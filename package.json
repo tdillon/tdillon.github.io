@@ -1,0 +1,10 @@
+{
+  "jspm": {
+    "dependencies": {
+      "seven-segment": "npm:seven-segment@^3.0.0"
+    },
+    "devDependencies": {
+      "typescript": "npm:typescript@^1.6.2"
+    }
+  }
+}
