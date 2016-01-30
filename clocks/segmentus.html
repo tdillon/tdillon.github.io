@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Segmentus Clock</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+        <script>
+
+            /* http://www.artlebedev.com/everything/segmentus */
+
+            window.onload = function() {
+                var classes = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+                var time = { hh: -1, h: -1, mm: -1, m: -1, ss: -1, s: -1 };
+
+                //Load Mustache Template
+                document.getElementById("clock").innerHTML = Mustache.to_html(
+                    document.getElementById("numberTemplate").innerHTML,
+                    {
+                        numbers: [
+                            {id:"hh",left:0},
+                            {id:"h",left:140},
+                            {id:"mm",left:280},
+                            {id:"m",left:420},
+                            {id:"ss",left:560},
+                            {id:"s",left:700}
+                        ],
+                        segments: [
+                            {class:"a",position:"0,0"} ,
+                            {class:"b",position:"70,0"},
+                            {class:"c",position:"0,70"},
+                            {class:"d",position:"70,70"},
+                            {class:"e",position:"0,140"},
+                            {class:"f",position:"70,140"}
+                        ]
+                    }
+                );
+
+                (function () {
+                    var now = new Date();
+
+                    var temp;
+
+                    var setClass = function(ele,newClass) {
+                        while (ele.classList.length > 1) {
+                            ele.classList.remove(ele.classList.item(ele.classList.length - 1));
+                        }
+                        ele.classList.add(classes[newClass]);
+                    }
+
+                    if ((temp = parseInt(now.getHours() / 10)) !== time.hh) {
+                        setClass(document.getElementById("hh"), time.hh = temp);
+                    }
+                    if ((temp = now.getHours() % 10) !== time.h) {
+                        setClass(document.getElementById("h"), time.h = temp);
+                    }
+                    if((temp = parseInt(now.getMinutes() / 10)) !== time.mm) {
+                        setClass(document.getElementById("mm"), time.mm = temp);
+                    }
+                    if((temp = now.getMinutes() % 10) !== time.m) {
+                        setClass(document.getElementById("m"), time.m = temp);
+                    }
+                    if((temp = parseInt(now.getSeconds() / 10)) !== time.ss) {
+                        setClass(document.getElementById("ss"), time.ss = temp);
+                    }
+                    if((temp = now.getSeconds() % 10) !== time.s) {
+                        setClass(document.getElementById("s"), time.s = temp);
+                    }
+
+                    setTimeout(arguments.callee, 1000 - new Date().getMilliseconds());
+                })();
+            }
+
+        </script>
+
+        <style>
+            body{margin:0;padding:0;background:#000;}
+            #clock{width:908px;margin:12px auto;}
+            .hand1,.hand2{fill:none;stroke:#dcdde2;stroke-width:24px;stroke-linecap:round;stroke-linejoin:round;}
+            circle{fill:#dcdde2;stroke:#d0d1d7;}
+
+            path{
+                   -moz-transition:-moz-transform .4s;
+                -webkit-transition: -webkit-transform .4s;
+
+                   -moz-transform-origin:70px 70px;
+                -webkit-transform-origin:70px 70px;
+            }
+
+            /* 0 */
+            .number.zero  .segment.a .hand1,
+            .number.zero  .segment.c .hand1,
+            .number.one   .segment.a .hand1,
+            .number.two   .segment.a .hand1,
+            .number.three .segment.a .hand1,
+            .number.four  .segment.a .hand1,
+            .number.five  .segment.a .hand1,
+            .number.five  .segment.c .hand1,
+            .number.six   .segment.a .hand1,
+            .number.six   .segment.e .hand1,
+            .number.seven .segment.a .hand1,
+            .number.eight .segment.a .hand1,
+            .number.eight .segment.c .hand1,
+            .number.nine  .segment.a .hand1,
+            .number.nine  .segment.c .hand1 {
+                        transform:rotate(0deg);
+                   -moz-transform:rotate(0deg);
+                -webkit-transform:rotate(0deg);
+            }
+
+            /* 45 */
+            .number.one   .segment.c .hand1,
+            .number.two   .segment.e .hand1,
+            .number.three .segment.c .hand1,
+            .number.three .segment.e .hand1,
+            .number.four  .segment.c .hand1,
+            .number.six   .segment.c .hand1,
+            .number.seven .segment.c .hand1,
+            .number.nine  .segment.e .hand2 {
+                        transform:rotate(45deg);
+                   -moz-transform:rotate(45deg);
+                -webkit-transform:rotate(45deg);
+            }
+
+            /* 90 */
+            .number.zero  .segment.d .hand1,
+            .number.zero  .segment.e .hand2,
+            .number.zero  .segment.f .hand1,
+            .number.one   .segment.d .hand1,
+            .number.one   .segment.f .hand1,
+            .number.two   .segment.d .hand1,
+            .number.two   .segment.e .hand2,
+            .number.two   .segment.f .hand1,
+            .number.three .segment.c .hand2,
+            .number.three .segment.d .hand1,
+            .number.three .segment.f .hand1,
+            .number.four  .segment.c .hand2,
+            .number.four  .segment.d .hand1,
+            .number.four  .segment.f .hand1,
+            .number.five  .segment.b .hand1,
+            .number.five  .segment.c .hand2,
+            .number.five  .segment.d .hand1,
+            .number.five  .segment.f .hand1,
+            .number.six   .segment.b .hand1,
+            .number.six   .segment.c .hand2,
+            .number.six   .segment.d .hand1,
+            .number.six   .segment.f .hand1,
+            .number.seven .segment.d .hand1,
+            .number.seven .segment.d .hand2,
+            .number.seven .segment.f .hand1,
+            .number.eight .segment.e .hand2,
+            .number.eight .segment.f .hand1,
+            .number.nine  .segment.f .hand1 {
+                        transform:rotate(90deg);
+                   -moz-transform:rotate(90deg);
+                -webkit-transform:rotate(90deg);
+            }
+
+            /* 180 */
+            .number.zero  .segment.b .hand2,
+            .number.zero  .segment.c .hand2,
+            .number.zero  .segment.d .hand2,
+            .number.zero  .segment.e .hand1,
+            .number.zero  .segment.f .hand2,
+            .number.one   .segment.b .hand2,
+            .number.one   .segment.d .hand2,
+            .number.one   .segment.e .hand1,
+            .number.one   .segment.f .hand2,
+            .number.two   .segment.b .hand2,
+            .number.two   .segment.f .hand2,
+            .number.three .segment.e .hand2,
+            .number.three .segment.f .hand2,
+            .number.four  .segment.b .hand1,
+            .number.four  .segment.d .hand2,
+            .number.four  .segment.e .hand2,
+            .number.four  .segment.f .hand2,
+            .number.five  .segment.d .hand2,
+            .number.five  .segment.e .hand2,
+            .number.six   .segment.d .hand2,
+            .number.six   .segment.e .hand2,
+            .number.seven .segment.c .hand2,
+            .number.seven .segment.e .hand2,
+            .number.seven .segment.f .hand2,
+            .number.eight .segment.b .hand2,
+            .number.eight .segment.c .hand2,
+            .number.eight .segment.d .hand1,
+            .number.eight .segment.e .hand1,
+            .number.eight .segment.f .hand2,
+            .number.nine  .segment.b .hand2,
+            .number.nine  .segment.e .hand1,
+            .number.nine  .segment.f .hand2 {
+                        transform:rotate(180deg);
+                   -moz-transform:rotate(180deg);
+                -webkit-transform:rotate(180deg);
+            }
+
+            /* 225 */
+            .number.one   .segment.b .hand1,
+            .number.two   .segment.d .hand2,
+            .number.three .segment.b .hand2,
+            .number.three .segment.d .hand2,
+            .number.four  .segment.b .hand2,
+            .number.six   .segment.b .hand2,
+            .number.seven .segment.b .hand2,
+            .number.nine  .segment.d .hand1 {
+                        transform:rotate(225deg);
+                   -moz-transform:rotate(225deg);
+                -webkit-transform:rotate(225deg);
+            }
+
+            /* 270 */
+            .number.zero  .segment.a .hand2,
+            .number.zero  .segment.b .hand1,
+            .number.one   .segment.a .hand2,
+            .number.one   .segment.c .hand2,
+            .number.one   .segment.e .hand2,
+            .number.two   .segment.a .hand2,
+            .number.two   .segment.b .hand1,
+            .number.two   .segment.c .hand1,
+            .number.two   .segment.c .hand2,
+            .number.three .segment.a .hand2,
+            .number.three .segment.b .hand1,
+            .number.four  .segment.a .hand2,
+            .number.four  .segment.e .hand1,
+            .number.five  .segment.a .hand2,
+            .number.five  .segment.b .hand2,
+            .number.five  .segment.e .hand1,
+            .number.five  .segment.f .hand2,
+            .number.six   .segment.a .hand2,
+            .number.six   .segment.f .hand2,
+            .number.seven .segment.a .hand2,
+            .number.seven .segment.b .hand1,
+            .number.seven .segment.e .hand1,
+            .number.eight .segment.a .hand2,
+            .number.eight .segment.b .hand1,
+            .number.eight .segment.d .hand2,
+            .number.nine  .segment.a .hand2,
+            .number.nine  .segment.b .hand1,
+            .number.nine  .segment.c .hand2,
+            .number.nine  .segment.d .hand2 {
+                        transform:rotate(270deg);
+                   -moz-transform:rotate(270deg);
+                -webkit-transform:rotate(270deg);
+            }
+
+        </style>
+
+    </head>
+    <body>
+        <div id="clock"></div>
+        <script id="numberTemplate" type="text/mustache">
+            <svg width="908" height="280" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0" >
+                <defs>
+                    <!-- http://www.w3.org/TR/SVG/filters.html -->
+                    <filter id="shadow" filterUnits="userSpaceOnUse" x="0" y="0" width="208" height="280">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+                        <feMerge>
+                            <feMergeNode in="blur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+
+                {{#numbers}}
+                <g id="{{id}}" class="number" transform="translate({{left}},0)" >
+                    {{#segments}}
+                    <g class="segment {{class}}" transform="translate({{position}})">
+                        <g filter="url(#shadow)"><path class="hand1" d="m 70 70 l 0 -46" /></g>
+                        <g filter="url(#shadow)"><path class="hand2" d="m 70 70 l 0 -46" /></g>
+                    </g>
+                    {{/segments}}
+                </g>
+                {{/numbers}}
+
+                <!-- Put the segment caps on last for shadowing purposes. -->
+                {{#numbers}}
+                <g transform="translate({{left}},0)" >
+                    {{#segments}}
+                    <g transform="translate({{position}})">
+                        <g filter="url(#shadow)"><circle cx="70" cy="70" r="12" stroke-width="0" /></g>
+                        <circle cx="70" cy="70" r="6.5" fill="transparent" stroke-width="1" />
+                    </g>
+                    {{/segments}}
+                </g>
+                {{/numbers}}
+
+                <g fill-rule="evenodd" fill="#111" opacity=".95" >
+                    <path d="m 0 0 l 908 0 l 0 280 l -908 0 z
+                             M 058 70 q 0 -12 12 -12 l 70 0 q 12 0 12 12 l 0 140 q 0 12 -12 12 l -70 0 q -12 0 -12 -12 z
+                             M 198 70 q 0 -12 12 -12 l 70 0 q 12 0 12 12 l 0 140 q 0 12 -12 12 l -70 0 q -12 0 -12 -12 z
+                             M 338 70 q 0 -12 12 -12 l 70 0 q 12 0 12 12 l 0 140 q 0 12 -12 12 l -70 0 q -12 0 -12 -12 z
+                             M 478 70 q 0 -12 12 -12 l 70 0 q 12 0 12 12 l 0 140 q 0 12 -12 12 l -70 0 q -12 0 -12 -12 z
+                             M 618 70 q 0 -12 12 -12 l 70 0 q 12 0 12 12 l 0 140 q 0 12 -12 12 l -70 0 q -12 0 -12 -12 z
+                             M 758 70 q 0 -12 12 -12 l 70 0 q 12 0 12 12 l 0 140 q 0 12 -12 12 l -70 0 q -12 0 -12 -12 z" />
+                </g>
+            </svg>
+        </script>
+    </body>
+</html>

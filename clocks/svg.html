@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>SVG Clock</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/2.1.0/knockout-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+        <script>
+
+var clock = [];
+var digits = [
+    /* 0 */ 'm55.64442,195.75887c-48.43558,-1.24162 -55.66244,-185.89004 -1.9508,-186.18969c53.71164,-0.29965 56.37826,179.98813 2.65395,185.98897',
+    /* 1 */ 'm55.97775,196.09219c-3.10301,-66.90729 -4.33,-169.89032 -4.2841,-183.1897c0.0459,-13.29938 -4.95401,4.32456 -6.67925,7.99206',
+    /* 2 */ 'm85.97679,168.09166c-123.77095,22.75937 -64.33251,2.45065 -28.2847,-65.85159c36.04782,-68.30229 20.38431,-99.01488 -44.34433,-79.34653',
+    /* 3 */ 'm35.97412,175.09201c106.24127,-101.24717 -25.33036,-68.55321 9.71733,-82.85248c35.04768,-14.29926 66.38675,-103.01506 -32.34369,-68.34594',
+    /* 4 */ 'm67.97582,193.09309l3.71704,-171.85731c-57.95701,64.70478 -90.62106,117.99696 23.65925,77.66186',
+    /* 5 */ 'm14.973,186.09268c105.2412,38.76039 92.67595,-98.55491 48.71941,-102.85363c-43.95654,-4.29872 -98.62196,-90.01437 27.65953,-67.34589',
+    /* 6 */ 'm39.54907,123c51.43558,-28.09277 99.6626,47.22339 6.95093,67.52304c-92.71164,20.29965 -17.71167,-73.98901 25.67944,-184.98901',
+    /* 7 */ 'm12.5,16c51.5,-2.5 38.5,-1.75 75.4375,-2.25c36.9375,-0.5 -26.1875,99.75 -70.9375,179.25',
+    /* 8 */ 'm44.36396,99.23264c31.69143,-213.98795 -92.89423,46.10146 1.48735,-0.61201c94.38158,-46.71347 -60.6494,228.12006 -1.17897,0.61045',
+    /* 9 */ 'm60.64455,72.09222c-51.43558,28.09278 -99.6626,-47.22338 -6.95093,-67.52304c92.71164,-20.29965 17.71167,73.98902 -25.67944,184.98902',
+];
+
+
+function writeDigits() {
+    var paper = Raphael("digits", 1000, 200);
+    for (var i = 0; i < digits.length; ++i) {
+        paper.rect(i * 100, 0, 100, 200).attr({stroke: 'red'});
+        paper.path(digits[i]).attr({stroke: '#09c','stroke-width':1, 'stroke-linecap':'round'}).transform("t" + i * 100 + ",0");
+    }
+}
+
+
+
+function getScale() {
+var minDim = document.documentElement.clientWidth < document.documentElement.clientHeight ? document.documentElement.clientWidth : document.documentElement.clientHeight;
+
+var clockRatio = 640 / 200 / 100;
+return document.documentElement.clientWidth / 700
+ /*   var scale =
+var clockRatio
+    if () {  //widescreen
+    }
+    return 1;*/
+
+    return 1;
+}
+
+
+
+function ClockViewModel() {
+    var self = this;
+    var now = new Date();
+
+    self.h1 = ko.observable();
+    self.h2 = ko.observable();
+    self.m1 = ko.observable();
+    self.m2 = ko.observable();
+    self.s1 = ko.observable();
+    self.s2 = ko.observable();
+
+    self.h1.subscribe(function(newValue) { clock[0].animate({path: digits[newValue]}, 1500); });
+    self.h2.subscribe(function(newValue) { clock[1].animate({path: digits[newValue]}, 1250); });
+    self.m1.subscribe(function(newValue) { clock[2].animate({path: digits[newValue]}, 1000); });
+    self.m2.subscribe(function(newValue) { clock[3].animate({path: digits[newValue]}, 750); });
+    self.s1.subscribe(function(newValue) { clock[4].animate({path: digits[newValue]}, 500); });
+    self.s2.subscribe(function(newValue) { clock[5].animate({path: digits[newValue]}, 250); });
+
+    self.update = function() {
+        var now = new Date();
+
+        self.h1(parseInt(now.getHours() / 10));
+        self.h2(now.getHours() % 10);
+        self.m1(parseInt(now.getMinutes() / 10));
+        self.m2(now.getMinutes() % 10);
+        self.s1(parseInt(now.getSeconds() / 10));
+        self.s2(now.getSeconds() % 10);
+    }
+}
+
+
+
+
+
+window.onload = function () {
+    /*
+     * Stroke Width Padding Info:
+     * The digits are 100 wide and 200 tall.
+     * If the stroke width is 1, then no padding is needed.
+     * Once stroke width is increased above 1, then the digits will overflow their 100x200 bounding boxes and possibly cause clipping.
+     * Therefore, the stroke width and half of the stroke width are used in calculations to correctly position the digits in a padded bounding box.
+     */
+    var scale = getScale();
+
+    var strokeWidth = 10 * scale;
+    var halfStrokeWidth = strokeWidth / 2;
+    var digitHeight = (200 + (strokeWidth/scale)) * scale;
+    var digitWidth = (100 + (strokeWidth/scale)) * scale;
+    var colonSpacing = 10 * scale;  /* left and right of colon padding */
+    var colonCenterDistance = 25 * scale;  /* distance from the centerline of the digits to each colon dot */
+    var colonDotRadius = 2.5 * scale;
+
+    var paper = Raphael("clock", 6 * digitWidth + 4 * colonSpacing /* colons */, digitHeight);
+
+    var left = halfStrokeWidth;
+
+    for (var i = 0; i < 6; ++i) {
+
+        if (i > 0 && i % 2 === 0) {
+            paper.circle(left - halfStrokeWidth + colonSpacing, digitHeight /2 - colonCenterDistance, colonDotRadius).attr({stroke: '#09c', fill: '#09c'});
+            paper.circle(left - halfStrokeWidth + colonSpacing, digitHeight /2 + colonCenterDistance, colonDotRadius).attr({stroke: '#09c', fill: '#09c'});
+            left += 2 * colonSpacing;
+        }
+
+        clock[i] = paper.path(digits[0]).attr({stroke: '#09c','stroke-width': strokeWidth, 'stroke-linecap': 'round'}).transform("t" + left + "," + halfStrokeWidth + "s" + scale + "," + scale + ",0,0");
+        //paper.rect(left - halfStrokeWidth, 0, digitWidth, digitHeight).attr({stroke: 'red'});  //bounding box
+        left += digitWidth;
+    }
+
+    var obj = new ClockViewModel();
+
+    ko.applyBindings(obj);
+
+    var tick = function () {
+        obj.update();
+        setTimeout( tick, 1000 - new Date().getMilliseconds());
+    }
+
+    setTimeout(tick, 1000 - new Date().getMilliseconds());
+};
+
+        </script>
+        <style media="screen">
+            body {background:#000;margin:0;}
+        </style>
+    </head>
+    <body>
+        <div id="clock"></div>
+        <div id="digits"><!-- Used to write out the digits to see how they look. --></div>
+    </body>
+</html>

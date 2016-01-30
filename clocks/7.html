@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html ng-app="SevenSegmentClock">
+  <head>
+    <meta charset="utf-8">
+    <title>7 segment</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
+
+    <script>
+
+
+
+/* Segment Golden ratio (length to width) = 212/52, now it is known to be 4:1 */
+
+
+"use strict";
+
+
+
+
+
+
+
+
+angular.module('SevenSegmentClock', [])
+  .controller('SevenSegmentClockController', ['$scope', '$timeout', function($scope, $timeout) {
+
+    $scope.Math = window.Math;
+    $scope.parseFloat = parseFloat;
+
+    $scope.menu = false;
+    $scope.scale = 2;
+    $scope.color = '#1D1D1D';
+    $scope.activeColor = '#fff';
+    $scope.inactiveColor = '#2a2a2a';
+    document.body.style.backgroundColor = '#1D1D1D';//hack
+
+    $scope.secondOne = '';
+    $scope.secondTen = '';
+    $scope.minuteOne = '';
+    $scope.minuteTen = '';
+    $scope.hourOne = '';
+    $scope.hourTen = '';
+
+    $scope.goldenLtoWratio = 4;
+    $scope.angle = 10;
+    $scope.length = .5;
+
+    $scope.width = $scope.length / $scope.goldenLtoWratio;
+    $scope.halfwidth = $scope.width / 2;
+    $scope.spacing = 0.015625;
+
+    $scope.angeleRad = function() { return $scope.angle * Math.PI / 180; }
+    $scope.digitWidth = function() { return $scope.length + $scope.width + 2 * $scope.spacing; }
+    $scope.digitSpacing = function() { return $scope.width;}  //spacing between 2 digits of same type, i.e., tens and ones of minutes
+    $scope.sectionSpacing = $scope.width * 3;  //spacing between hours and minutes or minutes and seconds
+
+    $scope.getD = function() {
+      var h = $scope.width;
+      var l = $scope.length;
+      var angle = $scope.angle * Math.PI / 180;
+      angle = Math.atan(Math.cos(angle) / (1 + Math.sin(angle)));
+
+      return {
+        hd: 'M 0 0 L ' + ((h / 2) / Math.tan(angle)) + ' ' + -h / 2 + ' L ' + (l - (h / 2) * Math.tan(angle)) + ' ' + -h / 2 + ' L ' + l + ' ' + ' 0 L ' + (l - (h / 2) / Math.tan(angle)) + ' ' + h / 2 + ' L ' + ((h / 2) * Math.tan(angle)) + ' ' + h / 2 + ' z',
+        vd: 'M 0 0' + ' L ' + ((h / 2) * Math.tan(angle)) + ' ' + -h / 2 + ' L ' + (l - (h / 2) / Math.tan(angle)) + ' ' + -h / 2 + ' L ' + l + ' ' + ' 0 L ' + (l - (h / 2) * Math.tan(angle)) + ' ' + h / 2 + ' L ' + ((h / 2) / Math.tan(angle)) + ' ' + h / 2 + ' z'
+      }
+    }
+
+    $scope.getDigitHeight = function() {
+      return 2 * $scope.halfwidth + 2 * $scope.length * Math.cos($scope.angeleRad()) + 4 * $scope.spacing;
+    }
+
+    $scope.getClockWidth = function() {
+      return $scope.digitWidth() * 6 + $scope.digitSpacing() * 3 + $scope.sectionSpacing * 2 + 2 * $scope.length * Math.sin(Math.abs($scope.angeleRad()));
+    }
+
+    $scope.getATransform = function() {
+      var x = $scope.halfwidth + $scope.spacing + ($scope.angeleRad() >= 0 ?  2 * $scope.length * Math.sin($scope.angeleRad()) : 0);
+      return 'translate(' + x +','+ $scope.halfwidth + ')';
+    }
+
+    $scope.getBTransform = function() {
+      var x = $scope.halfwidth + 2 * $scope.spacing + $scope.length + ($scope.angeleRad() >= 0 ?  2 * $scope.length * Math.sin($scope.angeleRad()) : 0);
+      return 'translate(' + x +','+ parseFloat($scope.halfwidth + $scope.spacing) + ') rotate( ' + parseFloat(90 + $scope.angle) + ')';
+    }
+
+    $scope.getCTransform = function() {
+      var x = parseFloat($scope.halfwidth + $scope.length * Math.sin(Math.abs($scope.angeleRad())) + 2 * $scope.spacing + $scope.length)
+      return 'translate(' + x +','+ parseFloat($scope.halfwidth + $scope.length * Math.cos($scope.angeleRad()) + 3 * $scope.spacing) + ') rotate( ' + parseFloat(90 + $scope.angle) + ')';
+    }
+
+    $scope.getDTransform = function() {
+      var x = $scope.halfwidth + $scope.spacing + ($scope.angeleRad() < 0 ?  2 * $scope.length * Math.sin(Math.abs($scope.angeleRad())) : 0);
+      return 'translate(' + x +','+ parseFloat($scope.halfwidth + 2 * $scope.length * Math.cos($scope.angeleRad()) + 4 * $scope.spacing) + ')';
+    }
+
+    $scope.getETransform = function() {
+      var x = parseFloat($scope.halfwidth + $scope.length * Math.sin(Math.abs($scope.angeleRad())))
+      return 'translate(' + x +','+ parseFloat($scope.halfwidth + $scope.length * Math.cos($scope.angeleRad()) + 3 * $scope.spacing) + ') rotate( ' + parseFloat(90 + $scope.angle) + ')';
+    }
+
+    $scope.getFTransform = function() {
+      var x = $scope.halfwidth + ($scope.angeleRad() >= 0 ?  2 * $scope.length * Math.sin($scope.angeleRad()) : 0);
+      return 'translate(' + x +','+ parseFloat($scope.halfwidth + $scope.spacing) + ') rotate( ' + parseFloat(90 + $scope.angle) + ')';
+    }
+
+    $scope.getGTransform = function() {
+      return 'translate(' + parseFloat($scope.halfwidth + $scope.length * Math.sin(Math.abs($scope.angeleRad())) + $scope.spacing) +','+ parseFloat($scope.halfwidth + $scope.length * Math.cos($scope.angeleRad()) + 2 * $scope.spacing) + ')';
+    }
+
+
+
+    var tick = function() {
+      var classes = ['zero','one','two','three','four','five','six','seven','eight','nine'];
+      var now = new Date();
+
+      $scope.secondOne = classes[now.getSeconds() % 10];
+      $scope.secondTen = classes[now.getSeconds() / 10 | 0];
+      $scope.minuteOne = classes[now.getMinutes() % 10];
+      $scope.minuteTen = classes[now.getMinutes() / 10 | 0];
+      $scope.hourOne = classes[now.getHours() % 10];
+      $scope.hourTen = classes[now.getHours() / 10 | 0];
+
+      $timeout(tick, 1000 - new Date().getMilliseconds());
+    }
+
+    $timeout(tick);
+  }])
+  //http://stackoverflow.com/questions/14594497/how-to-prevent-angularjs-to-lowercase-html-attributes/14596319#14596319
+  .directive('vbox', function() {return {link: function(scope, element, attrs) {attrs.$observe('vbox', function(value) {element.attr('viewBox', value);})}};});
+
+
+
+function getD(italicdegree, h, l) {
+  var angle = italicdegree * Math.PI / 180;
+  angle = Math.atan(Math.cos(angle) / (1 + Math.sin(angle)));
+
+  return {
+    hd: 'M 0 0 L ' + ((h / 2) / Math.tan(angle)) + ' ' + -h / 2 + ' L ' + (l - (h / 2) * Math.tan(angle)) + ' ' + -h / 2 + ' L ' + l + ' ' + ' 0 L ' + (l - (h / 2) / Math.tan(angle)) + ' ' + h / 2 + ' L ' + ((h / 2) * Math.tan(angle)) + ' ' + h / 2 + ' z',
+    vd: 'M 0 0' + ' L ' + ((h / 2) * Math.tan(angle)) + ' ' + -h / 2 + ' L ' + (l - (h / 2) / Math.tan(angle)) + ' ' + -h / 2 + ' L ' + l + ' ' + ' 0 L ' + (l - (h / 2) * Math.tan(angle)) + ' ' + h / 2 + ' L ' + ((h / 2) / Math.tan(angle)) + ' ' + h / 2 + ' z'
+  }
+}
+
+
+
+    </script>
+
+    <style>
+    </style>
+
+  </head>
+  <body ng-controller="SevenSegmentClockController" ng-click="menu = !menu;">
+  <div ng-show="menu">
+    Angle ({{angle}}): <input type="number" ng-model="angle" size="3" min="-90" max="90" />
+    Length ({{length}}): <input type="number" ng-model="length" size="3" step=".1" min=".1" max="2" />
+    Color ({{color}}): <input type="color" ng-model="color" />
+    Active ({{activeColor}}): <input type="color" ng-model="activeColor" />
+    Inactive ({{inactiveColor}}): <input type="color" ng-model="inactiveColor" />
+    Scale ({{scale}}): <input type="number" ng-model="scale" min=".1" max="5" step=".1" />
+  </div>
+
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" ng-attr-height="{{getDigitHeight() * scale}}in" ng-attr-width="{{getClockWidth() * scale}}in" vbox="0 0 {{getClockWidth() * scale}} {{getDigitHeight() * scale}}" ng-attr-transform="scale({{scale}})">
+      <style>
+        svg{position: fixed;margin: auto auto;left: 0;right: 0;top: 0;bottom: 0;background:{{color}};}
+        .A,.B,.C,.D,.E,.F,.G{/*transition:fill .4s ease;*/fill:{{inactiveColor}};}
+        .zero .A,.zero .B,.zero .C,.zero .D,.zero .E,.zero .F,
+        .one .B,.one .C,
+        .two .A,.two .B,.two .G,.two .E,.two .D,
+        .three .A,.three .B,.three .G,.three .C,.three .D,
+        .four .F,.four .B,.four .G,.four .C,
+        .five .A,.five .F,.five .G,.five .C,.five .D,
+        .six .A,.six .F,.six .E,.six .D,.six .C,.six .G,
+        .seven .A,.seven .B,.seven .C,
+        .eight .A,.eight .B,.eight .C,.eight .D,.eight .E,.eight .F,.eight .G,
+        .nine .A,.nine .F,.nine .B,.nine .C,.nine .D,.nine .G,
+        circle
+        {fill:{{activeColor}};}
+      </style>
+      <defs>
+        <g id="number">
+          <path class="A" ng-attr-d="{{getD().hd}}" ng-attr-transform="{{getATransform()}}" />
+          <path class="B" ng-attr-d="{{getD().vd}}" ng-attr-transform="{{getBTransform()}}" />
+          <path class="C" ng-attr-d="{{getD().vd}}" ng-attr-transform="{{getCTransform()}}" />
+          <path class="D" ng-attr-d="{{getD().hd}}" ng-attr-transform="{{getDTransform()}}" />
+          <path class="E" ng-attr-d="{{getD().vd}}" ng-attr-transform="{{getETransform()}}" />
+          <path class="F" ng-attr-d="{{getD().vd}}" ng-attr-transform="{{getFTransform()}}" />
+          <path class="G" ng-attr-d="{{getD().hd}}" ng-attr-transform="{{getGTransform()}}" />
+        </g>
+      </defs>
+      <rect width="100%" height="100%" fill="transparent" />
+      <!--
+       A
+      F B
+       G
+      E C
+       D
+      -->
+
+      <use xlink:href="#number" ng-class="hourTen" ng-attr-x="{{0}}" />
+      <use xlink:href="#number" ng-class="hourOne" ng-attr-x="{{ digitWidth() + digitSpacing() }}" />
+      <circle id="hmt" ng-attr-r="{{halfwidth}}" ng-attr-cx="{{digitWidth() + digitSpacing() + digitWidth() + (Math.sin(angeleRad()) * (length + length / 2)) + sectionSpacing / 2}}" ng-attr-cy="{{halfwidth + length / 2 * Math.cos(angeleRad()) + spacing}}" />
+      <circle id="hmb" ng-attr-r="{{halfwidth}}" ng-attr-cx="{{digitWidth() + digitSpacing() + digitWidth() + (Math.sin(angeleRad()) * (length / 2)) + sectionSpacing / 2}}" ng-attr-cy="{{halfwidth + length * 1.5 * Math.cos(angeleRad()) + 3 * spacing}}" />
+      <use ng-class="minuteTen" id="mt" xlink:href="#number" ng-attr-x="{{digitWidth() + digitSpacing() + digitWidth() + sectionSpacing}}" />
+      <use ng-class="minuteOne" id="mo" xlink:href="#number" ng-attr-x="{{digitWidth() + digitSpacing() + digitWidth() + sectionSpacing + digitWidth() + digitSpacing()}}" />
+      <circle id="mst" ng-attr-r="{{halfwidth}}" ng-attr-cx="{{digitWidth() + digitSpacing() + digitWidth() + sectionSpacing + digitWidth() + digitSpacing() + digitWidth() + (Math.sin(angeleRad()) * (length + length / 2)) + sectionSpacing / 2}}" ng-attr-cy="{{halfwidth + length / 2 * Math.cos(angeleRad()) + spacing}}" />
+      <circle id="msb" ng-attr-r="{{halfwidth}}" ng-attr-cx="{{digitWidth() + digitSpacing() + digitWidth() + sectionSpacing + digitWidth() + digitSpacing() + digitWidth() + (Math.sin(angeleRad()) * (length / 2)) + sectionSpacing / 2}}" ng-attr-cy="{{halfwidth + length * 1.5 * Math.cos(angeleRad()) + 3 * spacing}}" />
+      <use ng-class="secondTen" id="st" xlink:href="#number" ng-attr-x="{{digitWidth() + digitSpacing() + digitWidth() + sectionSpacing + digitWidth() + digitSpacing() + digitWidth() + sectionSpacing}}" />
+      <use ng-class="secondOne" id="so" xlink:href="#number" ng-attr-x="{{digitWidth() + digitSpacing() + digitWidth() + sectionSpacing + digitWidth() + digitSpacing() + digitWidth() + sectionSpacing + digitWidth() + digitSpacing()}}" />
+    </svg>
+  </body>
+</html>

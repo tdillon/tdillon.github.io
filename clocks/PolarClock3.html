@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Polar Clock</title>
+        <meta name="viewport" content="width=device-width">
+        <script src="mustache.js"></script>
+        <script>
+
+
+
+Ring = function(id, angleMethod) {
+    var ele = document.getElementById(id);
+    this.angleDeg = -1;
+
+    this.update = function(time) {
+        var temp;
+        if ((temp = angleMethod(time)) > this.angleDeg + .1 || temp < this.angleDeg) {  //don't update for minor changes (perf improv)
+            this.angleDeg = temp;
+            var angleRad = this.angleDeg * Math.PI / 180;
+            var largeArcFlag = (this.angleDeg > 180 ? 1 : 0);
+            ele.setAttribute("d", "m 200 100 A 100 100 1 " + largeArcFlag + " 1 " + (200 + 100 * Math.sin(angleRad)) + " " + (200 - 100 * Math.cos(angleRad)));
+            ele.setAttribute("stroke", "hsl(" + this.angleDeg + ", 100%, 50%)");
+        }
+    }
+}
+
+
+
+Clock = function() {
+    var getDaysInMonth = function(time) {
+        time.setDate(1);
+        time.setMonth(time.getMonth() + 1);
+        time.setDate(0);
+        return time.getDate();
+    }
+
+    var rings = [
+        new Ring("w",
+            function(t) {
+                var i = 7;  //# of intervals for this time unit
+                var mspi = 1000 * 60 * 60 * 24 * 7;  //milliseconds per interval for this time unit
+                var currentTime = t.getTime();  //current time value in unix epoch
+                var currentTimeUnit = t.getDay();  //current time interval value
+                t.setMilliseconds(0);
+                t.setSeconds(0);
+                t.setMinutes(0);
+                t.setHours(0);
+                t.setDate(t.getDate() - t.getDay());
+                return (currentTimeUnit * mspi + (currentTime - t.getTime())) * 360 / (i * mspi);
+            }),
+        new Ring("M",
+            function(t) {
+                var i = 12;  //# of intervals for this time unit
+                var mspi =  1000 * 60 * 60 * 24 * getDaysInMonth(new Date(t));  //milliseconds per interval for this time unit
+                var currentTime = t.getTime();  //current time value in unix epoch
+                var currentTimeUnit = t.getMonth();  //current time interval value
+                t.setMilliseconds(0);
+                t.setSeconds(0);
+                t.setMinutes(0);
+                t.setHours(0);
+                t.setDate(1);
+                return (currentTimeUnit * mspi + (currentTime - t.getTime())) * 360 / (i * mspi);
+            }),
+        new Ring("d",
+            function(t) {
+                var i = getDaysInMonth(new Date(t));  //# of intervals for this time unit
+                var mspi = 1000 * 60 * 60 * 24;  //milliseconds per interval for this time unit
+                var currentTime = t.getTime();  //current time value in unix epoch
+                var currentTimeUnit = t.getDate();  //current time interval value
+                t.setMilliseconds(0);
+                t.setSeconds(0);
+                t.setMinutes(0);
+                t.setHours(0);
+                return ((currentTimeUnit - 1) * mspi + (currentTime - t.getTime())) * 360 / (i * mspi);
+            }),
+        new Ring("h",
+            function(t) {
+                var i = 24;  //# of intervals for this time unit
+                var mspi = 1000 * 60 * 60;  //milliseconds per interval for this time unit
+                var currentTime = t.getTime();  //current time value in unix epoch
+                var currentTimeUnit = t.getHours();  //current time interval value
+                t.setMilliseconds(0);
+                t.setSeconds(0);
+                t.setMinutes(0);
+                return (currentTimeUnit * mspi + (currentTime - t.getTime())) * 360 / (i * mspi);
+            }),
+        new Ring("m",
+            function(t) {
+                var i = 60;  //# of intervals for this time unit
+                var mspi = 1000 * 60;  //milliseconds per interval for this time unit
+                var currentTime = t.getTime();  //current time value in unix epoch
+                var currentTimeUnit = t.getMinutes();  //current time interval value
+                t.setMilliseconds(0);
+                t.setSeconds(0);
+                return (currentTimeUnit * mspi + (currentTime - t.getTime())) * 360 / (i * mspi);
+            }),
+        new Ring("s",
+            function(t) {
+                var i = 60;  //# of intervals for this time unit
+                var mspi = 1000;  //milliseconds per interval for this time unit
+                var currentTime = t.getTime();  //current time value in unix epoch
+                var currentTimeUnit = t.getSeconds();  //current time interval value
+                t.setMilliseconds(0);
+                return (currentTimeUnit * mspi + (currentTime - t.getTime())) * 360 / (i * mspi);
+            })
+    ];
+
+    this.update = function(time) {
+        for (var i = 0; i < rings.length; ++i) {
+            rings[i].update(new Date(time.getTime()));
+        }
+    }
+}
+
+
+
+window.onload = function() {
+    //Load Mustache Template
+    document.getElementById("clock").innerHTML = Mustache.to_html(
+        document.getElementById("clockTemplate").innerHTML, { rings: ["w","M","d","h","m","s"] }
+    );
+
+    var clock = new Clock();
+
+    function step(timestamp) {
+        clock.update(new Date());
+        requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+}
+
+
+
+        </script>
+        <style>
+            body{margin:0;background:#666;}
+            #clock{height:400px;width:400px;margin:0 auto;}
+            path{fill: transparent;}
+            #w{stroke-width:180;}
+            #M{stroke-width:150;}
+            #d{stroke-width:120;}
+            #h{stroke-width:90;}
+            #m{stroke-width:60;}
+            #s{stroke-width:30;}
+        </style>
+    </head>
+    <body>
+        <div id="clock"></div>
+        <script id="clockTemplate" type="text/mustache">
+           <svg width="400" height="400" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0">
+                <defs>
+                    <!-- http://www.w3.org/TR/SVG/filters.html -->
+                    <filter id="shadow" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"/>
+                        <feMerge>
+                            <feMergeNode in="blur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                {{#rings}}
+                <path id="{{.}}" filter="url(#shadow)" />
+                {{/rings}}
+            </svg>
+        </script>
+    </body>
+</html>

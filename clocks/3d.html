@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>3D Clock</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+<script>
+
+window.onload = function() {
+    document.getElementById("clock").innerHTML = (Mustache.to_html(document.getElementById("numberTemplate").innerHTML, { numbers: ["hh", "h", "mm", "m", "ss", "s"], segments: ["a", "b", "c", "d", "e", "f"]}));
+    var classes = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+    var time = { hh: -1, h: -1, mm: -1, m: -1, ss: -1, s: -1 };
+
+    (function () {
+        var now = new Date();
+
+        var temp;
+
+        if ((temp = parseInt(now.getHours() / 10)) !== time.hh) {
+            time.hh = temp;
+            document.getElementById("hh").className = "number " + classes[time.hh];
+        }
+        if ((temp = now.getHours() % 10) !== time.h) {
+            time.h = temp;
+            document.getElementById("h").className = "number " + classes[time.h];
+        }
+        if((temp = parseInt(now.getMinutes() / 10)) !== time.mm) {
+            time.mm = temp;
+            document.getElementById("mm").className = "number " + classes[time.mm];
+        }
+        if((temp = now.getMinutes() % 10) !== time.m) {
+            time.m = temp;
+            document.getElementById("m").className = "number " + classes[time.m];
+        }
+        if((temp = parseInt(now.getSeconds() / 10)) !== time.ss) {
+            time.ss = temp;
+            document.getElementById("ss").className = "number " + classes[time.ss];
+        }
+        if((temp = now.getSeconds() % 10) !== time.s) {
+            time.s = temp;
+            document.getElementById("s").className = "number " + classes[time.s];
+        }
+
+        setTimeout(arguments.callee, 1000 - new Date().getMilliseconds());
+    })();
+}
+
+</script>
+
+<style>
+body{margin:0;padding:0;background:#000;}
+path{fill:none;stroke:#fff;stroke-width:20px;stroke-linecap:round;stroke-linejoin:round;}
+
+#clock{position:relative;height:295px;width:995px;margin:35px auto;background:#333;}
+.number{width:150px;height:225px;position:absolute;
+            transform:translateZ(-37.5px);
+       -moz-transform:translateZ(-37.5px);
+    -webkit-transform:translateZ(-37.5px);}
+.segment{width:75px;height:75px;position:absolute;
+            transform-style: preserve-3d;        transition:         transform 1s;
+       -moz-transform-style: preserve-3d;   -moz-transition:    -moz-transform 1s;
+    -webkit-transform-style: preserve-3d;-webkit-transition: -webkit-transform 1s;}
+.segment div {position: absolute;width:75px;height:75px;background: #111;
+            backface-visibility:hidden;
+       -moz-backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;}
+
+#hh .segment{
+            transition:         transform 6s;
+       -moz-transition:    -moz-transform 6s;
+    -webkit-transition: -webkit-transform 6s;
+}
+#h .segment{
+            transition:         transform 5s;
+       -moz-transition:    -moz-transform 5s;
+    -webkit-transition: -webkit-transform 5s;
+}
+#mm .segment{
+            transition:         transform 4s;
+       -moz-transition:    -moz-transform 4s;
+    -webkit-transition: -webkit-transform 4s;
+}
+#m .segment{
+            transition:         transform 3s;
+       -moz-transition:    -moz-transform 3s;
+    -webkit-transition: -webkit-transform 3s;
+}
+#ss .segment{
+            transition:         transform 2s;
+       -moz-transition:    -moz-transform 2s;
+    -webkit-transition: -webkit-transform 2s;
+}
+#s .segment{
+            transition:         transform .75s;
+       -moz-transition:    -moz-transform .75s;
+    -webkit-transition: -webkit-transform .75s;
+}
+
+#hh,#h,#mm,#m,#ss,#s{top:35px;}
+#hh{left:35px;}
+#h{left:190px;}
+#mm{left:345px;}
+#m{left:500px;}
+#ss{left:655px;}
+#s{left:810px;}
+
+.a{left:0;top:0;}
+.b{top:0;right:0;}
+.c{left:0;top:75px;}
+.d{right:0;top:75px;}
+.e{left:0;bottom:0;}
+.f{right:0;bottom:0;}
+
+.segment .front  {
+            transform: translateZ(37.5px);
+       -moz-transform: translateZ(37.5px);
+    -webkit-transform: translateZ(37.5px);
+}
+.segment .back   {
+            transform: rotateX(-180deg) translateZ(37.5px);
+       -moz-transform: rotateX(-180deg) translateZ(37.5px);
+    -webkit-transform: rotateX(-180deg) translateZ(37.5px);
+}
+.segment .right  {
+            transform: rotateY(90deg) translateZ(37.5px);
+       -moz-transform: rotateY(90deg) translateZ(37.5px);
+    -webkit-transform: rotateY(90deg) translateZ(37.5px);
+}
+.segment .left   {
+            transform: rotateY(-90deg) translateZ(37.5px);
+       -moz-transform: rotateY(-90deg) translateZ(37.5px);
+    -webkit-transform: rotateY(-90deg) translateZ(37.5px);
+}
+.segment .top    {
+            transform: rotateX(90deg) translateZ(37.5px);
+       -moz-transform: rotateX(90deg) translateZ(37.5px);
+    -webkit-transform: rotateX(90deg) translateZ(37.5px);
+}
+.segment .bottom {
+            transform: rotateX(-90deg) translateZ(37.5px);
+       -moz-transform: rotateX(-90deg) translateZ(37.5px);
+    -webkit-transform: rotateX(-90deg) translateZ(37.5px);
+}
+
+
+/* Vertical bar */
+    .number.zero .segment.c,
+    .number.zero .segment.d,
+    .number.one .segment.d,
+    .number.seven .segment.d {
+                transform: translateZ(-37.5px ) rotateX(90deg );
+           -moz-transform: translateZ(-37.5px ) rotateX(90deg );
+        -webkit-transform: translateZ(-37.5px ) rotateX(90deg );
+    }
+
+/* top L corner */
+    .number.zero .segment.a,
+    .number.two .segment.c,
+    .number.five .segment.a,
+    .number.eight .segment.a,
+    .number.nine .segment.a {
+                transform: translateZ(-37.5px ) rotateX(-90deg);
+           -moz-transform: translateZ(-37.5px ) rotateX(-90deg);
+        -webkit-transform: translateZ(-37.5px ) rotateX(-90deg);
+    }
+
+/* top R corner */
+    .number.zero .segment.b,
+    .number.two .segment.b,
+    .number.three .segment.b,
+    .number.five .segment.d,
+    .number.six .segment.d,
+    .number.seven .segment.b,
+    .number.eight .segment.b,
+    .number.nine .segment.b {
+                transform: translateZ(-37.5px ) rotateX(-90deg) rotateY(-90deg);
+           -moz-transform: translateZ(-37.5px ) rotateX(-90deg) rotateY(-90deg);
+        -webkit-transform: translateZ(-37.5px ) rotateX(-90deg) rotateY(-90deg);
+    }
+
+/* bot L corner */
+    .number.zero .segment.e,
+    .number.two .segment.e,
+    .number.four .segment.c,
+    .number.five .segment.c,
+    .number.six .segment.e,
+    .number.eight .segment.e,
+    .number.nine .segment.c {
+                transform: translateZ(-37.5px ) rotateX(-90deg) rotateY(90deg);
+           -moz-transform: translateZ(-37.5px ) rotateX(-90deg) rotateY(90deg);
+        -webkit-transform: translateZ(-37.5px ) rotateX(-90deg) rotateY(90deg);
+    }
+
+/* bot R corner */
+    .number.zero .segment.f,
+    .number.two .segment.d,
+    .number.three .segment.f,
+    .number.five .segment.f,
+    .number.six .segment.f,
+    .number.eight .segment.f {
+                transform: translateZ(-37.5px ) rotateZ(180deg) rotateX(-90deg);
+           -moz-transform: translateZ(-37.5px ) rotateZ(180deg) rotateX(-90deg);
+        -webkit-transform: translateZ(-37.5px ) rotateZ(180deg) rotateX(-90deg);
+    }
+
+/* partial line vertical TOP */
+    .number.one .segment.b,
+    .number.six .segment.a,
+    .number.four .segment.a,
+    .number.four .segment.b {
+                transform: translateZ(-37.5px ) rotateX(180deg);
+           -moz-transform: translateZ(-37.5px ) rotateX(180deg);
+        -webkit-transform: translateZ(-37.5px ) rotateX(180deg);
+    }
+
+/* partial line vertical BOTTOM */
+    .number.one .segment.f,
+    .number.four .segment.f,
+    .number.seven .segment.f,
+    .number.nine .segment.f {
+                transform: translateZ(-37.5px ) rotateX(180deg) rotateZ(180deg);
+           -moz-transform: translateZ(-37.5px ) rotateX(180deg) rotateZ(180deg);
+        -webkit-transform: translateZ(-37.5px ) rotateX(180deg) rotateZ(180deg);
+    }
+
+/* partial line horizontal LEFT */
+    .number.two .segment.a,
+    .number.three .segment.a,
+    .number.three .segment.c,
+    .number.three .segment.e,
+    .number.five .segment.e,
+    .number.seven .segment.a {
+                transform: translateZ(-37.5px ) rotateX(180deg) rotateZ(90deg);
+           -moz-transform: translateZ(-37.5px ) rotateX(180deg) rotateZ(90deg);
+        -webkit-transform: translateZ(-37.5px ) rotateX(180deg) rotateZ(90deg);
+    }
+
+/* partial line horizontal RIGHT */
+    .number.two .segment.f,
+    .number.five .segment.b {
+                transform: translateZ(-37.5px ) rotateZ(90deg) rotateX(180deg);
+           -moz-transform: translateZ(-37.5px ) rotateZ(90deg) rotateX(180deg);
+        -webkit-transform: translateZ(-37.5px ) rotateZ(90deg) rotateX(180deg);
+    }
+
+/* T - RIGHT */
+    .number.three .segment.d,
+    .number.four .segment.d,
+    .number.eight .segment.d,
+    .number.nine .segment.d {
+                transform: translateZ(-37.5px ) rotateY(-90deg);
+           -moz-transform: translateZ(-37.5px ) rotateY(-90deg);
+        -webkit-transform: translateZ(-37.5px ) rotateY(-90deg);
+    }
+
+/* T - LEFT */
+    .number.six .segment.c,
+    .number.eight .segment.c {
+                transform: translateZ(-37.5px ) rotateY(90deg);
+           -moz-transform: translateZ(-37.5px ) rotateY(90deg);
+        -webkit-transform: translateZ(-37.5px ) rotateY(90deg);
+    }
+
+
+/* BLANK*/
+    .number.one .segment.a,
+    .number.one .segment.c,
+    .number.one .segment.e,
+    .number.four .segment.e,
+    .number.six .segment.b,
+    .number.seven .segment.c,
+    .number.seven .segment.e,
+    .number.nine .segment.e {
+                transform: translateZ(-37.5px );
+           -moz-transform: translateZ(-37.5px );
+        -webkit-transform: translateZ(-37.5px );
+    }
+
+</style>
+
+</head>
+<body>
+    <div id="clock"></div>
+
+<script id="numberTemplate" type="text/mustache">
+{{#numbers}}
+<div id="{{.}}" class="number">
+    {{#segments}}
+    <div class="segment {{.}}">
+        <div class="front">
+            <!-- blank -->
+        </div>
+        <div class="back">
+            <!-- partial line vertical top -->
+            <svg width="75" height="75" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0" >
+                <path d="m 37.5 37.5 l 0 75" />
+            </svg>
+        </div>
+        <div class="right">
+            <!-- t right side -->
+            <svg width="75" height="75" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0" >
+                <path d="m 0 37.5 l 37.5 0 m 0 -37.5 l 0 75" />
+            </svg>
+        </div>
+        <div class="left">
+            <!-- t left side -->
+            <svg width="75" height="75" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0" >
+                <path d="m 37.5 0 l 0 75 m 0 -37.5 l 37.5 0" />
+            </svg>
+        </div>
+        <div class="top">
+            <!-- 90deg top left corner -->
+            <svg width="75" height="75" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0" >
+                <path d="m 37.5 75 l 0 -37.5 l 37.5 0" />
+            </svg>
+        </div>
+        <div class="bottom">
+            <!-- full line vertical -->
+            <svg width="75" height="75" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0" >
+                <path d="m 37.5 0 l 0 75" />
+            </svg>
+        </div>
+    </div>
+    {{/segments}}
+</div>
+{{/numbers}}
+
+</script>
+</body>
+</html>
