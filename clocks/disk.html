@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Disk Clock</title>
+
+<style type="text/css">body{margin:0;}canvas{background:#000;/*HACK: keep scrollbars from showing*/display:block;}</style>
+
+<script type="text/javascript" src="paper.js"></script>
+
+<script type="text/javascript">
+
+
+var center;
+var colors = { Active: "#fff", Inactive: "#222" };
+
+var data = [
+    { StartsAt : 0, Current: 0, CurrentGUI: null, Method: "getDay", GUIs: [], Labels: ["   Sunday", "   Monday", "  Tuesday", "Wednesday", " Thursday", "   Friday", " Saturday"] },
+    { StartsAt : 0, Current: 0, CurrentGUI: null, Method: "getMonth", GUIs: [], Labels: ["  January", " February", "    March", "    April", "      May", "     June", "     July", "   August", "September", "  October", " November", " December"] },
+    { StartsAt : 1, Current: 1, CurrentGUI: null, Method: "getDate", GUIs: [], Labels: ["1st","2nd","3rd","4th","5th","6th","7th","8th","9th","10th","11th","12th","13th","14th","15th","16th","17th","18th","19th","20th","21st","22nd","23rd","24th","25th","26th","27th","28th","29th","30th","31st"] },
+    { StartsAt : 0, Current: 0, CurrentGUI: null, Method: "getHours", GUIs: [], Labels: ["00","01","02","03","04","05","06","07","08","09",10,11,12,13,14,15,16,17,18,19,20,21,22,23] },
+    { StartsAt : 0, Current: 0, CurrentGUI: null, Method: "getMinutes", GUIs: [], Labels: ["00","01","02","03","04","05","06","07","08","09",10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59] },
+    { StartsAt : 0, Current: 0, CurrentGUI: null, Method: "getSeconds", GUIs: [], Labels: ["00","01","02","03","04","05","06","07","08","09",10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59] }
+];
+
+
+
+function getFoo(r, items, guis) {
+    var g = new Group();
+    var disk = Path.Circle(center, r);
+    disk.rotate(180);
+
+    var origin = disk.getPointAt(0);
+    var normal = disk.getNormalAt(0);
+
+    for (var i = 0; i < items.length; ++i) {
+        text = new PointText({
+            point: origin,
+            content: items[i],
+            fillColor: colors.Inactive,
+            font: 'consolas,monospace',
+            fontSize:23
+        });
+        g.addChild(text);
+        guis.push(text);
+        text.rotate(Math.atan(normal.y / normal.x) * 180 / Math.PI + (normal.x < 0 ? 180 : 0));
+        g.rotate (360 / items.length, center);
+    }
+
+    return g;
+}
+
+
+
+paper.install(window);
+
+window.onload = function() {
+    paper.setup('clock');
+    center = paper.view.center;
+
+    disks = [];
+    disks[0] = getFoo(100,data[0].Labels, data[0].GUIs);
+    disks[1] = getFoo(disks[0].bounds.width / 2 + 5,data[1].Labels, data[1].GUIs);
+    disks[2] = getFoo(disks[1].bounds.width / 2 + 3,data[2].Labels, data[2].GUIs);
+    disks[3] = getFoo(disks[2].bounds.width / 2 + 25,data[3].Labels, data[3].GUIs);
+    disks[4] = getFoo(disks[3].bounds.width / 2 + 3,data[4].Labels, data[4].GUIs);
+    disks[5] = getFoo(disks[4].bounds.width / 2 + 3,data[5].Labels, data[5].GUIs);
+
+    for (var i = 0; i < data.length; ++i) {
+        data[i].CurrentGUI = data[i].GUIs[0];
+        data[i].CurrentGUI.setFillColor(colors.Active);
+    }
+
+    view.onFrame = function(event) {
+        var now = new Date();
+
+        for (var i = 0; i < data.length; ++i) {
+            var amt;
+            var timepart = now[data[i].Method]();
+
+            if (timepart === data[i].Current) {
+                continue;
+            } else if (timepart > data[i].Current + 1) {
+                amt = 1;
+            } else if (timepart < data[i].Current && timepart !== data[i].StartsAt) {
+                amt = -1;
+            } else if (timepart > data[i].Current || (timepart == data[i].StartsAt)) {
+                amt = .1;
+            } else {
+                continue;
+            }
+
+            //TODO  i believe this bombs when switching to the last day of the month
+
+            data[i].Current += amt;
+            data[i].Current = Number(data[i].Current.toFixed(1));  //floating point rounding issue, e.g., .1+.1+.1 == 0.30000000000000004
+            if (data[i].Current % 1 === 0) {
+                data[i].Current %=  data[i].Labels.length;
+            }
+            disks[i].rotate(360 / data[i].Labels.length * amt, center);
+
+            data[i].CurrentGUI.setFillColor(colors.Inactive);
+            data[i].CurrentGUI = data[i].GUIs[now[data[i].Method]() - data[i].StartsAt];
+            data[i].CurrentGUI.setFillColor(colors.Active);
+        }
+    };
+}
+
+</script>
+</head>
+<body>
+<canvas id="clock" data-paper-resize="true"></canvas>
+</body>
+</html>
