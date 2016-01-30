@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>TODO</title>
+<base href="/">
+
+<!-- build:css stylesheets/demo.css -->
+<link rel=stylesheet href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<!-- endbuild -->
+
+<my-app></my-app>
+
+<!-- build:remove -->
+<script src="../jspm_packages/system.js"></script>
+<script src="app/config.js"></script>
+<script>
+  System.import('app/src/boot').then(null, console.error.bind(console));
+</script>
+<!-- endbuild -->
+<!-- build:js src/demo.js -->
+<script src=""></script>
+<!-- endbuild -->
+<!--
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  try {
+    var pageTracker = _gat._getTracker("UA-17166133-3");
+    pageTracker._trackPageview();
+  } catch (err) {}
+</script> -->
