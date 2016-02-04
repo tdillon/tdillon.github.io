@@ -1,0 +1,39 @@
+@media all and (orientation: portrait) {
+  header {
+    height: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateY(0);
+  }
+  header.hideMenu {
+    transform: translateY(200%);
+  }
+}
+@media all and (orientation: landscape) {
+  header {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    transform: translateX(0);
+  }
+  header.hideMenu {
+    transform: translateX(100%);
+  }
+}
+header {
+  font-family: Roboto, sans-serif;
+  z-index: 3;
+  transition: transform .5s ease;
+  color: #000;
+  background: #DFDFDF;
+  position: fixed;
+  padding: 16px;
+  overflow-y: auto;
+}
+canvas {
+  display: block;
+  margin: 0;
+  position: absolute;
+}
