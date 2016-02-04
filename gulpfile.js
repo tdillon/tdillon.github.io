@@ -25,4 +25,13 @@ gulp.task('copy:weather', ['clean:weather'], function() {
 gulp.task('build:weather', ['useref:weather', 'copy:weather']);
 
 
-gulp.task('default', ['build:weather']);
+gulp.task('clean:bootstrap', function() {
+  return del('css/bootstrap.min.css');
+});
+gulp.task('copy:bootstrap', ['clean:bootstrap'], function() {
+  return gulp.src('node_modules/bootstrap/dist/css/bootstrap.min.css').pipe(gulp.dest('css'));
+});
+gulp.task('build:bootstrap', ['copy:bootstrap']);
+
+
+gulp.task('default', ['build:weather', 'build:bootstrap']);
