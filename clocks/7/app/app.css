@@ -3,11 +3,13 @@ body {
   background: #000;
 }
 seven-segment-clock {
+  display: block;
+  text-align: center;
+  width: 100%;
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  transform: translateY(-50%);
 }
-seven-segment-clock, clock, digit, canvas {
+clock, digit, canvas {
   display: inline-block;
 }
