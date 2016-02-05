@@ -6,9 +6,11 @@
   "scripts": {
     "jspm": "node_modules\\.bin\\jspm",
     "jspm:build:weather": "npm run jspm bundle-sfx weather/app/src/boot weather/src/bundle.js",
+    "jspm:build:sevenClock": "npm run jspm bundle-sfx clocks/7/app/src/boot clocks/7/src/bundle.js",
+    "jspm:build": "npm run jspm:build:weather && npm run jspm:build:sevenClock",
     "clean": "npm run gulp clean",
     "gulp": "node_modules\\.bin\\gulp",
-    "build": "npm run gulp && npm run jspm:build:weather"
+    "build": "npm run gulp && npm run jspm:build"
   },
   "repository": {
     "type": "git",

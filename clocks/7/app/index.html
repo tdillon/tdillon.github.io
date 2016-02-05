@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>7 clock</title>
+
+<!-- build:css src/bundle.css -->
+<link rel=stylesheet href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<link rel=stylesheet href="app.css">
+<!-- endbuild -->
+<seven-segment-clock>Loading...</seven-segment-clock>
+
+<!-- build:remove -->
+<script src="../../../jspm_packages/system.js"></script>
+<script src="../../../js/config.js"></script>
+<script>
+  System.import('clocks/7/app/src/boot').then(null, console.error.bind(console));
+</script>
+<!-- endbuild -->
+<!-- build:js src/bundle.js -->
+<script src=""></script>
+<!-- endbuild -->
