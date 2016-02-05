@@ -1,6 +1,6 @@
 {
   "name": "tdillon.github.io",
-  "description": "Mindless Drone Software",
+  "description": "Mindless Drone Software - Developement Procedure:   1) checkout   2) npm i   3) make changes   4) npm run build   5) checkin",
   "version": "1.0.0",
   "main": "build.js",
   "scripts": {
