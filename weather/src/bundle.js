@@ -13414,7 +13414,7 @@ $__System.register("94", [], function(exports_1) {
         Object.defineProperty(Day.prototype, "humidity", {
           get: function() {
             return {
-              x: this.xLeft,
+              x: this.xLeft + (this.xRight - this.xLeft) / 2,
               y: this.yTop + (1 - this.data.humidity) * this.dayHeight
             };
           },
@@ -13424,7 +13424,7 @@ $__System.register("94", [], function(exports_1) {
         Object.defineProperty(Day.prototype, "visibility", {
           get: function() {
             return {
-              x: this.xLeft,
+              x: this.xLeft + (this.xRight - this.xLeft) / 2,
               y: this.yTop + (10 - this.data.visibility) * this.dayHeight * .1
             };
           },
@@ -13434,7 +13434,7 @@ $__System.register("94", [], function(exports_1) {
         Object.defineProperty(Day.prototype, "dewPoint", {
           get: function() {
             return {
-              x: this.xLeft,
+              x: this.xLeft + (this.xRight - this.xLeft) / 2,
               y: this.yTop + (this.ranges.temperature.max - this.data.dewPoint) * this.unitsPerDegree
             };
           },
@@ -13444,7 +13444,7 @@ $__System.register("94", [], function(exports_1) {
         Object.defineProperty(Day.prototype, "windSpeed", {
           get: function() {
             return {
-              x: this.xLeft,
+              x: this.xLeft + (this.xRight - this.xLeft) / 2,
               y: this.yTop + (this.ranges.windSpeed.max - this.data.windSpeed) * (this.dayHeight / this.ranges.windSpeed.max)
             };
           },
@@ -13454,7 +13454,7 @@ $__System.register("94", [], function(exports_1) {
         Object.defineProperty(Day.prototype, "ozone", {
           get: function() {
             return {
-              x: this.xLeft,
+              x: this.xLeft + (this.xRight - this.xLeft) / 2,
               y: this.yTop + (this.ranges.ozone.max - this.data.ozone) * (this.dayHeight / (this.ranges.ozone.max - this.ranges.ozone.min))
             };
           },
@@ -13464,7 +13464,7 @@ $__System.register("94", [], function(exports_1) {
         Object.defineProperty(Day.prototype, "pressure", {
           get: function() {
             return {
-              x: this.xLeft,
+              x: this.xLeft + (this.xRight - this.xLeft) / 2,
               y: this.yTop + (this.ranges.pressure.max - this.data.pressure) * (this.dayHeight / (this.ranges.pressure.max - this.ranges.pressure.min))
             };
           },
@@ -13474,7 +13474,7 @@ $__System.register("94", [], function(exports_1) {
         Object.defineProperty(Day.prototype, "apparentTemperature", {
           get: function() {
             return {
-              x: this.xLeft,
+              x: this.xLeft + (this.xRight - this.xLeft) / 2,
               y: this.yTop + (this.ranges.temperature.max - this.data.apparentTemperature) * this.unitsPerDegree
             };
           },
@@ -13484,7 +13484,7 @@ $__System.register("94", [], function(exports_1) {
         Object.defineProperty(Day.prototype, "temperature", {
           get: function() {
             return {
-              x: this.xLeft,
+              x: this.xLeft + (this.xRight - this.xLeft) / 2,
               y: this.yTop + (this.ranges.temperature.max - this.data.temperature) * this.unitsPerDegree
             };
           },
@@ -13494,7 +13494,7 @@ $__System.register("94", [], function(exports_1) {
         Object.defineProperty(Day.prototype, "precipProbability", {
           get: function() {
             return {
-              x: this.xLeft,
+              x: this.xLeft + (this.xRight - this.xLeft) / 2,
               y: this.yTop + (1 - this.data.precipProbability) * this.dayHeight
             };
           },
@@ -13504,7 +13504,7 @@ $__System.register("94", [], function(exports_1) {
         Object.defineProperty(Day.prototype, "precipAccumulation", {
           get: function() {
             return {
-              x: this.xLeft,
+              x: this.xLeft + (this.xRight - this.xLeft) / 2,
               y: this.yTop + (this.ranges.precipAccumulation.max - this.data.precipAccumulation) * (this.dayHeight / (this.ranges.precipAccumulation.max - this.ranges.precipAccumulation.min))
             };
           },
@@ -13781,6 +13781,38 @@ $__System.register("97", [], function(exports_1) {
           ctx.fillStyle = color;
           ctx.beginPath();
           ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+          ctx.closePath();
+          ctx.fill();
+        };
+        DotDrawer.wind = function(ctx, x, y, r, color, windBearing) {
+          var pointAngleDeg = (windBearing + 180) % 360;
+          var pointAngle = pointAngleDeg * Math.PI / 180;
+          var tailAngle = 60;
+          var tailPercent = .6;
+          var secondAngle = ((pointAngleDeg + 90 + tailAngle) * Math.PI / 180) % (2 * Math.PI);
+          var thirdAngle = ((pointAngleDeg + 270 - tailAngle) * Math.PI / 180) % (2 * Math.PI);
+          var points = [{
+            x: x + r * Math.sin(pointAngle),
+            y: y - r * Math.cos(pointAngle)
+          }, {
+            x: x + r * Math.sin(secondAngle),
+            y: y - r * Math.cos(secondAngle)
+          }, {
+            x: x + (r * tailPercent) * Math.sin(windBearing * Math.PI / 180),
+            y: y - (r * tailPercent) * Math.cos(windBearing * Math.PI / 180)
+          }, {
+            x: x + r * Math.sin(thirdAngle),
+            y: y - r * Math.cos(thirdAngle)
+          }];
+          ctx.beginPath();
+          ctx.fillStyle = color;
+          ctx.moveTo(points[0].x, points[0].y);
+          for (var _i = 0,
+              points_1 = points; _i < points_1.length; _i++) {
+            var p = points_1[_i];
+            ctx.lineTo(p.x, p.y);
+          }
+          ctx.closePath();
           ctx.fill();
         };
         DotDrawer.moon = function(ctx, x, y, r, color, moonPhase) {
@@ -13824,6 +13856,7 @@ $__System.register("97", [], function(exports_1) {
             }
             ctx.arc(x, y, r, -Math.PI / 2, Math.PI / 2, false);
           }
+          ctx.closePath();
           ctx.fill();
         };
         return DotDrawer;
@@ -13925,7 +13958,7 @@ $__System.register("98", ["94", "99", "a", "95", "96", "97"], function(exports_1
           }
           var pxPerMPH = graphHeight / ranges.windSpeed.max;
           for (var i = 1; i <= Math.floor(ranges.windSpeed.max); ++i) {
-            this.ctx.fillText(i.toString(), widgetWidth - maxTempTextWidth / 2, PADDING.top + (ranges.windSpeed.max - i) * pxPerMPH, maxTempTextWidth);
+            this.ctx.fillText(i.toString(), widgetWidth - 2 * maxTempTextWidth / 2, PADDING.top + (ranges.windSpeed.max - i) * pxPerMPH, maxTempTextWidth);
           }
           var yesterday,
               today;
@@ -13954,11 +13987,14 @@ $__System.register("98", ["94", "99", "a", "95", "96", "97"], function(exports_1
                 _a = this.config.options; _i < _a.length; _i++) {
               var o = _a[_i];
               var c = this.config[o.title];
-              var s = new SegmentGeometry_1.SegmentGeometry(c, this.config.global, (yesterday ? yesterday[o.title].x : null), (yesterday ? yesterday[o.title].y : null), today[o.title].x, today[o.title].y);
               if ((c.show.global && this.config.global.show.value) || (!c.show.global && c.show.value)) {
+                var s = new SegmentGeometry_1.SegmentGeometry(c, this.config.global, (yesterday ? yesterday[o.title].x : null), (yesterday ? yesterday[o.title].y : null), today[o.title].x, today[o.title].y);
                 switch (o.title) {
                   case 'moon':
                     DotDrawer_1.DotDrawer.moon(this.ctx, today[o.title].x, today[o.title].y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), (c.dot.color.global ? this.config.global.dot.color.value.rgba : c.dot.color.value.rgba), d.moonPhase);
+                    break;
+                  case 'windSpeed':
+                    DotDrawer_1.DotDrawer.wind(this.ctx, today[o.title].x, today[o.title].y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), (c.dot.color.global ? this.config.global.dot.color.value.rgba : c.dot.color.value.rgba), d.windBearing);
                     break;
                   default:
                     DotDrawer_1.DotDrawer.simple(this.ctx, today[o.title].x, today[o.title].y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), (c.dot.color.global ? this.config.global.dot.color.value.rgba : c.dot.color.value.rgba));
@@ -13969,6 +14005,7 @@ $__System.register("98", ["94", "99", "a", "95", "96", "97"], function(exports_1
                   this.ctx.arc(s.start.point.x, s.start.point.y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), s.start.from, s.start.to, false);
                   this.ctx.arc(s.end.point.x, s.end.point.y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), s.end.from, s.end.to, false);
                   this.ctx.fill();
+                  this.ctx.closePath();
                 }
               }
             }
@@ -14028,7 +14065,8 @@ $__System.register("9a", ["a", "9b"], function(exports_1) {
         __decorate([core_1.Input(), __metadata('design:type', Object)], ColorComponent.prototype, "showalpha", void 0);
         ColorComponent = __decorate([core_1.Component({
           selector: 'color',
-          template: "\n  <div class=\"panel panel-default\">\n    <div class=\"panel-heading\" (click)=\"show= !show\">\n      <span [class.glyphicon-collapse-up]=\"show\" class=\"glyphicon glyphicon-collapse-down\"></span>\n      {{title}}:\n      <span [ngSwitch]=\"showalpha\">\n        <template [ngSwitchWhen]=\"true\">{{color.rgba}}</template>\n        <template [ngSwitchWhen]=\"false\">{{color.rgb}}</template>\n      </span>\n    </div>\n    <div class=\"panel-body\" [class.hide]=\"!show\">\n      <div class=form-group>\n        <label>Red: {{color.r}}</label>\n        <input #red (input)=\"refresh(color.r = red.value * 1)\" [value]=color.r [disabled]=disabled type=range min=0 max=255 step=1 class=form-control>\n      </div>\n      <div class=form-group>\n        <label>Green: {{color.g}}</label>\n        <input #green (input)=\"refresh(color.g = green.value * 1)\" [value]=color.g [disabled]=disabled type=range min=0 max=255 step=1 class=form-control>\n      </div>\n      <div class=form-group>\n        <label>Blue: {{color.b}}</label>\n        <input #blue (input)=\"refresh(color.b = blue.value * 1)\" [value]=color.b [disabled]=disabled type=range min=0 max=255 step=1 class=form-control>\n      </div>\n      <div class=form-group *ngIf=\"showalpha\">\n        <label>Alpha: {{color.a}}</label>\n        <input #alpha (input)=\"refresh(color.a = alpha.value * 1)\" [value]=color.a [disabled]=disabled type=range min=0 max=1 step=\".1\" class=form-control>\n      </div>\n    </div>\n  </div>\n  "
+          template: "\n  <div class=\"panel panel-default\">\n    <div class=\"panel-heading\" (click)=\"show= !show\">\n      <span [class.down]=\"!show\" [class.up]=\"show\"></span>\n      {{title}}:\n      <span [ngSwitch]=\"showalpha\">\n        <template [ngSwitchWhen]=\"true\">{{color.rgba}}</template>\n        <template [ngSwitchWhen]=\"false\">{{color.rgb}}</template>\n      </span>\n    </div>\n    <div class=\"panel-body\" [class.hide]=\"!show\">\n      <div class=\"form-group row\">\n        <div class=col-xs-4>Red: {{color.r}}</div>\n        <div class=col-xs-8><input #red (input)=\"refresh(color.r = red.value * 1)\" [value]=color.r [disabled]=disabled type=range min=0 max=255 step=1 class=form-control></div>\n      </div>\n      <div class=\"form-group row\">\n        <div class=col-xs-4>Green: {{color.g}}</div>\n        <div class=col-xs-8><input #green (input)=\"refresh(color.g = green.value * 1)\" [value]=color.g [disabled]=disabled type=range min=0 max=255 step=1 class=form-control></div>\n      </div>\n      <div class=\"form-group row\">\n        <div class=col-xs-4>Blue: {{color.b}}</div>\n        <div class=col-xs-8><input #blue (input)=\"refresh(color.b = blue.value * 1)\" [value]=color.b [disabled]=disabled type=range min=0 max=255 step=1 class=form-control></div>\n      </div>\n      <div class=\"form-group row\" *ngIf=\"showalpha\">\n        <div class=col-xs-4>Alpha: {{color.a}}</div>\n        <div class=col-xs-8><input #alpha (input)=\"refresh(color.a = alpha.value * 1)\" [value]=color.a [disabled]=disabled type=range min=0 max=1 step=\".1\" class=form-control></div>\n      </div>\n    </div>\n  </div>\n  ",
+          styleUrls: ['src/arrows.css']
         }), __metadata('design:paramtypes', [])], ColorComponent);
         return ColorComponent;
       }());

@@ -86,7 +86,7 @@ export class Graph {
     //TODO draw windSpeed scale!!!
     const pxPerMPH = graphHeight / ranges.windSpeed.max;
     for (let i = 1; i <= Math.floor(ranges.windSpeed.max); ++i) {
-      this.ctx.fillText(i.toString(), widgetWidth - maxTempTextWidth / 2, PADDING.top + (ranges.windSpeed.max - i) * pxPerMPH, maxTempTextWidth);
+      this.ctx.fillText(i.toString(), widgetWidth - 2 * maxTempTextWidth / 2, PADDING.top + (ranges.windSpeed.max - i) * pxPerMPH, maxTempTextWidth);
     }
 
     //TODO other scales, how to generalize them? how to show them?
@@ -159,11 +159,15 @@ export class Graph {
 
       for (let o of this.config.options) {
         let c = <ConfigOption>this.config[o.title];
-        let s = new SegmentGeometry(c, this.config.global, (yesterday ? yesterday[o.title].x : null), (yesterday ? yesterday[o.title].y : null), today[o.title].x, today[o.title].y);
         if ((c.show.global && this.config.global.show.value) || (!c.show.global && c.show.value)) {
+          let s = new SegmentGeometry(c, this.config.global, (yesterday ? yesterday[o.title].x : null), (yesterday ? yesterday[o.title].y : null), today[o.title].x, today[o.title].y);
+
           switch (o.title) {
             case 'moon':
               DotDrawer.moon(this.ctx, today[o.title].x, today[o.title].y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), (c.dot.color.global ? this.config.global.dot.color.value.rgba : c.dot.color.value.rgba), d.moonPhase);
+              break;
+            case 'windSpeed':
+              DotDrawer.wind(this.ctx, today[o.title].x, today[o.title].y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), (c.dot.color.global ? this.config.global.dot.color.value.rgba : c.dot.color.value.rgba), d.windBearing);
               break;
             default:
               DotDrawer.simple(this.ctx, today[o.title].x, today[o.title].y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), (c.dot.color.global ? this.config.global.dot.color.value.rgba : c.dot.color.value.rgba));
@@ -175,6 +179,7 @@ export class Graph {
             this.ctx.arc(s.start.point.x, s.start.point.y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), s.start.from, s.start.to, false);
             this.ctx.arc(s.end.point.x, s.end.point.y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), s.end.from, s.end.to, false);
             this.ctx.fill();
+            this.ctx.closePath();
           }
         }
       }

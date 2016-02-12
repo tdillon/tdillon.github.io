@@ -5,6 +5,34 @@ export class DotDrawer {
     ctx.fillStyle = color;
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+
+  static wind(ctx: CanvasRenderingContext2D, x: number, y: number, r: number, color: string, windBearing: number) {
+    //DotDrawer.simple(ctx, x, y, r, color);  //TODO just testing, remove me.
+
+    let pointAngleDeg = (windBearing + 180) % 360;
+    let pointAngle = pointAngleDeg * Math.PI / 180;
+    let tailAngle = 60;
+    let tailPercent = .6;
+    let secondAngle = ((pointAngleDeg + 90 + tailAngle) * Math.PI / 180) % (2 * Math.PI);
+    let thirdAngle = ((pointAngleDeg + 270 - tailAngle) * Math.PI / 180) % (2 * Math.PI);
+    let points = [
+      { x: x + r * Math.sin(pointAngle), y: y - r * Math.cos(pointAngle) },
+      { x: x + r * Math.sin(secondAngle), y: y - r * Math.cos(secondAngle) },
+      { x: x + (r * tailPercent) * Math.sin(windBearing * Math.PI / 180), y: y - (r * tailPercent) * Math.cos(windBearing * Math.PI / 180) },
+      { x: x + r * Math.sin(thirdAngle), y: y - r * Math.cos(thirdAngle) }
+    ];
+
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let p of points) {
+      ctx.lineTo(p.x, p.y);
+    }
+    ctx.closePath();
     ctx.fill();
   }
 
@@ -54,6 +82,7 @@ export class DotDrawer {
       ctx.arc(x, y, r, -Math.PI / 2, Math.PI / 2, false);
     }
 
+    ctx.closePath();
     ctx.fill();
   }
 }
