@@ -1,3 +1,4 @@
+import {Theme} from "./Theme.interface";
 import {DataBlock} from "./forecast.io.interface";
 import {ConfigService} from "./config.service";
 
@@ -12,14 +13,14 @@ export class Ranges {
   maxWindSpeed:number;
   maxPrecipAccumulation:number;
 
-  constructor(db:DataBlock, config:ConfigService) {
+  constructor(db:DataBlock, config:Theme) {
     this.minTemp = this.minOzone = this.minPressure = Number.MAX_SAFE_INTEGER;
     this.maxTemp = this.maxOzone = this.maxPressure = this.maxWindSpeed = this.maxPrecipAccumulation = Number.MIN_SAFE_INTEGER;
     let temperatureOptions = ['temperatureMax', 'temperatureMin', 'dewPoint', 'apparentTemperatureMax', 'apparentTemperatureMin', 'apparentTemperature', 'temperature'];
 
     for (let d of db.data) {
       for (let t of temperatureOptions) {
-        if ((!config.item(t).show.global && config.item(t).show.value) || (config.item(t).show.global && config.global.show.value)) {
+        if (config.options.some(o => o.title === t)) {
           if (d[t] > this.maxTemp) {
             this.maxTemp = d[t];
           }

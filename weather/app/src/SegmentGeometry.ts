@@ -1,17 +1,17 @@
-import {ConfigOption} from "./config.service";
 import {EndPoint} from "./EndPoint.interface";
+import {ConfigOption, GlobalOptions} from "./Option.interface"
 
 export class SegmentGeometry {
   private _length:number = 0;
   private _start:EndPoint;
   private _end:EndPoint;
 
-  constructor(private config:ConfigOption, private globals:ConfigOption, private x1:number, private y1:number, private x2:number, private y2:number) {
+  constructor(private config:ConfigOption, private globals:GlobalOptions, private x1:number, private y1:number, private x2:number, private y2:number) {
 
     if (x1 !== null && y1 !== null && x2 !== null && y2 !== null) {
-      let angle = (config.segment.angle.global ? globals.segment.angle.value : config.segment.angle.value);
-      let padding = (config.segment.padding.global ? globals.segment.padding.value : config.segment.padding.value);
-      let radius = (config.dot.radius.global ? globals.dot.radius.value : config.dot.radius.value);
+      let angle = (config.segment.angle.global ? globals.segment.angle : config.segment.angle.value);
+      let padding = (config.segment.padding.global ? globals.segment.padding : config.segment.padding.value);
+      let radius = (config.dot.radius.global ? globals.dot.radius : config.dot.radius.value);
       let prettyAngle = Math.atan((y1 - y2) / (x1 - x2));
       let prettyAngleDegree = prettyAngle * 180 / Math.PI;
       let prettyShift = (prettyAngle < 0 ? 1 : -1);  //the X/Y values shift depending upon the slope

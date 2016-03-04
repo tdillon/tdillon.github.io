@@ -1,115 +1,68 @@
-import {Injectable} from "angular2/core";
-import {Color} from "./Color";
+import {Theme} from "./Theme.interface";
+import {Injectable} from "angular2/core"
+import {Color} from "./Color"
+import {Http} from 'angular2/http'
+import {Observable} from 'rxjs/Observable'
+import {Observer} from 'rxjs/Observer'
+import 'rxjs/add/operator/map'
 
-export interface ConfigOption {
-  title: string,
-  type?: string,
-  show: {
-    global?: boolean,
-    value: boolean
-  },
-  dot: {
-    color: {
-      global?: boolean,
-      value: Color
-    },
-    radius: {
-      global?: boolean,
-      value: number
-    }
-  },
-  segment: {
-    show: {
-      global?: boolean,
-      value: boolean,
-    }
-    color: {
-      global?: boolean,
-      value: Color
-    },
-    angle: {
-      global?: boolean,
-      value: number
-    },
-    padding: {
-      global?: boolean,
-      value: number
-    }
-  }
-}
+
+//TODO WIP persist to local storage!!!!
 
 
 @Injectable()
 export class ConfigService {
-  public options: Array<ConfigOption> = [];
-  _global: ConfigOption;
+  private _observer: Observer<Theme>;
 
-  private _optNames = ['moon', 'humidity', 'visibility', 'dewPoint', 'apparentTemperatureMax', 'apparentTemperatureMin', 'temperatureMin', 'temperatureMax', 'windSpeed', 'ozone', 'pressure', 'apparentTemperature', 'temperature', 'precipProbability', 'precipAccumulation'];
+  constructor(private _http: Http) {
+  }
 
-  public daylight = { color: new Color(0, 168, 255), show: true };
-
-  constructor() {
-    this._global = {
-      title: 'Global',
-      show: { value: false },
-      type: 'h',
-      dot: {
-        color: { value: Color.white },
-        radius: { value: 5 }
-      },
-      segment: {
-        show: { value: true },
-        color: { value: Color.whiteFifty },
-        angle: { value: 40 },
-        padding: { value: 6 }
-      }
-    };
-
-    for (let o of this._optNames) {
-      this.options.push(this[o] = {
-        title: o,
-        show: {
-          global: true,
-          value: true
-        },
-        dot: {
-          color: {
-            global: true,
-            value: Color.white
-          },
-          radius: {
-            global: true,
-            value: 3
-          }
-        },
-        segment: {
-          show: {
-            global: true,
-            value: true
-          },
-          color: {
-            global: true,
-            value: Color.white
-          },
-          angle: {
-            global: true,
-            value: 5
-          },
-          padding: {
-            global: true,
-            value: 5
-          }
-        }
-      });
+  private deserializeColors(obj: Object) {
+    if (typeof obj !== 'object') {
+      return;
     }
+
+    Object.keys(obj).forEach(key => {
+      if (key === 'color' || key === 'daylight') {
+        if (obj[key].hasOwnProperty('value')) {
+          obj[key].value = Color.getColor(obj[key].value);
+        } else {
+          obj[key] = Color.getColor(obj[key]);
+        }
+      } else {
+        this.deserializeColors(obj[key]);
+      }
+    });
   }
 
-  item(name: string): ConfigOption {
-    return this[name];
+  get themes(): Observable<Theme> {
+    //TODO cache themes?
+
+    return new Observable((observer: Observer<Theme>) => {
+      this._observer = observer;
+
+      this._http.get('preset-themes.json').map(res => {
+        var themes = <Theme[]>(res.json());
+        for (let t of themes) {
+          this.deserializeColors(t);
+        }
+        return themes;
+      }).subscribe(ta => ta.forEach(t => this._observer.next(t)));
+
+    });
+
+    // return this._http.get('preset-themes.json').map(res => {
+    //   var themes = <Theme[]>(res.json());
+    //   for (let t of themes) {
+    //     this.deserializeColors(t);
+    //   }
+    //   return themes;
+    // });
   }
 
-  get global() {
-    return this._global;
+  save(theme: Theme) {
+    //TODO add theme to 'custom' theme repo (localStorage or app engine, etc.).
+    this._observer.next(theme);
   }
 
   /**
@@ -118,15 +71,18 @@ export class ConfigService {
    * @returns {Number|number} The largest radius of the any dot that is shown.
    */
   get maxDotRadius() {
-    this.global.dot.radius.value *= 1;
-    let max = this.global.dot.radius.value;
+    //TODO fix to use new way
+    let max = 10;
 
-    for (let o of this.options) {
-      o.dot.radius.value *= 1;
-      if ((o.show.global && this.global.show.value || (!o.show.global && o.show.value)) && !o.dot.radius.global && o.dot.radius.value > max) {
-        max = o.dot.radius.value;
-      }
-    }
+    // this.global.dot.radius.value *= 1;
+    // let max = this.global.dot.radius.value;
+    //
+    // for (let o of this.options) {
+    //   o.dot.radius.value *= 1;
+    //   if ((o.show.global && this.global.show.value || (!o.show.global && o.show.value)) && !o.dot.radius.global && o.dot.radius.value > max) {
+    //     max = o.dot.radius.value;
+    //   }
+    // }
 
     return max;
   }

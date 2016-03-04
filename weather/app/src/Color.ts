@@ -1,5 +1,5 @@
 export class Color {
-  constructor(public r:number, public g:number, public b:number, public a?:number) {
+  constructor(public r: number, public g: number, public b: number, public a?: number) {
   }
 
   get rgba() {
@@ -14,6 +14,9 @@ export class Color {
     return new Color(255, 255, 255, 1);
   }
 
+  static getColor(c: { r: number, g: number, b: number, a?: number }): Color {
+    return new Color(c.r, c.g, c.b, c.a);
+  }
 
   static get whiteFifty() {
     return new Color(255, 255, 255, .5);

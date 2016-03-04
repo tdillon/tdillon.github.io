@@ -1,28 +1,40 @@
+import {WidgetType} from "./WidgetType";
+import {Theme} from "./Theme.interface";
 import {DataBlock, DataPoint, ForecastIO} from './forecast.io.interface';
 import {Day} from "./Day";
-import {ConfigService, ConfigOption} from "./config.service";
-import {Injectable} from "angular2/core";
+import {ConfigService} from "./config.service";
+import {Component, Input, AfterViewInit, DoCheck} from "angular2/core";
 import {SegmentGeometry} from "./SegmentGeometry";
 import {Ranges} from "./Ranges";
 import {DotDrawer} from './DotDrawer'
 
 
-@Injectable()
-export class Graph {
+@Component({
+  selector: 'widget-display',
+  template: `
+    <canvas></canvas>
+  `
+})
+export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
-  data: ForecastIO;
+  @Input() data: ForecastIO;
   /** width to height */
   widgetRatio = 2;
+  @Input() theme: Theme;
 
-  constructor(private config: ConfigService) {
-  }
-
-  init() {
+  ngAfterViewInit() {
     this.canvas = <HTMLCanvasElement>document.querySelector('canvas');
     this.ctx = this.canvas.getContext('2d');
     this.canvas.height = document.documentElement.clientHeight;
     this.canvas.width = document.documentElement.clientWidth;
+  }
+
+  ngDoCheck() {
+    //TODO how else can i get notified if this.theme.XXX has changed?, this hits too often
+    if (this.data && this.theme) {
+      this.render();
+    }
   }
 
   render() {
@@ -43,8 +55,9 @@ export class Graph {
 
     let PADDING = {
       left: maxTempTextWidth,
-      top: this.config.maxDotRadius,
-      right: this.config.maxDotRadius,
+      // top: this.config.maxDotRadius,  TODO
+      // right: this.config.maxDotRadius,  TODO
+      top: 0, right: 0,
       bottom: fontSize
     };  //TODO account for 'time bar', 'temp bar', and dot radius
 
@@ -63,8 +76,8 @@ export class Graph {
     this.ctx.fillRect(PADDING.left, PADDING.top, graphWidth, graphHeight);
 
 
-    let db = (this.config.global.type === 'd' ? this.data.daily : this.data.hourly);
-    let ranges = new Ranges(db, this.config);
+    let db = (this.theme.widgetType === WidgetType.Daily ? this.data.daily : this.data.hourly);
+    let ranges = new Ranges(db, this.theme);
 
 
     this.ctx.textAlign = 'center';
@@ -97,20 +110,25 @@ export class Graph {
 
     for (let i = 0, d: DataPoint; d = db.data[i]; ++i) {
       yesterday = today;
-      today = new Day(d, ranges, PADDING.left + i * (this.config.global.type === 'h' ? hourWidth : dayWidth), PADDING.left + (i + 1) * (this.config.global.type === 'h' ? hourWidth : dayWidth), PADDING.top, PADDING.top + graphHeight);  //TODO change with padding
+      today = new Day(d, ranges, PADDING.left + i * (this.theme.widgetType === WidgetType.Hourly ? hourWidth : dayWidth), PADDING.left + (i + 1) * (this.theme.widgetType === WidgetType.Hourly ? hourWidth : dayWidth), PADDING.top, PADDING.top + graphHeight);  //TODO change with padding
 
       //Daylight bars
-      if (this.config.daylight.show) {
-        this.config.daylight.color.a = d.cloudCover;
-        this.ctx.fillStyle = this.config.daylight.color.rgba;
-        this.ctx.fillRect(today.sunriseX, today.sunTop, today.sunWidth, today.sunHeight);
+      if (this.theme.daylight) {
+        this.theme.daylight.a = 1 - d.cloudCover;
+        this.ctx.fillStyle = this.theme.daylight.rgba;
+        if (this.theme.widgetType === WidgetType.Daily) {
+          this.ctx.fillRect(today.sunriseX, today.sunTop, today.sunWidth, today.sunHeight);
+        } else {
+          //TODO draw on 'time bar'.  Signify daytime vs nighttime.
+          this.ctx.fillRect(today.xLeft, today.sunTop, hourWidth, today.sunHeight);
+        }
       }
 
       //draw times
       this.ctx.fillStyle = '#fff';
       this.ctx.textBaseline = 'bottom';
       this.ctx.textAlign = 'center';
-      if (this.config.global.type === 'h') {
+      if (this.theme.widgetType === WidgetType.Hourly) {
         let day = new Date(d.time * 1000);
         let hour = day.getHours();
         if (hour % 4 === 0) {
@@ -124,15 +142,16 @@ export class Graph {
        * TODO:MainGraph
        * Padding: we are using the radius of the largest shown dot for top and right. do we care about the case where that large dot is not near the top or right?  i.e., do we shift the padding depending upon the nearest dot to the edge?
        * Padding: what if max dot radius is larger then 'time bar' or 'temp bar'?
-       * Draw invert the order of the 2 for loops so that entire lines are drawn at once. this will allow for depth of lines to be set
-       *
-       * TODO:Hourly
-       * Moon: draw moon on hourly at midnight. are their any other daily options that we want to show on hourly?
+       * IS THIS NECESSARY?  FIND AN EXAMPLE WHERE IT MATTERS -> Draw invert the order of the 2 for loops so that entire lines are drawn at once. this will allow for depth of lines to be set
        *
        * TODO:Dots
-       * Wind Speed: direction
-       * Moon: draw icon as moon phase. how to abstract that out for others? e.g., rain drops, or snow flakes, or visibility eye?
-       * PrecipProbability: i don't want to show a dot/segment if it is 0. Could that be the case for other options?
+       * Rain, Sleet, Snow, Hail icons for PrecipProbability
+       * visibility icon
+       * pressure icon
+       * hummidity icon
+       *
+       * TODO segments
+       * Color precipProbability segments for precipIntensiy
        *
        * TODO Work List:
        * Toggle between daily and hourly.  work in progress figuring how hiding and showing of config options
@@ -150,34 +169,34 @@ export class Graph {
        * Ozone: what scale? same as wind speed questions.
        * Pressure: what scale? same as wind speed questions.
        *
-       *
        * TODO:Themes
        * Add 'themes'
        * Add save/edit/delete theme capability
        *
        */
 
-      for (let o of this.config.options) {
-        let c = <ConfigOption>this.config[o.title];
-        if ((c.show.global && this.config.global.show.value) || (!c.show.global && c.show.value)) {
-          let s = new SegmentGeometry(c, this.config.global, (yesterday ? yesterday[o.title].x : null), (yesterday ? yesterday[o.title].y : null), today[o.title].x, today[o.title].y);
+      for (let c of this.theme.options) {
+        //Don't show dots/segments for 0% precipitation probability
+        if (!(c.title === 'precipProbability' && d.precipProbability === 0)) {
+          let s = new SegmentGeometry(c, this.theme.globals, (yesterday ? yesterday[c.title].x : null), (yesterday ? yesterday[c.title].y : null), today[c.title].x, today[c.title].y);
 
-          switch (o.title) {
+          switch (c.title) {
             case 'moon':
-              DotDrawer.moon(this.ctx, today[o.title].x, today[o.title].y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), (c.dot.color.global ? this.config.global.dot.color.value.rgba : c.dot.color.value.rgba), d.moonPhase);
+              DotDrawer.moon(this.ctx, today[c.title].x, today[c.title].y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), (c.dot.color.global ? this.theme.globals.dot.color.rgba : c.dot.color.value.rgba), d.moonPhase);
               break;
             case 'windSpeed':
-              DotDrawer.wind(this.ctx, today[o.title].x, today[o.title].y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), (c.dot.color.global ? this.config.global.dot.color.value.rgba : c.dot.color.value.rgba), d.windBearing);
+              DotDrawer.wind(this.ctx, today[c.title].x, today[c.title].y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), (c.dot.color.global ? this.theme.globals.dot.color.rgba : c.dot.color.value.rgba), d.windBearing);
               break;
             default:
-              DotDrawer.simple(this.ctx, today[o.title].x, today[o.title].y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), (c.dot.color.global ? this.config.global.dot.color.value.rgba : c.dot.color.value.rgba));
+              DotDrawer.simple(this.ctx, today[c.title].x, today[c.title].y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), (c.dot.color.global ? this.theme.globals.dot.color.rgba : c.dot.color.value.rgba));
           }
 
-          if ((c.segment.show.global ? this.config.global.segment.show.value : c.segment.show.value) && s.hasSegment) {
-            this.ctx.fillStyle = (c.segment.color.global ? this.config.global.segment.color.value.rgba : c.segment.color.value.rgba);
+          //Don't draw segment for precipProbability when yesterday was 0%.
+          if ((c.segment.show.global ? this.theme.globals.segment.show : c.segment.show.value) && s.hasSegment && !(c.title === 'precipProbability' && yesterday.data.precipProbability === 0)) {
+            this.ctx.fillStyle = (c.segment.color.global ? this.theme.globals.segment.color.rgba : c.segment.color.value.rgba);
             this.ctx.beginPath();
-            this.ctx.arc(s.start.point.x, s.start.point.y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), s.start.from, s.start.to, false);
-            this.ctx.arc(s.end.point.x, s.end.point.y, (c.dot.radius.global ? this.config.global.dot.radius.value : c.dot.radius.value), s.end.from, s.end.to, false);
+            this.ctx.arc(s.start.point.x, s.start.point.y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), s.start.from, s.start.to, false);
+            this.ctx.arc(s.end.point.x, s.end.point.y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), s.end.from, s.end.to, false);
             this.ctx.fill();
             this.ctx.closePath();
           }

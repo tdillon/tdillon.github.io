@@ -11,6 +11,7 @@ System.config({
     "angular2": "npm:angular2@2.0.0-beta.3",
     "es6-shim": "github:es-shims/es6-shim@0.34.2",
     "reflect-metadata": "npm:reflect-metadata@0.1.3",
+    "rxjs": "npm:rxjs@5.0.0-beta.0",
     "seven-segment": "npm:seven-segment@4.1.0",
     "zone.js": "npm:zone.js@0.5.13",
     "github:jspm/nodelibs-assert@0.1.0": {
