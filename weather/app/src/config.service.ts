@@ -41,7 +41,7 @@ export class ConfigService {
     return new Observable((observer: Observer<Theme>) => {
       this._observer = observer;
 
-      this._http.get('preset-themes.json').map(res => {
+      this._http.get('src/preset-themes.json').map(res => {
         var themes = <Theme[]>(res.json());
         for (let t of themes) {
           this.deserializeColors(t);

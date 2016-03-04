@@ -1,0 +1,149 @@
+[{
+    "name": "moon only hourly",
+    "themeType": 0,
+    "widgetType": 1,
+    "daylight": {
+      "r": 0,
+      "g": 255,
+      "b": 255
+    },
+    "globals": {
+      "dot": {
+        "color": {
+          "r": 0,
+          "g": 127,
+          "b": 255,
+          "a": 1
+        },
+        "radius": 5
+      },
+      "segment": {
+        "show": false,
+        "color": {
+          "r": 0,
+          "g": 127,
+          "b": 255,
+          "a": 0.5
+        },
+        "angle": 40,
+        "padding": 5
+      }
+    },
+    "options": [{
+      "title": "moon",
+      "dot": {
+        "color": {
+          "global": true,
+          "value": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1
+          }
+        },
+        "radius": {
+          "global": true,
+          "value": 3
+        }
+      },
+      "segment": {
+        "show": {
+          "global": true,
+          "value": true
+        },
+        "color": {
+          "global": true,
+          "value": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1
+          }
+        },
+        "angle": {
+          "global": true,
+          "value": 5
+        },
+        "padding": {
+          "global": true,
+          "value": 5
+        }
+      }
+    }]
+  },
+
+  {
+    "name": "moon only daily",
+    "themeType": 0,
+    "widgetType": 0,
+    "daylight": {
+      "r": 0,
+      "g": 127,
+      "b": 255
+    },
+    "globals": {
+      "dot": {
+        "color": {
+          "r": 0,
+          "g": 127,
+          "b": 255,
+          "a": 1
+        },
+        "radius": 5
+      },
+      "segment": {
+        "show": false,
+        "color": {
+          "r": 0,
+          "g": 127,
+          "b": 255,
+          "a": 1
+        },
+        "angle": 40,
+        "padding": 5
+      }
+    },
+    "options": [{
+      "title": "moon",
+      "dot": {
+        "color": {
+          "global": true,
+          "value": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1
+          }
+        },
+        "radius": {
+          "global": true,
+          "value": 3
+        }
+      },
+      "segment": {
+        "show": {
+          "global": true,
+          "value": true
+        },
+        "color": {
+          "global": true,
+          "value": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1
+          }
+        },
+        "angle": {
+          "global": true,
+          "value": 5
+        },
+        "padding": {
+          "global": true,
+          "value": 5
+        }
+      }
+    }]
+  }
+
+]

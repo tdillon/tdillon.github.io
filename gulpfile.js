@@ -13,7 +13,7 @@ gulp.task('useref:weather', ['clean:weather'], function() {
 });
 gulp.task('copy:weather', ['clean:weather'], function() {
   return gulp
-    .src(['weather/app/src/**/*.html', 'weather/app/src/**/*.css'])
+    .src(['weather/app/src/**/*.html', 'weather/app/src/**/*.css', 'weather/app/src/preset-themes.json'])
     .pipe(gulp.dest('weather/src'))
 });
 gulp.task('build:weather', ['useref:weather', 'copy:weather']);

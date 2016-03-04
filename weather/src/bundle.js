@@ -29829,7 +29829,7 @@ $__System.register("97", ["a", "93", "f9", "ab", "101"], function(exports_1, con
             var _this = this;
             return new Observable_1.Observable(function(observer) {
               _this._observer = observer;
-              _this._http.get('preset-themes.json').map(function(res) {
+              _this._http.get('src/preset-themes.json').map(function(res) {
                 var themes = (res.json());
                 for (var _i = 0,
                     themes_1 = themes; _i < themes_1.length; _i++) {
