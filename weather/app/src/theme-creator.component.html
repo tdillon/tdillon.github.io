@@ -1,76 +1,76 @@
 <input *ngIf="!addingNew" type=button value=New (click)="new()">
+<input type=button value="TODO Copy from Existing">
 <div *ngIf="addingNew">
-  <div>TODO</div>
-  <input type=text [(ngModel)]="theme.name" placeholder="Theme name" required>
+
+
+  <!-- WHERE DO I PUT SAVE AND CANCEL -->
   <input type=button value=Save (click)="save()">
   <input type=button value=Cancel (click)="addingNew = false">
 
 
+  <div class=list-group>
 
-  <div class="panel-heading" (click)="show= !show">
-    <span [class.down]="!show" [class.up]="show"></span> Global Default Settings
+
+    <!-- THEME NAME -->
+    <div [class.active]="showThemeName" class=list-group-item>
+      <div (click)="showThemeName = true">
+        <h4 class=list-group-item-heading>Theme Name</h4>
+        <p class=list-group-item-text><span [hidden]="theme.name">Enter the name of your theme.</span>{{theme.name}}</p>
+      </div>
+      <div [hidden]="!showThemeName">
+        <input class="form-control" type=text [(ngModel)]="theme.name" placeholder="Theme Name" required>
+        <input class="btn btn-success" type=button value=Save (click)="showThemeName = false">
+        <input class="btn btn-default" type=button value=Cancel (click)="showThemeName = false">
+      </div>
+    </div>
+
+
+    <!-- WIDGET TYPE -->
+    <div [class.active]="showWidgetType" class=list-group-item>
+      <div (click)="showWidgetType = true">
+        <h4 class=list-group-item-heading>Widget Type</h4>
+        <p class=list-group-item-text>{{WidgetType[theme.widgetType]}}</p>
+      </div>
+      <div [hidden]="!showWidgetType">
+        <div class=input-group>
+          <div class="radio">
+            <label>
+              <input type="radio" name="type" (change)="refresh(theme.widgetType = WidgetType.Hourly)" [checked]="theme.widgetType === WidgetType.Hourly" [value]="WidgetType.Hourly"> Hourly
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="type" (click)="refresh(theme.widgetType = WidgetType.Daily)" [checked]="theme.widgetType === WidgetType.Daily" [value]="WidgetType.Daily"> Daily
+            </label>
+          </div>
+        </div>
+        <div>
+          <input class="btn btn-success" type=button value=Done (click)="showWidgetType = false">
+          <input class="btn btn-default" type=button value=Cancel (click)="showWidgetType = false">
+        </div>
+      </div>
+    </div>
+
+
+    <div class=list-group-item>
+      <div (click)="showDefaultThemeSettings = true">
+        <h4 class=list-group-item-heading>Default Theme Settings</h4>
+        <p class=list-group-item-text>Click to set values that are used by default for dots and segments.</p>
+      </div>
+      <default-theme-settings (refreshed)="refresh()" [default]="theme.globals" [hidden]="!showDefaultThemeSettings"></default-theme-settings>
+    </div>
+
+
   </div>
-  <div class="panel-body" [class.hide]="!show">
-
-    <div class=row>
-      <div class=col-xs-5>Widget Type</div>
-      <div class=col-xs-7>
-        <div class="radio-inline">
-          <label>
-            <input type="radio" name="type" (change)="refresh(theme.widgetType = WidgetType.Hourly)" [checked]="theme.widgetType === WidgetType.Hourly" [value]="WidgetType.Hourly"> Hourly
-          </label>
-        </div>
-        <div class="radio-inline">
-          <label>
-            <input type="radio" name="type" (click)="refresh(theme.widgetType = WidgetType.Daily)" [checked]="theme.widgetType === WidgetType.Daily" [value]="WidgetType.Daily"> Daily
-          </label>
-        </div>
-      </div>
-    </div>
 
 
-    <div class="form-group form-inline row">
-      <div class=col-xs-5>Dot Radius: {{theme.globals.dot.radius}}</div>
-      <div class=col-xs-7>
-        <input #globalDotRadius (input)="refresh(theme.globals.dot.radius = globalDotRadius.value)" [value]=theme.globals.dot.radius type=range min=1 max=20 step=1 class=form-control>
-      </div>
-    </div>
-    <div class=form-group>
-      <color [color]="theme.globals.dot.color" (refreshed)="refresh(theme.globals.dot.color = $event)" [title]="'Dot Color'"></color>
-    </div>
-
-    <div class=row>
-      <div class=col-xs-5>Segment Visibility</div>
-      <div class="checkbox-inline col-xs-7">
-        <label>
-          <input type=checkbox #globalSegmentVisibility (change)="refresh(theme.globals.segment.show = globalSegmentVisibility.checked)" [checked]=theme.globals.segment.show> Show?
-        </label>
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <div class=col-xs-5>Segment Width Angle: {{theme.globals.segment.angle}}</div>
-      <div class=col-xs-7>
-        <input #gSegWidAng (input)="refresh(theme.globals.segment.angle = gSegWidAng.value)" [value]=theme.globals.segment.angle type=range min=0 max=90 step=1 class=form-control>
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class=col-xs-5>Segment Padding: {{theme.globals.segment.padding}}</div>
-      <div class=col-xs-7>
-        <input #gSegPad (input)="refresh(theme.globals.segment.padding = gSegPad.value)" [value]=theme.globals.segment.padding type=range min=0 max=10 step=1 class=form-control>
-      </div>
-    </div>
-    <div class="form-group">
-      <color [color]="theme.globals.segment.color" (refreshed)="refresh(theme.globals.segment.color = $event)" [title]="'Segment Color'"></color>
-    </div>
-
-    <!-- <div class="form-group row">
+  <!-- TODO Move this to the 'config' menu, i.e., with forecast.io stuff -->
+  <!-- <div class="form-group row">
       <div class=col-xs-5>Widget Dimension Ratio: {{graph.widgetRatio}}</div>
       <div class=col-xs-7>
         <input #gWidDimRat (input)="refresh(graph.widgetRatio = gWidDimRat.value)" [value]=graph.widgetRatio type=range min=".1" max=5 step=".2" class=form-control>
       </div>
     </div> -->
-  </div>
 
 
   <div class=btn-group style="margin:5px">

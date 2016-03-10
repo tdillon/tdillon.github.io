@@ -15,13 +15,12 @@ import {ConfigService} from "./config.service";
     <widget-display [theme]="currentTheme" [data]="data" (click)="showMenu = !showMenu"></widget-display>
     <header [class.hideMenu]="!showMenu">
 
-      <div class="btn-group">
-        <button type="button" class="btn btn-default" [class.active]="tab === 1" (click)="tab = 1">Themes</button>
-        <button type="button" class="btn btn-default" [class.active]="tab === 2" (click)="tab = 2">Theme Editor</button>
-        <button type="button" class="btn btn-default" [class.active]="tab === 3" (click)="tab = 3">Configuration</button>
-      </div>
+      <nav class="navbar navbar-light bg-faded">
+        Themes
+        <input type=button class="btn btn-default" value="New Theme" (click)="tab = 2">
+      </nav>
 
-      <theme-picker [hidden]="tab !== 1" (themePicked)="currentTheme = $event"></theme-picker>
+      <theme-picker [hidden]="tab && tab !== 1" (themePicked)="currentTheme = $event"></theme-picker>
       <theme-creator [hidden]="tab !== 2" (refreshed)="currentTheme = $event"></theme-creator>
       <div [hidden]="tab !== 3">
         Weather Data Last Retrieved: {{timestamp}}

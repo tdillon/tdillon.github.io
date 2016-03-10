@@ -1,0 +1,12 @@
+<div [class.active]="showPicker" class=list-group-item>
+  <div (click)="showPicker = true">
+    <h4 class=list-group-item-heading>{{title}}</h4>
+    <p class=list-group-item-text>{{value}}</p>
+  </div>
+  <div [hidden]="!showPicker">
+    <input #numberVal (input)="refresh(value = numberVal.value)" [value]="value" type=range [min]="min" [max]="max" [step]="step" class=form-control>
+
+    <input class="btn btn-success" type=button value=Done (click)="showPicker = false">
+    <input class="btn btn-default" type=button value=Cancel (click)="showPicker = false">
+  </div>
+</div>

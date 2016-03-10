@@ -1,0 +1,22 @@
+<div class=list-group>
+
+
+  <number-picker [title]="'Dot Radius'" [value]="default.dot.radius" (updated)="refresh(default.dot.radius = $event)" [min]="1" [max]="20" [step]="1"></number-picker>
+  <color [color]="default.dot.color" (refreshed)="refresh(default.dot.color = $event)" [title]="'Dot Color'"></color>
+
+  <div class=row>
+    <div class=col-xs-5>Segment Visibility</div>
+    <div class="checkbox-inline col-xs-7">
+      <label>
+        <input type=checkbox #globalSegmentVisibility (change)="refresh(default.segment.show = globalSegmentVisibility.checked)" [checked]=default.segment.show> Show?
+      </label>
+    </div>
+  </div>
+
+  <number-picker [title]="'Segment Width Angle'" [value]="default.segment.angle" (updated)="refresh(default.segment.angle = $event)" [min]="0" [max]="90" [step]="1"></number-picker>
+  <number-picker [title]="'Segment Padding'" [value]="default.segment.padding" (updated)="refresh(default.segment.padding = $event)" [min]="0" [max]="10" [step]="1"></number-picker>
+
+
+  <color [color]="default.segment.color" (refreshed)="refresh(default.segment.color = $event)" [title]="'Segment Color'"></color>
+
+</div>

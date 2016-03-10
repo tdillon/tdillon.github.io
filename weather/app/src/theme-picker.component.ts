@@ -17,7 +17,12 @@ export class ThemePickerComponent {
   current:Theme;
 
   constructor(_config: ConfigService) {
-    _config.themes.subscribe(t => this.themes.push(t));
+    _config.themes.subscribe(t => {
+      this.themes.push(t);
+      if (this.themes.length == 1) {
+        this.onSelect(this.themes[0]);
+      }
+    });
   }
 
   onSelect(theme:Theme){

@@ -1,3 +1,4 @@
+import {DefaultThemeSettingsComponent} from "./default-theme-settings.component";
 import {ColorComponent} from "./color.component";
 import {Color} from "./Color";
 import {Theme, ThemeType} from "./Theme.interface"
@@ -12,7 +13,7 @@ import {ConfigOption} from './Option.interface'
   selector: 'theme-creator',
   templateUrl: 'src/theme-creator.component.html',
   styleUrls: ['src/arrows.css'],
-  directives: [ColorComponent]
+  directives: [ColorComponent, DefaultThemeSettingsComponent]
 })
 export class ThemeCreatorComponent {
   @Output() refreshed: EventEmitter<Theme> = new EventEmitter();
