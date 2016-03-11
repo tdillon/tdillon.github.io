@@ -1,3 +1,4 @@
+import {BooleanPickerComponent} from "./boolean-picker.component";
 import {NumberPickerComponent} from "./number-picker.component";
 import {ColorComponent} from "./color.component";
 import {Theme} from "./Theme.interface";
@@ -9,7 +10,7 @@ import {Component, Output, Input, EventEmitter} from 'angular2/core';
 @Component({
   selector: 'default-theme-settings',
   templateUrl: `src/default-theme-settings.component.html`,
-  directives: [ColorComponent, NumberPickerComponent]
+  directives: [ColorComponent, NumberPickerComponent, BooleanPickerComponent]
 })
 export class DefaultThemeSettingsComponent {
   @Input() default: GlobalOptions;

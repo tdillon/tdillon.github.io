@@ -1,5 +1,4 @@
 import {Component, Output, EventEmitter, Input} from 'angular2/core';
-import {Color} from "./Color";
 
 
 @Component({
@@ -9,11 +8,11 @@ import {Color} from "./Color";
 export class NumberPickerComponent {
   @Output() updated: EventEmitter<number> = new EventEmitter();
 
-  @Input() title = 'TODO';
-  @Input() value = 0;
+  @Input() title: string;
   @Input() min = 1;
   @Input() max = 100;
   @Input() step = 1;
+  @Input() value = 0;
 
   constructor() {
   }
