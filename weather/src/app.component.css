@@ -1,39 +1,24 @@
 @media all and (orientation: portrait) {
-  header {
-    height: 50%;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    transform: translateY(0);
+  :host, weather-widget-number-one-prototype {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
-  header.hideMenu {
-    transform: translateY(200%);
+  widget-display {
+    order: 1;
+  }
+  header {
+    order: 2;
+    overflow-y: scroll;
   }
 }
 @media all and (orientation: landscape) {
-  header {
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 50%;
-    transform: translateX(0);
-  }
-  header.hideMenu {
-    transform: translateX(100%);
-  }
+  /* TODO landscape formating is not done */
 }
 header {
   font-family: Roboto, sans-serif;
-  z-index: 3;
   transition: transform .5s ease;
   color: #000;
   background: #DFDFDF;
-  position: fixed;
   padding: 16px;
-  overflow-y: auto;
-}
-canvas {
-  display: block;
-  margin: 0;
-  position: absolute;
 }

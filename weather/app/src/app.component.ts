@@ -15,13 +15,13 @@ import {ConfigService} from "./config.service";
     <widget-display [theme]="currentTheme" [data]="data" (click)="showMenu = !showMenu"></widget-display>
     <header [class.hideMenu]="!showMenu">
 
-      <nav class="navbar navbar-light bg-faded">
+      <nav [hidden]="tab !== 1" class="navbar navbar-light bg-faded">
         Themes
-        <input type=button class="btn btn-default" value="New Theme" (click)="tab = 2">
+        <input type=button class="btn btn-default" value="New Theme" (click)="createTheme()">
       </nav>
 
-      <theme-picker [hidden]="tab && tab !== 1" (themePicked)="currentTheme = $event"></theme-picker>
-      <theme-creator [hidden]="tab !== 2" (refreshed)="currentTheme = $event"></theme-creator>
+      <theme-picker [hidden]="tab !== 1" (themePicked)="currentTheme = $event"></theme-picker>
+      <theme-creator [hidden]="tab !== 2" (refreshed)="currentTheme = $event" (created)="themeCreated($event)" (canceled)="cancelThemeCreation()"></theme-creator>
       <div [hidden]="tab !== 3">
         Weather Data Last Retrieved: {{timestamp}}
         <forecast-io (refreshed)="newWeatherDataAvailable($event)"></forecast-io>
@@ -36,7 +36,9 @@ export class AppComponent implements AfterViewInit {
   timestamp = '';
   showMenu = false;
   currentTheme: Theme;
+  currentThemeBeforeCreatingTheme: Theme;//TODO name, essentially a holder for the selected theme prior to creating a theme, set back to this theme on cancel
   data: ForecastIO;
+  tab = 1;//keeps track of state of app, rename and maybe use an enum
 
   constructor(private _weatherService: WeatherService, public config: ConfigService) {
   }
@@ -59,6 +61,21 @@ export class AppComponent implements AfterViewInit {
       this.data = weather;
       this.draw();
     }, () => console.log('Data is not set, configure forecast io info!!!'));
+  }
+
+  createTheme() {
+    this.tab = 2;
+    this.currentThemeBeforeCreatingTheme = this.currentTheme;
+  }
+
+  cancelThemeCreation() {
+    this.currentTheme = this.currentThemeBeforeCreatingTheme;
+    this.tab = 1;
+  }
+
+  themeCreated(theme :Theme){
+    this.currentTheme = theme;
+    this.tab = 1;
   }
 
   draw() {

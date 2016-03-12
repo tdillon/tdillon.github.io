@@ -1,4 +1,4 @@
-<div [class.active]="showPicker" class=list-group-item>
+<div [class.active]="showPicker" [class.disabled]="disabled" class=list-group-item>
   <div (click)="showPicker = true">
     <h4 class=list-group-item-heading>{{title}}</h4>
     <p class=list-group-item-text>{{value}}</p>

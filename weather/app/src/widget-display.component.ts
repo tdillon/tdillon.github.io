@@ -26,8 +26,6 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
   ngAfterViewInit() {
     this.canvas = <HTMLCanvasElement>document.querySelector('canvas');
     this.ctx = this.canvas.getContext('2d');
-    this.canvas.height = document.documentElement.clientHeight;
-    this.canvas.width = document.documentElement.clientWidth;
   }
 
   ngDoCheck() {
@@ -40,8 +38,8 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
   render() {
     this.widgetRatio *= 1;
 
-    let widgetWidth = this.canvas.width;
-    let widgetHeight = widgetWidth / this.widgetRatio;;
+    let widgetWidth = this.canvas.width = document.documentElement.clientWidth;
+    let widgetHeight = this.canvas.height = widgetWidth / this.widgetRatio;;
     let fontSize = 12;
 
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

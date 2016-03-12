@@ -1,4 +1,5 @@
 import {DefaultThemeSettingsComponent} from "./default-theme-settings.component";
+import {WeatherPropertySettingsComponent} from "./weather-property-settings.component";
 import {ColorComponent} from "./color.component";
 import {Color} from "./Color";
 import {Theme, ThemeType} from "./Theme.interface"
@@ -6,6 +7,8 @@ import {WidgetType} from './WidgetType'
 import {ConfigService} from "./config.service"
 import {Component, Output, EventEmitter} from 'angular2/core'
 import {ConfigOption} from './Option.interface'
+import {WeatherPropertyPickerComponent} from './weather-property-picker.component'
+import {BooleanPickerComponent} from './boolean-picker.component'
 
 
 
@@ -13,10 +16,12 @@ import {ConfigOption} from './Option.interface'
   selector: 'theme-creator',
   templateUrl: 'src/theme-creator.component.html',
   styleUrls: ['src/arrows.css'],
-  directives: [ColorComponent, DefaultThemeSettingsComponent]
+  directives: [ColorComponent, DefaultThemeSettingsComponent, WeatherPropertyPickerComponent, BooleanPickerComponent, WeatherPropertySettingsComponent]
 })
 export class ThemeCreatorComponent {
+  @Output() created: EventEmitter<Theme> = new EventEmitter();
   @Output() refreshed: EventEmitter<Theme> = new EventEmitter();
+  @Output() canceled: EventEmitter<any> = new EventEmitter();
   theme: Theme;
   addingNew = false;
   WidgetType = WidgetType;
@@ -28,15 +33,15 @@ export class ThemeCreatorComponent {
     this.refresh();
   }
 
-  addDaylight() {
-    this.theme.daylight = Color.white;
+  updateDaylight(showDaylight: boolean) {
+    if (showDaylight) {
+      this.theme.daylight = Color.white;
+    } else {
+      delete this.theme.daylight;
+    }
     this.refresh();
   }
 
-  removeDaylight() {
-    delete this.theme.daylight;
-    this.refresh();
-  }
 
   resetTheme() {
     if (this.theme) {
@@ -113,6 +118,12 @@ export class ThemeCreatorComponent {
     //TODO validate this.theme
     this._config.save(this.theme);
     this.addingNew = false;
+    this.created.emit(this.theme);
+  }
+
+  cancel() {
+    this.addingNew = false;
+    this.canceled.emit(null);
   }
 
   new() {

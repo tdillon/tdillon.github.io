@@ -8,6 +8,7 @@ import {Component, Output, EventEmitter, Input} from 'angular2/core';
 export class BooleanPickerComponent {
   @Output() updated: EventEmitter<boolean> = new EventEmitter();
 
+  @Input() disabled = false;
   @Input() title: string;
   @Input() subtitle: string;
   @Input() value = false;

@@ -8,10 +8,10 @@ import {Color} from "./Color";
   styleUrls: ['src/arrows.css'],
 })
 export class ColorComponent {
-  @Output() refreshed:EventEmitter<Color> = new EventEmitter();
+  @Output() refreshed: EventEmitter<Color> = new EventEmitter();
 
   @Input() color = Color.white;
-  @Input() disabled:boolean = false;
+  @Input() disabled = false;
   @Input() title = 'Color';
   @Input() showalpha = true;
 

@@ -6,8 +6,8 @@ import {Component, Output, EventEmitter} from 'angular2/core';
 @Component({
   selector: 'theme-picker',
   template: `
-    <div class="list-group">
-      <input type=button [class.active]="t===current" class="list-group-item" *ngFor="#t of themes" (click)="onSelect(t)" [value]="t.name">
+    <div class="btn-group-vertical">
+      <input type=button [class.active]="t===current" class="btn btn-default" *ngFor="#t of themes" (click)="onSelect(t)" [value]="t.name">
     </div>
   `
 })

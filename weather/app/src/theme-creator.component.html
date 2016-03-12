@@ -1,11 +1,11 @@
 <input *ngIf="!addingNew" type=button value=New (click)="new()">
 <input type=button value="TODO Copy from Existing">
+<input type=button value=Cancel (click)="cancel()">
 <div *ngIf="addingNew">
 
 
   <!-- WHERE DO I PUT SAVE AND CANCEL -->
   <input type=button value=Save (click)="save()">
-  <input type=button value=Cancel (click)="addingNew = false">
 
 
   <div class=list-group>
@@ -52,6 +52,7 @@
     </div>
 
 
+    <!-- DEFAULT THEME SETTINGS -->
     <div class=list-group-item>
       <div (click)="showDefaultThemeSettings = true">
         <h4 class=list-group-item-heading>Default Theme Settings</h4>
@@ -72,25 +73,20 @@
       </div>
     </div> -->
 
-
-  <div class=btn-group style="margin:5px">
-    <input type=button class="btn btn-default" value=Daylight>
-    <input type=button class="btn btn-primary" value=+ (click)="addDaylight()" *ngIf="!theme.daylight">
-    <input type=button class="btn btn-danger" value=- (click)="removeDaylight()" *ngIf="theme.daylight">
-    <color *ngIf="theme.daylight" [color]="theme.daylight" (refreshed)="refresh(theme.daylight = $event)" [title]="'Daylight Color'" [showalpha]="false"></color>
-  </div>
-
-  <div>Theme Options:</div>
-  <div class=btn-group style="margin:5px" *ngFor="#opt of theme.options">
-    <input type=button class="btn btn-default" [value]="opt.title">
-    <input type=button class="btn btn-danger" value="-" (click)=remove(opt)>
-  </div>
+  <boolean-picker [title]="'Daylight Visibility'" [subtitle]="'Show daylight/cloud coverage?'" [value]="theme.daylight" (updated)="updateDaylight($event)"></boolean-picker>
+  <color *ngIf="theme.daylight" [color]="theme.daylight" [showalpha]="false" (refreshed)="refresh(theme.daylight = $event)" [title]="'Daylight Color'"></color>
 
 
-  <div>Available Options:</div>
-  <div class=btn-group style="margin:5px" *ngFor="#opt of availableOptions">
-    <input type=button class="btn btn-default" [value]="opt.title">
-    <input type=button class="btn btn-primary" value="+" (click)=add(opt)>
+  <weather-property-picker [properties]="theme.options" (refreshed)="refresh()"></weather-property-picker>
+
+  <div class=list-group *ngFor="#p of theme.options">
+    <div class=list-group-item>
+      <div (click)="showPropertySettings = true">
+        <h4 class=list-group-item-heading>{{p.title}}</h4>
+        <p class=list-group-item-text>Click to set values that are used.</p>
+      </div>
+      <weather-property-settings (refreshed)="refresh()" [default]="theme.globals" [property]="p" [hidden]="!showPropertySettings"></weather-property-settings>
+    </div>
   </div>
 
 

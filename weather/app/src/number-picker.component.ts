@@ -8,6 +8,7 @@ import {Component, Output, EventEmitter, Input} from 'angular2/core';
 export class NumberPickerComponent {
   @Output() updated: EventEmitter<number> = new EventEmitter();
 
+  @Input() disabled = false;
   @Input() title: string;
   @Input() min = 1;
   @Input() max = 100;
