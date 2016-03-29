@@ -1,0 +1,16 @@
+<header (click)="onFocus()">
+  <h1>Default Theme Settings</h1>
+  <h2>Click to set values that are used by default for dots and segments.</h2>
+</header>
+<!-- <div> -->
+<number-picker #dr [class.show]="currentPicker === dr" [title]="'Dot Radius'" [value]="default.dot.radius" (focus)="onFocus(dr)" (update)="onUpdate(default.dot.radius = $event)" cancel="currentPicker = null" save="currentPicker = null" [min]="1" [max]="20" [step]="1"></number-picker>
+<color-picker #dc [class.show]="currentPicker === dc" [title]="'Dot Color'" [color]="default.dot.color" (focus)="onFocus(dc)" (update)="onUpdate(default.dot.color = $event)" (cancel)="'TODO' + 1" (save)="'TODO'.toString()"></color-picker>
+<boolean-picker [title]="'Segment Visibility'" [subtitle]="'Are segments visible?'" [value]="default.segment.show" (update)="onUpdate(default.segment.show = $event)"></boolean-picker>
+<number-picker [title]="'Segment Width Angle'" [value]="default.segment.angle" (updated)="onUpdate(default.segment.angle = $event)" [min]="0" [max]="90" [step]="1"></number-picker>
+<number-picker [title]="'Segment Padding'" [value]="default.segment.padding" (updated)="onUpdate(default.segment.padding = $event)" [min]="0" [max]="10" [step]="1"></number-picker>
+<color-picker [title]="'Segment Color'" [color]="default.segment.color" (focus)="'TODO' + 1" (update)="onUpdate(default.segment.color = $event)" (cancel)="'TODO' + 1" (save)="'TODO'.toString()"></color-picker>
+<div>
+  <input type=button title=Done value="&#10004;" (click)="onSave()">
+  <input type=button title=Cancel value="&#10008;" (click)="onCancel()">
+</div>
+<!-- </div> -->

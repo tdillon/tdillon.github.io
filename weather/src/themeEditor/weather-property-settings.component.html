@@ -1,0 +1,23 @@
+<header>
+  <h1></h1>
+  <h2></h2>
+</header>
+<div>
+  <boolean-picker [title]="'Use Global Dot Radius?'" [subtitle]="'Use Global dot radius value?'" [value]="property.dot.radius.global" (update)="refresh(property.dot.radius.global = $event)"></boolean-picker>
+  <number-picker [disabled]="property.dot.radius.global" [title]="'Dot Radius'" [value]="property.dot.radius.value" (updated)="refresh(property.dot.radius.value = $event)" [min]="1" [max]="20" [step]="1"></number-picker>
+
+  <boolean-picker [title]="'Use Global Dot Color?'" [subtitle]="'Use Global dot color value?'" [value]="property.dot.color.global" (update)="refresh(property.dot.color.global = $event)"></boolean-picker>
+  <color-picker [title]="'Dot Color'" [color]="property.dot.color.value"  [disabled]="property.dot.color.global" (focus)="'TODO' + 1" (update)="refresh(property.dot.color.value = $event)" (cancel)="'TODO' + 1" (save)="'TODO' + 1" ></color-picker>
+
+  <boolean-picker [title]="'use global seg vis?'" [subtitle]="'TODO'" [value]="property.segment.show.global" (update)="refresh(property.segment.show.global = $event)"></boolean-picker>
+  <boolean-picker [disabled]="property.segment.show.global" [title]="'Segment Visibility'" [subtitle]="'Are segments visible?'" [value]="property.segment.show.value" (updated)="refresh(property.segment.show.value = $event)"></boolean-picker>
+
+  <boolean-picker [title]="'use global seg ang?'" [subtitle]="'TODO'" [value]="property.segment.angle.global" (update)="refresh(property.segment.angle.global = $event)"></boolean-picker>
+  <number-picker [disabled]="property.segment.angle.global" [title]="'Segment Width Angle'" [value]="property.segment.angle.value" (updated)="refresh(property.segment.angle.value = $event)" [min]="0" [max]="90" [step]="1"></number-picker>
+
+  <boolean-picker [title]="'use global seg pad?'" [subtitle]="'TODO'" [value]="property.segment.padding.global" (update)="refresh(property.segment.padding.global = $event)"></boolean-picker>
+  <number-picker [disabled]="property.segment.padding.global" [title]="'Segment Padding'" [value]="property.segment.padding.value" (updated)="refresh(property.segment.padding.value = $event)" [min]="0" [max]="10" [step]="1"></number-picker>
+
+  <boolean-picker [title]="'Use global seg color?'" [subtitle]="'TODO'" [value]="property.segment.color.global" (update)="refresh(property.segment.color.global = $event)"></boolean-picker>
+  <color-picker [title]="'Segment Color'" [color]="property.segment.color.value" [disabled]="property.segment.color.global" (focus)="'TODO' + 1" (update)="refresh(property.segment.color.value = $event)" (cancel)="'TODO' + 1" (save)="'TODO' + 1" ></color-picker>
+</div>

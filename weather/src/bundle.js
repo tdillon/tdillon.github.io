@@ -13222,7 +13222,7 @@ $__System.register("92", ["93", "94", "95", "a"], function(exports_1, context_1)
   };
   var boolean_picker_component_1,
       number_picker_component_1,
-      color_component_1,
+      color_picker_component_1,
       core_1;
   var DefaultThemeSettingsComponent;
   return {
@@ -13230,25 +13230,46 @@ $__System.register("92", ["93", "94", "95", "a"], function(exports_1, context_1)
       boolean_picker_component_1 = boolean_picker_component_1_1;
     }, function(number_picker_component_1_1) {
       number_picker_component_1 = number_picker_component_1_1;
-    }, function(color_component_1_1) {
-      color_component_1 = color_component_1_1;
+    }, function(color_picker_component_1_1) {
+      color_picker_component_1 = color_picker_component_1_1;
     }, function(core_1_1) {
       core_1 = core_1_1;
     }],
     execute: function() {
       DefaultThemeSettingsComponent = (function() {
         function DefaultThemeSettingsComponent() {
-          this.refreshed = new core_1.EventEmitter();
+          this.focus = new core_1.EventEmitter();
+          this.update = new core_1.EventEmitter();
+          this.cancel = new core_1.EventEmitter();
+          this.save = new core_1.EventEmitter();
+          this.currentPicker = null;
         }
-        DefaultThemeSettingsComponent.prototype.refresh = function() {
-          this.refreshed.emit(null);
+        DefaultThemeSettingsComponent.prototype.onFocus = function(picker) {
+          this.currentPicker = picker;
+          this.focus.emit(null);
         };
+        DefaultThemeSettingsComponent.prototype.onUpdate = function() {
+          this.update.emit(null);
+        };
+        DefaultThemeSettingsComponent.prototype.onCancel = function() {
+          this.currentPicker = null;
+          this.cancel.emit(null);
+        };
+        DefaultThemeSettingsComponent.prototype.onSave = function() {
+          this.currentPicker = null;
+          this.save.emit(null);
+        };
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DefaultThemeSettingsComponent.prototype, "focus", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DefaultThemeSettingsComponent.prototype, "update", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DefaultThemeSettingsComponent.prototype, "cancel", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DefaultThemeSettingsComponent.prototype, "save", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Object)], DefaultThemeSettingsComponent.prototype, "default", void 0);
-        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], DefaultThemeSettingsComponent.prototype, "refreshed", void 0);
         DefaultThemeSettingsComponent = __decorate([core_1.Component({
           selector: 'default-theme-settings',
-          templateUrl: "src/default-theme-settings.component.html",
-          directives: [color_component_1.ColorComponent, number_picker_component_1.NumberPickerComponent, boolean_picker_component_1.BooleanPickerComponent]
+          host: {'[class.hide]': 'currentPicker'},
+          templateUrl: "src/themeEditor/default-theme-settings.component.html",
+          styleUrls: ['src/themeEditor/picker-header.css'],
+          directives: [color_picker_component_1.ColorPickerComponent, number_picker_component_1.NumberPickerComponent, boolean_picker_component_1.BooleanPickerComponent]
         }), __metadata('design:paramtypes', [])], DefaultThemeSettingsComponent);
         return DefaultThemeSettingsComponent;
       }());
@@ -13285,18 +13306,31 @@ $__System.register("94", ["a"], function(exports_1, context_1) {
     execute: function() {
       NumberPickerComponent = (function() {
         function NumberPickerComponent() {
-          this.updated = new core_1.EventEmitter();
-          this.disabled = false;
+          this.focus = new core_1.EventEmitter();
+          this.cancel = new core_1.EventEmitter();
+          this.save = new core_1.EventEmitter();
+          this.update = new core_1.EventEmitter();
           this.min = 1;
           this.max = 100;
           this.step = 1;
           this.value = 0;
         }
-        NumberPickerComponent.prototype.refresh = function() {
-          this.updated.emit(this.value);
+        NumberPickerComponent.prototype.onFocus = function() {
+          this.focus.emit(null);
         };
-        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], NumberPickerComponent.prototype, "updated", void 0);
-        __decorate([core_1.Input(), __metadata('design:type', Object)], NumberPickerComponent.prototype, "disabled", void 0);
+        NumberPickerComponent.prototype.onUpdate = function() {
+          this.update.emit(this.value);
+        };
+        NumberPickerComponent.prototype.onCancel = function() {
+          this.cancel.emit(this.value);
+        };
+        NumberPickerComponent.prototype.onSave = function() {
+          this.save.emit(this.value);
+        };
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], NumberPickerComponent.prototype, "focus", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], NumberPickerComponent.prototype, "cancel", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], NumberPickerComponent.prototype, "save", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], NumberPickerComponent.prototype, "update", void 0);
         __decorate([core_1.Input(), __metadata('design:type', String)], NumberPickerComponent.prototype, "title", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Object)], NumberPickerComponent.prototype, "min", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Object)], NumberPickerComponent.prototype, "max", void 0);
@@ -13304,7 +13338,8 @@ $__System.register("94", ["a"], function(exports_1, context_1) {
         __decorate([core_1.Input(), __metadata('design:type', Object)], NumberPickerComponent.prototype, "value", void 0);
         NumberPickerComponent = __decorate([core_1.Component({
           selector: 'number-picker',
-          templateUrl: "src/number-picker.component.html"
+          templateUrl: "src/themeEditor/number-picker.component.html",
+          styleUrls: ['src/themeEditor/picker-header.css']
         }), __metadata('design:paramtypes', [])], NumberPickerComponent);
         return NumberPickerComponent;
       }());
@@ -13334,7 +13369,7 @@ $__System.register("96", ["93", "94", "95", "a"], function(exports_1, context_1)
   };
   var boolean_picker_component_1,
       number_picker_component_1,
-      color_component_1,
+      color_picker_component_1,
       core_1;
   var WeatherPropertySettingsComponent;
   return {
@@ -13342,8 +13377,8 @@ $__System.register("96", ["93", "94", "95", "a"], function(exports_1, context_1)
       boolean_picker_component_1 = boolean_picker_component_1_1;
     }, function(number_picker_component_1_1) {
       number_picker_component_1 = number_picker_component_1_1;
-    }, function(color_component_1_1) {
-      color_component_1 = color_component_1_1;
+    }, function(color_picker_component_1_1) {
+      color_picker_component_1 = color_picker_component_1_1;
     }, function(core_1_1) {
       core_1 = core_1_1;
     }],
@@ -13360,8 +13395,9 @@ $__System.register("96", ["93", "94", "95", "a"], function(exports_1, context_1)
         __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], WeatherPropertySettingsComponent.prototype, "refreshed", void 0);
         WeatherPropertySettingsComponent = __decorate([core_1.Component({
           selector: 'weather-property-settings',
-          templateUrl: "src/weather-property-settings.component.html",
-          directives: [color_component_1.ColorComponent, number_picker_component_1.NumberPickerComponent, boolean_picker_component_1.BooleanPickerComponent]
+          templateUrl: "src/themeEditor/weather-property-settings.component.html",
+          styleUrls: ['src/themeEditor/picker-header.css'],
+          directives: [color_picker_component_1.ColorPickerComponent, number_picker_component_1.NumberPickerComponent, boolean_picker_component_1.BooleanPickerComponent]
         }), __metadata('design:paramtypes', [])], WeatherPropertySettingsComponent);
         return WeatherPropertySettingsComponent;
       }());
@@ -13391,7 +13427,7 @@ $__System.register("95", ["a", "97"], function(exports_1, context_1) {
   };
   var core_1,
       Color_1;
-  var ColorComponent;
+  var ColorPickerComponent;
   return {
     setters: [function(core_1_1) {
       core_1 = core_1_1;
@@ -13399,30 +13435,45 @@ $__System.register("95", ["a", "97"], function(exports_1, context_1) {
       Color_1 = Color_1_1;
     }],
     execute: function() {
-      ColorComponent = (function() {
-        function ColorComponent() {
-          this.refreshed = new core_1.EventEmitter();
+      ColorPickerComponent = (function() {
+        function ColorPickerComponent() {
+          this.focus = new core_1.EventEmitter();
+          this.cancel = new core_1.EventEmitter();
+          this.save = new core_1.EventEmitter();
+          this.update = new core_1.EventEmitter();
           this.color = Color_1.Color.white;
           this.disabled = false;
           this.title = 'Color';
           this.showalpha = true;
         }
-        ColorComponent.prototype.refresh = function() {
-          this.refreshed.emit(this.color);
+        ColorPickerComponent.prototype.onFocus = function() {
+          this.focus.emit(null);
         };
-        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ColorComponent.prototype, "refreshed", void 0);
-        __decorate([core_1.Input(), __metadata('design:type', Object)], ColorComponent.prototype, "color", void 0);
-        __decorate([core_1.Input(), __metadata('design:type', Object)], ColorComponent.prototype, "disabled", void 0);
-        __decorate([core_1.Input(), __metadata('design:type', Object)], ColorComponent.prototype, "title", void 0);
-        __decorate([core_1.Input(), __metadata('design:type', Object)], ColorComponent.prototype, "showalpha", void 0);
-        ColorComponent = __decorate([core_1.Component({
-          selector: 'color',
-          templateUrl: "src/color.component.html",
-          styleUrls: ['src/arrows.css']
-        }), __metadata('design:paramtypes', [])], ColorComponent);
-        return ColorComponent;
+        ColorPickerComponent.prototype.onUpdate = function() {
+          this.update.emit(this.color);
+        };
+        ColorPickerComponent.prototype.onCancel = function() {
+          this.cancel.emit(this.color);
+        };
+        ColorPickerComponent.prototype.onSave = function() {
+          this.save.emit(this.color);
+        };
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ColorPickerComponent.prototype, "focus", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ColorPickerComponent.prototype, "cancel", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ColorPickerComponent.prototype, "save", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ColorPickerComponent.prototype, "update", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', Object)], ColorPickerComponent.prototype, "color", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', Object)], ColorPickerComponent.prototype, "disabled", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', Object)], ColorPickerComponent.prototype, "title", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', Object)], ColorPickerComponent.prototype, "showalpha", void 0);
+        ColorPickerComponent = __decorate([core_1.Component({
+          selector: 'color-picker',
+          templateUrl: "src/themeEditor/color-picker.component.html",
+          styleUrls: ['src/themeEditor/picker-header.css']
+        }), __metadata('design:paramtypes', [])], ColorPickerComponent);
+        return ColorPickerComponent;
       }());
-      exports_1("ColorComponent", ColorComponent);
+      exports_1("ColorPickerComponent", ColorPickerComponent);
     }
   };
 });
@@ -13477,7 +13528,10 @@ $__System.register("99", ["97", "93", "a"], function(exports_1, context_1) {
     execute: function() {
       WeatherPropertyPickerComponent = (function() {
         function WeatherPropertyPickerComponent() {
-          this.refreshed = new core_1.EventEmitter();
+          this.focus = new core_1.EventEmitter();
+          this.update = new core_1.EventEmitter();
+          this.cancel = new core_1.EventEmitter();
+          this.save = new core_1.EventEmitter();
           this._properties = [{
             picked: false,
             summary: 'TODO explain',
@@ -13568,7 +13622,10 @@ $__System.register("99", ["97", "93", "a"], function(exports_1, context_1) {
           enumerable: true,
           configurable: true
         });
-        WeatherPropertyPickerComponent.prototype.refresh = function(opt, show) {
+        WeatherPropertyPickerComponent.prototype.onFocus = function() {
+          this.focus.emit(null);
+        };
+        WeatherPropertyPickerComponent.prototype.onUpdate = function(opt, show) {
           if (show) {
             this._passedInProps.push(this.getDefaultConfigOption(opt.title));
           } else {
@@ -13576,7 +13633,13 @@ $__System.register("99", ["97", "93", "a"], function(exports_1, context_1) {
               return p.title === opt.title;
             }), 1);
           }
-          this.refreshed.emit(null);
+          this.update.emit(null);
+        };
+        WeatherPropertyPickerComponent.prototype.onCancel = function() {
+          this.cancel.emit(null);
+        };
+        WeatherPropertyPickerComponent.prototype.onSave = function() {
+          this.save.emit(null);
         };
         WeatherPropertyPickerComponent.prototype.getDefaultConfigOption = function(title) {
           return {
@@ -13611,11 +13674,15 @@ $__System.register("99", ["97", "93", "a"], function(exports_1, context_1) {
             }
           };
         };
-        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], WeatherPropertyPickerComponent.prototype, "refreshed", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], WeatherPropertyPickerComponent.prototype, "focus", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], WeatherPropertyPickerComponent.prototype, "update", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], WeatherPropertyPickerComponent.prototype, "cancel", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], WeatherPropertyPickerComponent.prototype, "save", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Array), __metadata('design:paramtypes', [Array])], WeatherPropertyPickerComponent.prototype, "properties", null);
         WeatherPropertyPickerComponent = __decorate([core_1.Component({
           selector: 'weather-property-picker',
-          templateUrl: "src/weather-property-picker.component.html",
+          templateUrl: "src/themeEditor/weather-property-picker.component.html",
+          styleUrls: ['src/themeEditor/picker-header.css'],
           directives: [boolean_picker_component_1.BooleanPickerComponent]
         }), __metadata('design:paramtypes', [])], WeatherPropertyPickerComponent);
         return WeatherPropertyPickerComponent;
@@ -13653,21 +13720,22 @@ $__System.register("93", ["a"], function(exports_1, context_1) {
     execute: function() {
       BooleanPickerComponent = (function() {
         function BooleanPickerComponent() {
-          this.updated = new core_1.EventEmitter();
+          this.update = new core_1.EventEmitter();
           this.disabled = false;
           this.value = false;
         }
-        BooleanPickerComponent.prototype.refresh = function() {
-          this.updated.emit(this.value);
+        BooleanPickerComponent.prototype.onUpdate = function() {
+          this.update.emit(this.value);
         };
-        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], BooleanPickerComponent.prototype, "updated", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], BooleanPickerComponent.prototype, "update", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Object)], BooleanPickerComponent.prototype, "disabled", void 0);
         __decorate([core_1.Input(), __metadata('design:type', String)], BooleanPickerComponent.prototype, "title", void 0);
         __decorate([core_1.Input(), __metadata('design:type', String)], BooleanPickerComponent.prototype, "subtitle", void 0);
         __decorate([core_1.Input(), __metadata('design:type', Object)], BooleanPickerComponent.prototype, "value", void 0);
         BooleanPickerComponent = __decorate([core_1.Component({
           selector: 'boolean-picker',
-          templateUrl: "src/boolean-picker.component.html"
+          templateUrl: "src/themeEditor/boolean-picker.component.html",
+          styleUrls: ['src/themeEditor/picker-header.css']
         }), __metadata('design:paramtypes', [])], BooleanPickerComponent);
         return BooleanPickerComponent;
       }());
@@ -13676,7 +13744,137 @@ $__System.register("93", ["a"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("9a", ["92", "96", "95", "97", "98", "9b", "9c", "a", "99", "93"], function(exports_1, context_1) {
+$__System.register("9a", ["a"], function(exports_1, context_1) {
+  "use strict";
+  var __moduleName = context_1 && context_1.id;
+  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
+    var c = arguments.length,
+        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+        d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+      r = Reflect.decorate(decorators, target, key, desc);
+    else
+      for (var i = decorators.length - 1; i >= 0; i--)
+        if (d = decorators[i])
+          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+  };
+  var __metadata = (this && this.__metadata) || function(k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+      return Reflect.metadata(k, v);
+  };
+  var core_1;
+  var TextPickerComponent;
+  return {
+    setters: [function(core_1_1) {
+      core_1 = core_1_1;
+    }],
+    execute: function() {
+      TextPickerComponent = (function() {
+        function TextPickerComponent() {
+          this.focus = new core_1.EventEmitter();
+          this.cancel = new core_1.EventEmitter();
+          this.save = new core_1.EventEmitter();
+          this.update = new core_1.EventEmitter();
+          this.value = '';
+        }
+        TextPickerComponent.prototype.onFocus = function() {
+          this.focus.emit(null);
+        };
+        TextPickerComponent.prototype.onUpdate = function() {
+          this.update.emit(this.value);
+        };
+        TextPickerComponent.prototype.onCancel = function() {
+          this.cancel.emit(this.value);
+        };
+        TextPickerComponent.prototype.onSave = function() {
+          this.save.emit(this.value);
+        };
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], TextPickerComponent.prototype, "focus", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], TextPickerComponent.prototype, "cancel", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], TextPickerComponent.prototype, "save", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], TextPickerComponent.prototype, "update", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', String)], TextPickerComponent.prototype, "title", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', Object)], TextPickerComponent.prototype, "value", void 0);
+        TextPickerComponent = __decorate([core_1.Component({
+          selector: 'text-picker',
+          templateUrl: "src/themeEditor/text-picker.component.html",
+          styleUrls: ['src/themeEditor/picker-header.css']
+        }), __metadata('design:paramtypes', [])], TextPickerComponent);
+        return TextPickerComponent;
+      }());
+      exports_1("TextPickerComponent", TextPickerComponent);
+    }
+  };
+});
+
+$__System.register("9b", ["9c", "a"], function(exports_1, context_1) {
+  "use strict";
+  var __moduleName = context_1 && context_1.id;
+  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
+    var c = arguments.length,
+        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+        d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+      r = Reflect.decorate(decorators, target, key, desc);
+    else
+      for (var i = decorators.length - 1; i >= 0; i--)
+        if (d = decorators[i])
+          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+  };
+  var __metadata = (this && this.__metadata) || function(k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+      return Reflect.metadata(k, v);
+  };
+  var WidgetType_1,
+      core_1;
+  var WidgetTypePickerComponent;
+  return {
+    setters: [function(WidgetType_1_1) {
+      WidgetType_1 = WidgetType_1_1;
+    }, function(core_1_1) {
+      core_1 = core_1_1;
+    }],
+    execute: function() {
+      WidgetTypePickerComponent = (function() {
+        function WidgetTypePickerComponent() {
+          this.focus = new core_1.EventEmitter();
+          this.cancel = new core_1.EventEmitter();
+          this.save = new core_1.EventEmitter();
+          this.update = new core_1.EventEmitter();
+          this.WidgetType = WidgetType_1.WidgetType;
+        }
+        WidgetTypePickerComponent.prototype.onFocus = function() {
+          this.focus.emit(null);
+        };
+        WidgetTypePickerComponent.prototype.onCancel = function() {
+          this.cancel.emit(this.type);
+        };
+        WidgetTypePickerComponent.prototype.onSave = function() {
+          this.save.emit(this.type);
+        };
+        WidgetTypePickerComponent.prototype.onUpdate = function() {
+          this.update.emit(this.type);
+        };
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], WidgetTypePickerComponent.prototype, "focus", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], WidgetTypePickerComponent.prototype, "cancel", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], WidgetTypePickerComponent.prototype, "save", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], WidgetTypePickerComponent.prototype, "update", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', Number)], WidgetTypePickerComponent.prototype, "type", void 0);
+        WidgetTypePickerComponent = __decorate([core_1.Component({
+          selector: 'widget-type-picker',
+          templateUrl: "src/themeEditor/widget-type-picker.component.html",
+          styleUrls: ['src/themeEditor/picker-header.css']
+        }), __metadata('design:paramtypes', [])], WidgetTypePickerComponent);
+        return WidgetTypePickerComponent;
+      }());
+      exports_1("WidgetTypePickerComponent", WidgetTypePickerComponent);
+    }
+  };
+});
+
+$__System.register("9d", ["92", "96", "95", "97", "98", "9c", "9e", "a", "99", "93", "9a", "9b"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -13697,22 +13895,24 @@ $__System.register("9a", ["92", "96", "95", "97", "98", "9b", "9c", "a", "99", "
   };
   var default_theme_settings_component_1,
       weather_property_settings_component_1,
-      color_component_1,
+      color_picker_component_1,
       Color_1,
       Theme_interface_1,
       WidgetType_1,
       config_service_1,
       core_1,
       weather_property_picker_component_1,
-      boolean_picker_component_1;
+      boolean_picker_component_1,
+      text_picker_component_1,
+      widget_type_picker_component_1;
   var ThemeCreatorComponent;
   return {
     setters: [function(default_theme_settings_component_1_1) {
       default_theme_settings_component_1 = default_theme_settings_component_1_1;
     }, function(weather_property_settings_component_1_1) {
       weather_property_settings_component_1 = weather_property_settings_component_1_1;
-    }, function(color_component_1_1) {
-      color_component_1 = color_component_1_1;
+    }, function(color_picker_component_1_1) {
+      color_picker_component_1 = color_picker_component_1_1;
     }, function(Color_1_1) {
       Color_1 = Color_1_1;
     }, function(Theme_interface_1_1) {
@@ -13727,6 +13927,10 @@ $__System.register("9a", ["92", "96", "95", "97", "98", "9b", "9c", "a", "99", "
       weather_property_picker_component_1 = weather_property_picker_component_1_1;
     }, function(boolean_picker_component_1_1) {
       boolean_picker_component_1 = boolean_picker_component_1_1;
+    }, function(text_picker_component_1_1) {
+      text_picker_component_1 = text_picker_component_1_1;
+    }, function(widget_type_picker_component_1_1) {
+      widget_type_picker_component_1 = widget_type_picker_component_1_1;
     }],
     execute: function() {
       ThemeCreatorComponent = (function() {
@@ -13737,6 +13941,15 @@ $__System.register("9a", ["92", "96", "95", "97", "98", "9b", "9c", "a", "99", "
           this.canceled = new core_1.EventEmitter();
           this.addingNew = false;
           this.WidgetType = WidgetType_1.WidgetType;
+          this.Pickers = {
+            None: 0,
+            ThemeName: 1,
+            WidgetType: 2,
+            Defaults: 3,
+            PropertyPicker: 4,
+            DaylightColor: 5
+          };
+          this.currentPicker = this.Pickers.None;
           this.availableOptions = this.allOptions;
           this.resetTheme();
           this.refresh();
@@ -13848,6 +14061,7 @@ $__System.register("9a", ["92", "96", "95", "97", "98", "9b", "9c", "a", "99", "
           this.canceled.emit(null);
         };
         ThemeCreatorComponent.prototype.new = function() {
+          this.theme = null;
           this.addingNew = true;
           this.resetTheme();
         };
@@ -13859,9 +14073,13 @@ $__System.register("9a", ["92", "96", "95", "97", "98", "9b", "9c", "a", "99", "
         __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemeCreatorComponent.prototype, "canceled", void 0);
         ThemeCreatorComponent = __decorate([core_1.Component({
           selector: 'theme-creator',
-          templateUrl: 'src/theme-creator.component.html',
-          styleUrls: ['src/arrows.css'],
-          directives: [color_component_1.ColorComponent, default_theme_settings_component_1.DefaultThemeSettingsComponent, weather_property_picker_component_1.WeatherPropertyPickerComponent, boolean_picker_component_1.BooleanPickerComponent, weather_property_settings_component_1.WeatherPropertySettingsComponent]
+          host: {
+            '[class.hide]': 'currentPicker !== Pickers.None',
+            '[class.show]': 'currentPicker === Pickers.None'
+          },
+          templateUrl: 'src/themeEditor/theme-creator.component.html',
+          styleUrls: ['src/themeEditor/theme-creator.component.css'],
+          directives: [color_picker_component_1.ColorPickerComponent, default_theme_settings_component_1.DefaultThemeSettingsComponent, weather_property_picker_component_1.WeatherPropertyPickerComponent, boolean_picker_component_1.BooleanPickerComponent, weather_property_settings_component_1.WeatherPropertySettingsComponent, text_picker_component_1.TextPickerComponent, widget_type_picker_component_1.WidgetTypePickerComponent]
         }), __metadata('design:paramtypes', [config_service_1.ConfigService])], ThemeCreatorComponent);
         return ThemeCreatorComponent;
       }());
@@ -13870,7 +14088,7 @@ $__System.register("9a", ["92", "96", "95", "97", "98", "9b", "9c", "a", "99", "
   };
 });
 
-$__System.register("9d", ["9c", "a"], function(exports_1, context_1) {
+$__System.register("9f", ["9e", "a"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -13903,6 +14121,8 @@ $__System.register("9d", ["9c", "a"], function(exports_1, context_1) {
         function ThemePickerComponent(_config) {
           var _this = this;
           this.themePicked = new core_1.EventEmitter();
+          this.showConfig = new core_1.EventEmitter();
+          this.createTheme = new core_1.EventEmitter();
           this.themes = [];
           _config.themes.subscribe(function(t) {
             _this.themes.push(t);
@@ -13911,14 +14131,23 @@ $__System.register("9d", ["9c", "a"], function(exports_1, context_1) {
             }
           });
         }
+        ThemePickerComponent.prototype.onCreateTheme = function() {
+          this.createTheme.emit(null);
+        };
         ThemePickerComponent.prototype.onSelect = function(theme) {
           this.current = theme;
           this.themePicked.emit(theme);
         };
+        ThemePickerComponent.prototype.onShowConfig = function() {
+          this.showConfig.emit(null);
+        };
         __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemePickerComponent.prototype, "themePicked", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemePickerComponent.prototype, "showConfig", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemePickerComponent.prototype, "createTheme", void 0);
         ThemePickerComponent = __decorate([core_1.Component({
           selector: 'theme-picker',
-          template: "\n    <div class=\"btn-group-vertical\">\n      <input type=button [class.active]=\"t===current\" class=\"btn btn-default\" *ngFor=\"#t of themes\" (click)=\"onSelect(t)\" [value]=\"t.name\">\n    </div>\n  "
+          templateUrl: "src/themeList/theme-picker.component.html",
+          styles: [':host{display: block;}']
         }), __metadata('design:paramtypes', [config_service_1.ConfigService])], ThemePickerComponent);
         return ThemePickerComponent;
       }());
@@ -13927,140 +14156,7 @@ $__System.register("9d", ["9c", "a"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("9e", ["a"], function(exports_1, context_1) {
-  "use strict";
-  var __moduleName = context_1 && context_1.id;
-  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
-    var c = arguments.length,
-        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-        d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(decorators, target, key, desc);
-    else
-      for (var i = decorators.length - 1; i >= 0; i--)
-        if (d = decorators[i])
-          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-  };
-  var __metadata = (this && this.__metadata) || function(k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
-      return Reflect.metadata(k, v);
-  };
-  var core_1;
-  var WeatherService;
-  return {
-    setters: [function(core_1_1) {
-      core_1 = core_1_1;
-    }],
-    execute: function() {
-      WeatherService = (function() {
-        function WeatherService() {
-          var d = localStorage.getItem('data');
-          this.data = (d ? JSON.parse(d) : null);
-          this.apikey = localStorage.getItem('apikey');
-          this.latitude = localStorage.getItem('latitude');
-          this.longitude = localStorage.getItem('longitude');
-        }
-        WeatherService.prototype.getWeather = function() {
-          var _this = this;
-          if (this.data) {
-            return new Promise(function(resolve, reject) {
-              return resolve(_this.data);
-            });
-          } else if (this.apikey && this.latitude && this.longitude) {
-            return this.refresh();
-          } else {
-            return new Promise(function(resolve, reject) {
-              reject();
-            });
-          }
-        };
-        WeatherService.prototype.refresh = function() {
-          var _this = this;
-          localStorage.setItem('apikey', this.apikey);
-          localStorage.setItem('latitude', this.latitude.toString());
-          localStorage.setItem('longitude', this.longitude.toString());
-          return new Promise(function(resolve) {
-            var callback = 'apiCallback';
-            var self = _this;
-            window[callback] = function(weatherData) {
-              weatherData.hourly.data.forEach(function(h) {
-                if (new Date(h.time * 1000).getHours() === 0) {
-                  h.moonPhase = weatherData.daily.data.find(function(d) {
-                    return d.time === h.time;
-                  }).moonPhase;
-                }
-              });
-              localStorage.setItem('data', JSON.stringify(self.data = weatherData));
-              resolve(weatherData);
-            };
-            var apiScript = document.createElement('script');
-            apiScript.src = "https://api.forecast.io/forecast/" + _this.apikey + "/" + _this.latitude + "," + _this.longitude + "?callback=" + callback + "&exclude=flags,minutely";
-            document.body.appendChild(apiScript);
-          });
-        };
-        WeatherService = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [])], WeatherService);
-        return WeatherService;
-      }());
-      exports_1("WeatherService", WeatherService);
-    }
-  };
-});
-
-$__System.register("9f", ["a", "9e"], function(exports_1, context_1) {
-  "use strict";
-  var __moduleName = context_1 && context_1.id;
-  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
-    var c = arguments.length,
-        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-        d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(decorators, target, key, desc);
-    else
-      for (var i = decorators.length - 1; i >= 0; i--)
-        if (d = decorators[i])
-          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-  };
-  var __metadata = (this && this.__metadata) || function(k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
-      return Reflect.metadata(k, v);
-  };
-  var core_1,
-      weather_service_1;
-  var ForecastIoComponent;
-  return {
-    setters: [function(core_1_1) {
-      core_1 = core_1_1;
-    }, function(weather_service_1_1) {
-      weather_service_1 = weather_service_1_1;
-    }],
-    execute: function() {
-      ForecastIoComponent = (function() {
-        function ForecastIoComponent(dao) {
-          this.dao = dao;
-          this.refreshed = new core_1.EventEmitter();
-        }
-        ForecastIoComponent.prototype.refresh = function() {
-          var _this = this;
-          this.dao.refresh().then(function(weather) {
-            _this.refreshed.emit(weather);
-          });
-        };
-        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ForecastIoComponent.prototype, "refreshed", void 0);
-        ForecastIoComponent = __decorate([core_1.Component({
-          selector: 'forecast-io',
-          template: "\n  <div class=\"panel panel-default\">\n    <div class=\"panel-heading\" (click)=\"show= !show\">\n      <span [class.down]=\"!show\" [class.up]=\"show\"></span>\n      Forecast IO info\n    </div>\n    <div class=\"panel-body\" [class.hide]=\"!show\">\n      <form (ngSubmit)=\"refresh()\" #form=\"ngForm\">\n        <div class=\"form-group\">\n          <label>API Key</label>\n          <input type=text required [(ngModel)]=dao.apikey placeholder=\"API Key\" class=\"form-control\">\n        </div>\n        <div class=\"form-group\">\n          <label>Latitude</label>\n          <input type=number step=any required [(ngModel)]=dao.latitude placeholder=\"Latitude\" class=\"form-control\">\n        </div>\n        <div class=\"form-group\">\n          <label>Longitude</label>\n          <input type=number step=any required [(ngModel)]=dao.longitude placeholder=\"Longitude\" class=\"form-control\">\n        </div>\n        <div class=\"form-group\">\n          <input type=submit value=Refresh [disabled]=\"!form.form.valid\" class=\"btn btn-default\">\n        </div>\n      </form>\n    </div>\n  </div>\n  ",
-          styleUrls: ['src/arrows.css']
-        }), __metadata('design:paramtypes', [weather_service_1.WeatherService])], ForecastIoComponent);
-        return ForecastIoComponent;
-      }());
-      exports_1("ForecastIoComponent", ForecastIoComponent);
-    }
-  };
-});
-
-$__System.register("9b", [], function(exports_1, context_1) {
+$__System.register("9c", [], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var WidgetType;
@@ -14627,7 +14723,7 @@ $__System.register("a3", [], function(exports_1, context_1) {
   };
 });
 
-$__System.register("a4", ["9b", "a0", "a", "a1", "a2", "a3"], function(exports_1, context_1) {
+$__System.register("a4", ["9c", "a0", "a", "a1", "a2", "a3"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -14782,7 +14878,8 @@ $__System.register("a4", ["9b", "a0", "a", "a1", "a2", "a3"], function(exports_1
         __decorate([core_1.Input(), __metadata('design:type', Object)], WidgetDisplayComponent.prototype, "theme", void 0);
         WidgetDisplayComponent = __decorate([core_1.Component({
           selector: 'widget-display',
-          template: "\n    <canvas></canvas>\n  "
+          template: "\n    <canvas></canvas>\n  ",
+          styles: ['canvas{display:block}']
         }), __metadata('design:paramtypes', [])], WidgetDisplayComponent);
         return WidgetDisplayComponent;
       }());
@@ -15423,19 +15520,751 @@ $__System.registerDynamic("a8", ["7", "ac", "a9", "a", "b3", "af"], true, functi
   return module.exports;
 });
 
-$__System.registerDynamic("b4", ["b5"], true, function($__require, exports, module) {
+$__System.registerDynamic("ad", ["a", "7", "ac", "a9"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var decorators_1 = $__require('b5');
+  var __extends = (this && this.__extends) || function(d, b) {
+    for (var p in b)
+      if (b.hasOwnProperty(p))
+        d[p] = b[p];
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
+    var c = arguments.length,
+        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+        d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+      r = Reflect.decorate(decorators, target, key, desc);
+    else
+      for (var i = decorators.length - 1; i >= 0; i--)
+        if (d = decorators[i])
+          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+  };
+  var __metadata = (this && this.__metadata) || function(k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+      return Reflect.metadata(k, v);
+  };
+  var core_1 = $__require('a');
+  var lang_1 = $__require('7');
+  var headers_1 = $__require('ac');
+  var enums_1 = $__require('a9');
+  var ResponseOptions = (function() {
+    function ResponseOptions(_a) {
+      var _b = _a === void 0 ? {} : _a,
+          body = _b.body,
+          status = _b.status,
+          headers = _b.headers,
+          statusText = _b.statusText,
+          type = _b.type,
+          url = _b.url;
+      this.body = lang_1.isPresent(body) ? body : null;
+      this.status = lang_1.isPresent(status) ? status : null;
+      this.headers = lang_1.isPresent(headers) ? headers : null;
+      this.statusText = lang_1.isPresent(statusText) ? statusText : null;
+      this.type = lang_1.isPresent(type) ? type : null;
+      this.url = lang_1.isPresent(url) ? url : null;
+    }
+    ResponseOptions.prototype.merge = function(options) {
+      return new ResponseOptions({
+        body: lang_1.isPresent(options) && lang_1.isPresent(options.body) ? options.body : this.body,
+        status: lang_1.isPresent(options) && lang_1.isPresent(options.status) ? options.status : this.status,
+        headers: lang_1.isPresent(options) && lang_1.isPresent(options.headers) ? options.headers : this.headers,
+        statusText: lang_1.isPresent(options) && lang_1.isPresent(options.statusText) ? options.statusText : this.statusText,
+        type: lang_1.isPresent(options) && lang_1.isPresent(options.type) ? options.type : this.type,
+        url: lang_1.isPresent(options) && lang_1.isPresent(options.url) ? options.url : this.url
+      });
+    };
+    return ResponseOptions;
+  })();
+  exports.ResponseOptions = ResponseOptions;
+  var BaseResponseOptions = (function(_super) {
+    __extends(BaseResponseOptions, _super);
+    function BaseResponseOptions() {
+      _super.call(this, {
+        status: 200,
+        statusText: 'Ok',
+        type: enums_1.ResponseType.Default,
+        headers: new headers_1.Headers()
+      });
+    }
+    BaseResponseOptions = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [])], BaseResponseOptions);
+    return BaseResponseOptions;
+  })(ResponseOptions);
+  exports.BaseResponseOptions = BaseResponseOptions;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("a7", ["ac", "af", "7"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var headers_1 = $__require('ac');
+  var http_utils_1 = $__require('af');
+  var lang_1 = $__require('7');
+  var Request = (function() {
+    function Request(requestOptions) {
+      var url = requestOptions.url;
+      this.url = requestOptions.url;
+      if (lang_1.isPresent(requestOptions.search)) {
+        var search = requestOptions.search.toString();
+        if (search.length > 0) {
+          var prefix = '?';
+          if (lang_1.StringWrapper.contains(this.url, '?')) {
+            prefix = (this.url[this.url.length - 1] == '&') ? '' : '&';
+          }
+          this.url = url + prefix + search;
+        }
+      }
+      this._body = requestOptions.body;
+      this.method = http_utils_1.normalizeMethodName(requestOptions.method);
+      this.headers = new headers_1.Headers(requestOptions.headers);
+    }
+    Request.prototype.text = function() {
+      return lang_1.isPresent(this._body) ? this._body.toString() : '';
+    };
+    return Request;
+  })();
+  exports.Request = Request;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("af", ["7", "a9", "10"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var lang_1 = $__require('7');
+  var enums_1 = $__require('a9');
+  var exceptions_1 = $__require('10');
+  function normalizeMethodName(method) {
+    if (lang_1.isString(method)) {
+      var originalMethod = method;
+      method = method.replace(/(\w)(\w*)/g, function(g0, g1, g2) {
+        return g1.toUpperCase() + g2.toLowerCase();
+      });
+      method = enums_1.RequestMethod[method];
+      if (typeof method !== 'number')
+        throw exceptions_1.makeTypeError("Invalid request method. The method \"" + originalMethod + "\" is not supported.");
+    }
+    return method;
+  }
+  exports.normalizeMethodName = normalizeMethodName;
+  exports.isSuccess = function(status) {
+    return (status >= 200 && status < 300);
+  };
+  function getResponseURL(xhr) {
+    if ('responseURL' in xhr) {
+      return xhr.responseURL;
+    }
+    if (/^X-Request-URL:/m.test(xhr.getAllResponseHeaders())) {
+      return xhr.getResponseHeader('X-Request-URL');
+    }
+    return;
+  }
+  exports.getResponseURL = getResponseURL;
+  var lang_2 = $__require('7');
+  exports.isJsObject = lang_2.isJsObject;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("ab", ["7", "10", "af"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var lang_1 = $__require('7');
+  var exceptions_1 = $__require('10');
+  var http_utils_1 = $__require('af');
+  var Response = (function() {
+    function Response(responseOptions) {
+      this._body = responseOptions.body;
+      this.status = responseOptions.status;
+      this.statusText = responseOptions.statusText;
+      this.headers = responseOptions.headers;
+      this.type = responseOptions.type;
+      this.url = responseOptions.url;
+    }
+    Response.prototype.blob = function() {
+      throw new exceptions_1.BaseException('"blob()" method not implemented on Response superclass');
+    };
+    Response.prototype.json = function() {
+      var jsonResponse;
+      if (http_utils_1.isJsObject(this._body)) {
+        jsonResponse = this._body;
+      } else if (lang_1.isString(this._body)) {
+        jsonResponse = lang_1.Json.parse(this._body);
+      }
+      return jsonResponse;
+    };
+    Response.prototype.text = function() {
+      return this._body.toString();
+    };
+    Response.prototype.arrayBuffer = function() {
+      throw new exceptions_1.BaseException('"arrayBuffer()" method not implemented on Response superclass');
+    };
+    return Response;
+  })();
+  exports.Response = Response;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("a6", [], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var ConnectionBackend = (function() {
+    function ConnectionBackend() {}
+    return ConnectionBackend;
+  })();
+  exports.ConnectionBackend = ConnectionBackend;
+  var Connection = (function() {
+    function Connection() {}
+    return Connection;
+  })();
+  exports.Connection = Connection;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("ac", ["7", "10", "11"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var lang_1 = $__require('7');
+  var exceptions_1 = $__require('10');
+  var collection_1 = $__require('11');
+  var Headers = (function() {
+    function Headers(headers) {
+      var _this = this;
+      if (headers instanceof Headers) {
+        this._headersMap = headers._headersMap;
+        return;
+      }
+      this._headersMap = new collection_1.Map();
+      if (lang_1.isBlank(headers)) {
+        return;
+      }
+      collection_1.StringMapWrapper.forEach(headers, function(v, k) {
+        _this._headersMap.set(k, collection_1.isListLikeIterable(v) ? v : [v]);
+      });
+    }
+    Headers.fromResponseHeaderString = function(headersString) {
+      return headersString.trim().split('\n').map(function(val) {
+        return val.split(':');
+      }).map(function(_a) {
+        var key = _a[0],
+            parts = _a.slice(1);
+        return ([key.trim(), parts.join(':').trim()]);
+      }).reduce(function(headers, _a) {
+        var key = _a[0],
+            value = _a[1];
+        return !headers.set(key, value) && headers;
+      }, new Headers());
+    };
+    Headers.prototype.append = function(name, value) {
+      var mapName = this._headersMap.get(name);
+      var list = collection_1.isListLikeIterable(mapName) ? mapName : [];
+      list.push(value);
+      this._headersMap.set(name, list);
+    };
+    Headers.prototype.delete = function(name) {
+      this._headersMap.delete(name);
+    };
+    Headers.prototype.forEach = function(fn) {
+      this._headersMap.forEach(fn);
+    };
+    Headers.prototype.get = function(header) {
+      return collection_1.ListWrapper.first(this._headersMap.get(header));
+    };
+    Headers.prototype.has = function(header) {
+      return this._headersMap.has(header);
+    };
+    Headers.prototype.keys = function() {
+      return collection_1.MapWrapper.keys(this._headersMap);
+    };
+    Headers.prototype.set = function(header, value) {
+      var list = [];
+      if (collection_1.isListLikeIterable(value)) {
+        var pushValue = value.join(',');
+        list.push(pushValue);
+      } else {
+        list.push(value);
+      }
+      this._headersMap.set(header, list);
+    };
+    Headers.prototype.values = function() {
+      return collection_1.MapWrapper.values(this._headersMap);
+    };
+    Headers.prototype.toJSON = function() {
+      return lang_1.Json.stringify(this.values());
+    };
+    Headers.prototype.getAll = function(header) {
+      var headers = this._headersMap.get(header);
+      return collection_1.isListLikeIterable(headers) ? headers : [];
+    };
+    Headers.prototype.entries = function() {
+      throw new exceptions_1.BaseException('"entries" method is not implemented on Headers class');
+    };
+    return Headers;
+  })();
+  exports.Headers = Headers;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("a9", [], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  (function(RequestMethod) {
+    RequestMethod[RequestMethod["Get"] = 0] = "Get";
+    RequestMethod[RequestMethod["Post"] = 1] = "Post";
+    RequestMethod[RequestMethod["Put"] = 2] = "Put";
+    RequestMethod[RequestMethod["Delete"] = 3] = "Delete";
+    RequestMethod[RequestMethod["Options"] = 4] = "Options";
+    RequestMethod[RequestMethod["Head"] = 5] = "Head";
+    RequestMethod[RequestMethod["Patch"] = 6] = "Patch";
+  })(exports.RequestMethod || (exports.RequestMethod = {}));
+  var RequestMethod = exports.RequestMethod;
+  (function(ReadyState) {
+    ReadyState[ReadyState["Unsent"] = 0] = "Unsent";
+    ReadyState[ReadyState["Open"] = 1] = "Open";
+    ReadyState[ReadyState["HeadersReceived"] = 2] = "HeadersReceived";
+    ReadyState[ReadyState["Loading"] = 3] = "Loading";
+    ReadyState[ReadyState["Done"] = 4] = "Done";
+    ReadyState[ReadyState["Cancelled"] = 5] = "Cancelled";
+  })(exports.ReadyState || (exports.ReadyState = {}));
+  var ReadyState = exports.ReadyState;
+  (function(ResponseType) {
+    ResponseType[ResponseType["Basic"] = 0] = "Basic";
+    ResponseType[ResponseType["Cors"] = 1] = "Cors";
+    ResponseType[ResponseType["Default"] = 2] = "Default";
+    ResponseType[ResponseType["Error"] = 3] = "Error";
+    ResponseType[ResponseType["Opaque"] = 4] = "Opaque";
+  })(exports.ResponseType || (exports.ResponseType = {}));
+  var ResponseType = exports.ResponseType;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("b3", ["7", "11"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var lang_1 = $__require('7');
+  var collection_1 = $__require('11');
+  function paramParser(rawParams) {
+    if (rawParams === void 0) {
+      rawParams = '';
+    }
+    var map = new collection_1.Map();
+    if (rawParams.length > 0) {
+      var params = rawParams.split('&');
+      params.forEach(function(param) {
+        var split = param.split('=');
+        var key = split[0];
+        var val = split[1];
+        var list = lang_1.isPresent(map.get(key)) ? map.get(key) : [];
+        list.push(val);
+        map.set(key, list);
+      });
+    }
+    return map;
+  }
+  var URLSearchParams = (function() {
+    function URLSearchParams(rawParams) {
+      if (rawParams === void 0) {
+        rawParams = '';
+      }
+      this.rawParams = rawParams;
+      this.paramsMap = paramParser(rawParams);
+    }
+    URLSearchParams.prototype.clone = function() {
+      var clone = new URLSearchParams();
+      clone.appendAll(this);
+      return clone;
+    };
+    URLSearchParams.prototype.has = function(param) {
+      return this.paramsMap.has(param);
+    };
+    URLSearchParams.prototype.get = function(param) {
+      var storedParam = this.paramsMap.get(param);
+      if (collection_1.isListLikeIterable(storedParam)) {
+        return collection_1.ListWrapper.first(storedParam);
+      } else {
+        return null;
+      }
+    };
+    URLSearchParams.prototype.getAll = function(param) {
+      var mapParam = this.paramsMap.get(param);
+      return lang_1.isPresent(mapParam) ? mapParam : [];
+    };
+    URLSearchParams.prototype.set = function(param, val) {
+      var mapParam = this.paramsMap.get(param);
+      var list = lang_1.isPresent(mapParam) ? mapParam : [];
+      collection_1.ListWrapper.clear(list);
+      list.push(val);
+      this.paramsMap.set(param, list);
+    };
+    URLSearchParams.prototype.setAll = function(searchParams) {
+      var _this = this;
+      searchParams.paramsMap.forEach(function(value, param) {
+        var mapParam = _this.paramsMap.get(param);
+        var list = lang_1.isPresent(mapParam) ? mapParam : [];
+        collection_1.ListWrapper.clear(list);
+        list.push(value[0]);
+        _this.paramsMap.set(param, list);
+      });
+    };
+    URLSearchParams.prototype.append = function(param, val) {
+      var mapParam = this.paramsMap.get(param);
+      var list = lang_1.isPresent(mapParam) ? mapParam : [];
+      list.push(val);
+      this.paramsMap.set(param, list);
+    };
+    URLSearchParams.prototype.appendAll = function(searchParams) {
+      var _this = this;
+      searchParams.paramsMap.forEach(function(value, param) {
+        var mapParam = _this.paramsMap.get(param);
+        var list = lang_1.isPresent(mapParam) ? mapParam : [];
+        for (var i = 0; i < value.length; ++i) {
+          list.push(value[i]);
+        }
+        _this.paramsMap.set(param, list);
+      });
+    };
+    URLSearchParams.prototype.replaceAll = function(searchParams) {
+      var _this = this;
+      searchParams.paramsMap.forEach(function(value, param) {
+        var mapParam = _this.paramsMap.get(param);
+        var list = lang_1.isPresent(mapParam) ? mapParam : [];
+        collection_1.ListWrapper.clear(list);
+        for (var i = 0; i < value.length; ++i) {
+          list.push(value[i]);
+        }
+        _this.paramsMap.set(param, list);
+      });
+    };
+    URLSearchParams.prototype.toString = function() {
+      var paramsList = [];
+      this.paramsMap.forEach(function(values, k) {
+        values.forEach(function(v) {
+          return paramsList.push(k + '=' + v);
+        });
+      });
+      return paramsList.join('&');
+    };
+    URLSearchParams.prototype.delete = function(param) {
+      this.paramsMap.delete(param);
+    };
+    return URLSearchParams;
+  })();
+  exports.URLSearchParams = URLSearchParams;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("b4", ["a", "a5", "aa", "b1", "ae", "b2", "a8", "ad", "a7", "ab", "a6", "ac", "a9", "b3"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var core_1 = $__require('a');
+  var http_1 = $__require('a5');
+  var xhr_backend_1 = $__require('aa');
+  var jsonp_backend_1 = $__require('b1');
+  var browser_xhr_1 = $__require('ae');
+  var browser_jsonp_1 = $__require('b2');
+  var base_request_options_1 = $__require('a8');
+  var base_response_options_1 = $__require('ad');
+  var static_request_1 = $__require('a7');
+  exports.Request = static_request_1.Request;
+  var static_response_1 = $__require('ab');
+  exports.Response = static_response_1.Response;
+  var interfaces_1 = $__require('a6');
+  exports.Connection = interfaces_1.Connection;
+  exports.ConnectionBackend = interfaces_1.ConnectionBackend;
+  var browser_xhr_2 = $__require('ae');
+  exports.BrowserXhr = browser_xhr_2.BrowserXhr;
+  var base_request_options_2 = $__require('a8');
+  exports.BaseRequestOptions = base_request_options_2.BaseRequestOptions;
+  exports.RequestOptions = base_request_options_2.RequestOptions;
+  var base_response_options_2 = $__require('ad');
+  exports.BaseResponseOptions = base_response_options_2.BaseResponseOptions;
+  exports.ResponseOptions = base_response_options_2.ResponseOptions;
+  var xhr_backend_2 = $__require('aa');
+  exports.XHRBackend = xhr_backend_2.XHRBackend;
+  exports.XHRConnection = xhr_backend_2.XHRConnection;
+  var jsonp_backend_2 = $__require('b1');
+  exports.JSONPBackend = jsonp_backend_2.JSONPBackend;
+  exports.JSONPConnection = jsonp_backend_2.JSONPConnection;
+  var http_2 = $__require('a5');
+  exports.Http = http_2.Http;
+  exports.Jsonp = http_2.Jsonp;
+  var headers_1 = $__require('ac');
+  exports.Headers = headers_1.Headers;
+  var enums_1 = $__require('a9');
+  exports.ResponseType = enums_1.ResponseType;
+  exports.ReadyState = enums_1.ReadyState;
+  exports.RequestMethod = enums_1.RequestMethod;
+  var url_search_params_1 = $__require('b3');
+  exports.URLSearchParams = url_search_params_1.URLSearchParams;
+  exports.HTTP_PROVIDERS = [core_1.provide(http_1.Http, {
+    useFactory: function(xhrBackend, requestOptions) {
+      return new http_1.Http(xhrBackend, requestOptions);
+    },
+    deps: [xhr_backend_1.XHRBackend, base_request_options_1.RequestOptions]
+  }), browser_xhr_1.BrowserXhr, core_1.provide(base_request_options_1.RequestOptions, {useClass: base_request_options_1.BaseRequestOptions}), core_1.provide(base_response_options_1.ResponseOptions, {useClass: base_response_options_1.BaseResponseOptions}), xhr_backend_1.XHRBackend];
+  exports.HTTP_BINDINGS = exports.HTTP_PROVIDERS;
+  exports.JSONP_PROVIDERS = [core_1.provide(http_1.Jsonp, {
+    useFactory: function(jsonpBackend, requestOptions) {
+      return new http_1.Jsonp(jsonpBackend, requestOptions);
+    },
+    deps: [jsonp_backend_1.JSONPBackend, base_request_options_1.RequestOptions]
+  }), browser_jsonp_1.BrowserJsonp, core_1.provide(base_request_options_1.RequestOptions, {useClass: base_request_options_1.BaseRequestOptions}), core_1.provide(base_response_options_1.ResponseOptions, {useClass: base_response_options_1.BaseResponseOptions}), core_1.provide(jsonp_backend_1.JSONPBackend, {useClass: jsonp_backend_1.JSONPBackend_})];
+  exports.JSON_BINDINGS = exports.JSONP_PROVIDERS;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("b5", ["b6"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var errorObject_1 = $__require('b6');
+  var tryCatchTarget;
+  function tryCatcher() {
+    try {
+      return tryCatchTarget.apply(this, arguments);
+    } catch (e) {
+      errorObject_1.errorObject.e = e;
+      return errorObject_1.errorObject;
+    }
+  }
+  function tryCatch(fn) {
+    tryCatchTarget = fn;
+    return tryCatcher;
+  }
+  exports.tryCatch = tryCatch;
+  ;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("b6", [], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  exports.errorObject = {e: {}};
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("b7", ["b8", "b5", "b6"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var __extends = (this && this.__extends) || function(d, b) {
+    for (var p in b)
+      if (b.hasOwnProperty(p))
+        d[p] = b[p];
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+  var Subscriber_1 = $__require('b8');
+  var tryCatch_1 = $__require('b5');
+  var errorObject_1 = $__require('b6');
+  function map(project, thisArg) {
+    if (typeof project !== 'function') {
+      throw new TypeError('argument is not a function. Are you looking for `mapTo()`?');
+    }
+    return this.lift(new MapOperator(project, thisArg));
+  }
+  exports.map = map;
+  var MapOperator = (function() {
+    function MapOperator(project, thisArg) {
+      this.project = project;
+      this.thisArg = thisArg;
+    }
+    MapOperator.prototype.call = function(subscriber) {
+      return new MapSubscriber(subscriber, this.project, this.thisArg);
+    };
+    return MapOperator;
+  })();
+  var MapSubscriber = (function(_super) {
+    __extends(MapSubscriber, _super);
+    function MapSubscriber(destination, project, thisArg) {
+      _super.call(this, destination);
+      this.project = project;
+      this.thisArg = thisArg;
+      this.count = 0;
+    }
+    MapSubscriber.prototype._next = function(x) {
+      var result = tryCatch_1.tryCatch(this.project).call(this.thisArg || this, x, this.count++);
+      if (result === errorObject_1.errorObject) {
+        this.error(errorObject_1.errorObject.e);
+      } else {
+        this.destination.next(result);
+      }
+    };
+    return MapSubscriber;
+  })(Subscriber_1.Subscriber);
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("b9", ["b0", "b7"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var Observable_1 = $__require('b0');
+  var map_1 = $__require('b7');
+  Observable_1.Observable.prototype.map = map_1.map;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.register("9e", ["a", "97", "b4", "b0", "b9"], function(exports_1, context_1) {
+  "use strict";
+  var __moduleName = context_1 && context_1.id;
+  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
+    var c = arguments.length,
+        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+        d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+      r = Reflect.decorate(decorators, target, key, desc);
+    else
+      for (var i = decorators.length - 1; i >= 0; i--)
+        if (d = decorators[i])
+          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+  };
+  var __metadata = (this && this.__metadata) || function(k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+      return Reflect.metadata(k, v);
+  };
+  var core_1,
+      Color_1,
+      http_1,
+      Observable_1;
+  var ConfigService;
+  return {
+    setters: [function(core_1_1) {
+      core_1 = core_1_1;
+    }, function(Color_1_1) {
+      Color_1 = Color_1_1;
+    }, function(http_1_1) {
+      http_1 = http_1_1;
+    }, function(Observable_1_1) {
+      Observable_1 = Observable_1_1;
+    }, function(_1) {}],
+    execute: function() {
+      ConfigService = (function() {
+        function ConfigService(_http) {
+          this._http = _http;
+        }
+        ConfigService.prototype.deserializeColors = function(obj) {
+          var _this = this;
+          if (typeof obj !== 'object') {
+            return;
+          }
+          Object.keys(obj).forEach(function(key) {
+            if (key === 'color' || key === 'daylight') {
+              if (obj[key].hasOwnProperty('value')) {
+                obj[key].value = Color_1.Color.getColor(obj[key].value);
+              } else {
+                obj[key] = Color_1.Color.getColor(obj[key]);
+              }
+            } else {
+              _this.deserializeColors(obj[key]);
+            }
+          });
+        };
+        Object.defineProperty(ConfigService.prototype, "themes", {
+          get: function() {
+            var _this = this;
+            return new Observable_1.Observable(function(observer) {
+              _this._observer = observer;
+              _this._http.get('src/preset-themes.json').map(function(res) {
+                var themes = (res.json());
+                for (var _i = 0,
+                    themes_1 = themes; _i < themes_1.length; _i++) {
+                  var t = themes_1[_i];
+                  _this.deserializeColors(t);
+                }
+                return themes;
+              }).subscribe(function(ta) {
+                return ta.forEach(function(t) {
+                  return _this._observer.next(t);
+                });
+              });
+            });
+          },
+          enumerable: true,
+          configurable: true
+        });
+        ConfigService.prototype.save = function(theme) {
+          this._observer.next(theme);
+        };
+        Object.defineProperty(ConfigService.prototype, "maxDotRadius", {
+          get: function() {
+            var max = 10;
+            return max;
+          },
+          enumerable: true,
+          configurable: true
+        });
+        ConfigService = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [http_1.Http])], ConfigService);
+        return ConfigService;
+      }());
+      exports_1("ConfigService", ConfigService);
+    }
+  };
+});
+
+$__System.registerDynamic("ba", ["bb"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var decorators_1 = $__require('bb');
   exports.Class = decorators_1.Class;
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("b6", ["7"], true, function($__require, exports, module) {
+$__System.registerDynamic("bc", ["7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -15447,7 +16276,7 @@ $__System.registerDynamic("b6", ["7"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("b7", ["7", "9", "10", "b8"], true, function($__require, exports, module) {
+$__System.registerDynamic("bd", ["7", "9", "10", "be"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -15459,13 +16288,13 @@ $__System.registerDynamic("b7", ["7", "9", "10", "b8"], true, function($__requir
   exports.EventEmitter = async_1.EventEmitter;
   var exceptions_1 = $__require('10');
   exports.WrappedException = exceptions_1.WrappedException;
-  var exception_handler_1 = $__require('b8');
+  var exception_handler_1 = $__require('be');
   exports.ExceptionHandler = exception_handler_1.ExceptionHandler;
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("58", ["4e", "7", "3b", "8d", "9", "11", "5b", "b9", "10", "ba", "bb"], true, function($__require, exports, module) {
+$__System.registerDynamic("58", ["4e", "7", "3b", "8d", "9", "11", "5b", "bf", "10", "c0", "c1"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -15487,10 +16316,10 @@ $__System.registerDynamic("58", ["4e", "7", "3b", "8d", "9", "11", "5b", "b9", "
   var async_1 = $__require('9');
   var collection_1 = $__require('11');
   var testability_1 = $__require('5b');
-  var dynamic_component_loader_1 = $__require('b9');
+  var dynamic_component_loader_1 = $__require('bf');
   var exceptions_1 = $__require('10');
-  var console_1 = $__require('ba');
-  var profile_1 = $__require('bb');
+  var console_1 = $__require('c0');
+  var profile_1 = $__require('c1');
   var lang_2 = $__require('7');
   function _componentProviders(appComponentType) {
     return [di_1.provide(application_tokens_1.APP_COMPONENT, {useValue: appComponentType}), di_1.provide(application_tokens_1.APP_COMPONENT_REF_PROMISE, {
@@ -15862,7 +16691,7 @@ $__System.registerDynamic("58", ["4e", "7", "3b", "8d", "9", "11", "5b", "b9", "
   return module.exports;
 });
 
-$__System.registerDynamic("bc", ["4e"], true, function($__require, exports, module) {
+$__System.registerDynamic("c2", ["4e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -15875,13 +16704,13 @@ $__System.registerDynamic("bc", ["4e"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("bd", ["be"], true, function($__require, exports, module) {
+$__System.registerDynamic("c3", ["c4"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var api_1 = $__require('be');
+  var api_1 = $__require('c4');
   exports.RootRenderer = api_1.RootRenderer;
   exports.Renderer = api_1.Renderer;
   exports.RenderComponentType = api_1.RenderComponentType;
@@ -15889,7 +16718,7 @@ $__System.registerDynamic("bd", ["be"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("bf", ["7e", "80", "5d", "c0", "c1", "b9", "c2", "c3", "5e", "c4"], true, function($__require, exports, module) {
+$__System.registerDynamic("c5", ["7e", "80", "5d", "c6", "c7", "bf", "c8", "c9", "5e", "ca"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -15901,24 +16730,24 @@ $__System.registerDynamic("bf", ["7e", "80", "5d", "c0", "c1", "b9", "c2", "c3",
   exports.ViewResolver = view_resolver_1.ViewResolver;
   var compiler_1 = $__require('5d');
   exports.Compiler = compiler_1.Compiler;
-  var view_manager_1 = $__require('c0');
+  var view_manager_1 = $__require('c6');
   exports.AppViewManager = view_manager_1.AppViewManager;
-  var query_list_1 = $__require('c1');
+  var query_list_1 = $__require('c7');
   exports.QueryList = query_list_1.QueryList;
-  var dynamic_component_loader_1 = $__require('b9');
+  var dynamic_component_loader_1 = $__require('bf');
   exports.DynamicComponentLoader = dynamic_component_loader_1.DynamicComponentLoader;
-  var element_ref_1 = $__require('c2');
+  var element_ref_1 = $__require('c8');
   exports.ElementRef = element_ref_1.ElementRef;
-  var template_ref_1 = $__require('c3');
+  var template_ref_1 = $__require('c9');
   exports.TemplateRef = template_ref_1.TemplateRef;
   var view_ref_1 = $__require('5e');
   exports.EmbeddedViewRef = view_ref_1.EmbeddedViewRef;
   exports.HostViewRef = view_ref_1.HostViewRef;
   exports.ViewRef = view_ref_1.ViewRef;
   exports.HostViewFactoryRef = view_ref_1.HostViewFactoryRef;
-  var view_container_ref_1 = $__require('c4');
+  var view_container_ref_1 = $__require('ca');
   exports.ViewContainerRef = view_container_ref_1.ViewContainerRef;
-  var dynamic_component_loader_2 = $__require('b9');
+  var dynamic_component_loader_2 = $__require('bf');
   exports.ComponentRef = dynamic_component_loader_2.ComponentRef;
   global.define = __define;
   return module.exports;
@@ -16113,7 +16942,7 @@ $__System.registerDynamic("82", ["3b", "7"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("ba", ["3b", "7"], true, function($__require, exports, module) {
+$__System.registerDynamic("c0", ["3b", "7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -16150,7 +16979,7 @@ $__System.registerDynamic("ba", ["3b", "7"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("4e", ["11", "7", "9", "bb", "4"], true, function($__require, exports, module) {
+$__System.registerDynamic("4e", ["11", "7", "9", "c1", "4"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -16160,7 +16989,7 @@ $__System.registerDynamic("4e", ["11", "7", "9", "bb", "4"], true, function($__r
     var collection_1 = $__require('11');
     var lang_1 = $__require('7');
     var async_1 = $__require('9');
-    var profile_1 = $__require('bb');
+    var profile_1 = $__require('c1');
     var NgZoneError = (function() {
       function NgZoneError(error, stackTrace) {
         this.error = error;
@@ -16563,7 +17392,7 @@ $__System.registerDynamic("5b", ["3b", "11", "7", "10", "4e", "9"], true, functi
   return module.exports;
 });
 
-$__System.registerDynamic("c5", ["7", "3b", "ba", "81", "5b"], true, function($__require, exports, module) {
+$__System.registerDynamic("cb", ["7", "3b", "c0", "81", "5b"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -16571,7 +17400,7 @@ $__System.registerDynamic("c5", ["7", "3b", "ba", "81", "5b"], true, function($_
   global.define = undefined;
   var lang_1 = $__require('7');
   var di_1 = $__require('3b');
-  var console_1 = $__require('ba');
+  var console_1 = $__require('c0');
   var reflection_1 = $__require('81');
   var testability_1 = $__require('5b');
   function _reflector() {
@@ -16585,7 +17414,7 @@ $__System.registerDynamic("c5", ["7", "3b", "ba", "81", "5b"], true, function($_
   return module.exports;
 });
 
-$__System.registerDynamic("6c", ["3b", "7", "8b", "7e", "c6", "7f"], true, function($__require, exports, module) {
+$__System.registerDynamic("6c", ["3b", "7", "8b", "7e", "cc", "7f"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -16611,7 +17440,7 @@ $__System.registerDynamic("6c", ["3b", "7", "8b", "7e", "c6", "7f"], true, funct
   var lang_1 = $__require('7');
   var element_1 = $__require('8b');
   var directive_resolver_1 = $__require('7e');
-  var pipe_provider_1 = $__require('c6');
+  var pipe_provider_1 = $__require('cc');
   var pipe_resolver_1 = $__require('7f');
   var ResolvedMetadataCache = (function() {
     function ResolvedMetadataCache(_directiveResolver, _pipeResolver) {
@@ -16946,13 +17775,13 @@ $__System.registerDynamic("7a", ["7", "4"], true, function($__require, exports, 
   return module.exports;
 });
 
-$__System.registerDynamic("50", ["c7", "7d", "7a", "b5"], true, function($__require, exports, module) {
+$__System.registerDynamic("50", ["cd", "7d", "7a", "bb"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var di_1 = $__require('c7');
+  var di_1 = $__require('cd');
   exports.QueryMetadata = di_1.QueryMetadata;
   exports.ContentChildrenMetadata = di_1.ContentChildrenMetadata;
   exports.ContentChildMetadata = di_1.ContentChildMetadata;
@@ -16971,10 +17800,10 @@ $__System.registerDynamic("50", ["c7", "7d", "7a", "b5"], true, function($__requ
   var view_1 = $__require('7a');
   exports.ViewMetadata = view_1.ViewMetadata;
   exports.ViewEncapsulation = view_1.ViewEncapsulation;
-  var di_2 = $__require('c7');
+  var di_2 = $__require('cd');
   var directives_2 = $__require('7d');
   var view_2 = $__require('7a');
-  var decorators_1 = $__require('b5');
+  var decorators_1 = $__require('bb');
   exports.Component = decorators_1.makeDecorator(directives_2.ComponentMetadata, function(fn) {
     return fn.View = exports.View;
   });
@@ -17250,7 +18079,7 @@ $__System.registerDynamic("5e", ["10"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("c8", [], true, function($__require, exports, module) {
+$__System.registerDynamic("ce", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -17268,7 +18097,7 @@ $__System.registerDynamic("c8", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("c9", ["7", "10", "11", "c8"], true, function($__require, exports, module) {
+$__System.registerDynamic("cf", ["7", "10", "11", "ce"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -17277,7 +18106,7 @@ $__System.registerDynamic("c9", ["7", "10", "11", "c8"], true, function($__requi
   var lang_1 = $__require('7');
   var exceptions_1 = $__require('10');
   var collection_1 = $__require('11');
-  var cd = $__require('c8');
+  var cd = $__require('ce');
   var ProtoPipes = (function() {
     function ProtoPipes(config) {
       this.config = config;
@@ -17324,7 +18153,7 @@ $__System.registerDynamic("c9", ["7", "10", "11", "c8"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("ca", ["7"], true, function($__require, exports, module) {
+$__System.registerDynamic("d0", ["7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -17349,7 +18178,7 @@ $__System.registerDynamic("ca", ["7"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("6a", ["11", "6b", "cb", "8b", "7", "10", "be", "5e", "c9", "ca", "8a"], true, function($__require, exports, module) {
+$__System.registerDynamic("6a", ["11", "6b", "d1", "8b", "7", "10", "c4", "5e", "cf", "d0", "8a"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -17373,17 +18202,17 @@ $__System.registerDynamic("6a", ["11", "6b", "cb", "8b", "7", "10", "be", "5e", 
   };
   var collection_1 = $__require('11');
   var change_detection_1 = $__require('6b');
-  var interfaces_1 = $__require('cb');
+  var interfaces_1 = $__require('d1');
   var element_1 = $__require('8b');
   var lang_1 = $__require('7');
   var exceptions_1 = $__require('10');
-  var api_1 = $__require('be');
+  var api_1 = $__require('c4');
   var view_ref_1 = $__require('5e');
-  var pipes_1 = $__require('c9');
-  var util_1 = $__require('ca');
-  var interfaces_2 = $__require('cb');
+  var pipes_1 = $__require('cf');
+  var util_1 = $__require('d0');
+  var interfaces_2 = $__require('d1');
   exports.DebugContext = interfaces_2.DebugContext;
-  var pipes_2 = $__require('c9');
+  var pipes_2 = $__require('cf');
   var view_type_1 = $__require('8a');
   var REFLECT_PREFIX = 'ng-reflect-';
   var EMPTY_CONTEXT = lang_1.CONST_EXPR(new Object());
@@ -17632,7 +18461,7 @@ $__System.registerDynamic("6a", ["11", "6b", "cb", "8b", "7", "10", "be", "5e", 
   return module.exports;
 });
 
-$__System.registerDynamic("c7", ["7", "3b", "cc"], true, function($__require, exports, module) {
+$__System.registerDynamic("cd", ["7", "3b", "d2"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -17665,7 +18494,7 @@ $__System.registerDynamic("c7", ["7", "3b", "cc"], true, function($__require, ex
   };
   var lang_1 = $__require('7');
   var di_1 = $__require('3b');
-  var metadata_1 = $__require('cc');
+  var metadata_1 = $__require('d2');
   var AttributeMetadata = (function(_super) {
     __extends(AttributeMetadata, _super);
     function AttributeMetadata(attributeName) {
@@ -17809,7 +18638,7 @@ $__System.registerDynamic("c7", ["7", "3b", "cc"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("c2", ["10"], true, function($__require, exports, module) {
+$__System.registerDynamic("c8", ["10"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -17853,7 +18682,7 @@ $__System.registerDynamic("c2", ["10"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("c4", ["11", "10", "7"], true, function($__require, exports, module) {
+$__System.registerDynamic("ca", ["11", "10", "7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -17981,7 +18810,7 @@ $__System.registerDynamic("c4", ["11", "10", "7"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("c3", [], true, function($__require, exports, module) {
+$__System.registerDynamic("c9", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -18028,7 +18857,7 @@ $__System.registerDynamic("c3", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("cd", ["6b"], true, function($__require, exports, module) {
+$__System.registerDynamic("d3", ["6b"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -18047,7 +18876,7 @@ $__System.registerDynamic("cd", ["6b"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("7d", ["7", "cc", "cd"], true, function($__require, exports, module) {
+$__System.registerDynamic("7d", ["7", "d2", "d3"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -18079,8 +18908,8 @@ $__System.registerDynamic("7d", ["7", "cc", "cd"], true, function($__require, ex
       return Reflect.metadata(k, v);
   };
   var lang_1 = $__require('7');
-  var metadata_1 = $__require('cc');
-  var change_detection_1 = $__require('cd');
+  var metadata_1 = $__require('d2');
+  var change_detection_1 = $__require('d3');
   var DirectiveMetadata = (function(_super) {
     __extends(DirectiveMetadata, _super);
     function DirectiveMetadata(_a) {
@@ -18278,7 +19107,7 @@ $__System.registerDynamic("7d", ["7", "cc", "cd"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("ce", ["7", "10", "11", "3b"], true, function($__require, exports, module) {
+$__System.registerDynamic("d4", ["7", "10", "11", "3b"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -18346,7 +19175,7 @@ $__System.registerDynamic("ce", ["7", "10", "11", "3b"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("cf", ["7", "10", "11"], true, function($__require, exports, module) {
+$__System.registerDynamic("d5", ["7", "10", "11"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -18829,7 +19658,7 @@ $__System.registerDynamic("cf", ["7", "10", "11"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("d0", ["7", "10", "11", "3b"], true, function($__require, exports, module) {
+$__System.registerDynamic("d6", ["7", "10", "11", "3b"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -18897,7 +19726,7 @@ $__System.registerDynamic("d0", ["7", "10", "11", "3b"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("d1", ["11", "7", "10"], true, function($__require, exports, module) {
+$__System.registerDynamic("d7", ["11", "7", "10"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -19188,7 +20017,7 @@ $__System.registerDynamic("d1", ["11", "7", "10"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("d2", ["d3", "11", "7", "10"], true, function($__require, exports, module) {
+$__System.registerDynamic("d8", ["d9", "11", "7", "10"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -19219,7 +20048,7 @@ $__System.registerDynamic("d2", ["d3", "11", "7", "10"], true, function($__requi
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
       return Reflect.metadata(k, v);
   };
-  var decorators_1 = $__require('d3');
+  var decorators_1 = $__require('d9');
   var collection_1 = $__require('11');
   var lang_1 = $__require('7');
   var exceptions_1 = $__require('10');
@@ -19638,7 +20467,7 @@ $__System.registerDynamic("d2", ["d3", "11", "7", "10"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("d4", ["d3", "7", "10", "11", "d2", "81", "71"], true, function($__require, exports, module) {
+$__System.registerDynamic("da", ["d9", "7", "10", "11", "d8", "81", "71"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -19669,11 +20498,11 @@ $__System.registerDynamic("d4", ["d3", "7", "10", "11", "d2", "81", "71"], true,
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
       return Reflect.metadata(k, v);
   };
-  var decorators_1 = $__require('d3');
+  var decorators_1 = $__require('d9');
   var lang_1 = $__require('7');
   var exceptions_1 = $__require('10');
   var collection_1 = $__require('11');
-  var lexer_1 = $__require('d2');
+  var lexer_1 = $__require('d8');
   var reflection_1 = $__require('81');
   var ast_1 = $__require('71');
   var _implicitReceiver = new ast_1.ImplicitReceiver();
@@ -20274,7 +21103,7 @@ $__System.registerDynamic("d4", ["d3", "7", "10", "11", "d2", "81", "71"], true,
   return module.exports;
 });
 
-$__System.registerDynamic("cb", [], true, function($__require, exports, module) {
+$__System.registerDynamic("d1", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -20318,7 +21147,7 @@ $__System.registerDynamic("cb", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("d5", ["7", "11"], true, function($__require, exports, module) {
+$__System.registerDynamic("db", ["7", "11"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -20501,15 +21330,15 @@ $__System.registerDynamic("d5", ["7", "11"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("d6", ["7", "d7", "d8", "88", "10"], true, function($__require, exports, module) {
+$__System.registerDynamic("dc", ["7", "dd", "de", "88", "10"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   var lang_1 = $__require('7');
-  var codegen_facade_1 = $__require('d7');
-  var proto_record_1 = $__require('d8');
+  var codegen_facade_1 = $__require('dd');
+  var proto_record_1 = $__require('de');
   var constants_1 = $__require('88');
   var exceptions_1 = $__require('10');
   var CodegenLogicUtil = (function() {
@@ -20724,7 +21553,7 @@ $__System.registerDynamic("d6", ["7", "d7", "d8", "88", "10"], true, function($_
   return module.exports;
 });
 
-$__System.registerDynamic("d7", [], true, function($__require, exports, module) {
+$__System.registerDynamic("dd", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -21231,7 +22060,7 @@ $__System.registerDynamic("71", ["11", "4"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("d9", [], true, function($__require, exports, module) {
+$__System.registerDynamic("df", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -21251,7 +22080,7 @@ $__System.registerDynamic("d9", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("da", ["7", "11", "d8"], true, function($__require, exports, module) {
+$__System.registerDynamic("e0", ["7", "11", "de"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -21259,7 +22088,7 @@ $__System.registerDynamic("da", ["7", "11", "d8"], true, function($__require, ex
   global.define = undefined;
   var lang_1 = $__require('7');
   var collection_1 = $__require('11');
-  var proto_record_1 = $__require('d8');
+  var proto_record_1 = $__require('de');
   function coalesce(srcRecords) {
     var dstRecords = [];
     var excludedIdxs = [];
@@ -21365,7 +22194,7 @@ $__System.registerDynamic("da", ["7", "11", "d8"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("db", ["7", "10", "11", "71", "87", "dc", "dd", "d9", "da", "d8"], true, function($__require, exports, module) {
+$__System.registerDynamic("e1", ["7", "10", "11", "71", "87", "e2", "e3", "df", "e0", "de"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -21376,11 +22205,11 @@ $__System.registerDynamic("db", ["7", "10", "11", "71", "87", "dc", "dd", "d9", 
   var collection_1 = $__require('11');
   var ast_1 = $__require('71');
   var change_detection_util_1 = $__require('87');
-  var dynamic_change_detector_1 = $__require('dc');
-  var directive_record_1 = $__require('dd');
-  var event_binding_1 = $__require('d9');
-  var coalesce_1 = $__require('da');
-  var proto_record_1 = $__require('d8');
+  var dynamic_change_detector_1 = $__require('e2');
+  var directive_record_1 = $__require('e3');
+  var event_binding_1 = $__require('df');
+  var coalesce_1 = $__require('e0');
+  var proto_record_1 = $__require('de');
   var DynamicProtoChangeDetector = (function() {
     function DynamicProtoChangeDetector(_definition) {
       this._definition = _definition;
@@ -21772,7 +22601,7 @@ $__System.registerDynamic("db", ["7", "10", "11", "71", "87", "dc", "dd", "d9", 
   return module.exports;
 });
 
-$__System.registerDynamic("85", ["7", "10", "11", "86", "87", "d8", "d5", "d6", "d7", "88", "db"], true, function($__require, exports, module) {
+$__System.registerDynamic("85", ["7", "10", "11", "86", "87", "de", "db", "dc", "dd", "88", "e1"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -21783,12 +22612,12 @@ $__System.registerDynamic("85", ["7", "10", "11", "86", "87", "d8", "d5", "d6", 
   var collection_1 = $__require('11');
   var abstract_change_detector_1 = $__require('86');
   var change_detection_util_1 = $__require('87');
-  var proto_record_1 = $__require('d8');
-  var codegen_name_util_1 = $__require('d5');
-  var codegen_logic_util_1 = $__require('d6');
-  var codegen_facade_1 = $__require('d7');
+  var proto_record_1 = $__require('de');
+  var codegen_name_util_1 = $__require('db');
+  var codegen_logic_util_1 = $__require('dc');
+  var codegen_facade_1 = $__require('dd');
   var constants_1 = $__require('88');
-  var proto_change_detector_1 = $__require('db');
+  var proto_change_detector_1 = $__require('e1');
   var IS_CHANGED_LOCAL = "isChanged";
   var CHANGES_LOCAL = "changes";
   var ChangeDetectorJITGenerator = (function() {
@@ -22075,7 +22904,7 @@ $__System.registerDynamic("85", ["7", "10", "11", "86", "87", "d8", "d5", "d6", 
   return module.exports;
 });
 
-$__System.registerDynamic("de", ["85"], true, function($__require, exports, module) {
+$__System.registerDynamic("e4", ["85"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -22103,7 +22932,7 @@ $__System.registerDynamic("de", ["85"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("df", ["10"], true, function($__require, exports, module) {
+$__System.registerDynamic("e5", ["10"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -22167,7 +22996,7 @@ $__System.registerDynamic("df", ["10"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("e0", ["7", "10", "11"], true, function($__require, exports, module) {
+$__System.registerDynamic("e6", ["7", "10", "11"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -22216,7 +23045,7 @@ $__System.registerDynamic("e0", ["7", "10", "11"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("e1", [], true, function($__require, exports, module) {
+$__System.registerDynamic("e7", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -22230,7 +23059,7 @@ $__System.registerDynamic("e1", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("86", ["7", "11", "87", "e2", "df", "e0", "88", "bb", "e1", "9"], true, function($__require, exports, module) {
+$__System.registerDynamic("86", ["7", "11", "87", "e8", "e5", "e6", "88", "c1", "e7", "9"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -22239,12 +23068,12 @@ $__System.registerDynamic("86", ["7", "11", "87", "e2", "df", "e0", "88", "bb", 
   var lang_1 = $__require('7');
   var collection_1 = $__require('11');
   var change_detection_util_1 = $__require('87');
-  var change_detector_ref_1 = $__require('e2');
-  var exceptions_1 = $__require('df');
-  var locals_1 = $__require('e0');
+  var change_detector_ref_1 = $__require('e8');
+  var exceptions_1 = $__require('e5');
+  var locals_1 = $__require('e6');
   var constants_1 = $__require('88');
-  var profile_1 = $__require('bb');
-  var observable_facade_1 = $__require('e1');
+  var profile_1 = $__require('c1');
+  var observable_facade_1 = $__require('e7');
   var async_1 = $__require('9');
   var _scope_check = profile_1.wtfCreateScope("ChangeDetector#check(ascii id, bool throwOnChange)");
   var _Context = (function() {
@@ -22534,7 +23363,7 @@ $__System.registerDynamic("86", ["7", "11", "87", "e2", "df", "e0", "88", "bb", 
   return module.exports;
 });
 
-$__System.registerDynamic("d8", [], true, function($__require, exports, module) {
+$__System.registerDynamic("de", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -22611,7 +23440,7 @@ $__System.registerDynamic("d8", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("dc", ["7", "10", "11", "86", "87", "88", "d8", "81", "9"], true, function($__require, exports, module) {
+$__System.registerDynamic("e2", ["7", "10", "11", "86", "87", "88", "de", "81", "9"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -22632,7 +23461,7 @@ $__System.registerDynamic("dc", ["7", "10", "11", "86", "87", "88", "d8", "81", 
   var abstract_change_detector_1 = $__require('86');
   var change_detection_util_1 = $__require('87');
   var constants_1 = $__require('88');
-  var proto_record_1 = $__require('d8');
+  var proto_record_1 = $__require('de');
   var reflection_1 = $__require('81');
   var async_1 = $__require('9');
   var DynamicChangeDetector = (function(_super) {
@@ -23041,7 +23870,7 @@ $__System.registerDynamic("dc", ["7", "10", "11", "86", "87", "88", "d8", "81", 
   return module.exports;
 });
 
-$__System.registerDynamic("e2", ["88"], true, function($__require, exports, module) {
+$__System.registerDynamic("e8", ["88"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -23091,7 +23920,7 @@ $__System.registerDynamic("e2", ["88"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("e3", [], true, function($__require, exports, module) {
+$__System.registerDynamic("e9", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -23105,7 +23934,7 @@ $__System.registerDynamic("e3", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("e4", ["7"], true, function($__require, exports, module) {
+$__System.registerDynamic("ea", ["7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -23269,7 +24098,7 @@ $__System.registerDynamic("88", ["7"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("dd", ["7", "88"], true, function($__require, exports, module) {
+$__System.registerDynamic("e3", ["7", "88"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -23328,7 +24157,7 @@ $__System.registerDynamic("dd", ["7", "88"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("87", ["7", "10", "11", "88", "e3", "e4", "dd"], true, function($__require, exports, module) {
+$__System.registerDynamic("87", ["7", "10", "11", "88", "e9", "ea", "e3"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -23338,9 +24167,9 @@ $__System.registerDynamic("87", ["7", "10", "11", "88", "e3", "e4", "dd"], true,
   var exceptions_1 = $__require('10');
   var collection_1 = $__require('11');
   var constants_1 = $__require('88');
-  var pipe_lifecycle_reflector_1 = $__require('e3');
-  var binding_record_1 = $__require('e4');
-  var directive_record_1 = $__require('dd');
+  var pipe_lifecycle_reflector_1 = $__require('e9');
+  var binding_record_1 = $__require('ea');
+  var directive_record_1 = $__require('e3');
   var WrappedValue = (function() {
     function WrappedValue(wrapped) {
       this.wrapped = wrapped;
@@ -23561,16 +24390,16 @@ $__System.registerDynamic("87", ["7", "10", "11", "88", "e3", "e4", "dd"], true,
   return module.exports;
 });
 
-$__System.registerDynamic("6b", ["ce", "cf", "d0", "d1", "7", "71", "d2", "d4", "e0", "df", "cb", "88", "db", "de", "e4", "dd", "dc", "e2", "87"], true, function($__require, exports, module) {
+$__System.registerDynamic("6b", ["d4", "d5", "d6", "d7", "7", "71", "d8", "da", "e6", "e5", "d1", "88", "e1", "e4", "ea", "e3", "e2", "e8", "87"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var iterable_differs_1 = $__require('ce');
-  var default_iterable_differ_1 = $__require('cf');
-  var keyvalue_differs_1 = $__require('d0');
-  var default_keyvalue_differ_1 = $__require('d1');
+  var iterable_differs_1 = $__require('d4');
+  var default_iterable_differ_1 = $__require('d5');
+  var keyvalue_differs_1 = $__require('d6');
+  var default_keyvalue_differ_1 = $__require('d7');
   var lang_1 = $__require('7');
   var ast_1 = $__require('71');
   exports.ASTWithSource = ast_1.ASTWithSource;
@@ -23579,40 +24408,40 @@ $__System.registerDynamic("6b", ["ce", "cf", "d0", "d1", "7", "71", "d2", "d4", 
   exports.PropertyRead = ast_1.PropertyRead;
   exports.LiteralArray = ast_1.LiteralArray;
   exports.ImplicitReceiver = ast_1.ImplicitReceiver;
-  var lexer_1 = $__require('d2');
+  var lexer_1 = $__require('d8');
   exports.Lexer = lexer_1.Lexer;
-  var parser_1 = $__require('d4');
+  var parser_1 = $__require('da');
   exports.Parser = parser_1.Parser;
-  var locals_1 = $__require('e0');
+  var locals_1 = $__require('e6');
   exports.Locals = locals_1.Locals;
-  var exceptions_1 = $__require('df');
+  var exceptions_1 = $__require('e5');
   exports.DehydratedException = exceptions_1.DehydratedException;
   exports.ExpressionChangedAfterItHasBeenCheckedException = exceptions_1.ExpressionChangedAfterItHasBeenCheckedException;
   exports.ChangeDetectionError = exceptions_1.ChangeDetectionError;
-  var interfaces_1 = $__require('cb');
+  var interfaces_1 = $__require('d1');
   exports.ChangeDetectorDefinition = interfaces_1.ChangeDetectorDefinition;
   exports.DebugContext = interfaces_1.DebugContext;
   exports.ChangeDetectorGenConfig = interfaces_1.ChangeDetectorGenConfig;
   var constants_1 = $__require('88');
   exports.ChangeDetectionStrategy = constants_1.ChangeDetectionStrategy;
   exports.CHANGE_DETECTION_STRATEGY_VALUES = constants_1.CHANGE_DETECTION_STRATEGY_VALUES;
-  var proto_change_detector_1 = $__require('db');
+  var proto_change_detector_1 = $__require('e1');
   exports.DynamicProtoChangeDetector = proto_change_detector_1.DynamicProtoChangeDetector;
-  var jit_proto_change_detector_1 = $__require('de');
+  var jit_proto_change_detector_1 = $__require('e4');
   exports.JitProtoChangeDetector = jit_proto_change_detector_1.JitProtoChangeDetector;
-  var binding_record_1 = $__require('e4');
+  var binding_record_1 = $__require('ea');
   exports.BindingRecord = binding_record_1.BindingRecord;
   exports.BindingTarget = binding_record_1.BindingTarget;
-  var directive_record_1 = $__require('dd');
+  var directive_record_1 = $__require('e3');
   exports.DirectiveIndex = directive_record_1.DirectiveIndex;
   exports.DirectiveRecord = directive_record_1.DirectiveRecord;
-  var dynamic_change_detector_1 = $__require('dc');
+  var dynamic_change_detector_1 = $__require('e2');
   exports.DynamicChangeDetector = dynamic_change_detector_1.DynamicChangeDetector;
-  var change_detector_ref_1 = $__require('e2');
+  var change_detector_ref_1 = $__require('e8');
   exports.ChangeDetectorRef = change_detector_ref_1.ChangeDetectorRef;
-  var iterable_differs_2 = $__require('ce');
+  var iterable_differs_2 = $__require('d4');
   exports.IterableDiffers = iterable_differs_2.IterableDiffers;
-  var keyvalue_differs_2 = $__require('d0');
+  var keyvalue_differs_2 = $__require('d6');
   exports.KeyValueDiffers = keyvalue_differs_2.KeyValueDiffers;
   var change_detection_util_1 = $__require('87');
   exports.WrappedValue = change_detection_util_1.WrappedValue;
@@ -23685,7 +24514,7 @@ $__System.registerDynamic("2b", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("e5", ["e6", "e7"], true, function($__require, exports, module) {
+$__System.registerDynamic("eb", ["ec", "b8"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -23699,8 +24528,8 @@ $__System.registerDynamic("e5", ["e6", "e7"], true, function($__require, exports
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var Subscription_1 = $__require('e6');
-  var Subscriber_1 = $__require('e7');
+  var Subscription_1 = $__require('ec');
+  var Subscriber_1 = $__require('b8');
   var SubjectSubscription = (function(_super) {
     __extends(SubjectSubscription, _super);
     function SubjectSubscription(subject, observer) {
@@ -23735,7 +24564,7 @@ $__System.registerDynamic("e5", ["e6", "e7"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("e8", ["b0", "e7", "e6", "e5", "e9"], true, function($__require, exports, module) {
+$__System.registerDynamic("ed", ["b0", "b8", "ec", "eb", "ee"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -23750,10 +24579,10 @@ $__System.registerDynamic("e8", ["b0", "e7", "e6", "e5", "e9"], true, function($
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
   var Observable_1 = $__require('b0');
-  var Subscriber_1 = $__require('e7');
-  var Subscription_1 = $__require('e6');
-  var SubjectSubscription_1 = $__require('e5');
-  var rxSubscriber_1 = $__require('e9');
+  var Subscriber_1 = $__require('b8');
+  var Subscription_1 = $__require('ec');
+  var SubjectSubscription_1 = $__require('eb');
+  var rxSubscriber_1 = $__require('ee');
   var subscriptionAdd = Subscription_1.Subscription.prototype.add;
   var subscriptionRemove = Subscription_1.Subscription.prototype.remove;
   var subscriptionUnsubscribe = Subscription_1.Subscription.prototype.unsubscribe;
@@ -23913,7 +24742,7 @@ $__System.registerDynamic("e8", ["b0", "e7", "e6", "e5", "e9"], true, function($
   return module.exports;
 });
 
-$__System.registerDynamic("ea", ["e6"], true, function($__require, exports, module) {
+$__System.registerDynamic("ef", ["ec"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -23927,7 +24756,7 @@ $__System.registerDynamic("ea", ["e6"], true, function($__require, exports, modu
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var Subscription_1 = $__require('e6');
+  var Subscription_1 = $__require('ec');
   var QueueAction = (function(_super) {
     __extends(QueueAction, _super);
     function QueueAction(scheduler, work) {
@@ -23970,7 +24799,7 @@ $__System.registerDynamic("ea", ["e6"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("eb", ["ea"], true, function($__require, exports, module) {
+$__System.registerDynamic("f0", ["ef"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -23984,7 +24813,7 @@ $__System.registerDynamic("eb", ["ea"], true, function($__require, exports, modu
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var QueueAction_1 = $__require('ea');
+  var QueueAction_1 = $__require('ef');
   var FutureAction = (function(_super) {
     __extends(FutureAction, _super);
     function FutureAction(scheduler, work) {
@@ -24030,13 +24859,13 @@ $__System.registerDynamic("eb", ["ea"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("ec", ["ea", "eb"], true, function($__require, exports, module) {
+$__System.registerDynamic("f1", ["ef", "f0"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var QueueAction_1 = $__require('ea');
-  var FutureAction_1 = $__require('eb');
+  var QueueAction_1 = $__require('ef');
+  var FutureAction_1 = $__require('f0');
   var QueueScheduler = (function() {
     function QueueScheduler() {
       this.actions = [];
@@ -24076,18 +24905,18 @@ $__System.registerDynamic("ec", ["ea", "eb"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("ed", ["ec"], true, function($__require, exports, module) {
+$__System.registerDynamic("f2", ["f1"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var QueueScheduler_1 = $__require('ec');
+  var QueueScheduler_1 = $__require('f1');
   exports.queue = new QueueScheduler_1.QueueScheduler();
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("ee", ["b0", "e6", "ed"], true, function($__require, exports, module) {
+$__System.registerDynamic("f3", ["b0", "ec", "f2"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -24102,8 +24931,8 @@ $__System.registerDynamic("ee", ["b0", "e6", "ed"], true, function($__require, e
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
   var Observable_1 = $__require('b0');
-  var Subscription_1 = $__require('e6');
-  var queue_1 = $__require('ed');
+  var Subscription_1 = $__require('ec');
+  var queue_1 = $__require('f2');
   var PromiseObservable = (function(_super) {
     __extends(PromiseObservable, _super);
     function PromiseObservable(promise, scheduler) {
@@ -24191,12 +25020,12 @@ $__System.registerDynamic("ee", ["b0", "e6", "ed"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("ef", ["f0"], true, function($__require, exports, module) {
+$__System.registerDynamic("f4", ["f5"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var root_1 = $__require('f0');
+  var root_1 = $__require('f5');
   function toPromise(PromiseCtor) {
     var _this = this;
     if (!PromiseCtor) {
@@ -24225,7 +25054,457 @@ $__System.registerDynamic("ef", ["f0"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("9", ["7", "2b", "e8", "ee", "ef", "b0"], true, function($__require, exports, module) {
+$__System.registerDynamic("f6", [], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  function throwError(e) {
+    throw e;
+  }
+  exports.throwError = throwError;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("f7", [], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  function tryOrOnError(target) {
+    function tryCatcher() {
+      try {
+        tryCatcher.target.apply(this, arguments);
+      } catch (e) {
+        this.error(e);
+      }
+    }
+    tryCatcher.target = target;
+    return tryCatcher;
+  }
+  exports.tryOrOnError = tryOrOnError;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("f8", [], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  function noop() {}
+  exports.noop = noop;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("ec", ["f8"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var noop_1 = $__require('f8');
+  var Subscription = (function() {
+    function Subscription(_unsubscribe) {
+      this.isUnsubscribed = false;
+      if (_unsubscribe) {
+        this._unsubscribe = _unsubscribe;
+      }
+    }
+    Subscription.prototype._unsubscribe = function() {
+      noop_1.noop();
+    };
+    Subscription.prototype.unsubscribe = function() {
+      if (this.isUnsubscribed) {
+        return;
+      }
+      this.isUnsubscribed = true;
+      var unsubscribe = this._unsubscribe;
+      var subscriptions = this._subscriptions;
+      this._subscriptions = void 0;
+      if (unsubscribe) {
+        unsubscribe.call(this);
+      }
+      if (subscriptions != null) {
+        var index = -1;
+        var len = subscriptions.length;
+        while (++index < len) {
+          subscriptions[index].unsubscribe();
+        }
+      }
+    };
+    Subscription.prototype.add = function(subscription) {
+      if (!subscription || (subscription === this) || (subscription === Subscription.EMPTY)) {
+        return;
+      }
+      var sub = subscription;
+      switch (typeof subscription) {
+        case 'function':
+          sub = new Subscription(subscription);
+        case 'object':
+          if (sub.isUnsubscribed || typeof sub.unsubscribe !== 'function') {
+            break;
+          } else if (this.isUnsubscribed) {
+            sub.unsubscribe();
+          } else {
+            var subscriptions = this._subscriptions || (this._subscriptions = []);
+            subscriptions.push(sub);
+          }
+          break;
+        default:
+          throw new Error('Unrecognized subscription ' + subscription + ' added to Subscription.');
+      }
+    };
+    Subscription.prototype.remove = function(subscription) {
+      if (subscription == null || (subscription === this) || (subscription === Subscription.EMPTY)) {
+        return;
+      }
+      var subscriptions = this._subscriptions;
+      if (subscriptions) {
+        var subscriptionIndex = subscriptions.indexOf(subscription);
+        if (subscriptionIndex !== -1) {
+          subscriptions.splice(subscriptionIndex, 1);
+        }
+      }
+    };
+    Subscription.EMPTY = (function(empty) {
+      empty.isUnsubscribed = true;
+      return empty;
+    }(new Subscription()));
+    return Subscription;
+  })();
+  exports.Subscription = Subscription;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("b8", ["f8", "f6", "f7", "ec", "ee"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var __extends = (this && this.__extends) || function(d, b) {
+    for (var p in b)
+      if (b.hasOwnProperty(p))
+        d[p] = b[p];
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+  var noop_1 = $__require('f8');
+  var throwError_1 = $__require('f6');
+  var tryOrOnError_1 = $__require('f7');
+  var Subscription_1 = $__require('ec');
+  var rxSubscriber_1 = $__require('ee');
+  var Subscriber = (function(_super) {
+    __extends(Subscriber, _super);
+    function Subscriber(destination) {
+      _super.call(this);
+      this.destination = destination;
+      this._isUnsubscribed = false;
+      if (!this.destination) {
+        return;
+      }
+      var subscription = destination._subscription;
+      if (subscription) {
+        this._subscription = subscription;
+      } else if (destination instanceof Subscriber) {
+        this._subscription = destination;
+      }
+    }
+    Subscriber.prototype[rxSubscriber_1.rxSubscriber] = function() {
+      return this;
+    };
+    Object.defineProperty(Subscriber.prototype, "isUnsubscribed", {
+      get: function() {
+        var subscription = this._subscription;
+        if (subscription) {
+          return this._isUnsubscribed || subscription.isUnsubscribed;
+        } else {
+          return this._isUnsubscribed;
+        }
+      },
+      set: function(value) {
+        var subscription = this._subscription;
+        if (subscription) {
+          subscription.isUnsubscribed = Boolean(value);
+        } else {
+          this._isUnsubscribed = Boolean(value);
+        }
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Subscriber.create = function(next, error, complete) {
+      var subscriber = new Subscriber();
+      subscriber._next = (typeof next === 'function') && tryOrOnError_1.tryOrOnError(next) || noop_1.noop;
+      subscriber._error = (typeof error === 'function') && error || throwError_1.throwError;
+      subscriber._complete = (typeof complete === 'function') && complete || noop_1.noop;
+      return subscriber;
+    };
+    Subscriber.prototype.add = function(sub) {
+      var _subscription = this._subscription;
+      if (_subscription) {
+        _subscription.add(sub);
+      } else {
+        _super.prototype.add.call(this, sub);
+      }
+    };
+    Subscriber.prototype.remove = function(sub) {
+      if (this._subscription) {
+        this._subscription.remove(sub);
+      } else {
+        _super.prototype.remove.call(this, sub);
+      }
+    };
+    Subscriber.prototype.unsubscribe = function() {
+      if (this._isUnsubscribed) {
+        return;
+      } else if (this._subscription) {
+        this._isUnsubscribed = true;
+      } else {
+        _super.prototype.unsubscribe.call(this);
+      }
+    };
+    Subscriber.prototype._next = function(value) {
+      var destination = this.destination;
+      if (destination.next) {
+        destination.next(value);
+      }
+    };
+    Subscriber.prototype._error = function(err) {
+      var destination = this.destination;
+      if (destination.error) {
+        destination.error(err);
+      }
+    };
+    Subscriber.prototype._complete = function() {
+      var destination = this.destination;
+      if (destination.complete) {
+        destination.complete();
+      }
+    };
+    Subscriber.prototype.next = function(value) {
+      if (!this.isUnsubscribed) {
+        this._next(value);
+      }
+    };
+    Subscriber.prototype.error = function(err) {
+      if (!this.isUnsubscribed) {
+        this._error(err);
+        this.unsubscribe();
+      }
+    };
+    Subscriber.prototype.complete = function() {
+      if (!this.isUnsubscribed) {
+        this._complete();
+        this.unsubscribe();
+      }
+    };
+    return Subscriber;
+  })(Subscription_1.Subscription);
+  exports.Subscriber = Subscriber;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("f5", [], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var objectTypes = {
+    'boolean': false,
+    'function': true,
+    'object': true,
+    'number': false,
+    'string': false,
+    'undefined': false
+  };
+  exports.root = (objectTypes[typeof self] && self) || (objectTypes[typeof window] && window);
+  var freeExports = objectTypes[typeof exports] && exports && !exports.nodeType && exports;
+  var freeModule = objectTypes[typeof module] && module && !module.nodeType && module;
+  var freeGlobal = objectTypes[typeof global] && global;
+  if (freeGlobal && (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal)) {
+    exports.root = freeGlobal;
+  }
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("f9", ["f5"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var root_1 = $__require('f5');
+  function polyfillSymbol(root) {
+    var Symbol = ensureSymbol(root);
+    ensureIterator(Symbol, root);
+    ensureObservable(Symbol);
+    ensureFor(Symbol);
+    return Symbol;
+  }
+  exports.polyfillSymbol = polyfillSymbol;
+  function ensureFor(Symbol) {
+    if (!Symbol.for) {
+      Symbol.for = symbolForPolyfill;
+    }
+  }
+  exports.ensureFor = ensureFor;
+  var id = 0;
+  function ensureSymbol(root) {
+    if (!root.Symbol) {
+      root.Symbol = function symbolFuncPolyfill(description) {
+        return "@@Symbol(" + description + "):" + id++;
+      };
+    }
+    return root.Symbol;
+  }
+  exports.ensureSymbol = ensureSymbol;
+  function symbolForPolyfill(key) {
+    return '@@' + key;
+  }
+  exports.symbolForPolyfill = symbolForPolyfill;
+  function ensureIterator(Symbol, root) {
+    if (!Symbol.iterator) {
+      if (typeof Symbol.for === 'function') {
+        Symbol.iterator = Symbol.for('iterator');
+      } else if (root.Set && typeof new root.Set()['@@iterator'] === 'function') {
+        Symbol.iterator = '@@iterator';
+      } else if (root.Map) {
+        var keys = Object.getOwnPropertyNames(root.Map.prototype);
+        for (var i = 0; i < keys.length; ++i) {
+          var key = keys[i];
+          if (key !== 'entries' && key !== 'size' && root.Map.prototype[key] === root.Map.prototype['entries']) {
+            Symbol.iterator = key;
+            break;
+          }
+        }
+      } else {
+        Symbol.iterator = '@@iterator';
+      }
+    }
+  }
+  exports.ensureIterator = ensureIterator;
+  function ensureObservable(Symbol) {
+    if (!Symbol.observable) {
+      if (typeof Symbol.for === 'function') {
+        Symbol.observable = Symbol.for('observable');
+      } else {
+        Symbol.observable = '@@observable';
+      }
+    }
+  }
+  exports.ensureObservable = ensureObservable;
+  exports.SymbolShim = polyfillSymbol(root_1.root);
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("ee", ["f9"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var SymbolShim_1 = $__require('f9');
+  exports.rxSubscriber = SymbolShim_1.SymbolShim.for('rxSubscriber');
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("b0", ["b8", "f5", "f9", "ee"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var Subscriber_1 = $__require('b8');
+  var root_1 = $__require('f5');
+  var SymbolShim_1 = $__require('f9');
+  var rxSubscriber_1 = $__require('ee');
+  var Observable = (function() {
+    function Observable(subscribe) {
+      this._isScalar = false;
+      if (subscribe) {
+        this._subscribe = subscribe;
+      }
+    }
+    Observable.prototype.lift = function(operator) {
+      var observable = new Observable();
+      observable.source = this;
+      observable.operator = operator;
+      return observable;
+    };
+    Observable.prototype[SymbolShim_1.SymbolShim.observable] = function() {
+      return this;
+    };
+    Observable.prototype.subscribe = function(observerOrNext, error, complete) {
+      var subscriber;
+      if (observerOrNext && typeof observerOrNext === 'object') {
+        if (observerOrNext instanceof Subscriber_1.Subscriber) {
+          subscriber = observerOrNext;
+        } else if (observerOrNext[rxSubscriber_1.rxSubscriber]) {
+          subscriber = observerOrNext[rxSubscriber_1.rxSubscriber]();
+        } else {
+          subscriber = new Subscriber_1.Subscriber(observerOrNext);
+        }
+      } else {
+        var next = observerOrNext;
+        subscriber = Subscriber_1.Subscriber.create(next, error, complete);
+      }
+      subscriber.add(this._subscribe(subscriber));
+      return subscriber;
+    };
+    Observable.prototype.forEach = function(next, thisArg, PromiseCtor) {
+      if (!PromiseCtor) {
+        if (root_1.root.Rx && root_1.root.Rx.config && root_1.root.Rx.config.Promise) {
+          PromiseCtor = root_1.root.Rx.config.Promise;
+        } else if (root_1.root.Promise) {
+          PromiseCtor = root_1.root.Promise;
+        }
+      }
+      if (!PromiseCtor) {
+        throw new Error('no Promise impl found');
+      }
+      var nextHandler;
+      if (thisArg) {
+        nextHandler = function nextHandlerFn(value) {
+          var _a = nextHandlerFn,
+              thisArg = _a.thisArg,
+              next = _a.next;
+          return next.call(thisArg, value);
+        };
+        nextHandler.thisArg = thisArg;
+        nextHandler.next = next;
+      } else {
+        nextHandler = next;
+      }
+      var promiseCallback = function promiseCallbackFn(resolve, reject) {
+        var _a = promiseCallbackFn,
+            source = _a.source,
+            nextHandler = _a.nextHandler;
+        source.subscribe(nextHandler, reject, resolve);
+      };
+      promiseCallback.source = this;
+      promiseCallback.nextHandler = nextHandler;
+      return new PromiseCtor(promiseCallback);
+    };
+    Observable.prototype._subscribe = function(subscriber) {
+      return this.source._subscribe(this.operator.call(subscriber));
+    };
+    Observable.create = function(subscribe) {
+      return new Observable(subscribe);
+    };
+    return Observable;
+  })();
+  exports.Observable = Observable;
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.registerDynamic("9", ["7", "2b", "ed", "f3", "f4", "b0"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -24244,12 +25523,12 @@ $__System.registerDynamic("9", ["7", "2b", "e8", "ee", "ef", "b0"], true, functi
   var promise_1 = $__require('2b');
   exports.PromiseWrapper = promise_1.PromiseWrapper;
   exports.Promise = promise_1.Promise;
-  var Subject_1 = $__require('e8');
-  var fromPromise_1 = $__require('ee');
-  var toPromise_1 = $__require('ef');
+  var Subject_1 = $__require('ed');
+  var fromPromise_1 = $__require('f3');
+  var toPromise_1 = $__require('f4');
   var Observable_1 = $__require('b0');
   exports.Observable = Observable_1.Observable;
-  var Subject_2 = $__require('e8');
+  var Subject_2 = $__require('ed');
   exports.Subject = Subject_2.Subject;
   var TimerWrapper = (function() {
     function TimerWrapper() {}
@@ -24397,7 +25676,7 @@ $__System.registerDynamic("9", ["7", "2b", "e8", "ee", "ef", "b0"], true, functi
   return module.exports;
 });
 
-$__System.registerDynamic("c1", ["11", "7", "9"], true, function($__require, exports, module) {
+$__System.registerDynamic("c7", ["11", "7", "9"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -24470,7 +25749,7 @@ $__System.registerDynamic("c1", ["11", "7", "9"], true, function($__require, exp
   return module.exports;
 });
 
-$__System.registerDynamic("c6", ["f1", "3b"], true, function($__require, exports, module) {
+$__System.registerDynamic("cc", ["fa", "3b"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -24485,7 +25764,7 @@ $__System.registerDynamic("c6", ["f1", "3b"], true, function($__require, exports
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var provider_1 = $__require('f1');
+  var provider_1 = $__require('fa');
   var di_1 = $__require('3b');
   var PipeProvider = (function(_super) {
     __extends(PipeProvider, _super);
@@ -24506,7 +25785,7 @@ $__System.registerDynamic("c6", ["f1", "3b"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("8b", ["7", "10", "11", "3b", "f1", "f2", "c7", "8a", "c2", "c4", "be", "c3", "7d", "6b", "c1", "81", "c6"], true, function($__require, exports, module) {
+$__System.registerDynamic("8b", ["7", "10", "11", "3b", "fa", "fb", "cd", "8a", "c8", "ca", "c4", "c9", "7d", "6b", "c7", "81", "cc"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -24525,22 +25804,22 @@ $__System.registerDynamic("8b", ["7", "10", "11", "3b", "f1", "f2", "c7", "8a", 
   var exceptions_1 = $__require('10');
   var collection_1 = $__require('11');
   var di_1 = $__require('3b');
-  var provider_1 = $__require('f1');
-  var injector_1 = $__require('f2');
-  var provider_2 = $__require('f1');
-  var di_2 = $__require('c7');
+  var provider_1 = $__require('fa');
+  var injector_1 = $__require('fb');
+  var provider_2 = $__require('fa');
+  var di_2 = $__require('cd');
   var view_type_1 = $__require('8a');
-  var element_ref_1 = $__require('c2');
-  var view_container_ref_1 = $__require('c4');
-  var element_ref_2 = $__require('c2');
-  var api_1 = $__require('be');
-  var template_ref_1 = $__require('c3');
+  var element_ref_1 = $__require('c8');
+  var view_container_ref_1 = $__require('ca');
+  var element_ref_2 = $__require('c8');
+  var api_1 = $__require('c4');
+  var template_ref_1 = $__require('c9');
   var directives_1 = $__require('7d');
   var change_detection_1 = $__require('6b');
-  var query_list_1 = $__require('c1');
+  var query_list_1 = $__require('c7');
   var reflection_1 = $__require('81');
-  var pipe_provider_1 = $__require('c6');
-  var view_container_ref_2 = $__require('c4');
+  var pipe_provider_1 = $__require('cc');
+  var view_container_ref_2 = $__require('ca');
   var _staticKeys;
   var StaticKeys = (function() {
     function StaticKeys() {
@@ -25307,7 +26586,7 @@ $__System.registerDynamic("8b", ["7", "10", "11", "3b", "f1", "f2", "c7", "8a", 
   return module.exports;
 });
 
-$__System.registerDynamic("be", [], true, function($__require, exports, module) {
+$__System.registerDynamic("c4", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -25346,7 +26625,7 @@ $__System.registerDynamic("be", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("f3", ["7"], true, function($__require, exports, module) {
+$__System.registerDynamic("fc", ["7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -25391,13 +26670,13 @@ $__System.registerDynamic("f3", ["7"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("bb", ["f3"], true, function($__require, exports, module) {
+$__System.registerDynamic("c1", ["fc"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var impl = $__require('f3');
+  var impl = $__require('fc');
   exports.wtfEnabled = impl.detectWTF();
   function noopScope(arg0, arg1) {
     return null;
@@ -25418,7 +26697,7 @@ $__System.registerDynamic("bb", ["f3"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("b5", ["7"], true, function($__require, exports, module) {
+$__System.registerDynamic("bb", ["7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -25586,14 +26865,14 @@ $__System.registerDynamic("b5", ["7"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("d3", ["cc", "b5"], true, function($__require, exports, module) {
+$__System.registerDynamic("d9", ["d2", "bb"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var metadata_1 = $__require('cc');
-  var decorators_1 = $__require('b5');
+  var metadata_1 = $__require('d2');
+  var decorators_1 = $__require('bb');
   exports.Inject = decorators_1.makeParamDecorator(metadata_1.InjectMetadata);
   exports.Optional = decorators_1.makeParamDecorator(metadata_1.OptionalMetadata);
   exports.Injectable = decorators_1.makeDecorator(metadata_1.InjectableMetadata);
@@ -25604,7 +26883,7 @@ $__System.registerDynamic("d3", ["cc", "b5"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("f4", [], true, function($__require, exports, module) {
+$__System.registerDynamic("fd", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -25696,37 +26975,37 @@ $__System.registerDynamic("f4", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("f5", ["f4"], true, function($__require, exports, module) {
+$__System.registerDynamic("fe", ["fd"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('f4');
+  module.exports = $__require('fd');
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("f6", ["f5"], true, function($__require, exports, module) {
+$__System.registerDynamic("ff", ["fe"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__System._nodeRequire ? process : $__require('f5');
+  module.exports = $__System._nodeRequire ? process : $__require('fe');
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("4", ["f6"], true, function($__require, exports, module) {
+$__System.registerDynamic("4", ["ff"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('f6');
+  module.exports = $__require('ff');
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("f2", ["11", "f1", "f7", "7", "f8", "cc", "4"], true, function($__require, exports, module) {
+$__System.registerDynamic("fb", ["11", "fa", "100", "7", "101", "d2", "4"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -25734,11 +27013,11 @@ $__System.registerDynamic("f2", ["11", "f1", "f7", "7", "f8", "cc", "4"], true, 
   (function(process) {
     'use strict';
     var collection_1 = $__require('11');
-    var provider_1 = $__require('f1');
-    var exceptions_1 = $__require('f7');
+    var provider_1 = $__require('fa');
+    var exceptions_1 = $__require('100');
     var lang_1 = $__require('7');
-    var key_1 = $__require('f8');
-    var metadata_1 = $__require('cc');
+    var key_1 = $__require('101');
+    var metadata_1 = $__require('d2');
     var _MAX_CONSTRUCTION_COUNTER = 10;
     exports.UNDEFINED = lang_1.CONST_EXPR(new Object());
     (function(Visibility) {
@@ -26394,7 +27673,7 @@ $__System.registerDynamic("f2", ["11", "f1", "f7", "7", "f8", "cc", "4"], true, 
   return module.exports;
 });
 
-$__System.registerDynamic("cc", ["7"], true, function($__require, exports, module) {
+$__System.registerDynamic("d2", ["7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -26487,7 +27766,7 @@ $__System.registerDynamic("cc", ["7"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("f1", ["7", "10", "11", "81", "f8", "cc", "f7", "f9"], true, function($__require, exports, module) {
+$__System.registerDynamic("fa", ["7", "10", "11", "81", "101", "d2", "100", "102"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -26522,10 +27801,10 @@ $__System.registerDynamic("f1", ["7", "10", "11", "81", "f8", "cc", "f7", "f9"],
   var exceptions_1 = $__require('10');
   var collection_1 = $__require('11');
   var reflection_1 = $__require('81');
-  var key_1 = $__require('f8');
-  var metadata_1 = $__require('cc');
-  var exceptions_2 = $__require('f7');
-  var forward_ref_1 = $__require('f9');
+  var key_1 = $__require('101');
+  var metadata_1 = $__require('d2');
+  var exceptions_2 = $__require('100');
+  var forward_ref_1 = $__require('102');
   var Dependency = (function() {
     function Dependency(key, optional, lowerBoundVisibility, upperBoundVisibility, properties) {
       this.key = key;
@@ -26843,7 +28122,7 @@ $__System.registerDynamic("f1", ["7", "10", "11", "81", "f8", "cc", "f7", "f9"],
   return module.exports;
 });
 
-$__System.registerDynamic("fa", [], true, function($__require, exports, module) {
+$__System.registerDynamic("103", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -26865,7 +28144,7 @@ $__System.registerDynamic("fa", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("f9", ["7"], true, function($__require, exports, module) {
+$__System.registerDynamic("102", ["7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -26892,7 +28171,7 @@ $__System.registerDynamic("f9", ["7"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("f8", ["7", "10", "fa", "f9"], true, function($__require, exports, module) {
+$__System.registerDynamic("101", ["7", "10", "103", "102"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -26900,9 +28179,9 @@ $__System.registerDynamic("f8", ["7", "10", "fa", "f9"], true, function($__requi
   global.define = undefined;
   var lang_1 = $__require('7');
   var exceptions_1 = $__require('10');
-  var type_literal_1 = $__require('fa');
-  var forward_ref_1 = $__require('f9');
-  var type_literal_2 = $__require('fa');
+  var type_literal_1 = $__require('103');
+  var forward_ref_1 = $__require('102');
+  var type_literal_2 = $__require('103');
   exports.TypeLiteral = type_literal_2.TypeLiteral;
   var Key = (function() {
     function Key(token, id) {
@@ -26966,7 +28245,7 @@ $__System.registerDynamic("f8", ["7", "10", "fa", "f9"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("f7", ["11", "7", "10"], true, function($__require, exports, module) {
+$__System.registerDynamic("100", ["11", "7", "10"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -27137,7 +28416,7 @@ $__System.registerDynamic("f7", ["11", "7", "10"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("fb", ["7"], true, function($__require, exports, module) {
+$__System.registerDynamic("104", ["7"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -27175,7 +28454,7 @@ $__System.registerDynamic("fb", ["7"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("3b", ["cc", "d3", "f9", "f2", "f1", "f8", "f7", "fb"], true, function($__require, exports, module) {
+$__System.registerDynamic("3b", ["d2", "d9", "102", "fb", "fa", "101", "100", "104"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -27186,7 +28465,7 @@ $__System.registerDynamic("3b", ["cc", "d3", "f9", "f2", "f1", "f8", "f7", "fb"]
       if (!exports.hasOwnProperty(p))
         exports[p] = m[p];
   }
-  var metadata_1 = $__require('cc');
+  var metadata_1 = $__require('d2');
   exports.InjectMetadata = metadata_1.InjectMetadata;
   exports.OptionalMetadata = metadata_1.OptionalMetadata;
   exports.InjectableMetadata = metadata_1.InjectableMetadata;
@@ -27194,13 +28473,13 @@ $__System.registerDynamic("3b", ["cc", "d3", "f9", "f2", "f1", "f8", "f7", "fb"]
   exports.HostMetadata = metadata_1.HostMetadata;
   exports.SkipSelfMetadata = metadata_1.SkipSelfMetadata;
   exports.DependencyMetadata = metadata_1.DependencyMetadata;
-  __export($__require('d3'));
-  var forward_ref_1 = $__require('f9');
+  __export($__require('d9'));
+  var forward_ref_1 = $__require('102');
   exports.forwardRef = forward_ref_1.forwardRef;
   exports.resolveForwardRef = forward_ref_1.resolveForwardRef;
-  var injector_1 = $__require('f2');
+  var injector_1 = $__require('fb');
   exports.Injector = injector_1.Injector;
-  var provider_1 = $__require('f1');
+  var provider_1 = $__require('fa');
   exports.Binding = provider_1.Binding;
   exports.ProviderBuilder = provider_1.ProviderBuilder;
   exports.ResolvedFactory = provider_1.ResolvedFactory;
@@ -27208,10 +28487,10 @@ $__System.registerDynamic("3b", ["cc", "d3", "f9", "f2", "f1", "f8", "f7", "fb"]
   exports.bind = provider_1.bind;
   exports.Provider = provider_1.Provider;
   exports.provide = provider_1.provide;
-  var key_1 = $__require('f8');
+  var key_1 = $__require('101');
   exports.Key = key_1.Key;
   exports.TypeLiteral = key_1.TypeLiteral;
-  var exceptions_1 = $__require('f7');
+  var exceptions_1 = $__require('100');
   exports.NoProviderError = exceptions_1.NoProviderError;
   exports.AbstractProviderError = exceptions_1.AbstractProviderError;
   exports.CyclicDependencyError = exceptions_1.CyclicDependencyError;
@@ -27219,7 +28498,7 @@ $__System.registerDynamic("3b", ["cc", "d3", "f9", "f2", "f1", "f8", "f7", "fb"]
   exports.InvalidProviderError = exceptions_1.InvalidProviderError;
   exports.NoAnnotationError = exceptions_1.NoAnnotationError;
   exports.OutOfBoundsError = exceptions_1.OutOfBoundsError;
-  var opaque_token_1 = $__require('fb');
+  var opaque_token_1 = $__require('104');
   exports.OpaqueToken = opaque_token_1.OpaqueToken;
   global.define = __define;
   return module.exports;
@@ -27269,7 +28548,7 @@ $__System.registerDynamic("8a", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("c0", ["3b", "7", "11", "10", "6a", "8b", "be", "bb", "8d", "8a"], true, function($__require, exports, module) {
+$__System.registerDynamic("c6", ["3b", "7", "11", "10", "6a", "8b", "c4", "c1", "8d", "8a"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -27311,8 +28590,8 @@ $__System.registerDynamic("c0", ["3b", "7", "11", "10", "6a", "8b", "be", "bb", 
   var exceptions_1 = $__require('10');
   var view_1 = $__require('6a');
   var element_1 = $__require('8b');
-  var api_1 = $__require('be');
-  var profile_1 = $__require('bb');
+  var api_1 = $__require('c4');
+  var profile_1 = $__require('c1');
   var application_tokens_1 = $__require('8d');
   var view_type_1 = $__require('8a');
   var AppViewManager = (function() {
@@ -27464,7 +28743,7 @@ $__System.registerDynamic("c0", ["3b", "7", "11", "10", "6a", "8b", "be", "bb", 
   return module.exports;
 });
 
-$__System.registerDynamic("b9", ["3b", "5d", "7", "c0"], true, function($__require, exports, module) {
+$__System.registerDynamic("bf", ["3b", "5d", "7", "c6"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -27498,7 +28777,7 @@ $__System.registerDynamic("b9", ["3b", "5d", "7", "c0"], true, function($__requi
   var di_1 = $__require('3b');
   var compiler_1 = $__require('5d');
   var lang_1 = $__require('7');
-  var view_manager_1 = $__require('c0');
+  var view_manager_1 = $__require('c6');
   var ComponentRef = (function() {
     function ComponentRef() {}
     Object.defineProperty(ComponentRef.prototype, "hostView", {
@@ -27607,7 +28886,7 @@ $__System.registerDynamic("b9", ["3b", "5d", "7", "c0"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("fc", ["7", "3b", "8d", "6b", "6c", "c0", "80", "7e", "7f", "5d", "b9"], true, function($__require, exports, module) {
+$__System.registerDynamic("105", ["7", "3b", "8d", "6b", "6c", "c6", "80", "7e", "7f", "5d", "bf"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -27618,21 +28897,21 @@ $__System.registerDynamic("fc", ["7", "3b", "8d", "6b", "6c", "c0", "80", "7e", 
   var application_tokens_1 = $__require('8d');
   var change_detection_1 = $__require('6b');
   var resolved_metadata_cache_1 = $__require('6c');
-  var view_manager_1 = $__require('c0');
-  var view_manager_2 = $__require('c0');
+  var view_manager_1 = $__require('c6');
+  var view_manager_2 = $__require('c6');
   var view_resolver_1 = $__require('80');
   var directive_resolver_1 = $__require('7e');
   var pipe_resolver_1 = $__require('7f');
   var compiler_1 = $__require('5d');
   var compiler_2 = $__require('5d');
-  var dynamic_component_loader_1 = $__require('b9');
-  var dynamic_component_loader_2 = $__require('b9');
+  var dynamic_component_loader_1 = $__require('bf');
+  var dynamic_component_loader_2 = $__require('bf');
   exports.APPLICATION_COMMON_PROVIDERS = lang_1.CONST_EXPR([new di_1.Provider(compiler_1.Compiler, {useClass: compiler_2.Compiler_}), application_tokens_1.APP_ID_RANDOM_PROVIDER, resolved_metadata_cache_1.ResolvedMetadataCache, new di_1.Provider(view_manager_1.AppViewManager, {useClass: view_manager_2.AppViewManager_}), view_resolver_1.ViewResolver, new di_1.Provider(change_detection_1.IterableDiffers, {useValue: change_detection_1.defaultIterableDiffers}), new di_1.Provider(change_detection_1.KeyValueDiffers, {useValue: change_detection_1.defaultKeyValueDiffers}), directive_resolver_1.DirectiveResolver, pipe_resolver_1.PipeResolver, new di_1.Provider(dynamic_component_loader_1.DynamicComponentLoader, {useClass: dynamic_component_loader_2.DynamicComponentLoader_})]);
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("fd", ["7", "10", "11"], true, function($__require, exports, module) {
+$__System.registerDynamic("106", ["7", "10", "11"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -27773,837 +29052,6 @@ $__System.registerDynamic("fd", ["7", "10", "11"], true, function($__require, ex
       return target.set(k, v);
     });
   }
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("91", ["7", "10"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var lang_1 = $__require('7');
-  var exceptions_1 = $__require('10');
-  var ReflectionCapabilities = (function() {
-    function ReflectionCapabilities(reflect) {
-      this._reflect = lang_1.isPresent(reflect) ? reflect : lang_1.global.Reflect;
-    }
-    ReflectionCapabilities.prototype.isReflectionEnabled = function() {
-      return true;
-    };
-    ReflectionCapabilities.prototype.factory = function(t) {
-      switch (t.length) {
-        case 0:
-          return function() {
-            return new t();
-          };
-        case 1:
-          return function(a1) {
-            return new t(a1);
-          };
-        case 2:
-          return function(a1, a2) {
-            return new t(a1, a2);
-          };
-        case 3:
-          return function(a1, a2, a3) {
-            return new t(a1, a2, a3);
-          };
-        case 4:
-          return function(a1, a2, a3, a4) {
-            return new t(a1, a2, a3, a4);
-          };
-        case 5:
-          return function(a1, a2, a3, a4, a5) {
-            return new t(a1, a2, a3, a4, a5);
-          };
-        case 6:
-          return function(a1, a2, a3, a4, a5, a6) {
-            return new t(a1, a2, a3, a4, a5, a6);
-          };
-        case 7:
-          return function(a1, a2, a3, a4, a5, a6, a7) {
-            return new t(a1, a2, a3, a4, a5, a6, a7);
-          };
-        case 8:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8);
-          };
-        case 9:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9);
-          };
-        case 10:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
-          };
-        case 11:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
-          };
-        case 12:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
-          };
-        case 13:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
-          };
-        case 14:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
-          };
-        case 15:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
-          };
-        case 16:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
-          };
-        case 17:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17);
-          };
-        case 18:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18);
-          };
-        case 19:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19);
-          };
-        case 20:
-          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20) {
-            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20);
-          };
-      }
-      ;
-      throw new Error("Cannot create a factory for '" + lang_1.stringify(t) + "' because its constructor has more than 20 arguments");
-    };
-    ReflectionCapabilities.prototype._zipTypesAndAnnotaions = function(paramTypes, paramAnnotations) {
-      var result;
-      if (typeof paramTypes === 'undefined') {
-        result = new Array(paramAnnotations.length);
-      } else {
-        result = new Array(paramTypes.length);
-      }
-      for (var i = 0; i < result.length; i++) {
-        if (typeof paramTypes === 'undefined') {
-          result[i] = [];
-        } else if (paramTypes[i] != Object) {
-          result[i] = [paramTypes[i]];
-        } else {
-          result[i] = [];
-        }
-        if (lang_1.isPresent(paramAnnotations) && lang_1.isPresent(paramAnnotations[i])) {
-          result[i] = result[i].concat(paramAnnotations[i]);
-        }
-      }
-      return result;
-    };
-    ReflectionCapabilities.prototype.parameters = function(typeOrFunc) {
-      if (lang_1.isPresent(typeOrFunc.parameters)) {
-        return typeOrFunc.parameters;
-      }
-      if (lang_1.isPresent(this._reflect) && lang_1.isPresent(this._reflect.getMetadata)) {
-        var paramAnnotations = this._reflect.getMetadata('parameters', typeOrFunc);
-        var paramTypes = this._reflect.getMetadata('design:paramtypes', typeOrFunc);
-        if (lang_1.isPresent(paramTypes) || lang_1.isPresent(paramAnnotations)) {
-          return this._zipTypesAndAnnotaions(paramTypes, paramAnnotations);
-        }
-      }
-      var parameters = new Array(typeOrFunc.length);
-      parameters.fill(undefined);
-      return parameters;
-    };
-    ReflectionCapabilities.prototype.annotations = function(typeOrFunc) {
-      if (lang_1.isPresent(typeOrFunc.annotations)) {
-        var annotations = typeOrFunc.annotations;
-        if (lang_1.isFunction(annotations) && annotations.annotations) {
-          annotations = annotations.annotations;
-        }
-        return annotations;
-      }
-      if (lang_1.isPresent(this._reflect) && lang_1.isPresent(this._reflect.getMetadata)) {
-        var annotations = this._reflect.getMetadata('annotations', typeOrFunc);
-        if (lang_1.isPresent(annotations))
-          return annotations;
-      }
-      return [];
-    };
-    ReflectionCapabilities.prototype.propMetadata = function(typeOrFunc) {
-      if (lang_1.isPresent(typeOrFunc.propMetadata)) {
-        var propMetadata = typeOrFunc.propMetadata;
-        if (lang_1.isFunction(propMetadata) && propMetadata.propMetadata) {
-          propMetadata = propMetadata.propMetadata;
-        }
-        return propMetadata;
-      }
-      if (lang_1.isPresent(this._reflect) && lang_1.isPresent(this._reflect.getMetadata)) {
-        var propMetadata = this._reflect.getMetadata('propMetadata', typeOrFunc);
-        if (lang_1.isPresent(propMetadata))
-          return propMetadata;
-      }
-      return {};
-    };
-    ReflectionCapabilities.prototype.interfaces = function(type) {
-      throw new exceptions_1.BaseException("JavaScript does not support interfaces");
-    };
-    ReflectionCapabilities.prototype.getter = function(name) {
-      return new Function('o', 'return o.' + name + ';');
-    };
-    ReflectionCapabilities.prototype.setter = function(name) {
-      return new Function('o', 'v', 'return o.' + name + ' = v;');
-    };
-    ReflectionCapabilities.prototype.method = function(name) {
-      var functionBody = "if (!o." + name + ") throw new Error('\"" + name + "\" is undefined');\n        return o." + name + ".apply(o, args);";
-      return new Function('o', 'args', functionBody);
-    };
-    ReflectionCapabilities.prototype.importUri = function(type) {
-      return './';
-    };
-    return ReflectionCapabilities;
-  })();
-  exports.ReflectionCapabilities = ReflectionCapabilities;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("81", ["fd", "91"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var reflector_1 = $__require('fd');
-  var reflector_2 = $__require('fd');
-  exports.Reflector = reflector_2.Reflector;
-  exports.ReflectionInfo = reflector_2.ReflectionInfo;
-  var reflection_capabilities_1 = $__require('91');
-  exports.reflector = new reflector_1.Reflector(new reflection_capabilities_1.ReflectionCapabilities());
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("a", ["50", "b4", "b6", "3b", "b7", "7", "58", "8d", "bc", "bd", "bf", "52", "5b", "cd", "82", "c5", "fc", "81"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  function __export(m) {
-    for (var p in m)
-      if (!exports.hasOwnProperty(p))
-        exports[p] = m[p];
-  }
-  __export($__require('50'));
-  __export($__require('b4'));
-  __export($__require('b6'));
-  __export($__require('3b'));
-  __export($__require('b7'));
-  var lang_1 = $__require('7');
-  exports.enableProdMode = lang_1.enableProdMode;
-  var application_ref_1 = $__require('58');
-  exports.platform = application_ref_1.platform;
-  exports.createNgZone = application_ref_1.createNgZone;
-  exports.PlatformRef = application_ref_1.PlatformRef;
-  exports.ApplicationRef = application_ref_1.ApplicationRef;
-  var application_tokens_1 = $__require('8d');
-  exports.APP_ID = application_tokens_1.APP_ID;
-  exports.APP_COMPONENT = application_tokens_1.APP_COMPONENT;
-  exports.APP_INITIALIZER = application_tokens_1.APP_INITIALIZER;
-  exports.PACKAGE_ROOT_URL = application_tokens_1.PACKAGE_ROOT_URL;
-  exports.PLATFORM_INITIALIZER = application_tokens_1.PLATFORM_INITIALIZER;
-  __export($__require('bc'));
-  __export($__require('bd'));
-  __export($__require('bf'));
-  var debug_node_1 = $__require('52');
-  exports.DebugElement = debug_node_1.DebugElement;
-  exports.DebugNode = debug_node_1.DebugNode;
-  exports.asNativeElements = debug_node_1.asNativeElements;
-  __export($__require('5b'));
-  __export($__require('cd'));
-  __export($__require('82'));
-  __export($__require('c5'));
-  __export($__require('fc'));
-  __export($__require('81'));
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("ad", ["a", "7", "ac", "a9"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var __extends = (this && this.__extends) || function(d, b) {
-    for (var p in b)
-      if (b.hasOwnProperty(p))
-        d[p] = b[p];
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
-    var c = arguments.length,
-        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-        d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(decorators, target, key, desc);
-    else
-      for (var i = decorators.length - 1; i >= 0; i--)
-        if (d = decorators[i])
-          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-  };
-  var __metadata = (this && this.__metadata) || function(k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
-      return Reflect.metadata(k, v);
-  };
-  var core_1 = $__require('a');
-  var lang_1 = $__require('7');
-  var headers_1 = $__require('ac');
-  var enums_1 = $__require('a9');
-  var ResponseOptions = (function() {
-    function ResponseOptions(_a) {
-      var _b = _a === void 0 ? {} : _a,
-          body = _b.body,
-          status = _b.status,
-          headers = _b.headers,
-          statusText = _b.statusText,
-          type = _b.type,
-          url = _b.url;
-      this.body = lang_1.isPresent(body) ? body : null;
-      this.status = lang_1.isPresent(status) ? status : null;
-      this.headers = lang_1.isPresent(headers) ? headers : null;
-      this.statusText = lang_1.isPresent(statusText) ? statusText : null;
-      this.type = lang_1.isPresent(type) ? type : null;
-      this.url = lang_1.isPresent(url) ? url : null;
-    }
-    ResponseOptions.prototype.merge = function(options) {
-      return new ResponseOptions({
-        body: lang_1.isPresent(options) && lang_1.isPresent(options.body) ? options.body : this.body,
-        status: lang_1.isPresent(options) && lang_1.isPresent(options.status) ? options.status : this.status,
-        headers: lang_1.isPresent(options) && lang_1.isPresent(options.headers) ? options.headers : this.headers,
-        statusText: lang_1.isPresent(options) && lang_1.isPresent(options.statusText) ? options.statusText : this.statusText,
-        type: lang_1.isPresent(options) && lang_1.isPresent(options.type) ? options.type : this.type,
-        url: lang_1.isPresent(options) && lang_1.isPresent(options.url) ? options.url : this.url
-      });
-    };
-    return ResponseOptions;
-  })();
-  exports.ResponseOptions = ResponseOptions;
-  var BaseResponseOptions = (function(_super) {
-    __extends(BaseResponseOptions, _super);
-    function BaseResponseOptions() {
-      _super.call(this, {
-        status: 200,
-        statusText: 'Ok',
-        type: enums_1.ResponseType.Default,
-        headers: new headers_1.Headers()
-      });
-    }
-    BaseResponseOptions = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [])], BaseResponseOptions);
-    return BaseResponseOptions;
-  })(ResponseOptions);
-  exports.BaseResponseOptions = BaseResponseOptions;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("a7", ["ac", "af", "7"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var headers_1 = $__require('ac');
-  var http_utils_1 = $__require('af');
-  var lang_1 = $__require('7');
-  var Request = (function() {
-    function Request(requestOptions) {
-      var url = requestOptions.url;
-      this.url = requestOptions.url;
-      if (lang_1.isPresent(requestOptions.search)) {
-        var search = requestOptions.search.toString();
-        if (search.length > 0) {
-          var prefix = '?';
-          if (lang_1.StringWrapper.contains(this.url, '?')) {
-            prefix = (this.url[this.url.length - 1] == '&') ? '' : '&';
-          }
-          this.url = url + prefix + search;
-        }
-      }
-      this._body = requestOptions.body;
-      this.method = http_utils_1.normalizeMethodName(requestOptions.method);
-      this.headers = new headers_1.Headers(requestOptions.headers);
-    }
-    Request.prototype.text = function() {
-      return lang_1.isPresent(this._body) ? this._body.toString() : '';
-    };
-    return Request;
-  })();
-  exports.Request = Request;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("af", ["7", "a9", "10"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var lang_1 = $__require('7');
-  var enums_1 = $__require('a9');
-  var exceptions_1 = $__require('10');
-  function normalizeMethodName(method) {
-    if (lang_1.isString(method)) {
-      var originalMethod = method;
-      method = method.replace(/(\w)(\w*)/g, function(g0, g1, g2) {
-        return g1.toUpperCase() + g2.toLowerCase();
-      });
-      method = enums_1.RequestMethod[method];
-      if (typeof method !== 'number')
-        throw exceptions_1.makeTypeError("Invalid request method. The method \"" + originalMethod + "\" is not supported.");
-    }
-    return method;
-  }
-  exports.normalizeMethodName = normalizeMethodName;
-  exports.isSuccess = function(status) {
-    return (status >= 200 && status < 300);
-  };
-  function getResponseURL(xhr) {
-    if ('responseURL' in xhr) {
-      return xhr.responseURL;
-    }
-    if (/^X-Request-URL:/m.test(xhr.getAllResponseHeaders())) {
-      return xhr.getResponseHeader('X-Request-URL');
-    }
-    return;
-  }
-  exports.getResponseURL = getResponseURL;
-  var lang_2 = $__require('7');
-  exports.isJsObject = lang_2.isJsObject;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("ab", ["7", "10", "af"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var lang_1 = $__require('7');
-  var exceptions_1 = $__require('10');
-  var http_utils_1 = $__require('af');
-  var Response = (function() {
-    function Response(responseOptions) {
-      this._body = responseOptions.body;
-      this.status = responseOptions.status;
-      this.statusText = responseOptions.statusText;
-      this.headers = responseOptions.headers;
-      this.type = responseOptions.type;
-      this.url = responseOptions.url;
-    }
-    Response.prototype.blob = function() {
-      throw new exceptions_1.BaseException('"blob()" method not implemented on Response superclass');
-    };
-    Response.prototype.json = function() {
-      var jsonResponse;
-      if (http_utils_1.isJsObject(this._body)) {
-        jsonResponse = this._body;
-      } else if (lang_1.isString(this._body)) {
-        jsonResponse = lang_1.Json.parse(this._body);
-      }
-      return jsonResponse;
-    };
-    Response.prototype.text = function() {
-      return this._body.toString();
-    };
-    Response.prototype.arrayBuffer = function() {
-      throw new exceptions_1.BaseException('"arrayBuffer()" method not implemented on Response superclass');
-    };
-    return Response;
-  })();
-  exports.Response = Response;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("a6", [], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var ConnectionBackend = (function() {
-    function ConnectionBackend() {}
-    return ConnectionBackend;
-  })();
-  exports.ConnectionBackend = ConnectionBackend;
-  var Connection = (function() {
-    function Connection() {}
-    return Connection;
-  })();
-  exports.Connection = Connection;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("b8", ["7", "10", "11"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var lang_1 = $__require('7');
-  var exceptions_1 = $__require('10');
-  var collection_1 = $__require('11');
-  var _ArrayLogger = (function() {
-    function _ArrayLogger() {
-      this.res = [];
-    }
-    _ArrayLogger.prototype.log = function(s) {
-      this.res.push(s);
-    };
-    _ArrayLogger.prototype.logError = function(s) {
-      this.res.push(s);
-    };
-    _ArrayLogger.prototype.logGroup = function(s) {
-      this.res.push(s);
-    };
-    _ArrayLogger.prototype.logGroupEnd = function() {};
-    ;
-    return _ArrayLogger;
-  })();
-  var ExceptionHandler = (function() {
-    function ExceptionHandler(_logger, _rethrowException) {
-      if (_rethrowException === void 0) {
-        _rethrowException = true;
-      }
-      this._logger = _logger;
-      this._rethrowException = _rethrowException;
-    }
-    ExceptionHandler.exceptionToString = function(exception, stackTrace, reason) {
-      if (stackTrace === void 0) {
-        stackTrace = null;
-      }
-      if (reason === void 0) {
-        reason = null;
-      }
-      var l = new _ArrayLogger();
-      var e = new ExceptionHandler(l, false);
-      e.call(exception, stackTrace, reason);
-      return l.res.join("\n");
-    };
-    ExceptionHandler.prototype.call = function(exception, stackTrace, reason) {
-      if (stackTrace === void 0) {
-        stackTrace = null;
-      }
-      if (reason === void 0) {
-        reason = null;
-      }
-      var originalException = this._findOriginalException(exception);
-      var originalStack = this._findOriginalStack(exception);
-      var context = this._findContext(exception);
-      this._logger.logGroup("EXCEPTION: " + this._extractMessage(exception));
-      if (lang_1.isPresent(stackTrace) && lang_1.isBlank(originalStack)) {
-        this._logger.logError("STACKTRACE:");
-        this._logger.logError(this._longStackTrace(stackTrace));
-      }
-      if (lang_1.isPresent(reason)) {
-        this._logger.logError("REASON: " + reason);
-      }
-      if (lang_1.isPresent(originalException)) {
-        this._logger.logError("ORIGINAL EXCEPTION: " + this._extractMessage(originalException));
-      }
-      if (lang_1.isPresent(originalStack)) {
-        this._logger.logError("ORIGINAL STACKTRACE:");
-        this._logger.logError(this._longStackTrace(originalStack));
-      }
-      if (lang_1.isPresent(context)) {
-        this._logger.logError("ERROR CONTEXT:");
-        this._logger.logError(context);
-      }
-      this._logger.logGroupEnd();
-      if (this._rethrowException)
-        throw exception;
-    };
-    ExceptionHandler.prototype._extractMessage = function(exception) {
-      return exception instanceof exceptions_1.WrappedException ? exception.wrapperMessage : exception.toString();
-    };
-    ExceptionHandler.prototype._longStackTrace = function(stackTrace) {
-      return collection_1.isListLikeIterable(stackTrace) ? stackTrace.join("\n\n-----async gap-----\n") : stackTrace.toString();
-    };
-    ExceptionHandler.prototype._findContext = function(exception) {
-      try {
-        if (!(exception instanceof exceptions_1.WrappedException))
-          return null;
-        return lang_1.isPresent(exception.context) ? exception.context : this._findContext(exception.originalException);
-      } catch (e) {
-        return null;
-      }
-    };
-    ExceptionHandler.prototype._findOriginalException = function(exception) {
-      if (!(exception instanceof exceptions_1.WrappedException))
-        return null;
-      var e = exception.originalException;
-      while (e instanceof exceptions_1.WrappedException && lang_1.isPresent(e.originalException)) {
-        e = e.originalException;
-      }
-      return e;
-    };
-    ExceptionHandler.prototype._findOriginalStack = function(exception) {
-      if (!(exception instanceof exceptions_1.WrappedException))
-        return null;
-      var e = exception;
-      var stack = exception.originalStack;
-      while (e instanceof exceptions_1.WrappedException && lang_1.isPresent(e.originalException)) {
-        e = e.originalException;
-        if (e instanceof exceptions_1.WrappedException && lang_1.isPresent(e.originalException)) {
-          stack = e.originalStack;
-        }
-      }
-      return stack;
-    };
-    return ExceptionHandler;
-  })();
-  exports.ExceptionHandler = ExceptionHandler;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("10", ["b8"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var __extends = (this && this.__extends) || function(d, b) {
-    for (var p in b)
-      if (b.hasOwnProperty(p))
-        d[p] = b[p];
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-  var exception_handler_1 = $__require('b8');
-  var exception_handler_2 = $__require('b8');
-  exports.ExceptionHandler = exception_handler_2.ExceptionHandler;
-  var BaseException = (function(_super) {
-    __extends(BaseException, _super);
-    function BaseException(message) {
-      if (message === void 0) {
-        message = "--";
-      }
-      _super.call(this, message);
-      this.message = message;
-      this.stack = (new Error(message)).stack;
-    }
-    BaseException.prototype.toString = function() {
-      return this.message;
-    };
-    return BaseException;
-  })(Error);
-  exports.BaseException = BaseException;
-  var WrappedException = (function(_super) {
-    __extends(WrappedException, _super);
-    function WrappedException(_wrapperMessage, _originalException, _originalStack, _context) {
-      _super.call(this, _wrapperMessage);
-      this._wrapperMessage = _wrapperMessage;
-      this._originalException = _originalException;
-      this._originalStack = _originalStack;
-      this._context = _context;
-      this._wrapperStack = (new Error(_wrapperMessage)).stack;
-    }
-    Object.defineProperty(WrappedException.prototype, "wrapperMessage", {
-      get: function() {
-        return this._wrapperMessage;
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(WrappedException.prototype, "wrapperStack", {
-      get: function() {
-        return this._wrapperStack;
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(WrappedException.prototype, "originalException", {
-      get: function() {
-        return this._originalException;
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(WrappedException.prototype, "originalStack", {
-      get: function() {
-        return this._originalStack;
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(WrappedException.prototype, "context", {
-      get: function() {
-        return this._context;
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(WrappedException.prototype, "message", {
-      get: function() {
-        return exception_handler_1.ExceptionHandler.exceptionToString(this);
-      },
-      enumerable: true,
-      configurable: true
-    });
-    WrappedException.prototype.toString = function() {
-      return this.message;
-    };
-    return WrappedException;
-  })(Error);
-  exports.WrappedException = WrappedException;
-  function makeTypeError(message) {
-    return new TypeError(message);
-  }
-  exports.makeTypeError = makeTypeError;
-  function unimplemented() {
-    throw new BaseException('unimplemented');
-  }
-  exports.unimplemented = unimplemented;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("ac", ["7", "10", "11"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var lang_1 = $__require('7');
-  var exceptions_1 = $__require('10');
-  var collection_1 = $__require('11');
-  var Headers = (function() {
-    function Headers(headers) {
-      var _this = this;
-      if (headers instanceof Headers) {
-        this._headersMap = headers._headersMap;
-        return;
-      }
-      this._headersMap = new collection_1.Map();
-      if (lang_1.isBlank(headers)) {
-        return;
-      }
-      collection_1.StringMapWrapper.forEach(headers, function(v, k) {
-        _this._headersMap.set(k, collection_1.isListLikeIterable(v) ? v : [v]);
-      });
-    }
-    Headers.fromResponseHeaderString = function(headersString) {
-      return headersString.trim().split('\n').map(function(val) {
-        return val.split(':');
-      }).map(function(_a) {
-        var key = _a[0],
-            parts = _a.slice(1);
-        return ([key.trim(), parts.join(':').trim()]);
-      }).reduce(function(headers, _a) {
-        var key = _a[0],
-            value = _a[1];
-        return !headers.set(key, value) && headers;
-      }, new Headers());
-    };
-    Headers.prototype.append = function(name, value) {
-      var mapName = this._headersMap.get(name);
-      var list = collection_1.isListLikeIterable(mapName) ? mapName : [];
-      list.push(value);
-      this._headersMap.set(name, list);
-    };
-    Headers.prototype.delete = function(name) {
-      this._headersMap.delete(name);
-    };
-    Headers.prototype.forEach = function(fn) {
-      this._headersMap.forEach(fn);
-    };
-    Headers.prototype.get = function(header) {
-      return collection_1.ListWrapper.first(this._headersMap.get(header));
-    };
-    Headers.prototype.has = function(header) {
-      return this._headersMap.has(header);
-    };
-    Headers.prototype.keys = function() {
-      return collection_1.MapWrapper.keys(this._headersMap);
-    };
-    Headers.prototype.set = function(header, value) {
-      var list = [];
-      if (collection_1.isListLikeIterable(value)) {
-        var pushValue = value.join(',');
-        list.push(pushValue);
-      } else {
-        list.push(value);
-      }
-      this._headersMap.set(header, list);
-    };
-    Headers.prototype.values = function() {
-      return collection_1.MapWrapper.values(this._headersMap);
-    };
-    Headers.prototype.toJSON = function() {
-      return lang_1.Json.stringify(this.values());
-    };
-    Headers.prototype.getAll = function(header) {
-      var headers = this._headersMap.get(header);
-      return collection_1.isListLikeIterable(headers) ? headers : [];
-    };
-    Headers.prototype.entries = function() {
-      throw new exceptions_1.BaseException('"entries" method is not implemented on Headers class');
-    };
-    return Headers;
-  })();
-  exports.Headers = Headers;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("a9", [], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  (function(RequestMethod) {
-    RequestMethod[RequestMethod["Get"] = 0] = "Get";
-    RequestMethod[RequestMethod["Post"] = 1] = "Post";
-    RequestMethod[RequestMethod["Put"] = 2] = "Put";
-    RequestMethod[RequestMethod["Delete"] = 3] = "Delete";
-    RequestMethod[RequestMethod["Options"] = 4] = "Options";
-    RequestMethod[RequestMethod["Head"] = 5] = "Head";
-    RequestMethod[RequestMethod["Patch"] = 6] = "Patch";
-  })(exports.RequestMethod || (exports.RequestMethod = {}));
-  var RequestMethod = exports.RequestMethod;
-  (function(ReadyState) {
-    ReadyState[ReadyState["Unsent"] = 0] = "Unsent";
-    ReadyState[ReadyState["Open"] = 1] = "Open";
-    ReadyState[ReadyState["HeadersReceived"] = 2] = "HeadersReceived";
-    ReadyState[ReadyState["Loading"] = 3] = "Loading";
-    ReadyState[ReadyState["Done"] = 4] = "Done";
-    ReadyState[ReadyState["Cancelled"] = 5] = "Cancelled";
-  })(exports.ReadyState || (exports.ReadyState = {}));
-  var ReadyState = exports.ReadyState;
-  (function(ResponseType) {
-    ResponseType[ResponseType["Basic"] = 0] = "Basic";
-    ResponseType[ResponseType["Cors"] = 1] = "Cors";
-    ResponseType[ResponseType["Default"] = 2] = "Default";
-    ResponseType[ResponseType["Error"] = 3] = "Error";
-    ResponseType[ResponseType["Opaque"] = 4] = "Opaque";
-  })(exports.ResponseType || (exports.ResponseType = {}));
-  var ResponseType = exports.ResponseType;
   global.define = __define;
   return module.exports;
 });
@@ -29456,513 +29904,135 @@ $__System.registerDynamic("11", ["7"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("b3", ["7", "11"], true, function($__require, exports, module) {
+$__System.registerDynamic("be", ["7", "10", "11"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   var lang_1 = $__require('7');
+  var exceptions_1 = $__require('10');
   var collection_1 = $__require('11');
-  function paramParser(rawParams) {
-    if (rawParams === void 0) {
-      rawParams = '';
+  var _ArrayLogger = (function() {
+    function _ArrayLogger() {
+      this.res = [];
     }
-    var map = new collection_1.Map();
-    if (rawParams.length > 0) {
-      var params = rawParams.split('&');
-      params.forEach(function(param) {
-        var split = param.split('=');
-        var key = split[0];
-        var val = split[1];
-        var list = lang_1.isPresent(map.get(key)) ? map.get(key) : [];
-        list.push(val);
-        map.set(key, list);
-      });
-    }
-    return map;
-  }
-  var URLSearchParams = (function() {
-    function URLSearchParams(rawParams) {
-      if (rawParams === void 0) {
-        rawParams = '';
+    _ArrayLogger.prototype.log = function(s) {
+      this.res.push(s);
+    };
+    _ArrayLogger.prototype.logError = function(s) {
+      this.res.push(s);
+    };
+    _ArrayLogger.prototype.logGroup = function(s) {
+      this.res.push(s);
+    };
+    _ArrayLogger.prototype.logGroupEnd = function() {};
+    ;
+    return _ArrayLogger;
+  })();
+  var ExceptionHandler = (function() {
+    function ExceptionHandler(_logger, _rethrowException) {
+      if (_rethrowException === void 0) {
+        _rethrowException = true;
       }
-      this.rawParams = rawParams;
-      this.paramsMap = paramParser(rawParams);
+      this._logger = _logger;
+      this._rethrowException = _rethrowException;
     }
-    URLSearchParams.prototype.clone = function() {
-      var clone = new URLSearchParams();
-      clone.appendAll(this);
-      return clone;
+    ExceptionHandler.exceptionToString = function(exception, stackTrace, reason) {
+      if (stackTrace === void 0) {
+        stackTrace = null;
+      }
+      if (reason === void 0) {
+        reason = null;
+      }
+      var l = new _ArrayLogger();
+      var e = new ExceptionHandler(l, false);
+      e.call(exception, stackTrace, reason);
+      return l.res.join("\n");
     };
-    URLSearchParams.prototype.has = function(param) {
-      return this.paramsMap.has(param);
+    ExceptionHandler.prototype.call = function(exception, stackTrace, reason) {
+      if (stackTrace === void 0) {
+        stackTrace = null;
+      }
+      if (reason === void 0) {
+        reason = null;
+      }
+      var originalException = this._findOriginalException(exception);
+      var originalStack = this._findOriginalStack(exception);
+      var context = this._findContext(exception);
+      this._logger.logGroup("EXCEPTION: " + this._extractMessage(exception));
+      if (lang_1.isPresent(stackTrace) && lang_1.isBlank(originalStack)) {
+        this._logger.logError("STACKTRACE:");
+        this._logger.logError(this._longStackTrace(stackTrace));
+      }
+      if (lang_1.isPresent(reason)) {
+        this._logger.logError("REASON: " + reason);
+      }
+      if (lang_1.isPresent(originalException)) {
+        this._logger.logError("ORIGINAL EXCEPTION: " + this._extractMessage(originalException));
+      }
+      if (lang_1.isPresent(originalStack)) {
+        this._logger.logError("ORIGINAL STACKTRACE:");
+        this._logger.logError(this._longStackTrace(originalStack));
+      }
+      if (lang_1.isPresent(context)) {
+        this._logger.logError("ERROR CONTEXT:");
+        this._logger.logError(context);
+      }
+      this._logger.logGroupEnd();
+      if (this._rethrowException)
+        throw exception;
     };
-    URLSearchParams.prototype.get = function(param) {
-      var storedParam = this.paramsMap.get(param);
-      if (collection_1.isListLikeIterable(storedParam)) {
-        return collection_1.ListWrapper.first(storedParam);
-      } else {
+    ExceptionHandler.prototype._extractMessage = function(exception) {
+      return exception instanceof exceptions_1.WrappedException ? exception.wrapperMessage : exception.toString();
+    };
+    ExceptionHandler.prototype._longStackTrace = function(stackTrace) {
+      return collection_1.isListLikeIterable(stackTrace) ? stackTrace.join("\n\n-----async gap-----\n") : stackTrace.toString();
+    };
+    ExceptionHandler.prototype._findContext = function(exception) {
+      try {
+        if (!(exception instanceof exceptions_1.WrappedException))
+          return null;
+        return lang_1.isPresent(exception.context) ? exception.context : this._findContext(exception.originalException);
+      } catch (e) {
         return null;
       }
     };
-    URLSearchParams.prototype.getAll = function(param) {
-      var mapParam = this.paramsMap.get(param);
-      return lang_1.isPresent(mapParam) ? mapParam : [];
+    ExceptionHandler.prototype._findOriginalException = function(exception) {
+      if (!(exception instanceof exceptions_1.WrappedException))
+        return null;
+      var e = exception.originalException;
+      while (e instanceof exceptions_1.WrappedException && lang_1.isPresent(e.originalException)) {
+        e = e.originalException;
+      }
+      return e;
     };
-    URLSearchParams.prototype.set = function(param, val) {
-      var mapParam = this.paramsMap.get(param);
-      var list = lang_1.isPresent(mapParam) ? mapParam : [];
-      collection_1.ListWrapper.clear(list);
-      list.push(val);
-      this.paramsMap.set(param, list);
-    };
-    URLSearchParams.prototype.setAll = function(searchParams) {
-      var _this = this;
-      searchParams.paramsMap.forEach(function(value, param) {
-        var mapParam = _this.paramsMap.get(param);
-        var list = lang_1.isPresent(mapParam) ? mapParam : [];
-        collection_1.ListWrapper.clear(list);
-        list.push(value[0]);
-        _this.paramsMap.set(param, list);
-      });
-    };
-    URLSearchParams.prototype.append = function(param, val) {
-      var mapParam = this.paramsMap.get(param);
-      var list = lang_1.isPresent(mapParam) ? mapParam : [];
-      list.push(val);
-      this.paramsMap.set(param, list);
-    };
-    URLSearchParams.prototype.appendAll = function(searchParams) {
-      var _this = this;
-      searchParams.paramsMap.forEach(function(value, param) {
-        var mapParam = _this.paramsMap.get(param);
-        var list = lang_1.isPresent(mapParam) ? mapParam : [];
-        for (var i = 0; i < value.length; ++i) {
-          list.push(value[i]);
+    ExceptionHandler.prototype._findOriginalStack = function(exception) {
+      if (!(exception instanceof exceptions_1.WrappedException))
+        return null;
+      var e = exception;
+      var stack = exception.originalStack;
+      while (e instanceof exceptions_1.WrappedException && lang_1.isPresent(e.originalException)) {
+        e = e.originalException;
+        if (e instanceof exceptions_1.WrappedException && lang_1.isPresent(e.originalException)) {
+          stack = e.originalStack;
         }
-        _this.paramsMap.set(param, list);
-      });
+      }
+      return stack;
     };
-    URLSearchParams.prototype.replaceAll = function(searchParams) {
-      var _this = this;
-      searchParams.paramsMap.forEach(function(value, param) {
-        var mapParam = _this.paramsMap.get(param);
-        var list = lang_1.isPresent(mapParam) ? mapParam : [];
-        collection_1.ListWrapper.clear(list);
-        for (var i = 0; i < value.length; ++i) {
-          list.push(value[i]);
-        }
-        _this.paramsMap.set(param, list);
-      });
-    };
-    URLSearchParams.prototype.toString = function() {
-      var paramsList = [];
-      this.paramsMap.forEach(function(values, k) {
-        values.forEach(function(v) {
-          return paramsList.push(k + '=' + v);
-        });
-      });
-      return paramsList.join('&');
-    };
-    URLSearchParams.prototype.delete = function(param) {
-      this.paramsMap.delete(param);
-    };
-    return URLSearchParams;
+    return ExceptionHandler;
   })();
-  exports.URLSearchParams = URLSearchParams;
+  exports.ExceptionHandler = ExceptionHandler;
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("fe", ["a", "a5", "aa", "b1", "ae", "b2", "a8", "ad", "a7", "ab", "a6", "ac", "a9", "b3"], true, function($__require, exports, module) {
+$__System.registerDynamic("10", ["be"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var core_1 = $__require('a');
-  var http_1 = $__require('a5');
-  var xhr_backend_1 = $__require('aa');
-  var jsonp_backend_1 = $__require('b1');
-  var browser_xhr_1 = $__require('ae');
-  var browser_jsonp_1 = $__require('b2');
-  var base_request_options_1 = $__require('a8');
-  var base_response_options_1 = $__require('ad');
-  var static_request_1 = $__require('a7');
-  exports.Request = static_request_1.Request;
-  var static_response_1 = $__require('ab');
-  exports.Response = static_response_1.Response;
-  var interfaces_1 = $__require('a6');
-  exports.Connection = interfaces_1.Connection;
-  exports.ConnectionBackend = interfaces_1.ConnectionBackend;
-  var browser_xhr_2 = $__require('ae');
-  exports.BrowserXhr = browser_xhr_2.BrowserXhr;
-  var base_request_options_2 = $__require('a8');
-  exports.BaseRequestOptions = base_request_options_2.BaseRequestOptions;
-  exports.RequestOptions = base_request_options_2.RequestOptions;
-  var base_response_options_2 = $__require('ad');
-  exports.BaseResponseOptions = base_response_options_2.BaseResponseOptions;
-  exports.ResponseOptions = base_response_options_2.ResponseOptions;
-  var xhr_backend_2 = $__require('aa');
-  exports.XHRBackend = xhr_backend_2.XHRBackend;
-  exports.XHRConnection = xhr_backend_2.XHRConnection;
-  var jsonp_backend_2 = $__require('b1');
-  exports.JSONPBackend = jsonp_backend_2.JSONPBackend;
-  exports.JSONPConnection = jsonp_backend_2.JSONPConnection;
-  var http_2 = $__require('a5');
-  exports.Http = http_2.Http;
-  exports.Jsonp = http_2.Jsonp;
-  var headers_1 = $__require('ac');
-  exports.Headers = headers_1.Headers;
-  var enums_1 = $__require('a9');
-  exports.ResponseType = enums_1.ResponseType;
-  exports.ReadyState = enums_1.ReadyState;
-  exports.RequestMethod = enums_1.RequestMethod;
-  var url_search_params_1 = $__require('b3');
-  exports.URLSearchParams = url_search_params_1.URLSearchParams;
-  exports.HTTP_PROVIDERS = [core_1.provide(http_1.Http, {
-    useFactory: function(xhrBackend, requestOptions) {
-      return new http_1.Http(xhrBackend, requestOptions);
-    },
-    deps: [xhr_backend_1.XHRBackend, base_request_options_1.RequestOptions]
-  }), browser_xhr_1.BrowserXhr, core_1.provide(base_request_options_1.RequestOptions, {useClass: base_request_options_1.BaseRequestOptions}), core_1.provide(base_response_options_1.ResponseOptions, {useClass: base_response_options_1.BaseResponseOptions}), xhr_backend_1.XHRBackend];
-  exports.HTTP_BINDINGS = exports.HTTP_PROVIDERS;
-  exports.JSONP_PROVIDERS = [core_1.provide(http_1.Jsonp, {
-    useFactory: function(jsonpBackend, requestOptions) {
-      return new http_1.Jsonp(jsonpBackend, requestOptions);
-    },
-    deps: [jsonp_backend_1.JSONPBackend, base_request_options_1.RequestOptions]
-  }), browser_jsonp_1.BrowserJsonp, core_1.provide(base_request_options_1.RequestOptions, {useClass: base_request_options_1.BaseRequestOptions}), core_1.provide(base_response_options_1.ResponseOptions, {useClass: base_response_options_1.BaseResponseOptions}), core_1.provide(jsonp_backend_1.JSONPBackend, {useClass: jsonp_backend_1.JSONPBackend_})];
-  exports.JSON_BINDINGS = exports.JSONP_PROVIDERS;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("b0", ["e7", "f0", "ff", "e9"], true, function($__require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var Subscriber_1 = $__require('e7');
-  var root_1 = $__require('f0');
-  var SymbolShim_1 = $__require('ff');
-  var rxSubscriber_1 = $__require('e9');
-  var Observable = (function() {
-    function Observable(subscribe) {
-      this._isScalar = false;
-      if (subscribe) {
-        this._subscribe = subscribe;
-      }
-    }
-    Observable.prototype.lift = function(operator) {
-      var observable = new Observable();
-      observable.source = this;
-      observable.operator = operator;
-      return observable;
-    };
-    Observable.prototype[SymbolShim_1.SymbolShim.observable] = function() {
-      return this;
-    };
-    Observable.prototype.subscribe = function(observerOrNext, error, complete) {
-      var subscriber;
-      if (observerOrNext && typeof observerOrNext === 'object') {
-        if (observerOrNext instanceof Subscriber_1.Subscriber) {
-          subscriber = observerOrNext;
-        } else if (observerOrNext[rxSubscriber_1.rxSubscriber]) {
-          subscriber = observerOrNext[rxSubscriber_1.rxSubscriber]();
-        } else {
-          subscriber = new Subscriber_1.Subscriber(observerOrNext);
-        }
-      } else {
-        var next = observerOrNext;
-        subscriber = Subscriber_1.Subscriber.create(next, error, complete);
-      }
-      subscriber.add(this._subscribe(subscriber));
-      return subscriber;
-    };
-    Observable.prototype.forEach = function(next, thisArg, PromiseCtor) {
-      if (!PromiseCtor) {
-        if (root_1.root.Rx && root_1.root.Rx.config && root_1.root.Rx.config.Promise) {
-          PromiseCtor = root_1.root.Rx.config.Promise;
-        } else if (root_1.root.Promise) {
-          PromiseCtor = root_1.root.Promise;
-        }
-      }
-      if (!PromiseCtor) {
-        throw new Error('no Promise impl found');
-      }
-      var nextHandler;
-      if (thisArg) {
-        nextHandler = function nextHandlerFn(value) {
-          var _a = nextHandlerFn,
-              thisArg = _a.thisArg,
-              next = _a.next;
-          return next.call(thisArg, value);
-        };
-        nextHandler.thisArg = thisArg;
-        nextHandler.next = next;
-      } else {
-        nextHandler = next;
-      }
-      var promiseCallback = function promiseCallbackFn(resolve, reject) {
-        var _a = promiseCallbackFn,
-            source = _a.source,
-            nextHandler = _a.nextHandler;
-        source.subscribe(nextHandler, reject, resolve);
-      };
-      promiseCallback.source = this;
-      promiseCallback.nextHandler = nextHandler;
-      return new PromiseCtor(promiseCallback);
-    };
-    Observable.prototype._subscribe = function(subscriber) {
-      return this.source._subscribe(this.operator.call(subscriber));
-    };
-    Observable.create = function(subscribe) {
-      return new Observable(subscribe);
-    };
-    return Observable;
-  })();
-  exports.Observable = Observable;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("100", [], true, function($__require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  function throwError(e) {
-    throw e;
-  }
-  exports.throwError = throwError;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("101", [], true, function($__require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  function tryOrOnError(target) {
-    function tryCatcher() {
-      try {
-        tryCatcher.target.apply(this, arguments);
-      } catch (e) {
-        this.error(e);
-      }
-    }
-    tryCatcher.target = target;
-    return tryCatcher;
-  }
-  exports.tryOrOnError = tryOrOnError;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("102", [], true, function($__require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  function noop() {}
-  exports.noop = noop;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("e6", ["102"], true, function($__require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var noop_1 = $__require('102');
-  var Subscription = (function() {
-    function Subscription(_unsubscribe) {
-      this.isUnsubscribed = false;
-      if (_unsubscribe) {
-        this._unsubscribe = _unsubscribe;
-      }
-    }
-    Subscription.prototype._unsubscribe = function() {
-      noop_1.noop();
-    };
-    Subscription.prototype.unsubscribe = function() {
-      if (this.isUnsubscribed) {
-        return;
-      }
-      this.isUnsubscribed = true;
-      var unsubscribe = this._unsubscribe;
-      var subscriptions = this._subscriptions;
-      this._subscriptions = void 0;
-      if (unsubscribe) {
-        unsubscribe.call(this);
-      }
-      if (subscriptions != null) {
-        var index = -1;
-        var len = subscriptions.length;
-        while (++index < len) {
-          subscriptions[index].unsubscribe();
-        }
-      }
-    };
-    Subscription.prototype.add = function(subscription) {
-      if (!subscription || (subscription === this) || (subscription === Subscription.EMPTY)) {
-        return;
-      }
-      var sub = subscription;
-      switch (typeof subscription) {
-        case 'function':
-          sub = new Subscription(subscription);
-        case 'object':
-          if (sub.isUnsubscribed || typeof sub.unsubscribe !== 'function') {
-            break;
-          } else if (this.isUnsubscribed) {
-            sub.unsubscribe();
-          } else {
-            var subscriptions = this._subscriptions || (this._subscriptions = []);
-            subscriptions.push(sub);
-          }
-          break;
-        default:
-          throw new Error('Unrecognized subscription ' + subscription + ' added to Subscription.');
-      }
-    };
-    Subscription.prototype.remove = function(subscription) {
-      if (subscription == null || (subscription === this) || (subscription === Subscription.EMPTY)) {
-        return;
-      }
-      var subscriptions = this._subscriptions;
-      if (subscriptions) {
-        var subscriptionIndex = subscriptions.indexOf(subscription);
-        if (subscriptionIndex !== -1) {
-          subscriptions.splice(subscriptionIndex, 1);
-        }
-      }
-    };
-    Subscription.EMPTY = (function(empty) {
-      empty.isUnsubscribed = true;
-      return empty;
-    }(new Subscription()));
-    return Subscription;
-  })();
-  exports.Subscription = Subscription;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("f0", [], true, function($__require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var objectTypes = {
-    'boolean': false,
-    'function': true,
-    'object': true,
-    'number': false,
-    'string': false,
-    'undefined': false
-  };
-  exports.root = (objectTypes[typeof self] && self) || (objectTypes[typeof window] && window);
-  var freeExports = objectTypes[typeof exports] && exports && !exports.nodeType && exports;
-  var freeModule = objectTypes[typeof module] && module && !module.nodeType && module;
-  var freeGlobal = objectTypes[typeof global] && global;
-  if (freeGlobal && (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal)) {
-    exports.root = freeGlobal;
-  }
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("ff", ["f0"], true, function($__require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var root_1 = $__require('f0');
-  function polyfillSymbol(root) {
-    var Symbol = ensureSymbol(root);
-    ensureIterator(Symbol, root);
-    ensureObservable(Symbol);
-    ensureFor(Symbol);
-    return Symbol;
-  }
-  exports.polyfillSymbol = polyfillSymbol;
-  function ensureFor(Symbol) {
-    if (!Symbol.for) {
-      Symbol.for = symbolForPolyfill;
-    }
-  }
-  exports.ensureFor = ensureFor;
-  var id = 0;
-  function ensureSymbol(root) {
-    if (!root.Symbol) {
-      root.Symbol = function symbolFuncPolyfill(description) {
-        return "@@Symbol(" + description + "):" + id++;
-      };
-    }
-    return root.Symbol;
-  }
-  exports.ensureSymbol = ensureSymbol;
-  function symbolForPolyfill(key) {
-    return '@@' + key;
-  }
-  exports.symbolForPolyfill = symbolForPolyfill;
-  function ensureIterator(Symbol, root) {
-    if (!Symbol.iterator) {
-      if (typeof Symbol.for === 'function') {
-        Symbol.iterator = Symbol.for('iterator');
-      } else if (root.Set && typeof new root.Set()['@@iterator'] === 'function') {
-        Symbol.iterator = '@@iterator';
-      } else if (root.Map) {
-        var keys = Object.getOwnPropertyNames(root.Map.prototype);
-        for (var i = 0; i < keys.length; ++i) {
-          var key = keys[i];
-          if (key !== 'entries' && key !== 'size' && root.Map.prototype[key] === root.Map.prototype['entries']) {
-            Symbol.iterator = key;
-            break;
-          }
-        }
-      } else {
-        Symbol.iterator = '@@iterator';
-      }
-    }
-  }
-  exports.ensureIterator = ensureIterator;
-  function ensureObservable(Symbol) {
-    if (!Symbol.observable) {
-      if (typeof Symbol.for === 'function') {
-        Symbol.observable = Symbol.for('observable');
-      } else {
-        Symbol.observable = '@@observable';
-      }
-    }
-  }
-  exports.ensureObservable = ensureObservable;
-  exports.SymbolShim = polyfillSymbol(root_1.root);
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("e9", ["ff"], true, function($__require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var SymbolShim_1 = $__require('ff');
-  exports.rxSubscriber = SymbolShim_1.SymbolShim.for('rxSubscriber');
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("e7", ["102", "100", "101", "e6", "e9"], true, function($__require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
   var __extends = (this && this.__extends) || function(d, b) {
     for (var p in b)
       if (b.hasOwnProperty(p))
@@ -29972,227 +30042,432 @@ $__System.registerDynamic("e7", ["102", "100", "101", "e6", "e9"], true, functio
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
-  var noop_1 = $__require('102');
-  var throwError_1 = $__require('100');
-  var tryOrOnError_1 = $__require('101');
-  var Subscription_1 = $__require('e6');
-  var rxSubscriber_1 = $__require('e9');
-  var Subscriber = (function(_super) {
-    __extends(Subscriber, _super);
-    function Subscriber(destination) {
-      _super.call(this);
-      this.destination = destination;
-      this._isUnsubscribed = false;
-      if (!this.destination) {
-        return;
+  var exception_handler_1 = $__require('be');
+  var exception_handler_2 = $__require('be');
+  exports.ExceptionHandler = exception_handler_2.ExceptionHandler;
+  var BaseException = (function(_super) {
+    __extends(BaseException, _super);
+    function BaseException(message) {
+      if (message === void 0) {
+        message = "--";
       }
-      var subscription = destination._subscription;
-      if (subscription) {
-        this._subscription = subscription;
-      } else if (destination instanceof Subscriber) {
-        this._subscription = destination;
-      }
+      _super.call(this, message);
+      this.message = message;
+      this.stack = (new Error(message)).stack;
     }
-    Subscriber.prototype[rxSubscriber_1.rxSubscriber] = function() {
-      return this;
+    BaseException.prototype.toString = function() {
+      return this.message;
     };
-    Object.defineProperty(Subscriber.prototype, "isUnsubscribed", {
+    return BaseException;
+  })(Error);
+  exports.BaseException = BaseException;
+  var WrappedException = (function(_super) {
+    __extends(WrappedException, _super);
+    function WrappedException(_wrapperMessage, _originalException, _originalStack, _context) {
+      _super.call(this, _wrapperMessage);
+      this._wrapperMessage = _wrapperMessage;
+      this._originalException = _originalException;
+      this._originalStack = _originalStack;
+      this._context = _context;
+      this._wrapperStack = (new Error(_wrapperMessage)).stack;
+    }
+    Object.defineProperty(WrappedException.prototype, "wrapperMessage", {
       get: function() {
-        var subscription = this._subscription;
-        if (subscription) {
-          return this._isUnsubscribed || subscription.isUnsubscribed;
-        } else {
-          return this._isUnsubscribed;
-        }
-      },
-      set: function(value) {
-        var subscription = this._subscription;
-        if (subscription) {
-          subscription.isUnsubscribed = Boolean(value);
-        } else {
-          this._isUnsubscribed = Boolean(value);
-        }
+        return this._wrapperMessage;
       },
       enumerable: true,
       configurable: true
     });
-    Subscriber.create = function(next, error, complete) {
-      var subscriber = new Subscriber();
-      subscriber._next = (typeof next === 'function') && tryOrOnError_1.tryOrOnError(next) || noop_1.noop;
-      subscriber._error = (typeof error === 'function') && error || throwError_1.throwError;
-      subscriber._complete = (typeof complete === 'function') && complete || noop_1.noop;
-      return subscriber;
+    Object.defineProperty(WrappedException.prototype, "wrapperStack", {
+      get: function() {
+        return this._wrapperStack;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(WrappedException.prototype, "originalException", {
+      get: function() {
+        return this._originalException;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(WrappedException.prototype, "originalStack", {
+      get: function() {
+        return this._originalStack;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(WrappedException.prototype, "context", {
+      get: function() {
+        return this._context;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(WrappedException.prototype, "message", {
+      get: function() {
+        return exception_handler_1.ExceptionHandler.exceptionToString(this);
+      },
+      enumerable: true,
+      configurable: true
+    });
+    WrappedException.prototype.toString = function() {
+      return this.message;
     };
-    Subscriber.prototype.add = function(sub) {
-      var _subscription = this._subscription;
-      if (_subscription) {
-        _subscription.add(sub);
-      } else {
-        _super.prototype.add.call(this, sub);
-      }
-    };
-    Subscriber.prototype.remove = function(sub) {
-      if (this._subscription) {
-        this._subscription.remove(sub);
-      } else {
-        _super.prototype.remove.call(this, sub);
-      }
-    };
-    Subscriber.prototype.unsubscribe = function() {
-      if (this._isUnsubscribed) {
-        return;
-      } else if (this._subscription) {
-        this._isUnsubscribed = true;
-      } else {
-        _super.prototype.unsubscribe.call(this);
-      }
-    };
-    Subscriber.prototype._next = function(value) {
-      var destination = this.destination;
-      if (destination.next) {
-        destination.next(value);
-      }
-    };
-    Subscriber.prototype._error = function(err) {
-      var destination = this.destination;
-      if (destination.error) {
-        destination.error(err);
-      }
-    };
-    Subscriber.prototype._complete = function() {
-      var destination = this.destination;
-      if (destination.complete) {
-        destination.complete();
-      }
-    };
-    Subscriber.prototype.next = function(value) {
-      if (!this.isUnsubscribed) {
-        this._next(value);
-      }
-    };
-    Subscriber.prototype.error = function(err) {
-      if (!this.isUnsubscribed) {
-        this._error(err);
-        this.unsubscribe();
-      }
-    };
-    Subscriber.prototype.complete = function() {
-      if (!this.isUnsubscribed) {
-        this._complete();
-        this.unsubscribe();
-      }
-    };
-    return Subscriber;
-  })(Subscription_1.Subscription);
-  exports.Subscriber = Subscriber;
+    return WrappedException;
+  })(Error);
+  exports.WrappedException = WrappedException;
+  function makeTypeError(message) {
+    return new TypeError(message);
+  }
+  exports.makeTypeError = makeTypeError;
+  function unimplemented() {
+    throw new BaseException('unimplemented');
+  }
+  exports.unimplemented = unimplemented;
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("103", ["104"], true, function($__require, exports, module) {
+$__System.registerDynamic("91", ["7", "10"], true, function($__require, exports, module) {
+  "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var errorObject_1 = $__require('104');
-  var tryCatchTarget;
-  function tryCatcher() {
-    try {
-      return tryCatchTarget.apply(this, arguments);
-    } catch (e) {
-      errorObject_1.errorObject.e = e;
-      return errorObject_1.errorObject;
+  var lang_1 = $__require('7');
+  var exceptions_1 = $__require('10');
+  var ReflectionCapabilities = (function() {
+    function ReflectionCapabilities(reflect) {
+      this._reflect = lang_1.isPresent(reflect) ? reflect : lang_1.global.Reflect;
     }
-  }
-  function tryCatch(fn) {
-    tryCatchTarget = fn;
-    return tryCatcher;
-  }
-  exports.tryCatch = tryCatch;
-  ;
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("104", [], true, function($__require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  exports.errorObject = {e: {}};
-  global.define = __define;
-  return module.exports;
-});
-
-$__System.registerDynamic("105", ["e7", "103", "104"], true, function($__require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var __extends = (this && this.__extends) || function(d, b) {
-    for (var p in b)
-      if (b.hasOwnProperty(p))
-        d[p] = b[p];
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-  var Subscriber_1 = $__require('e7');
-  var tryCatch_1 = $__require('103');
-  var errorObject_1 = $__require('104');
-  function map(project, thisArg) {
-    if (typeof project !== 'function') {
-      throw new TypeError('argument is not a function. Are you looking for `mapTo()`?');
-    }
-    return this.lift(new MapOperator(project, thisArg));
-  }
-  exports.map = map;
-  var MapOperator = (function() {
-    function MapOperator(project, thisArg) {
-      this.project = project;
-      this.thisArg = thisArg;
-    }
-    MapOperator.prototype.call = function(subscriber) {
-      return new MapSubscriber(subscriber, this.project, this.thisArg);
+    ReflectionCapabilities.prototype.isReflectionEnabled = function() {
+      return true;
     };
-    return MapOperator;
+    ReflectionCapabilities.prototype.factory = function(t) {
+      switch (t.length) {
+        case 0:
+          return function() {
+            return new t();
+          };
+        case 1:
+          return function(a1) {
+            return new t(a1);
+          };
+        case 2:
+          return function(a1, a2) {
+            return new t(a1, a2);
+          };
+        case 3:
+          return function(a1, a2, a3) {
+            return new t(a1, a2, a3);
+          };
+        case 4:
+          return function(a1, a2, a3, a4) {
+            return new t(a1, a2, a3, a4);
+          };
+        case 5:
+          return function(a1, a2, a3, a4, a5) {
+            return new t(a1, a2, a3, a4, a5);
+          };
+        case 6:
+          return function(a1, a2, a3, a4, a5, a6) {
+            return new t(a1, a2, a3, a4, a5, a6);
+          };
+        case 7:
+          return function(a1, a2, a3, a4, a5, a6, a7) {
+            return new t(a1, a2, a3, a4, a5, a6, a7);
+          };
+        case 8:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8);
+          };
+        case 9:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9);
+          };
+        case 10:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
+          };
+        case 11:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
+          };
+        case 12:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
+          };
+        case 13:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
+          };
+        case 14:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
+          };
+        case 15:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
+          };
+        case 16:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
+          };
+        case 17:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17);
+          };
+        case 18:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18);
+          };
+        case 19:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19);
+          };
+        case 20:
+          return function(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20) {
+            return new t(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20);
+          };
+      }
+      ;
+      throw new Error("Cannot create a factory for '" + lang_1.stringify(t) + "' because its constructor has more than 20 arguments");
+    };
+    ReflectionCapabilities.prototype._zipTypesAndAnnotaions = function(paramTypes, paramAnnotations) {
+      var result;
+      if (typeof paramTypes === 'undefined') {
+        result = new Array(paramAnnotations.length);
+      } else {
+        result = new Array(paramTypes.length);
+      }
+      for (var i = 0; i < result.length; i++) {
+        if (typeof paramTypes === 'undefined') {
+          result[i] = [];
+        } else if (paramTypes[i] != Object) {
+          result[i] = [paramTypes[i]];
+        } else {
+          result[i] = [];
+        }
+        if (lang_1.isPresent(paramAnnotations) && lang_1.isPresent(paramAnnotations[i])) {
+          result[i] = result[i].concat(paramAnnotations[i]);
+        }
+      }
+      return result;
+    };
+    ReflectionCapabilities.prototype.parameters = function(typeOrFunc) {
+      if (lang_1.isPresent(typeOrFunc.parameters)) {
+        return typeOrFunc.parameters;
+      }
+      if (lang_1.isPresent(this._reflect) && lang_1.isPresent(this._reflect.getMetadata)) {
+        var paramAnnotations = this._reflect.getMetadata('parameters', typeOrFunc);
+        var paramTypes = this._reflect.getMetadata('design:paramtypes', typeOrFunc);
+        if (lang_1.isPresent(paramTypes) || lang_1.isPresent(paramAnnotations)) {
+          return this._zipTypesAndAnnotaions(paramTypes, paramAnnotations);
+        }
+      }
+      var parameters = new Array(typeOrFunc.length);
+      parameters.fill(undefined);
+      return parameters;
+    };
+    ReflectionCapabilities.prototype.annotations = function(typeOrFunc) {
+      if (lang_1.isPresent(typeOrFunc.annotations)) {
+        var annotations = typeOrFunc.annotations;
+        if (lang_1.isFunction(annotations) && annotations.annotations) {
+          annotations = annotations.annotations;
+        }
+        return annotations;
+      }
+      if (lang_1.isPresent(this._reflect) && lang_1.isPresent(this._reflect.getMetadata)) {
+        var annotations = this._reflect.getMetadata('annotations', typeOrFunc);
+        if (lang_1.isPresent(annotations))
+          return annotations;
+      }
+      return [];
+    };
+    ReflectionCapabilities.prototype.propMetadata = function(typeOrFunc) {
+      if (lang_1.isPresent(typeOrFunc.propMetadata)) {
+        var propMetadata = typeOrFunc.propMetadata;
+        if (lang_1.isFunction(propMetadata) && propMetadata.propMetadata) {
+          propMetadata = propMetadata.propMetadata;
+        }
+        return propMetadata;
+      }
+      if (lang_1.isPresent(this._reflect) && lang_1.isPresent(this._reflect.getMetadata)) {
+        var propMetadata = this._reflect.getMetadata('propMetadata', typeOrFunc);
+        if (lang_1.isPresent(propMetadata))
+          return propMetadata;
+      }
+      return {};
+    };
+    ReflectionCapabilities.prototype.interfaces = function(type) {
+      throw new exceptions_1.BaseException("JavaScript does not support interfaces");
+    };
+    ReflectionCapabilities.prototype.getter = function(name) {
+      return new Function('o', 'return o.' + name + ';');
+    };
+    ReflectionCapabilities.prototype.setter = function(name) {
+      return new Function('o', 'v', 'return o.' + name + ' = v;');
+    };
+    ReflectionCapabilities.prototype.method = function(name) {
+      var functionBody = "if (!o." + name + ") throw new Error('\"" + name + "\" is undefined');\n        return o." + name + ".apply(o, args);";
+      return new Function('o', 'args', functionBody);
+    };
+    ReflectionCapabilities.prototype.importUri = function(type) {
+      return './';
+    };
+    return ReflectionCapabilities;
   })();
-  var MapSubscriber = (function(_super) {
-    __extends(MapSubscriber, _super);
-    function MapSubscriber(destination, project, thisArg) {
-      _super.call(this, destination);
-      this.project = project;
-      this.thisArg = thisArg;
-      this.count = 0;
-    }
-    MapSubscriber.prototype._next = function(x) {
-      var result = tryCatch_1.tryCatch(this.project).call(this.thisArg || this, x, this.count++);
-      if (result === errorObject_1.errorObject) {
-        this.error(errorObject_1.errorObject.e);
-      } else {
-        this.destination.next(result);
-      }
-    };
-    return MapSubscriber;
-  })(Subscriber_1.Subscriber);
+  exports.ReflectionCapabilities = ReflectionCapabilities;
   global.define = __define;
   return module.exports;
 });
 
-$__System.registerDynamic("106", ["b0", "105"], true, function($__require, exports, module) {
+$__System.registerDynamic("81", ["106", "91"], true, function($__require, exports, module) {
+  "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var Observable_1 = $__require('b0');
-  var map_1 = $__require('105');
-  Observable_1.Observable.prototype.map = map_1.map;
+  var reflector_1 = $__require('106');
+  var reflector_2 = $__require('106');
+  exports.Reflector = reflector_2.Reflector;
+  exports.ReflectionInfo = reflector_2.ReflectionInfo;
+  var reflection_capabilities_1 = $__require('91');
+  exports.reflector = new reflector_1.Reflector(new reflection_capabilities_1.ReflectionCapabilities());
   global.define = __define;
   return module.exports;
 });
 
-$__System.register("9c", ["a", "97", "fe", "b0", "106"], function(exports_1, context_1) {
+$__System.registerDynamic("a", ["50", "ba", "bc", "3b", "bd", "7", "58", "8d", "c2", "c3", "c5", "52", "5b", "d3", "82", "cb", "105", "81"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  function __export(m) {
+    for (var p in m)
+      if (!exports.hasOwnProperty(p))
+        exports[p] = m[p];
+  }
+  __export($__require('50'));
+  __export($__require('ba'));
+  __export($__require('bc'));
+  __export($__require('3b'));
+  __export($__require('bd'));
+  var lang_1 = $__require('7');
+  exports.enableProdMode = lang_1.enableProdMode;
+  var application_ref_1 = $__require('58');
+  exports.platform = application_ref_1.platform;
+  exports.createNgZone = application_ref_1.createNgZone;
+  exports.PlatformRef = application_ref_1.PlatformRef;
+  exports.ApplicationRef = application_ref_1.ApplicationRef;
+  var application_tokens_1 = $__require('8d');
+  exports.APP_ID = application_tokens_1.APP_ID;
+  exports.APP_COMPONENT = application_tokens_1.APP_COMPONENT;
+  exports.APP_INITIALIZER = application_tokens_1.APP_INITIALIZER;
+  exports.PACKAGE_ROOT_URL = application_tokens_1.PACKAGE_ROOT_URL;
+  exports.PLATFORM_INITIALIZER = application_tokens_1.PLATFORM_INITIALIZER;
+  __export($__require('c2'));
+  __export($__require('c3'));
+  __export($__require('c5'));
+  var debug_node_1 = $__require('52');
+  exports.DebugElement = debug_node_1.DebugElement;
+  exports.DebugNode = debug_node_1.DebugNode;
+  exports.asNativeElements = debug_node_1.asNativeElements;
+  __export($__require('5b'));
+  __export($__require('d3'));
+  __export($__require('82'));
+  __export($__require('cb'));
+  __export($__require('105'));
+  __export($__require('81'));
+  global.define = __define;
+  return module.exports;
+});
+
+$__System.register("107", ["a"], function(exports_1, context_1) {
+  "use strict";
+  var __moduleName = context_1 && context_1.id;
+  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
+    var c = arguments.length,
+        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+        d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+      r = Reflect.decorate(decorators, target, key, desc);
+    else
+      for (var i = decorators.length - 1; i >= 0; i--)
+        if (d = decorators[i])
+          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+  };
+  var __metadata = (this && this.__metadata) || function(k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+      return Reflect.metadata(k, v);
+  };
+  var core_1;
+  var WeatherService;
+  return {
+    setters: [function(core_1_1) {
+      core_1 = core_1_1;
+    }],
+    execute: function() {
+      WeatherService = (function() {
+        function WeatherService() {
+          var d = localStorage.getItem('data');
+          this.data = (d ? JSON.parse(d) : null);
+          this.apikey = localStorage.getItem('apikey');
+          this.latitude = localStorage.getItem('latitude');
+          this.longitude = localStorage.getItem('longitude');
+        }
+        WeatherService.prototype.getWeather = function() {
+          var _this = this;
+          if (this.data) {
+            return new Promise(function(resolve, reject) {
+              return resolve(_this.data);
+            });
+          } else if (this.apikey && this.latitude && this.longitude) {
+            return this.refresh();
+          } else {
+            return new Promise(function(resolve, reject) {
+              reject();
+            });
+          }
+        };
+        WeatherService.prototype.refresh = function() {
+          var _this = this;
+          localStorage.setItem('apikey', this.apikey);
+          localStorage.setItem('latitude', this.latitude.toString());
+          localStorage.setItem('longitude', this.longitude.toString());
+          return new Promise(function(resolve) {
+            var callback = 'apiCallback';
+            var self = _this;
+            window[callback] = function(weatherData) {
+              weatherData.hourly.data.forEach(function(h) {
+                if (new Date(h.time * 1000).getHours() === 0) {
+                  h.moonPhase = weatherData.daily.data.find(function(d) {
+                    return d.time === h.time;
+                  }).moonPhase;
+                }
+              });
+              localStorage.setItem('data', JSON.stringify(self.data = weatherData));
+              resolve(weatherData);
+            };
+            var apiScript = document.createElement('script');
+            apiScript.src = "https://api.forecast.io/forecast/" + _this.apikey + "/" + _this.latitude + "," + _this.longitude + "?callback=" + callback + "&exclude=flags,minutely";
+            document.body.appendChild(apiScript);
+          });
+        };
+        WeatherService = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [])], WeatherService);
+        return WeatherService;
+      }());
+      exports_1("WeatherService", WeatherService);
+    }
+  };
+});
+
+$__System.register("108", ["a", "107"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -30212,85 +30487,94 @@ $__System.register("9c", ["a", "97", "fe", "b0", "106"], function(exports_1, con
       return Reflect.metadata(k, v);
   };
   var core_1,
-      Color_1,
-      http_1,
-      Observable_1;
-  var ConfigService;
+      weather_service_1;
+  var ForecastIoComponent;
   return {
     setters: [function(core_1_1) {
       core_1 = core_1_1;
-    }, function(Color_1_1) {
-      Color_1 = Color_1_1;
-    }, function(http_1_1) {
-      http_1 = http_1_1;
-    }, function(Observable_1_1) {
-      Observable_1 = Observable_1_1;
-    }, function(_1) {}],
+    }, function(weather_service_1_1) {
+      weather_service_1 = weather_service_1_1;
+    }],
     execute: function() {
-      ConfigService = (function() {
-        function ConfigService(_http) {
-          this._http = _http;
+      ForecastIoComponent = (function() {
+        function ForecastIoComponent(dao) {
+          this.dao = dao;
+          this.refreshed = new core_1.EventEmitter();
         }
-        ConfigService.prototype.deserializeColors = function(obj) {
+        ForecastIoComponent.prototype.refresh = function() {
           var _this = this;
-          if (typeof obj !== 'object') {
-            return;
-          }
-          Object.keys(obj).forEach(function(key) {
-            if (key === 'color' || key === 'daylight') {
-              if (obj[key].hasOwnProperty('value')) {
-                obj[key].value = Color_1.Color.getColor(obj[key].value);
-              } else {
-                obj[key] = Color_1.Color.getColor(obj[key]);
-              }
-            } else {
-              _this.deserializeColors(obj[key]);
-            }
+          this.dao.refresh().then(function(weather) {
+            _this.refreshed.emit(weather);
           });
         };
-        Object.defineProperty(ConfigService.prototype, "themes", {
-          get: function() {
-            var _this = this;
-            return new Observable_1.Observable(function(observer) {
-              _this._observer = observer;
-              _this._http.get('src/preset-themes.json').map(function(res) {
-                var themes = (res.json());
-                for (var _i = 0,
-                    themes_1 = themes; _i < themes_1.length; _i++) {
-                  var t = themes_1[_i];
-                  _this.deserializeColors(t);
-                }
-                return themes;
-              }).subscribe(function(ta) {
-                return ta.forEach(function(t) {
-                  return _this._observer.next(t);
-                });
-              });
-            });
-          },
-          enumerable: true,
-          configurable: true
-        });
-        ConfigService.prototype.save = function(theme) {
-          this._observer.next(theme);
-        };
-        Object.defineProperty(ConfigService.prototype, "maxDotRadius", {
-          get: function() {
-            var max = 10;
-            return max;
-          },
-          enumerable: true,
-          configurable: true
-        });
-        ConfigService = __decorate([core_1.Injectable(), __metadata('design:paramtypes', [http_1.Http])], ConfigService);
-        return ConfigService;
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ForecastIoComponent.prototype, "refreshed", void 0);
+        ForecastIoComponent = __decorate([core_1.Component({
+          selector: 'forecast-io',
+          template: "\n  <div class=\"panel panel-default\">\n    <div class=\"panel-heading\" (click)=\"show= !show\">\n      <span [class.down]=\"!show\" [class.up]=\"show\"></span>\n      Forecast IO info\n    </div>\n    <div class=\"panel-body\" [class.hide]=\"!show\">\n      <form (ngSubmit)=\"refresh()\" #form=\"ngForm\">\n        <div class=\"form-group\">\n          <label>API Key</label>\n          <input type=text required [(ngModel)]=dao.apikey placeholder=\"API Key\" class=\"form-control\">\n        </div>\n        <div class=\"form-group\">\n          <label>Latitude</label>\n          <input type=number step=any required [(ngModel)]=dao.latitude placeholder=\"Latitude\" class=\"form-control\">\n        </div>\n        <div class=\"form-group\">\n          <label>Longitude</label>\n          <input type=number step=any required [(ngModel)]=dao.longitude placeholder=\"Longitude\" class=\"form-control\">\n        </div>\n        <div class=\"form-group\">\n          <input type=submit value=Refresh [disabled]=\"!form.form.valid\" class=\"btn btn-default\">\n        </div>\n      </form>\n    </div>\n  </div>\n  ",
+          styleUrls: ['src/arrows.css']
+        }), __metadata('design:paramtypes', [weather_service_1.WeatherService])], ForecastIoComponent);
+        return ForecastIoComponent;
       }());
-      exports_1("ConfigService", ConfigService);
+      exports_1("ForecastIoComponent", ForecastIoComponent);
     }
   };
 });
 
-$__System.register("107", ["9a", "9d", "a", "9e", "9f", "a4", "9c"], function(exports_1, context_1) {
+$__System.register("109", ["a", "108"], function(exports_1, context_1) {
+  "use strict";
+  var __moduleName = context_1 && context_1.id;
+  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
+    var c = arguments.length,
+        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+        d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+      r = Reflect.decorate(decorators, target, key, desc);
+    else
+      for (var i = decorators.length - 1; i >= 0; i--)
+        if (d = decorators[i])
+          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+  };
+  var __metadata = (this && this.__metadata) || function(k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+      return Reflect.metadata(k, v);
+  };
+  var core_1,
+      forecast_io_component_1;
+  var ConfigComponent;
+  return {
+    setters: [function(core_1_1) {
+      core_1 = core_1_1;
+    }, function(forecast_io_component_1_1) {
+      forecast_io_component_1 = forecast_io_component_1_1;
+    }],
+    execute: function() {
+      ConfigComponent = (function() {
+        function ConfigComponent() {
+          this.close = new core_1.EventEmitter();
+        }
+        ConfigComponent.prototype.onClose = function() {
+          this.close.emit(null);
+        };
+        ConfigComponent.prototype.newWeatherDataAvailable = function(weather) {
+          var dt = new Date(weather.currently.time * 1000);
+          this.timestamp = dt.toLocaleString();
+        };
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ConfigComponent.prototype, "close", void 0);
+        ConfigComponent = __decorate([core_1.Component({
+          selector: 'config',
+          templateUrl: 'src/config/config.component.html',
+          directives: [forecast_io_component_1.ForecastIoComponent],
+          styles: [':host{display: block;}']
+        }), __metadata('design:paramtypes', [])], ConfigComponent);
+        return ConfigComponent;
+      }());
+      exports_1("ConfigComponent", ConfigComponent);
+    }
+  };
+});
+
+$__System.register("10a", ["9d", "9f", "a", "107", "a4", "9e", "109"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -30313,9 +30597,9 @@ $__System.register("107", ["9a", "9d", "a", "9e", "9f", "a4", "9c"], function(ex
       theme_picker_component_1,
       core_1,
       weather_service_1,
-      forecast_io_component_1,
       widget_display_component_1,
-      config_service_1;
+      config_service_1,
+      config_component_1;
   var AppComponent;
   return {
     setters: [function(theme_creator_component_1_1) {
@@ -30326,12 +30610,12 @@ $__System.register("107", ["9a", "9d", "a", "9e", "9f", "a4", "9c"], function(ex
       core_1 = core_1_1;
     }, function(weather_service_1_1) {
       weather_service_1 = weather_service_1_1;
-    }, function(forecast_io_component_1_1) {
-      forecast_io_component_1 = forecast_io_component_1_1;
     }, function(widget_display_component_1_1) {
       widget_display_component_1 = widget_display_component_1_1;
     }, function(config_service_1_1) {
       config_service_1 = config_service_1_1;
+    }, function(config_component_1_1) {
+      config_component_1 = config_component_1_1;
     }],
     execute: function() {
       AppComponent = (function() {
@@ -30340,7 +30624,12 @@ $__System.register("107", ["9a", "9d", "a", "9e", "9f", "a4", "9c"], function(ex
           this.config = config;
           this.timestamp = '';
           this.showMenu = false;
-          this.tab = 1;
+          this.Pages = {
+            Themes: 1,
+            Editor: 2,
+            Config: 3
+          };
+          this.currentPage = this.Pages.Themes;
         }
         AppComponent.prototype.ngAfterViewInit = function() {
           this.getWeather();
@@ -30362,25 +30651,17 @@ $__System.register("107", ["9a", "9d", "a", "9e", "9f", "a4", "9c"], function(ex
             return console.log('Data is not set, configure forecast io info!!!');
           });
         };
-        AppComponent.prototype.createTheme = function() {
-          this.tab = 2;
-          this.currentThemeBeforeCreatingTheme = this.currentTheme;
-        };
         AppComponent.prototype.cancelThemeCreation = function() {
           this.currentTheme = this.currentThemeBeforeCreatingTheme;
-          this.tab = 1;
-        };
-        AppComponent.prototype.themeCreated = function(theme) {
-          this.currentTheme = theme;
-          this.tab = 1;
+          this.currentPage = this.Pages.Themes;
         };
         AppComponent.prototype.draw = function() {};
         AppComponent = __decorate([core_1.Component({
           selector: 'weather-widget-number-one-prototype',
-          template: "\n    <widget-display [theme]=\"currentTheme\" [data]=\"data\" (click)=\"showMenu = !showMenu\"></widget-display>\n    <header [class.hideMenu]=\"!showMenu\">\n\n      <nav [hidden]=\"tab !== 1\" class=\"navbar navbar-light bg-faded\">\n        Themes\n        <input type=button class=\"btn btn-default\" value=\"New Theme\" (click)=\"createTheme()\">\n      </nav>\n\n      <theme-picker [hidden]=\"tab !== 1\" (themePicked)=\"currentTheme = $event\"></theme-picker>\n      <theme-creator [hidden]=\"tab !== 2\" (refreshed)=\"currentTheme = $event\" (created)=\"themeCreated($event)\" (canceled)=\"cancelThemeCreation()\"></theme-creator>\n      <div [hidden]=\"tab !== 3\">\n        Weather Data Last Retrieved: {{timestamp}}\n        <forecast-io (refreshed)=\"newWeatherDataAvailable($event)\"></forecast-io>\n      </div>\n    </header>\n  ",
+          templateUrl: "src/app.component.html",
           styleUrls: ['src/app.component.css'],
           providers: [weather_service_1.WeatherService, config_service_1.ConfigService],
-          directives: [forecast_io_component_1.ForecastIoComponent, theme_picker_component_1.ThemePickerComponent, theme_creator_component_1.ThemeCreatorComponent, widget_display_component_1.WidgetDisplayComponent]
+          directives: [theme_picker_component_1.ThemePickerComponent, theme_creator_component_1.ThemeCreatorComponent, widget_display_component_1.WidgetDisplayComponent, config_component_1.ConfigComponent]
         }), __metadata('design:paramtypes', [weather_service_1.WeatherService, config_service_1.ConfigService])], AppComponent);
         return AppComponent;
       }());
@@ -30389,7 +30670,7 @@ $__System.register("107", ["9a", "9d", "a", "9e", "9f", "a4", "9c"], function(ex
   };
 });
 
-$__System.register("1", ["2", "5", "90", "fe", "107"], function(exports_1, context_1) {
+$__System.register("1", ["2", "5", "90", "b4", "10a"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var browser_1,

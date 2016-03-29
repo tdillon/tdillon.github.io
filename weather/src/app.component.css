@@ -6,14 +6,15 @@
   }
   widget-display {
     order: 1;
+    flex-shrink: 0;
   }
-  header {
+  #pages {
     order: 2;
     overflow-y: scroll;
   }
 }
 @media all and (orientation: landscape) {
-  header {
+  #pages {
     position: absolute;
     top: 0;
     left: 0;
@@ -21,13 +22,26 @@
     overflow-y: scroll;
   }
 }
-header.hideMenu {
+#pages.hideMenu {
   transform: translateX(-100%);
 }
-header {
-  font-family: Roboto, sans-serif;
+#pages {
+  /*font-family: Roboto, sans-serif;
   transition: transform .5s ease;
   color: #000;
-  background: #DFDFDF;
-  padding: 16px;
+  padding: 0 16px;
+  height: 100%;
+  position: relative;*/
+  
+}
+#pages > * {
+  height: 100%;
+  overflow-y: scroll;
+  background: #eee;
+  transition: transform .25s .5s ease-out, height .25s .25s ease-out;
+}
+#pages > *:not(.current) {
+  height: 0;
+  transform: translateX(-100%);
+  transition: transform .25s 0s ease-out, height .25s .25s ease-out;
 }

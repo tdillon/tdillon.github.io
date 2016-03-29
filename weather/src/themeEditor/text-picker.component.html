@@ -1,0 +1,9 @@
+<header (click)="onFocus()">
+  <h1>{{title}}</h1>
+  <h2>EMPTY or {{value}}</h2>
+</header>
+<div>
+  <input type=button title=Done value="&#10004;" (click)="onSave()">
+  <input type=button title=Cancel value="&#10008;" (click)="onCancel()">
+  <input type=text #val (input)="onUpdate(value = val.value)" [value]="value"  [placeholder]="title" required>
+</div>

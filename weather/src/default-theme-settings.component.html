@@ -1,8 +1,0 @@
-<div class=list-group>
-  <number-picker [title]="'Dot Radius'" [value]="default.dot.radius" (updated)="refresh(default.dot.radius = $event)" [min]="1" [max]="20" [step]="1"></number-picker>
-  <color [color]="default.dot.color" (refreshed)="refresh(default.dot.color = $event)" [title]="'Dot Color'"></color>
-  <boolean-picker [title]="'Segment Visibility'" [subtitle]="'Are segments visible?'" [value]="default.segment.show" (updated)="refresh(default.segment.show = $event)"></boolean-picker>
-  <number-picker [title]="'Segment Width Angle'" [value]="default.segment.angle" (updated)="refresh(default.segment.angle = $event)" [min]="0" [max]="90" [step]="1"></number-picker>
-  <number-picker [title]="'Segment Padding'" [value]="default.segment.padding" (updated)="refresh(default.segment.padding = $event)" [min]="0" [max]="10" [step]="1"></number-picker>
-  <color [color]="default.segment.color" (refreshed)="refresh(default.segment.color = $event)" [title]="'Segment Color'"></color>
-</div>

@@ -1,0 +1,30 @@
+<header (click)="onFocus()">
+  <h1>{{title}}</h1>
+  <h2>
+    <span [ngSwitch]="showalpha">
+      <template [ngSwitchWhen]="true">{{color.rgba}}</template>
+      <template [ngSwitchWhen]="false">{{color.rgb}}</template>
+    </span>
+  </h2>
+</header>
+<div>
+  <div>
+    <label>Red: {{color.r}}</label>
+    <input #red (input)="onUpdate(color.r = red.value * 1)" [value]="color.r" type=range min=0 max=255 step=1>
+  </div>
+  <div>
+    <label>Green: {{color.g}}</label>
+    <input #green (input)="onUpdate(color.g = green.value * 1)" [value]="color.g" type=range min=0 max=255 step=1>
+  </div>
+  <div>
+    <label>Blue: {{color.b}}</label>
+    <input #blue (input)="onUpdate(color.b = blue.value * 1)" [value]="color.b" type=range min=0 max=255 step=1>
+  </div>
+  <div *ngIf="showalpha">
+    <label>Alpha: {{color.a}}</label>
+    <input #alpha (input)="onUpdate(color.a = alpha.value * 1)" [value]="color.a" type=range min=0 max=1 step=".1">
+  </div>
+
+  <input class="btn btn-success" type=button value=Done (click)="onSave()">
+  <input class="btn btn-default" type=button value=Cancel (click)="onCancel()">
+</div>

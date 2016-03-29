@@ -13,7 +13,8 @@ import {DotDrawer} from './DotDrawer'
   selector: 'widget-display',
   template: `
     <canvas></canvas>
-  `
+  `,
+  styles: ['canvas{display:block}']
 })
 export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
   canvas: HTMLCanvasElement;

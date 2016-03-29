@@ -1,0 +1,9 @@
+<header (click)="onFocus()">
+  <h1>{{title}}</h1>
+  <h2>{{value}}</h2>
+</header>
+<div>
+  <input #numberVal (input)="onUpdate(value = numberVal.value)" [value]="value" type=range [min]="min" [max]="max" [step]="step">
+  <input class="btn btn-success" type=button value=Done (click)="onSave()">
+  <input class="btn btn-default" type=button value=Cancel (click)="onCancel()">
+</div>

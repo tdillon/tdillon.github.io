@@ -4,7 +4,107 @@
 <title>WW#1 Prototype</title>
 <link rel="icon" type="image/png" href="/icon.png" />
 
-<link rel="stylesheet" href="src/bundle.css">
+<!-- TODO build:css src/bundle.css -->
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<style>
+  html,
+  body {
+    margin: 0;
+    height: 100%;
+    min-height: 100%;
+  }
+
+  h1,
+  h2 {
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+  }
+
+  h1 {
+    font-size: 1em;
+  }
+
+  h2 {
+    font-size: .8em;
+    color: rgba(0, 0, 0, .6);
+  }
+
+  text-picker,
+  number-picker,
+  widget-type-picker,
+  color-picker,
+  boolean-picker,
+  default-theme-settings,
+  weather-property-picker,
+  theme-creator > header {
+    transition: transform .5s .5s ease-out;
+    background: #fff;
+  }
+
+  .hide > text-picker,
+  .hide > number-picker,
+  .hide > widget-type-picker,
+  .hide > color-picker,
+  .hide > boolean-picker,
+  .hide > default-theme-settings,
+  .hide > weather-property-picker,
+  theme-creator.hide > header {
+    transform: translateX(-100%);
+    transition: transform .5s 0s ease-out;
+  }
+
+  text-picker header,
+  number-picker header,
+  widget-type-picker header,
+  color-picker header,
+  boolean-picker header,
+  default-theme-settings > header,
+  weather-property-picker header {
+    height: 100%;
+    overflow: hidden;
+    transition: height 0s .5s ease-out;
+  }
+
+  :not(.show) > text-picker header,
+  :not(.show) > number-picker header,
+  :not(.show) > widget-type-picker header,
+  :not(.show) > color-picker header,
+  :not(.show) > boolean-picker header,
+  :not(.show) > default-theme-settings > header,
+  :not(.show) > weather-property-picker header {
+    height: 0;
+    transition: height 0s .5s ease-out;
+  }
+
+  text-picker > div,
+  number-picker > div,
+  widget-type-picker > div,
+  color-picker > div,
+  boolean-picker > div,
+  weather-property-picker > div,
+  default-theme-settings > div {
+    height: 0;
+    overflow: hidden;
+    transition: transform ease-out .5s 0s, height 0s .5s ease-out;
+  }
+
+  text-picker.show > div,
+  number-picker.show > div,
+  widget-type-picker.show > div,
+  color-picker.show > div,
+  boolean-picker.show > div,
+  weather-property-picker.show > div,
+  default-theme-settings.show > div,
+  default-theme-settings.show > number-picker,
+  default-theme-settings.show > color-picker,
+  default-theme-settings.show > boolean-picker {
+    height: 100%;
+    transform: translateX(100%);
+    transition: transform .5s .5s ease-out, height 0s .5s ease-out;
+  }
+</style>
+<!-- endbuild -->
 
 <weather-widget-number-one-prototype>Loading...</weather-widget-number-one-prototype>
 
