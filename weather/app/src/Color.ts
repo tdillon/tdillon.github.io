@@ -21,4 +21,8 @@ export class Color {
   static get whiteFifty() {
     return new Color(255, 255, 255, .5);
   }
+
+  copyOf() {
+    return new Color(this.r, this.g, this.b, this.a);
+  }
 }

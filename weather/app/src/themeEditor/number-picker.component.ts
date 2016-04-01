@@ -3,8 +3,9 @@ import {Component, Output, EventEmitter, Input} from 'angular2/core';
 
 @Component({
   selector: 'number-picker',
+  host: { '[class.picker]': 'true' },
   templateUrl: `src/themeEditor/number-picker.component.html`,
-  styleUrls: ['src/themeEditor/picker-header.css']
+  styles: [':host{display: block;}']
 })
 export class NumberPickerComponent {
   @Output() focus: EventEmitter<any> = new EventEmitter();
@@ -18,10 +19,10 @@ export class NumberPickerComponent {
   @Input() step = 1;
   @Input() value = 0;
 
-  constructor() {
-  }
+  oldValue: number;
 
   onFocus() {
+    this.oldValue = this.value;
     this.focus.emit(null);
   }
 
@@ -30,8 +31,7 @@ export class NumberPickerComponent {
   }
 
   onCancel() {
-    //TODO send back original color
-    this.cancel.emit(this.value);
+    this.cancel.emit(this.oldValue);
   }
 
   onSave() {

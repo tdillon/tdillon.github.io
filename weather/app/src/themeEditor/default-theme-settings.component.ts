@@ -9,9 +9,9 @@ import {Component, Output, Input, EventEmitter} from 'angular2/core';
 
 @Component({
   selector: 'default-theme-settings',
-  host: { '[class.hide]': 'currentPicker' },
+  host: { '[class.hide]': 'currentPicker', '[class.pickerGroup]': 'true' },
   templateUrl: `src/themeEditor/default-theme-settings.component.html`,
-  styleUrls: ['src/themeEditor/picker-header.css'],
+  styles: [':host{display: block;}'],
   directives: [ColorPickerComponent, NumberPickerComponent, BooleanPickerComponent]
 })
 export class DefaultThemeSettingsComponent {
@@ -39,11 +39,17 @@ export class DefaultThemeSettingsComponent {
 
   onCancel() {
     this.currentPicker = null;
+  }
+
+  onCancelMe() {
     this.cancel.emit(null);
   }
 
   onSave() {
     this.currentPicker = null;
+  }
+
+  onSaveMe() {
     this.save.emit(null);
   }
 }

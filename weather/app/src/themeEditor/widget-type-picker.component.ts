@@ -4,8 +4,9 @@ import {Component, Output, EventEmitter, Input} from 'angular2/core';
 
 @Component({
   selector: 'widget-type-picker',
+  host: { '[class.picker]': 'true' },
   templateUrl: `src/themeEditor/widget-type-picker.component.html`,
-  styleUrls: ['src/themeEditor/picker-header.css']
+  styles: [':host{display: block;}']
 })
 export class WidgetTypePickerComponent {
   @Output() focus: EventEmitter<any> = new EventEmitter();
@@ -15,18 +16,16 @@ export class WidgetTypePickerComponent {
 
   @Input() type: WidgetType;
 
+  oldType: WidgetType;
   WidgetType = WidgetType;
 
-  constructor() {
-  }
-
   onFocus() {
+    this.oldType = this.type;
     this.focus.emit(null);
   }
 
   onCancel() {
-    //TODO send back original value
-    this.cancel.emit(this.type);
+    this.cancel.emit(this.oldType);
   }
 
   onSave() {

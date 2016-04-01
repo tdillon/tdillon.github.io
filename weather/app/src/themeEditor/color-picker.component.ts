@@ -4,8 +4,9 @@ import {Color} from "../Color";
 
 @Component({
   selector: 'color-picker',
+  host: { '[class.picker]': 'true' },
   templateUrl: `src/themeEditor/color-picker.component.html`,
-  styleUrls: ['src/themeEditor/picker-header.css']
+  styles: [':host{display: block;}']
 })
 export class ColorPickerComponent {
   @Output() focus: EventEmitter<any> = new EventEmitter();
@@ -18,10 +19,10 @@ export class ColorPickerComponent {
   @Input() title = 'Color';
   @Input() showalpha = true;
 
-  constructor() {
-  }
+  oldColor = Color.white;
 
   onFocus() {
+    this.oldColor = this.color.copyOf();
     this.focus.emit(null);
   }
 
@@ -30,8 +31,7 @@ export class ColorPickerComponent {
   }
 
   onCancel() {
-    //TODO send back original color
-    this.cancel.emit(this.color);
+    this.cancel.emit(this.oldColor);
   }
 
   onSave() {

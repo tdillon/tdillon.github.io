@@ -17,11 +17,12 @@ import {WidgetTypePickerComponent} from './widget-type-picker.component'
 @Component({
   selector: 'theme-creator',
   host: {
-    '[class.hide]': 'currentPicker !== Pickers.None',
-    '[class.show]': 'currentPicker === Pickers.None'
+    '[class.hide]': 'currentPicker',
+    '[class.show]': '!currentPicker',
+    '[class.pickerGroup]': 'true'
   },
   templateUrl: 'src/themeEditor/theme-creator.component.html',
-  styleUrls: ['src/themeEditor/theme-creator.component.css'],
+  styles: [':host { display: block; }'],
   directives: [ColorPickerComponent,
     DefaultThemeSettingsComponent,
     WeatherPropertyPickerComponent,
@@ -32,21 +33,20 @@ import {WidgetTypePickerComponent} from './widget-type-picker.component'
   ]
 })
 export class ThemeCreatorComponent {
-  @Output() created: EventEmitter<Theme> = new EventEmitter();
-  @Output() refreshed: EventEmitter<Theme> = new EventEmitter();
-  @Output() canceled: EventEmitter<any> = new EventEmitter();
+  @Output() save: EventEmitter<Theme> = new EventEmitter();
+  @Output() update: EventEmitter<Theme> = new EventEmitter();
+  @Output() cancel: EventEmitter<any> = new EventEmitter();
   theme: Theme;
   addingNew = false;
   WidgetType = WidgetType;
   availableOptions: Array<ConfigOption>;
-  currentPicker: number;
-  Pickers = { None: 0, ThemeName: 1, WidgetType: 2, Defaults: 3, PropertyPicker: 4, DaylightColor: 5 };
+  currentPicker: any;
 
   constructor(private _config: ConfigService) {
-    this.currentPicker = this.Pickers.None;
+    this.currentPicker = null;
     this.availableOptions = this.allOptions;
     this.resetTheme();
-    this.refresh();
+    this.onUpdate();
   }
 
   updateDaylight(showDaylight: boolean) {
@@ -55,7 +55,7 @@ export class ThemeCreatorComponent {
     } else {
       delete this.theme.daylight;
     }
-    this.refresh();
+    this.onUpdate();
   }
 
 
@@ -121,25 +121,25 @@ export class ThemeCreatorComponent {
   add(o: ConfigOption) {
     this.theme.options.push(o);
     this.availableOptions.splice(this.availableOptions.indexOf(o), 1);
-    this.refresh();
+    this.onUpdate();
   }
 
   remove(o: ConfigOption) {
     this.availableOptions.push(o);
     this.theme.options.splice(this.theme.options.indexOf(o), 1);
-    this.refresh();
+    this.onUpdate();
   }
 
-  save() {
+  onSave() {
     //TODO validate this.theme
     this._config.save(this.theme);
     this.addingNew = false;
-    this.created.emit(this.theme);
+    this.save.emit(this.theme);
   }
 
-  cancel() {
+  onCancel() {
     this.addingNew = false;
-    this.canceled.emit(null);
+    this.cancel.emit(null);
   }
 
   new() {
@@ -148,37 +148,7 @@ export class ThemeCreatorComponent {
     this.resetTheme();
   }
 
-  refresh() {
-    this.refreshed.emit(this.theme);
+  onUpdate() {
+    this.update.emit(this.theme);
   }
 }
-
-
-
-
-
-/*
-//OLD weather-config.component
-import {Component, Output, EventEmitter} from 'angular2/core';
-import {ConfigService} from "./config.service";
-import {ColorPickerComponent} from  './color-picker.component';
-
-
-@Component({
-  selector: 'weather-config',
-  templateUrl: 'src/weather-config.component.html',
-  styleUrls: ['src/arrows.css'],
-  directives: [ColorPickerComponent]
-})
-export class WeatherConfigComponent {
-  @Output() refreshed:EventEmitter<any> = new EventEmitter();
-
-  constructor(private config:ConfigService) {
-    //config.getGlobalThemes().subscribe(a => console.log(a));
-  }
-
-  refresh() {
-    this.refreshed.emit(null);
-  }
-}
-*/

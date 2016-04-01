@@ -1,31 +1,69 @@
-<header>
+<div class=header>
   <h1>
     Create|Edit|Copy Theme
   </h1>
   <h2>
-    <input type=button value=Save (click)="save()">
-    <input type=button value=Cancel (click)="cancel()">
+    <input type=button value=Save (click)="onSave()">
+    <input type=button value=Cancel (click)="onCancel()">
     <input type=button value=Delete (click)="delete()">
   </h2>
-</header>
-
-
-<!-- WHERE DO I PUT SAVE AND CANCEL -->
-
-<text-picker [class.show]="currentPicker == Pickers.ThemeName" [title]="'Theme Name'" [value]="theme.name" (focus)="currentPicker = Pickers.ThemeName" (cancel)='currentPicker = Pickers.None' (save)="currentPicker = Pickers.None"></text-picker>
-<widget-type-picker [class.show]="currentPicker === Pickers.WidgetType" [type]="theme.widgetType" (focus)="currentPicker = Pickers.WidgetType" (update)="refresh(theme.widgetType = $event)" (cancel)="currentPicker = Pickers.None" (save)="currentPicker = Pickers.None"></widget-type-picker>
-<default-theme-settings [class.show]="currentPicker == Pickers.Defaults" (focus)="currentPicker = Pickers.Defaults" (update)="refresh()" [default]="theme.globals" (cancel)='currentPicker = Pickers.None' (save)="currentPicker = Pickers.None"></default-theme-settings>
-<boolean-picker [title]="'Daylight Visibility'" [subtitle]="'Show daylight/cloud coverage?'" [value]="theme.daylight" (update)="updateDaylight($event)"></boolean-picker>
-<color-picker [title]="'Daylight Color'" [color]="theme.daylight" [showalpha]="false" [class.show]="currentPicker === Pickers.DaylightColor" *ngIf="theme.daylight" (focus)="currentPicker = Pickers.DaylightColor" (update)="refresh(theme.daylight = $event)"
-  (cancel)="currentPicker = Pickers.None" (save)="currentPicker = Pickers.None"></color-picker>
-<weather-property-picker [class.show]="currentPicker === Pickers.PropertyPicker" [properties]="theme.options" (focus)="currentPicker = Pickers.PropertyPicker" (update)="refresh($event)" (cancel)="currentPicker = Pickers.None" (save)="currentPicker = Pickers.None"></weather-property-picker>
-
-<div [class.show]="currentPicker === Pickers.None" class=list-group *ngFor="#p of theme.options">
-  <div class=list-group-item>
-    <div (click)="showWPS = true">
-      <h4 class=list-group-item-heading>{{p.title}}</h4>
-      <p class=list-group-item-text>Click to set values that are used.</p>
-    </div>
-    <weather-property-settings (refreshed)="refresh()" [default]="theme.globals" [property]="p" [hidden]="!showWPS"></weather-property-settings>
-  </div>
 </div>
+<text-picker
+  #tn
+  [title]="'Theme Name'"
+  [value]="theme.name"
+  [class.show]="currentPicker === tn"
+  (focus)="currentPicker = tn"
+  (cancel)='currentPicker = null'
+  (save)="onUpdate(currentPicker = null, theme.name = $event)"></text-picker>
+<widget-type-picker
+  #wtp
+  [type]="theme.widgetType"
+  [class.show]="currentPicker === wtp"
+  (focus)="currentPicker = wtp"
+  (update)="onUpdate(theme.widgetType = $event)"
+  (cancel)="onUpdate(currentPicker = null, theme.widgetType = $event)"
+  (save)="onUpdate(currentPicker = null, theme.widgetType = $event)"></widget-type-picker>
+<default-theme-settings
+  #dts
+  [default]="theme.globals"
+  [class.show]="currentPicker == dts"
+  (focus)="currentPicker = dts"
+  (update)="onUpdate()"
+  (cancel)='currentPicker = null'
+  (save)="currentPicker = null"></default-theme-settings>
+<boolean-picker
+  [title]="'Daylight Visibility'"
+  [subtitle]="'Show daylight/cloud coverage?'"
+  [value]="theme.daylight"
+  (update)="updateDaylight($event)"></boolean-picker>
+<color-picker
+  #dc
+  [class.hide]="!theme.daylight"
+  [title]="'Daylight Color'"
+  [color]="theme.daylight"
+  [showalpha]="false"
+  [class.show]="currentPicker === dc"
+  (focus)="currentPicker = dc"
+  (update)="onUpdate(theme.daylight = $event)"
+  (cancel)="onUpdate(currentPicker = null, theme.daylight = $event)"
+  (save)="onUpdate(currentPicker = null, theme.daylight = $event)"></color-picker>
+<weather-property-picker
+  #wpp
+  class=prefContainer
+  [class.show]="currentPicker === wpp"
+  [properties]="theme.options"
+  (focus)="currentPicker = wpp"
+  (update)="onUpdate($event)"
+  (cancel)="currentPicker = null"
+  (save)="currentPicker = null"></weather-property-picker>
+<weather-property-settings
+  *ngFor="#p of theme.options"
+  [title]="p.title"
+  [default]="theme.globals"
+  [property]="p"
+  [class.show]="currentPicker === p"
+  (focus)="currentPicker = p"
+  (update)="onUpdate($event)"
+  (cancel)="currentPicker = null"
+  (save)="currentPicker = null"></weather-property-settings>

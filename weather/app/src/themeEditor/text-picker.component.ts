@@ -3,32 +3,26 @@ import {Component, Output, EventEmitter, Input} from 'angular2/core';
 
 @Component({
   selector: 'text-picker',
+  host: { '[class.picker]': 'true' },
   templateUrl: `src/themeEditor/text-picker.component.html`,
-  styleUrls: ['src/themeEditor/picker-header.css']
+  styles: [':host{display: block;}']
 })
 export class TextPickerComponent {
   @Output() focus: EventEmitter<any> = new EventEmitter();
   @Output() cancel: EventEmitter<string> = new EventEmitter();
   @Output() save: EventEmitter<string> = new EventEmitter();
-  @Output() update: EventEmitter<string> = new EventEmitter();
 
   @Input() title: string;
   @Input() value = '';
-
-  constructor() {
-  }
+  oldValue: string;
 
   onFocus() {
+    this.oldValue = this.value;
     this.focus.emit(null);
   }
 
-  onUpdate() {
-    this.update.emit(this.value);
-  }
-
   onCancel() {
-    //TODO send back original value
-    this.cancel.emit(this.value);
+    this.cancel.emit(this.oldValue);
   }
 
   onSave() {

@@ -1,6 +1,16 @@
 <widget-display [theme]="currentTheme" [data]="data" (click)="showMenu = !showMenu"></widget-display>
 <div id=pages [class.hideMenu]="!showMenu">
-  <config [class.current]="currentPage === Pages.Config" (close)="currentPage = Pages.Themes"></config>
-  <theme-picker [class.current]="currentPage === Pages.Themes" (themePicked)="currentTheme = $event" (showConfig)="currentPage = Pages.Config" (createTheme)="currentPage = Pages.Editor"></theme-picker>
-  <theme-creator [class.current]="currentPage === Pages.Editor" (refreshed)="currentTheme = $event" (created)="themeCreated($event)" (canceled)="cancelThemeCreation()"></theme-creator>
+  <config
+    [class.current]="currentPage === Pages.Config"
+    (close)="currentPage = Pages.Themes"></config>
+  <theme-picker
+    [class.current]="currentPage === Pages.Themes"
+    (themePicked)="currentTheme = $event"
+    (showConfig)="currentPage = Pages.Config"
+    (createTheme)="currentPage = Pages.Editor"></theme-picker>
+  <theme-creator
+    [class.current]="currentPage === Pages.Editor"
+    (update)="currentTheme = $event"
+    (cancel)="cancelThemeCreation()"
+    (save)="themeSave($event)"></theme-creator>
 </div>

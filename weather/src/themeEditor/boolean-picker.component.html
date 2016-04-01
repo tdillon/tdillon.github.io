@@ -1,5 +1,7 @@
-<header>
-  <h1>{{title}}</h1>
+<header (click)="onUpdate(value = !value)">
+  <h1>
+    <span>{{title}}</span>
+    <input type=checkbox [checked]=value>
+  </h1>
   <h2>{{subtitle}}</h2>
-  <input type=checkbox #bool (change)="onUpdate(value = bool.checked)" [checked]=value>
 </header>

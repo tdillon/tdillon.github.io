@@ -59,10 +59,10 @@ export class AppComponent implements AfterViewInit {
     this.currentPage = this.Pages.Themes;
   }
 
-  // themeCreated(theme: Theme) {
-  //   this.currentTheme = theme;
-  //   this.tab = 1;
-  // }
+  themeSave(theme: Theme) {
+    this.currentTheme = theme;
+    this.currentPage = this.Pages.Themes;
+  }
 
   draw() {
     //TODO trigger update in WidgetDisplayComponent

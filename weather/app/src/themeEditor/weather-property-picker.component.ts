@@ -6,8 +6,9 @@ import {ConfigOption} from '../Option.interface'
 
 @Component({
   selector: 'weather-property-picker',
+  host: {'[class.pickerGroup]': 'true'},
   templateUrl: `src/themeEditor/weather-property-picker.component.html`,
-  styleUrls: ['src/themeEditor/picker-header.css'],
+  styles: [':host{display: block;}'],
   directives: [BooleanPickerComponent]
 })
 export class WeatherPropertyPickerComponent {

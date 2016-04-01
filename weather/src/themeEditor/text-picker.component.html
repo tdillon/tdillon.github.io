@@ -2,8 +2,15 @@
   <h1>{{title}}</h1>
   <h2>EMPTY or {{value}}</h2>
 </header>
-<div>
-  <input type=button title=Done value="&#10004;" (click)="onSave()">
-  <input type=button title=Cancel value="&#10008;" (click)="onCancel()">
-  <input type=text #val (input)="onUpdate(value = val.value)" [value]="value"  [placeholder]="title" required>
+<div class=edit>
+  <div class=header>
+    <h1>
+      <span>{{title}}</span>
+      <input type=button title=Done value="&#10004;" (click)="onSave()">
+      <input type=button title=Cancel value="&#10008;" (click)="onCancel()"></h1>
+    <h2>{{oldValue}} - {{value}}</h2>
+  </div>
+  <div class=controls>
+    <input type=text [(ngModel)]="value" [placeholder]="title" required>
+  </div>
 </div>

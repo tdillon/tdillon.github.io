@@ -1,5 +1,21 @@
-<h1 (click)="onClose()">TODO</h1> Weather Data Last Retrieved: {{timestamp}}
-<forecast-io (refreshed)="newWeatherDataAvailable($event)"></forecast-io>
+<div class=header>
+  <h1>
+    Configuration
+  </h1>
+  <h2>
+    Weather Data Last Retrieved: {{timestamp}}
+    <input type=button value=Close (click)="onClose()">
+  </h2>
+</div>
+
+<forecast-io-settings
+  #fi
+  [class.show]="currentPicker === fi"
+  (focus)="currentPicker = fi"
+  (cancel)="currentPicker = null"
+  (save)="currentPicker = null"></forecast-io-settings>
+
+<forecast-io-refresher></forecast-io-refresher>
 
 
 <!-- TODO Move this to the 'config' menu, i.e., with forecast.io stuff -->

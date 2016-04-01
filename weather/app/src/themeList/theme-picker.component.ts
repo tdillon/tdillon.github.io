@@ -1,10 +1,15 @@
 import {Theme} from "../Theme.interface";
 import {ConfigService} from "../config.service";
 import {Component, Output, EventEmitter} from 'angular2/core';
+import {WidgetType} from '../WidgetType'
 
 
 @Component({
   selector: 'theme-picker',
+  host: {
+    '[class.show]': 'true',
+    '[class.pickerGroup]': 'true'
+  },
   templateUrl: `src/themeList/theme-picker.component.html`,
   styles: [':host{display: block;}']
 })
@@ -14,6 +19,7 @@ export class ThemePickerComponent {
   @Output() createTheme: EventEmitter<any> = new EventEmitter();
   themes: Array<Theme> = [];
   current: Theme;
+  WidgetType = WidgetType;
 
   constructor(_config: ConfigService) {
     _config.themes.subscribe(t => {
