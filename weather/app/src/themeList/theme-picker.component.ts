@@ -50,4 +50,8 @@ export class ThemePickerComponent {
     this.current = theme;
     this.themePicked.emit(theme);
   }
+
+  onShowConfig() {
+    this.showConfig.emit(null);
+  }
 }

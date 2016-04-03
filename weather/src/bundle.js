@@ -14195,6 +14195,9 @@ $__System.register("9f", ["9d", "9e", "a", "9b"], function(exports_1, context_1)
           this.current = theme;
           this.themePicked.emit(theme);
         };
+        ThemePickerComponent.prototype.onShowConfig = function() {
+          this.showConfig.emit(null);
+        };
         __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemePickerComponent.prototype, "themePicked", void 0);
         __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemePickerComponent.prototype, "showConfig", void 0);
         __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemePickerComponent.prototype, "createTheme", void 0);
