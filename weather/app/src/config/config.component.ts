@@ -18,6 +18,7 @@ import {ForecastIoSettingsComponent} from './forecast.io.settings.component'
 })
 export class ConfigComponent {
   @Output() close: EventEmitter<any> = new EventEmitter();
+  @Output() refresh: EventEmitter<ForecastIO> = new EventEmitter();
   timestamp: string;
   currentPicker: any;
 
@@ -30,9 +31,9 @@ export class ConfigComponent {
   }
 
 
-  newWeatherDataAvailable(weather: ForecastIO) {
+  onRefresh(weather: ForecastIO) {
     var dt = new Date(weather.currently.time * 1000);
     this.timestamp = dt.toLocaleString();
-    //this.data = weather;
+    this.refresh.emit(weather);
   }
 }

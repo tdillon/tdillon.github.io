@@ -5,14 +5,14 @@ import {Color} from "../Color";
 import {Theme, ThemeType} from "../Theme.interface"
 import {WidgetType} from '../WidgetType'
 import {ConfigService} from "../config.service"
-import {Component, Output, EventEmitter} from 'angular2/core'
+import {Component, Output, Input, EventEmitter} from 'angular2/core'
 import {ConfigOption} from '../Option.interface'
 import {WeatherPropertyPickerComponent} from './weather-property-picker.component'
 import {BooleanPickerComponent} from './boolean-picker.component'
 import {TextPickerComponent} from './text-picker.component'
 import {WidgetTypePickerComponent} from './widget-type-picker.component'
 
-
+export enum ThemeCreatorMode { New, Edit, Copy }
 
 @Component({
   selector: 'theme-creator',
@@ -36,11 +36,15 @@ export class ThemeCreatorComponent {
   @Output() save: EventEmitter<Theme> = new EventEmitter();
   @Output() update: EventEmitter<Theme> = new EventEmitter();
   @Output() cancel: EventEmitter<any> = new EventEmitter();
+
+  @Input() mode: ThemeCreatorMode;
+  @Input() inputTheme: Theme;
+
   theme: Theme;
-  addingNew = false;
   WidgetType = WidgetType;
   availableOptions: Array<ConfigOption>;
   currentPicker: any;
+  ThemeCreatorMode = ThemeCreatorMode;
 
   constructor(private _config: ConfigService) {
     this.currentPicker = null;
@@ -133,18 +137,15 @@ export class ThemeCreatorComponent {
   onSave() {
     //TODO validate this.theme
     this._config.save(this.theme);
-    this.addingNew = false;
     this.save.emit(this.theme);
   }
 
   onCancel() {
-    this.addingNew = false;
     this.cancel.emit(null);
   }
 
   new() {
     this.theme = null;
-    this.addingNew = true;
     this.resetTheme();
   }
 

@@ -9,10 +9,20 @@
   </h2>
 </div>
 <header *ngFor="#t of themes" (click)="onSelect(t)" [class.current]="current === t">
-  <h1 [ngSwitch]="t.widgetType">
-    <template [ngSwitchWhen]="WidgetType.Hourly">🕒</template>
-    <template [ngSwitchWhen]="WidgetType.Daily">📅</template>
+  <h1>
+    <span [ngSwitch]="t.widgetType">
+      <template [ngSwitchWhen]="WidgetType.Hourly">🕒</template>
+      <template [ngSwitchWhen]="WidgetType.Daily">📅</template>
+    </span>
     {{t.name}}
+    <span [ngSwitch]="t.themeType">
+      <template [ngSwitchWhen]="ThemeType.Preset">🔒</template>
+      <template [ngSwitchWhen]="ThemeType.Custom">
+        🔓
+        <input type=button value=Edit (click)="onEditTheme(t)">
+      </template>
+      <input type=button value=Copy (click)="onCopyTheme(t)">
+    </span>
   </h1>
   <h2>TODO</h2>
 </header>

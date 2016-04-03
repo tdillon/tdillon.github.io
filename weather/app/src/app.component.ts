@@ -1,4 +1,4 @@
-import {ThemeCreatorComponent} from "./themeEditor/theme-creator.component";
+import {ThemeCreatorComponent, ThemeCreatorMode} from "./themeEditor/theme-creator.component";
 import {Theme} from "./Theme.interface";
 import {ThemePickerComponent} from "./themeList/theme-picker.component";
 import {Component, AfterViewInit} from 'angular2/core';
@@ -17,13 +17,14 @@ import {ConfigComponent} from './config/config.component'
   directives: [ThemePickerComponent, ThemeCreatorComponent, WidgetDisplayComponent, ConfigComponent]
 })
 export class AppComponent implements AfterViewInit {
-  timestamp = '';
   showMenu = false;
   currentTheme: Theme;
   currentThemeBeforeCreatingTheme: Theme;//TODO name, essentially a holder for the selected theme prior to creating a theme, set back to this theme on cancel
   data: ForecastIO;
   currentPage: number;
   Pages = { Themes: 1, Editor: 2, Config: 3 };
+  creatorMode: ThemeCreatorMode;
+  inputTheme:Theme;
 
   constructor(private _weatherService: WeatherService, public config: ConfigService) {
     this.currentPage = this.Pages.Themes;
@@ -33,19 +34,9 @@ export class AppComponent implements AfterViewInit {
     this.getWeather();
   }
 
-  newWeatherDataAvailable(weather: ForecastIO) {
-    var dt = new Date(weather.currently.time * 1000);
-    this.timestamp = dt.toLocaleString();
-    this.data = weather;
-    this.draw();
-  }
-
   getWeather() {
     this._weatherService.getWeather().then((weather: ForecastIO) => {
-      var dt = new Date(weather.currently.time * 1000);
-      this.timestamp = dt.toLocaleString();
       this.data = weather;
-      this.draw();
     }, () => console.log('Data is not set, configure forecast io info!!!'));
   }
 
@@ -64,7 +55,21 @@ export class AppComponent implements AfterViewInit {
     this.currentPage = this.Pages.Themes;
   }
 
-  draw() {
-    //TODO trigger update in WidgetDisplayComponent
+  onCreateTheme() {
+    this.creatorMode = ThemeCreatorMode.New;
+    this.inputTheme = null;
+    this.currentPage = this.Pages.Editor;
+  }
+
+  onEditTheme(t: Theme) {
+    this.creatorMode = ThemeCreatorMode.Edit;
+    this.inputTheme = t;
+    this.currentPage = this.Pages.Editor;
+  }
+
+  onCopyTheme(t: Theme) {
+    this.creatorMode = ThemeCreatorMode.Copy;
+    this.inputTheme = t;
+    this.currentPage = this.Pages.Editor;
   }
 }

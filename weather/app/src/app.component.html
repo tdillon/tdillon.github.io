@@ -2,14 +2,18 @@
 <div id=pages [class.hideMenu]="!showMenu">
   <config
     [class.current]="currentPage === Pages.Config"
+    (refresh)="data = $event"
     (close)="currentPage = Pages.Themes"></config>
   <theme-picker
     [class.current]="currentPage === Pages.Themes"
     (themePicked)="currentTheme = $event"
-    (showConfig)="currentPage = Pages.Config"
-    (createTheme)="currentPage = Pages.Editor"></theme-picker>
+    (createTheme)="onCreateTheme($event)"
+    (copyTheme)="onCopyTheme($event)"
+    (editTheme)="onEditTheme($event)"></theme-picker>
   <theme-creator
     [class.current]="currentPage === Pages.Editor"
+    [mode]="creatorMode"
+    [inputTheme]="inputTheme"
     (update)="currentTheme = $event"
     (cancel)="cancelThemeCreation()"
     (save)="themeSave($event)"></theme-creator>

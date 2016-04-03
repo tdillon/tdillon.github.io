@@ -15,7 +15,7 @@
   (cancel)="currentPicker = null"
   (save)="currentPicker = null"></forecast-io-settings>
 
-<forecast-io-refresher></forecast-io-refresher>
+<forecast-io-refresher (refresh)="onRefresh($event)"></forecast-io-refresher>
 
 
 <!-- TODO Move this to the 'config' menu, i.e., with forecast.io stuff -->

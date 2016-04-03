@@ -13519,23 +13519,7 @@ $__System.register("95", ["a", "97"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("98", [], function(exports_1, context_1) {
-  "use strict";
-  var __moduleName = context_1 && context_1.id;
-  var ThemeType;
-  return {
-    setters: [],
-    execute: function() {
-      (function(ThemeType) {
-        ThemeType[ThemeType["Preset"] = 0] = "Preset";
-        ThemeType[ThemeType["Custom"] = 1] = "Custom";
-      })(ThemeType || (ThemeType = {}));
-      exports_1("ThemeType", ThemeType);
-    }
-  };
-});
-
-$__System.register("99", ["97", "93", "a"], function(exports_1, context_1) {
+$__System.register("98", ["97", "93", "a"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -13787,7 +13771,7 @@ $__System.register("93", ["a"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("9a", ["a"], function(exports_1, context_1) {
+$__System.register("99", ["a"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -13848,7 +13832,7 @@ $__System.register("9a", ["a"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("9b", ["9c", "a"], function(exports_1, context_1) {
+$__System.register("9a", ["9b", "a"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -13916,7 +13900,7 @@ $__System.register("9b", ["9c", "a"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("9d", ["92", "96", "95", "97", "98", "9c", "9e", "a", "99", "93", "9a", "9b"], function(exports_1, context_1) {
+$__System.register("9c", ["92", "96", "95", "97", "9d", "9b", "9e", "a", "98", "93", "99", "9a"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -13947,7 +13931,8 @@ $__System.register("9d", ["92", "96", "95", "97", "98", "9c", "9e", "a", "99", "
       boolean_picker_component_1,
       text_picker_component_1,
       widget_type_picker_component_1;
-  var ThemeCreatorComponent;
+  var ThemeCreatorMode,
+      ThemeCreatorComponent;
   return {
     setters: [function(default_theme_settings_component_1_1) {
       default_theme_settings_component_1 = default_theme_settings_component_1_1;
@@ -13975,14 +13960,20 @@ $__System.register("9d", ["92", "96", "95", "97", "98", "9c", "9e", "a", "99", "
       widget_type_picker_component_1 = widget_type_picker_component_1_1;
     }],
     execute: function() {
+      (function(ThemeCreatorMode) {
+        ThemeCreatorMode[ThemeCreatorMode["New"] = 0] = "New";
+        ThemeCreatorMode[ThemeCreatorMode["Edit"] = 1] = "Edit";
+        ThemeCreatorMode[ThemeCreatorMode["Copy"] = 2] = "Copy";
+      })(ThemeCreatorMode || (ThemeCreatorMode = {}));
+      exports_1("ThemeCreatorMode", ThemeCreatorMode);
       ThemeCreatorComponent = (function() {
         function ThemeCreatorComponent(_config) {
           this._config = _config;
           this.save = new core_1.EventEmitter();
           this.update = new core_1.EventEmitter();
           this.cancel = new core_1.EventEmitter();
-          this.addingNew = false;
           this.WidgetType = WidgetType_1.WidgetType;
+          this.ThemeCreatorMode = ThemeCreatorMode;
           this.currentPicker = null;
           this.availableOptions = this.allOptions;
           this.resetTheme();
@@ -14087,16 +14078,13 @@ $__System.register("9d", ["92", "96", "95", "97", "98", "9c", "9e", "a", "99", "
         };
         ThemeCreatorComponent.prototype.onSave = function() {
           this._config.save(this.theme);
-          this.addingNew = false;
           this.save.emit(this.theme);
         };
         ThemeCreatorComponent.prototype.onCancel = function() {
-          this.addingNew = false;
           this.cancel.emit(null);
         };
         ThemeCreatorComponent.prototype.new = function() {
           this.theme = null;
-          this.addingNew = true;
           this.resetTheme();
         };
         ThemeCreatorComponent.prototype.onUpdate = function() {
@@ -14105,6 +14093,8 @@ $__System.register("9d", ["92", "96", "95", "97", "98", "9c", "9e", "a", "99", "
         __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemeCreatorComponent.prototype, "save", void 0);
         __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemeCreatorComponent.prototype, "update", void 0);
         __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemeCreatorComponent.prototype, "cancel", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', Number)], ThemeCreatorComponent.prototype, "mode", void 0);
+        __decorate([core_1.Input(), __metadata('design:type', Object)], ThemeCreatorComponent.prototype, "inputTheme", void 0);
         ThemeCreatorComponent = __decorate([core_1.Component({
           selector: 'theme-creator',
           host: {
@@ -14123,7 +14113,23 @@ $__System.register("9d", ["92", "96", "95", "97", "98", "9c", "9e", "a", "99", "
   };
 });
 
-$__System.register("9f", ["9e", "a", "9c"], function(exports_1, context_1) {
+$__System.register("9d", [], function(exports_1, context_1) {
+  "use strict";
+  var __moduleName = context_1 && context_1.id;
+  var ThemeType;
+  return {
+    setters: [],
+    execute: function() {
+      (function(ThemeType) {
+        ThemeType[ThemeType["Preset"] = 0] = "Preset";
+        ThemeType[ThemeType["Custom"] = 1] = "Custom";
+      })(ThemeType || (ThemeType = {}));
+      exports_1("ThemeType", ThemeType);
+    }
+  };
+});
+
+$__System.register("9f", ["9d", "9e", "a", "9b"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -14142,12 +14148,15 @@ $__System.register("9f", ["9e", "a", "9c"], function(exports_1, context_1) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
       return Reflect.metadata(k, v);
   };
-  var config_service_1,
+  var Theme_interface_1,
+      config_service_1,
       core_1,
       WidgetType_1;
   var ThemePickerComponent;
   return {
-    setters: [function(config_service_1_1) {
+    setters: [function(Theme_interface_1_1) {
+      Theme_interface_1 = Theme_interface_1_1;
+    }, function(config_service_1_1) {
       config_service_1 = config_service_1_1;
     }, function(core_1_1) {
       core_1 = core_1_1;
@@ -14161,8 +14170,11 @@ $__System.register("9f", ["9e", "a", "9c"], function(exports_1, context_1) {
           this.themePicked = new core_1.EventEmitter();
           this.showConfig = new core_1.EventEmitter();
           this.createTheme = new core_1.EventEmitter();
+          this.copyTheme = new core_1.EventEmitter();
+          this.editTheme = new core_1.EventEmitter();
           this.themes = [];
           this.WidgetType = WidgetType_1.WidgetType;
+          this.ThemeType = Theme_interface_1.ThemeType;
           _config.themes.subscribe(function(t) {
             _this.themes.push(t);
             if (_this.themes.length == 1) {
@@ -14173,16 +14185,21 @@ $__System.register("9f", ["9e", "a", "9c"], function(exports_1, context_1) {
         ThemePickerComponent.prototype.onCreateTheme = function() {
           this.createTheme.emit(null);
         };
+        ThemePickerComponent.prototype.onEditTheme = function(t) {
+          this.editTheme.emit(t);
+        };
+        ThemePickerComponent.prototype.onCopyTheme = function(t) {
+          this.copyTheme.emit(t);
+        };
         ThemePickerComponent.prototype.onSelect = function(theme) {
           this.current = theme;
           this.themePicked.emit(theme);
         };
-        ThemePickerComponent.prototype.onShowConfig = function() {
-          this.showConfig.emit(null);
-        };
         __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemePickerComponent.prototype, "themePicked", void 0);
         __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemePickerComponent.prototype, "showConfig", void 0);
         __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemePickerComponent.prototype, "createTheme", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemePickerComponent.prototype, "copyTheme", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ThemePickerComponent.prototype, "editTheme", void 0);
         ThemePickerComponent = __decorate([core_1.Component({
           selector: 'theme-picker',
           host: {
@@ -14199,7 +14216,7 @@ $__System.register("9f", ["9e", "a", "9c"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("9c", [], function(exports_1, context_1) {
+$__System.register("9b", [], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var WidgetType;
@@ -14766,7 +14783,7 @@ $__System.register("a3", [], function(exports_1, context_1) {
   };
 });
 
-$__System.register("a4", ["9c", "a0", "a", "a1", "a2", "a3"], function(exports_1, context_1) {
+$__System.register("a4", ["9b", "a0", "a", "a1", "a2", "a3"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -30676,16 +30693,19 @@ $__System.register("10a", ["ba", "a", "109"], function(exports_1, context_1) {
       ConfigComponent = (function() {
         function ConfigComponent() {
           this.close = new core_1.EventEmitter();
+          this.refresh = new core_1.EventEmitter();
           this.currentPicker = null;
         }
         ConfigComponent.prototype.onClose = function() {
           this.close.emit(null);
         };
-        ConfigComponent.prototype.newWeatherDataAvailable = function(weather) {
+        ConfigComponent.prototype.onRefresh = function(weather) {
           var dt = new Date(weather.currently.time * 1000);
           this.timestamp = dt.toLocaleString();
+          this.refresh.emit(weather);
         };
         __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ConfigComponent.prototype, "close", void 0);
+        __decorate([core_1.Output(), __metadata('design:type', core_1.EventEmitter)], ConfigComponent.prototype, "refresh", void 0);
         ConfigComponent = __decorate([core_1.Component({
           selector: 'config',
           host: {
@@ -30704,7 +30724,7 @@ $__System.register("10a", ["ba", "a", "109"], function(exports_1, context_1) {
   };
 });
 
-$__System.register("10b", ["9d", "9f", "a", "bb", "a4", "9e", "10a"], function(exports_1, context_1) {
+$__System.register("10b", ["9c", "9f", "a", "bb", "a4", "9e", "10a"], function(exports_1, context_1) {
   "use strict";
   var __moduleName = context_1 && context_1.id;
   var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -30752,7 +30772,6 @@ $__System.register("10b", ["9d", "9f", "a", "bb", "a4", "9e", "10a"], function(e
         function AppComponent(_weatherService, config) {
           this._weatherService = _weatherService;
           this.config = config;
-          this.timestamp = '';
           this.showMenu = false;
           this.Pages = {
             Themes: 1,
@@ -30764,19 +30783,10 @@ $__System.register("10b", ["9d", "9f", "a", "bb", "a4", "9e", "10a"], function(e
         AppComponent.prototype.ngAfterViewInit = function() {
           this.getWeather();
         };
-        AppComponent.prototype.newWeatherDataAvailable = function(weather) {
-          var dt = new Date(weather.currently.time * 1000);
-          this.timestamp = dt.toLocaleString();
-          this.data = weather;
-          this.draw();
-        };
         AppComponent.prototype.getWeather = function() {
           var _this = this;
           this._weatherService.getWeather().then(function(weather) {
-            var dt = new Date(weather.currently.time * 1000);
-            _this.timestamp = dt.toLocaleString();
             _this.data = weather;
-            _this.draw();
           }, function() {
             return console.log('Data is not set, configure forecast io info!!!');
           });
@@ -30789,7 +30799,21 @@ $__System.register("10b", ["9d", "9f", "a", "bb", "a4", "9e", "10a"], function(e
           this.currentTheme = theme;
           this.currentPage = this.Pages.Themes;
         };
-        AppComponent.prototype.draw = function() {};
+        AppComponent.prototype.onCreateTheme = function() {
+          this.creatorMode = theme_creator_component_1.ThemeCreatorMode.New;
+          this.inputTheme = null;
+          this.currentPage = this.Pages.Editor;
+        };
+        AppComponent.prototype.onEditTheme = function(t) {
+          this.creatorMode = theme_creator_component_1.ThemeCreatorMode.Edit;
+          this.inputTheme = t;
+          this.currentPage = this.Pages.Editor;
+        };
+        AppComponent.prototype.onCopyTheme = function(t) {
+          this.creatorMode = theme_creator_component_1.ThemeCreatorMode.Copy;
+          this.inputTheme = t;
+          this.currentPage = this.Pages.Editor;
+        };
         AppComponent = __decorate([core_1.Component({
           selector: 'weather-widget-number-one-prototype',
           templateUrl: "src/app.component.html",

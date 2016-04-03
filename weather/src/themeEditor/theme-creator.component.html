@@ -1,6 +1,11 @@
 <div class=header>
   <h1>
-    Create|Edit|Copy Theme
+    <span [ngSwitch]="mode">
+      <template [ngSwitchWhen]="ThemeCreatorMode.New">New</template>
+      <template [ngSwitchWhen]="ThemeCreatorMode.Edit">Edit</template>
+      <template [ngSwitchWhen]="ThemeCreatorMode.Copy">Copy</template>
+    </span>
+    Theme
   </h1>
   <h2>
     <input type=button value=Save (click)="onSave()">
