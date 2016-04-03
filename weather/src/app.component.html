@@ -6,6 +6,7 @@
     (close)="currentPage = Pages.Themes"></config>
   <theme-picker
     [class.current]="currentPage === Pages.Themes"
+    (showConfig)="currentPage = Pages.Config"
     (themePicked)="currentTheme = $event"
     (createTheme)="onCreateTheme($event)"
     (copyTheme)="onCopyTheme($event)"
