@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale
+=1.0, user-scalable=no" />
+    <title>Shot Timer</title>
+
+    <script>
+"use strict";
+
+//https://developer.mozilla.org/en-US/docs/NavigatorUserMedia.getUserMedia
+navigator.getUserMedia = ( navigator.getUserMedia ||
+                       navigator.webkitGetUserMedia ||
+                       navigator.mozGetUserMedia ||
+                       navigator.msGetUserMedia);
+
+
+var AudioContext = window.AudioContext || window.webkitAudioContext;
+
+
+
+window.onload = function() {
+    var processing = false;
+    var results = [];
+    var running = false;
+    var microphoneReady = false;
+
+    var audioCtx = new AudioContext();
+    var datapoints;
+    var times;
+    var analyser;
+
+    if (navigator.getUserMedia) {
+      navigator.getUserMedia ({audio: true},
+        // successCallback
+        function(localMediaStream) {
+          console.log('getUserMedia success');
+
+          var microphone = audioCtx.createMediaStreamSource(localMediaStream);
+          window.source = microphone;  //BUG:  https://bugzilla.mozilla.org/show_bug.cgi?id=934512
+          analyser = audioCtx.createAnalyser();
+          microphone.connect(analyser);
+          microphoneReady = true;
+        },
+        // errorCallback
+        function(err) {
+           console.log("The following error occured: " + err);
+        }
+      );
+    } else {
+       console.log("getUserMedia not supported");
+    }
+
+var end;
+var start;
+var counter;
+
+    this.getRawDataDump = function(fftSize, title) {
+      console.log('getting data', fftSize, title);
+      counter = 0;
+      processing = true;
+      results.push({fftSize: fftSize, data: [], start: Date.now(), title: title});
+
+      analyser.fftSize = fftSize;
+      var bufferLength = analyser.frequencyBinCount;
+      var dataArray = new Uint8Array(bufferLength);
+
+      start = Date.now();
+
+      function draw() {
+        analyser.getByteTimeDomainData(dataArray);
+        ++counter;
+/*
+        $scope.results[$scope.results.length - 1].data.push(Array.prototype.slice.call(dataArray));
+*/
+        if (counter < 2000) {
+          setTimeout(draw,0);
+        } else {
+          end = Date.now();
+          document.getElementById('processing').textContent = ((end - start) / 1000) / counter;
+          console.log('done', counter, start, end, ((end - start) / 1000) / counter);
+        }
+      }
+
+      setTimeout(draw,0);
+    }
+
+ 
+}
+
+
+    </script>
+
+
+
+    <style>
+      html{height:100%;}
+      body{margin:0;height:100%;font-family:sans-serif;background:#263238;font-size:16px;}
+      form{
+        color: rgba(0, 0, 0, 0.87);
+        font-size: 1.2em;
+        padding:0 16px;
+        background:#eceff1;
+      }
+      .inputLabel{font-size:12px;color:rgba(0,0,0,.54);padding-top:16px;}
+      input{font-size:16px;padding:3px;border-size:1px;}
+      input[type="text"]{border:none;border-bottom:solid 1px rgba(0,0,0,.26);background:none;margin-bottom:8px;padding:8px 0;}
+      input[type="text"]:focus{border-bottom-color:#ff6e40;}
+      input[type="text"],label{font-size:16px;color:rgba(0,0,0,.87);}
+      input[type="submit"]{margin:16px 0;}
+      #processing, #waiting{/*
+        background:#263238;
+        bottom: 0;
+        color: rgba(255,255,255,87);
+        left: 0;
+        position: fixed;
+        right: 0;
+        text-align: center;
+        top: 0;*/
+      }
+      .result{
+        background:rgba(255,255,255,.05);
+        padding:15px;
+        margin:15px 0;
+      }
+      .result a{
+        text-decoration:none;
+        color:hsla(14,100%,63%,.87);
+        font-size:16px;
+        font-weight:bold;
+      }
+      .title{color:hsla(14,100%,63%,.87);}
+      .detail{font-size:12px;color:rgba(255, 255, 255, 0.54);margin-left:10px;padding:2px;}
+    </style>
+
+
+
+  </head>
+  <body>
+    <div id="waiting">Microphone not available.</div>
+    <div id="processing">
+      Processing ...
+      <input type="button" value="Stop" />
+    </div>
+    <form>
+      <div class='inputLabel'>Test Name</div>
+      <input id="txtName" type="text" ng-model="name" placeholder="e.g., 9mm rapid 3 shots" size="25" required />
+      <div class='inputLabel'>FFT Size</div>
+      <label><input type="radio" name="fftsize" value="32" /> 32</label>
+      <label><input type="radio" name="fftsize" value="2048" /> 2048</label>
+      <div>
+        <input type="button" value="Start Test" onclick="getRawDataDump(32, document.getElementById('txtName').value)" />
+      </div>
+    </form>
+    <div class="result" data-ng-repeat="result in results">
+      <div class="title">{{result.title}}</div>
+      <div class="detail">FFT Size: {{result.fftSize}}</div>
+      <div class="detail"># Samples: {{result.data.length}}</div>
+      <div class="detail">milliseconds: {{result.end - result.start}}</div>
+      <div class="detail">hz: {{((result.end - result.start) / 1000) / result.data.length}}</div>
+      <div class="detail">
+        <a download="{{result.title}}.fft{{result.fftSize}}.ms{{result.end-result.start}}.csv" title="{{result.title}}" data-ng-href="data:text/csv;charset=utf-8,{{encodeURIComponent(result.data.join('\n'))}}">
+          Download
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
