@@ -39,9 +39,17 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
   render() {
     this.widgetRatio *= 1;
 
-    let widgetWidth = this.canvas.width = document.documentElement.clientWidth;
-    let widgetHeight = this.canvas.height = widgetWidth / this.widgetRatio;;
+    // http://html5rocks.com/en/tutorials/canvas/hidpi/
+    let ratio = window.devicePixelRatio;
+    let oldWidth = document.documentElement.clientWidth;
+    let oldHeight = oldWidth / this.widgetRatio
+    let widgetWidth = this.canvas.width = ratio * oldWidth;
+    let widgetHeight = this.canvas.height = ratio * oldHeight;
     let fontSize = 12;
+
+    this.canvas.style.width = oldWidth + 'px';
+    this.canvas.style.height = oldHeight + 'px';
+    //this.ctx.scale(5,5);
 
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 

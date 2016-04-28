@@ -2,9 +2,9 @@ import {Injectable, Output, EventEmitter} from 'angular2/core';
 
 @Injectable()
 export class TimeService {
-  @Output() secondChanged: EventEmitter<number> = new EventEmitter<number>();
-  @Output() minuteChanged: EventEmitter<number> = new EventEmitter<number>();
-  @Output() hourChanged: EventEmitter<number> = new EventEmitter<number>();
+  @Output() secondChanged = new EventEmitter<number>();
+  @Output() minuteChanged = new EventEmitter<number>();
+  @Output() hourChanged = new EventEmitter<number>();
   handle: number;
   currentSecond = -1;
   currentMinute = -1;

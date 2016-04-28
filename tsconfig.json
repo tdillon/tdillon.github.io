@@ -1,55 +1,17 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "es5",
     "module": "system",
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "noImplicitAny": true
+    "noImplicitAny": false
   },
-  "filesGlob": [
-    "**/*.ts",
-    "!node_modules/**",
-    "!jspm_packages/**"
-  ],
-  "files": [
-    "clocks/7/app/src/app.component.ts",
-    "clocks/7/app/src/boot.ts",
-    "clocks/7/app/src/clock.component.ts",
-    "clocks/7/app/src/digit.component.ts",
-    "clocks/7/app/src/time.service.ts",
-    "weather/app/src/app.component.ts",
-    "weather/app/src/boot.ts",
-    "weather/app/src/Color.ts",
-    "weather/app/src/config.service.ts",
-    "weather/app/src/config/config.component.ts",
-    "weather/app/src/config/forecast.io.refresher.component.ts",
-    "weather/app/src/config/forecast.io.settings.component.ts",
-    "weather/app/src/Day.ts",
-    "weather/app/src/DotDrawer.ts",
-    "weather/app/src/EndPoint.interface.ts",
-    "weather/app/src/forecast.io.interface.ts",
-    "weather/app/src/Option.interface.ts",
-    "weather/app/src/Ranges.ts",
-    "weather/app/src/SegmentGeometry.ts",
-    "weather/app/src/Theme.interface.ts",
-    "weather/app/src/themeEditor/boolean-picker.component.ts",
-    "weather/app/src/themeEditor/color-picker.component.ts",
-    "weather/app/src/themeEditor/default-theme-settings.component.ts",
-    "weather/app/src/themeEditor/number-picker.component.ts",
-    "weather/app/src/themeEditor/text-picker.component.ts",
-    "weather/app/src/themeEditor/theme-creator.component.ts",
-    "weather/app/src/themeEditor/weather-property-picker.component.ts",
-    "weather/app/src/themeEditor/weather-property-settings.component.ts",
-    "weather/app/src/themeEditor/widget-type-picker.component.ts",
-    "weather/app/src/themeList/theme-picker.component.ts",
-    "weather/app/src/weather.service.ts",
-    "weather/app/src/widget-display.component.ts",
-    "weather/app/src/WidgetType.ts"
-  ],
-  "atom": {
-    "rewriteTsconfig": true
-  }
+  "exclude": [
+    "node_modules",
+    "typings/main",
+    "typings/main.d.ts"
+  ]
 }

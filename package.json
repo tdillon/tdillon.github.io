@@ -4,13 +4,14 @@
   "version": "1.0.0",
   "main": "build.js",
   "scripts": {
-    "jspm": "node_modules\\.bin\\jspm",
-    "jspm:build:weather": "npm run jspm bundle-sfx weather/app/src/boot weather/src/bundle.js",
-    "jspm:build:sevenClock": "npm run jspm bundle-sfx clocks/7/app/src/boot clocks/7/src/bundle.js",
-    "jspm:build": "npm run jspm:build:weather && npm run jspm:build:sevenClock",
-    "clean": "npm run gulp clean",
+    "typings": "typings",
+    "postinstall": "typings install",
+    "tsc": "tsc",
+    "tsc:p": "tsc -p ./",
+    "tsc:w": "tsc -w",
     "gulp": "node_modules\\.bin\\gulp",
-    "build": "npm run gulp && npm run jspm:build"
+    "clean": "npm run gulp clean",
+    "build": "npm run gulp clean && npm run tsc:p && npm run gulp"
   },
   "repository": {
     "type": "git",
@@ -22,33 +23,22 @@
     "url": "https://github.com/tdillon/tdillon.github.io/issues"
   },
   "homepage": "https://github.com/tdillon/tdillon.github.io#readme",
-  "devDependencies": {
-    "angular2": "2.0.0-beta.0",
-    "bootstrap": "^3.3.6",
-    "del": "^2.2.0",
-    "es6-promise": "^3.0.2",
-    "es6-shim": "^0.33.3",
-    "gulp": "^3.9.0",
-    "gulp-useref": "^3.0.5",
-    "jspm": "^0.16.24",
-    "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.0",
-    "seven-segment": "^4.1.0",
-    "zone.js": "0.5.10"
-  },
-  "jspm": {
-    "configFile": "js/config.js",
-    "dependencies": {
-      "angular2": "npm:angular2@^2.0.0-beta.1",
-      "es6-shim": "github:es-shims/es6-shim@^0.34.1",
-      "reflect-metadata": "npm:reflect-metadata@^0.1.3",
-      "rxjs": "npm:rxjs@5.0.0-beta.0",
-      "seven-segment": "npm:seven-segment@^4.1.0",
-      "zone.js": "npm:zone.js@^0.5.10"
-    },
-    "devDependencies": {}
-  },
   "dependencies": {
-    "bootstrap": "^3.3.6"
+    "angular2": "2.0.0-beta.14",
+    "systemjs": "0.19.25",
+    "es6-shim": "^0.35.0",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.2",
+    "zone.js": "0.6.6",
+    "bootstrap": "^3.3.6",
+    "seven-segment": "^4.1.0"
+  },
+  "devDependencies": {
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-preprocess": "^2.0.0",
+    "gulp-useref": "^3.0.8",
+    "typescript": "^1.8.9",
+    "typings": "^0.7.12"
   }
 }

@@ -8,9 +8,9 @@ import {Component, Output, EventEmitter, Input} from 'angular2/core';
   styles: [':host{display: block;}']
 })
 export class TextPickerComponent {
-  @Output() focus: EventEmitter<any> = new EventEmitter();
-  @Output() cancel: EventEmitter<string> = new EventEmitter();
-  @Output() save: EventEmitter<string> = new EventEmitter();
+  @Output('focus') focus10 = new EventEmitter<any>();
+  @Output('cancel') cancel10 = new EventEmitter<string>();
+  @Output('save') save10 = new EventEmitter<string>();
 
   @Input() title: string;
   @Input() value = '';
@@ -18,14 +18,14 @@ export class TextPickerComponent {
 
   onFocus() {
     this.oldValue = this.value;
-    this.focus.emit(null);
+    this.focus10.emit(null);
   }
 
   onCancel() {
-    this.cancel.emit(this.oldValue);
+    this.cancel10.emit(this.oldValue);
   }
 
   onSave() {
-    this.save.emit(this.value);
+    this.save10.emit(this.value);
   }
 }

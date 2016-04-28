@@ -10,7 +10,7 @@ import {ForecastIO} from "../forecast.io.interface";
   styles: [':host{display: block;}']
 })
 export class ForecastIoRefresherComponent {
-  @Output() refresh: EventEmitter<any> = new EventEmitter();
+  @Output('refresh') refresh5 = new EventEmitter<ForecastIO>();
 
   timestamp: string;
   refreshing = false;
@@ -32,7 +32,7 @@ export class ForecastIoRefresherComponent {
       this.refreshing = false;
       var dt = new Date(weather.currently.time * 1000);
       this.timestamp = dt.toLocaleString();
-      this.refresh.emit(weather);
+      this.refresh5.emit(weather);
     });
   }
 }

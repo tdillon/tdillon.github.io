@@ -9,10 +9,10 @@ import {Color} from "../Color";
   styles: [':host{display: block;}']
 })
 export class ColorPickerComponent {
-  @Output() focus: EventEmitter<any> = new EventEmitter();
-  @Output() cancel: EventEmitter<Color> = new EventEmitter();
-  @Output() save: EventEmitter<Color> = new EventEmitter();
-  @Output() update: EventEmitter<Color> = new EventEmitter();
+  @Output('focus') focus8 = new EventEmitter<any>();
+  @Output('cancel') cancel8 = new EventEmitter<Color>();
+  @Output('save') save8 = new EventEmitter<Color>();
+  @Output('update') update8 = new EventEmitter<Color>();
 
   @Input() color = Color.white;
   @Input() disabled = false;
@@ -23,18 +23,18 @@ export class ColorPickerComponent {
 
   onFocus() {
     this.oldColor = this.color.copyOf();
-    this.focus.emit(null);
+    this.focus8.emit(null);
   }
 
   onUpdate() {
-    this.update.emit(this.color);
+    this.update8.emit(this.color);
   }
 
   onCancel() {
-    this.cancel.emit(this.oldColor);
+    this.cancel8.emit(this.oldColor);
   }
 
   onSave() {
-    this.save.emit(this.color);
+    this.save8.emit(this.color);
   }
 }

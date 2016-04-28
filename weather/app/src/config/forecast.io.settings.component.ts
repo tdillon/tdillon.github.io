@@ -10,22 +10,22 @@ import {ForecastIO} from "../forecast.io.interface";
   styles: [':host{display: block;}']
 })
 export class ForecastIoSettingsComponent {
-  @Output() focus: EventEmitter<any> = new EventEmitter();
-  @Output() cancel: EventEmitter<any> = new EventEmitter();
-  @Output() save: EventEmitter<any> = new EventEmitter();
+  @Output('focus') focus6 = new EventEmitter<any>();
+  @Output('cancel') cancel6 = new EventEmitter<any>();
+  @Output('save') save6 = new EventEmitter<any>();
 
   constructor(private dao: WeatherService) {
   }
 
   onFocus() {
-    this.focus.emit(null);
+    this.focus6.emit(null);
   }
 
   onCancel() {
-    this.cancel.emit(null);
+    this.cancel6.emit(null);
   }
 
   onSave() {
-    this.save.emit(null);
+    this.save6.emit(null);
   }
 }

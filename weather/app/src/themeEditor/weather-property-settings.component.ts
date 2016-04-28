@@ -16,10 +16,10 @@ import {Component, Output, Input, EventEmitter} from 'angular2/core';
 })
 export class WeatherPropertySettingsComponent {
 
-  @Output() focus: EventEmitter<any> = new EventEmitter();
-  @Output() update: EventEmitter<any> = new EventEmitter();
-  @Output() cancel: EventEmitter<any> = new EventEmitter();
-  @Output() save: EventEmitter<any> = new EventEmitter();
+  @Output('focus') focus2 = new EventEmitter<any>();
+  @Output('update') update2 = new EventEmitter<any>();
+  @Output('cancel') cancel2 = new EventEmitter<any>();
+  @Output('save') save2 = new EventEmitter<any>();
 
   @Input() default: GlobalOptions;
   @Input() property: ConfigOption;
@@ -33,11 +33,11 @@ export class WeatherPropertySettingsComponent {
 
   onFocus(picker: any) {
     this.currentPicker = picker;
-    this.focus.emit(null);
+    this.focus2.emit(null);
   }
 
   onUpdate() {
-    this.update.emit(null);
+    this.update2.emit(null);
   }
 
   onCancel() {
@@ -45,7 +45,7 @@ export class WeatherPropertySettingsComponent {
   }
 
   onCancelMe() {
-    this.cancel.emit(null);
+    this.cancel2.emit(null);
   }
 
   onSave() {
@@ -53,6 +53,6 @@ export class WeatherPropertySettingsComponent {
   }
 
   onSaveMe() {
-    this.save.emit(null);
+    this.save2.emit(null);
   }
 }

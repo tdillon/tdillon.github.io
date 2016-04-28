@@ -12,7 +12,7 @@ import {Component, Output, EventEmitter, Input} from 'angular2/core';
   ]
 })
 export class BooleanPickerComponent {
-  @Output() update: EventEmitter<boolean> = new EventEmitter();
+  @Output('update') update7 = new EventEmitter<boolean>();
 
   @Input() disabled = false;
   @Input() title: string;
@@ -20,6 +20,6 @@ export class BooleanPickerComponent {
   @Input() value = false;
 
   onUpdate() {
-    this.update.emit(this.value);
+    this.update7.emit(this.value);
   }
 }

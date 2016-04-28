@@ -12,8 +12,8 @@ export class WeatherService {
     let d = localStorage.getItem('data');
     this.data = (d ? JSON.parse(d) : null);
     this.apikey = localStorage.getItem('apikey');
-    this.latitude = localStorage.getItem('latitude');
-    this.longitude = localStorage.getItem('longitude');
+    this.latitude = +localStorage.getItem('latitude');
+    this.longitude = +localStorage.getItem('longitude');
   }
 
   getWeather(): Promise<ForecastIO> {

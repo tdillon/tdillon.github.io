@@ -1,8 +1,7 @@
 import {Component} from 'angular2/core'
 import {DigitComponent} from './digit.component'
 import {TimeService} from './time.service'
-import {Digit} from 'seven-segment/7'
-
+import {Digit} from 'seven-segment'
 
 @Component({
   selector: 'clock',

@@ -1,16 +1,16 @@
-import {DefaultThemeSettingsComponent} from "./default-theme-settings.component";
-import {WeatherPropertySettingsComponent} from "./weather-property-settings.component";
-import {ColorPickerComponent} from "./color-picker.component";
 import {Color} from "../Color";
 import {Theme, ThemeType} from "../Theme.interface"
 import {WidgetType} from '../WidgetType'
 import {ConfigService} from "../config.service"
 import {Component, Output, Input, EventEmitter} from 'angular2/core'
 import {ConfigOption} from '../Option.interface'
-import {WeatherPropertyPickerComponent} from './weather-property-picker.component'
-import {BooleanPickerComponent} from './boolean-picker.component'
 import {TextPickerComponent} from './text-picker.component'
 import {WidgetTypePickerComponent} from './widget-type-picker.component'
+import {BooleanPickerComponent} from './boolean-picker.component'
+import {ColorPickerComponent} from "./color-picker.component";
+import {WeatherPropertyPickerComponent} from './weather-property-picker.component'
+import {DefaultThemeSettingsComponent} from "./default-theme-settings.component";
+import {WeatherPropertySettingsComponent} from "./weather-property-settings.component";
 
 export enum ThemeCreatorMode { New, Edit, Copy }
 
@@ -23,19 +23,20 @@ export enum ThemeCreatorMode { New, Edit, Copy }
   },
   templateUrl: 'src/themeEditor/theme-creator.component.html',
   styles: [':host { display: block; }'],
-  directives: [ColorPickerComponent,
-    DefaultThemeSettingsComponent,
-    WeatherPropertyPickerComponent,
+  directives: [
+    ColorPickerComponent,
     BooleanPickerComponent,
-    WeatherPropertySettingsComponent,
     TextPickerComponent,
-    WidgetTypePickerComponent
+    WidgetTypePickerComponent,
+    WeatherPropertyPickerComponent,
+    DefaultThemeSettingsComponent,
+    WeatherPropertySettingsComponent,
   ]
 })
 export class ThemeCreatorComponent {
-  @Output() save: EventEmitter<Theme> = new EventEmitter();
-  @Output() update: EventEmitter<Theme> = new EventEmitter();
-  @Output() cancel: EventEmitter<any> = new EventEmitter();
+  @Output('save') save11 = new EventEmitter<Theme>();
+  @Output('update') update11 = new EventEmitter<Theme>();
+  @Output('cancel') cancel11 = new EventEmitter<any>();
 
   @Input() mode: ThemeCreatorMode;
   @Input() inputTheme: Theme;
@@ -137,11 +138,11 @@ export class ThemeCreatorComponent {
   onSave() {
     //TODO validate this.theme
     this._config.save(this.theme);
-    this.save.emit(this.theme);
+    this.save11.emit(this.theme);
   }
 
   onCancel() {
-    this.cancel.emit(null);
+    this.cancel11.emit(null);
   }
 
   new() {
@@ -150,6 +151,6 @@ export class ThemeCreatorComponent {
   }
 
   onUpdate() {
-    this.update.emit(this.theme);
+    this.update11.emit(this.theme);
   }
 }

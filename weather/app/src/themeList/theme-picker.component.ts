@@ -14,11 +14,11 @@ import {WidgetType} from '../WidgetType'
   styles: [':host{display: block;}']
 })
 export class ThemePickerComponent {
-  @Output() themePicked: EventEmitter<Theme> = new EventEmitter();
-  @Output() showConfig: EventEmitter<any> = new EventEmitter();
-  @Output() createTheme: EventEmitter<any> = new EventEmitter();
-  @Output() copyTheme: EventEmitter<any> = new EventEmitter();
-  @Output() editTheme: EventEmitter<any> = new EventEmitter();
+  @Output('themePicked') themePicked13 = new EventEmitter<Theme>();
+  @Output('showConfig') showConfig13 = new EventEmitter<any>();
+  @Output('createTheme') createTheme13 = new EventEmitter<any>();
+  @Output('copyTheme') copyTheme13 = new EventEmitter<any>();
+  @Output('editTheme') editTheme13 = new EventEmitter<any>();
 
   themes: Array<Theme> = [];
   current: Theme;
@@ -35,23 +35,23 @@ export class ThemePickerComponent {
   }
 
   onCreateTheme() {
-    this.createTheme.emit(null);
+    this.createTheme13.emit(null);
   }
 
   onEditTheme(t: Theme) {
-    this.editTheme.emit(t);
+    this.editTheme13.emit(t);
   }
 
   onCopyTheme(t: Theme) {
-    this.copyTheme.emit(t);
+    this.copyTheme13.emit(t);
   }
 
   onSelect(theme: Theme) {
     this.current = theme;
-    this.themePicked.emit(theme);
+    this.themePicked13.emit(theme);
   }
 
   onShowConfig() {
-    this.showConfig.emit(null);
+    this.showConfig13.emit(null);
   }
 }

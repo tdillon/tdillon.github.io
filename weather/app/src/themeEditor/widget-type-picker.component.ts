@@ -9,10 +9,10 @@ import {Component, Output, EventEmitter, Input} from 'angular2/core';
   styles: [':host{display: block;}']
 })
 export class WidgetTypePickerComponent {
-  @Output() focus: EventEmitter<any> = new EventEmitter();
-  @Output() cancel: EventEmitter<WidgetType> = new EventEmitter();
-  @Output() save: EventEmitter<WidgetType> = new EventEmitter();
-  @Output() update: EventEmitter<WidgetType> = new EventEmitter();
+  @Output('focus') focus12 = new EventEmitter<any>();
+  @Output('cancel') cancel12 = new EventEmitter<WidgetType>();
+  @Output('save') save12 = new EventEmitter<WidgetType>();
+  @Output('update') update12 = new EventEmitter<WidgetType>();
 
   @Input() type: WidgetType;
 
@@ -21,18 +21,18 @@ export class WidgetTypePickerComponent {
 
   onFocus() {
     this.oldType = this.type;
-    this.focus.emit(null);
+    this.focus12.emit(null);
   }
 
   onCancel() {
-    this.cancel.emit(this.oldType);
+    this.cancel12.emit(this.oldType);
   }
 
   onSave() {
-    this.save.emit(this.type);
+    this.save12.emit(this.type);
   }
 
   onUpdate() {
-    this.update.emit(this.type);
+    this.update12.emit(this.type);
   }
 }

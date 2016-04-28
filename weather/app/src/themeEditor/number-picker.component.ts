@@ -8,10 +8,10 @@ import {Component, Output, EventEmitter, Input} from 'angular2/core';
   styles: [':host{display: block;}']
 })
 export class NumberPickerComponent {
-  @Output() focus: EventEmitter<any> = new EventEmitter();
-  @Output() cancel: EventEmitter<number> = new EventEmitter();
-  @Output() save: EventEmitter<number> = new EventEmitter();
-  @Output() update: EventEmitter<number> = new EventEmitter();
+  @Output('focus') focus9 = new EventEmitter<any>();
+  @Output('cancel') cancel9 = new EventEmitter<number>();
+  @Output('save') save9 = new EventEmitter<number>();
+  @Output('update') update9 = new EventEmitter<number>();
 
   @Input() title: string;
   @Input() min = 1;
@@ -23,18 +23,18 @@ export class NumberPickerComponent {
 
   onFocus() {
     this.oldValue = this.value;
-    this.focus.emit(null);
+    this.focus9.emit(null);
   }
 
   onUpdate() {
-    this.update.emit(this.value);
+    this.update9.emit(this.value);
   }
 
   onCancel() {
-    this.cancel.emit(this.oldValue);
+    this.cancel9.emit(this.oldValue);
   }
 
   onSave() {
-    this.save.emit(this.value);
+    this.save9.emit(this.value);
   }
 }

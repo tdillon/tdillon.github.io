@@ -1,22 +1,22 @@
 import {Color} from "../Color";
-import {BooleanPickerComponent} from "./boolean-picker.component";
 import {Component, Input, Output, EventEmitter} from 'angular2/core'
 import {ConfigOption} from '../Option.interface'
+import {BooleanPickerComponent} from "./boolean-picker.component";
 
 
 @Component({
   selector: 'weather-property-picker',
-  host: {'[class.pickerGroup]': 'true'},
+  host: { '[class.pickerGroup]': 'true' },
   templateUrl: `src/themeEditor/weather-property-picker.component.html`,
   styles: [':host{display: block;}'],
   directives: [BooleanPickerComponent]
 })
 export class WeatherPropertyPickerComponent {
   private _passedInProps: Array<ConfigOption>;
-  @Output() focus: EventEmitter<any> = new EventEmitter();
-  @Output() update: EventEmitter<any> = new EventEmitter();
-  @Output() cancel: EventEmitter<any> = new EventEmitter();
-  @Output() save: EventEmitter<any> = new EventEmitter();
+  @Output('focus') focus1 = new EventEmitter<any>();
+  @Output('update') update1 = new EventEmitter<any>();
+  @Output('cancel') cancel1 = new EventEmitter<any>();
+  @Output('save') save1 = new EventEmitter<any>();
 
   _properties = [
     { picked: false, summary: 'TODO explain', displayTitle: 'Dew Point', title: 'dewPoint' },
@@ -43,8 +43,8 @@ export class WeatherPropertyPickerComponent {
     props.forEach(p => this._properties.find(p2 => p.title === p2.title).picked = true);
   }
 
-  onFocus(){
-    this.focus.emit(null)
+  onFocus() {
+    this.focus1.emit(null)
   }
 
   onUpdate(opt: any, show: boolean) {
@@ -53,15 +53,15 @@ export class WeatherPropertyPickerComponent {
     } else {
       this._passedInProps.splice(this._passedInProps.findIndex(p=> p.title === opt.title), 1);
     }
-    this.update.emit(null);
+    this.update1.emit(null);
   }
 
   onCancel() {
-    this.cancel.emit(null);
+    this.cancel1.emit(null);
   }
 
-  onSave(){
-    this.save.emit(null);
+  onSave() {
+    this.save1.emit(null);
   }
 
 

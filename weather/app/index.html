@@ -3,21 +3,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 <title>WW#1 Prototype</title>
 <link rel="icon" type="image/png" href="/icon.png" />
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 
 <!-- build:css src/bundle.css -->
-<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="app.css">
 <!-- endbuild -->
 
 <weather-widget-number-one-prototype>Loading...</weather-widget-number-one-prototype>
 
-<!-- build:remove -->
-<script src="../../jspm_packages/system.js"></script>
-<script src="../../js/config.js"></script>
-<script>
-  System.import('weather/app/src/boot').then(null, console.error.bind(console));
-</script>
-<!-- endbuild -->
 <!-- build:js src/bundle.js -->
-<script src=""></script>
+<script src="../../node_modules/es6-shim/es6-shim.min.js"></script>
+<script src="../../node_modules/systemjs/dist/system-polyfills.js"></script>
+<script src="../../node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
+<script src="../../node_modules/angular2/bundles/angular2-polyfills.js"></script>
+<script src="../../node_modules/systemjs/dist/system.src.js"></script>
+<script src="../../node_modules/rxjs/bundles/Rx.js"></script>
+<script src="../../node_modules/angular2/bundles/angular2.dev.js"></script>
+<script src="../../node_modules/angular2/bundles/http.dev.js"></script>
 <!-- endbuild -->
+
+<script>
+  System.config({
+    packages: {
+      src: {
+        format: 'register',
+        defaultExtension: 'js'
+      }
+    }
+  });
+
+  System.import('src/boot').then(null, console.error.bind(console));
+</script>

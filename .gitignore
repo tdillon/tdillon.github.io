@@ -1,5 +1,6 @@
 node_modules/
 jspm_packages/
+typings/
 weather/app/src/**/*.js
 weather/app/src/**/*.map
 clocks/7/app/src/**/*.js

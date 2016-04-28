@@ -15,10 +15,10 @@ import {Component, Output, Input, EventEmitter} from 'angular2/core';
   directives: [ColorPickerComponent, NumberPickerComponent, BooleanPickerComponent]
 })
 export class DefaultThemeSettingsComponent {
-  @Output() focus: EventEmitter<string> = new EventEmitter();
-  @Output() update: EventEmitter<any> = new EventEmitter();
-  @Output() cancel: EventEmitter<any> = new EventEmitter();
-  @Output() save: EventEmitter<any> = new EventEmitter();
+  @Output('focus') focus3 = new EventEmitter<string>();
+  @Output('update') update3 = new EventEmitter<any>();
+  @Output('cancel') cancel3 = new EventEmitter<any>();
+  @Output('save') save3 = new EventEmitter<any>();
 
   @Input() default: GlobalOptions;
 
@@ -30,11 +30,11 @@ export class DefaultThemeSettingsComponent {
 
   onFocus(picker: any) {
     this.currentPicker = picker;
-    this.focus.emit(null);
+    this.focus3.emit(null);
   }
 
   onUpdate() {
-    this.update.emit(null);
+    this.update3.emit(null);
   }
 
   onCancel() {
@@ -42,7 +42,7 @@ export class DefaultThemeSettingsComponent {
   }
 
   onCancelMe() {
-    this.cancel.emit(null);
+    this.cancel3.emit(null);
   }
 
   onSave() {
@@ -50,6 +50,6 @@ export class DefaultThemeSettingsComponent {
   }
 
   onSaveMe() {
-    this.save.emit(null);
+    this.save3.emit(null);
   }
 }
