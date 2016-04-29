@@ -39,7 +39,10 @@ export class ThemeCreatorComponent {
   @Output('cancel') cancel11 = new EventEmitter<any>();
 
   @Input() mode: ThemeCreatorMode;
-  @Input() inputTheme: Theme;
+  // @Input() inputTheme: Theme;
+  @Input() set inputTheme(t:Theme) {
+    console.log('set theme in theme-creator.component', t);
+  }
 
   theme: Theme;
   WidgetType = WidgetType;

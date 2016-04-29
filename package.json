@@ -24,12 +24,12 @@
   },
   "homepage": "https://github.com/tdillon/tdillon.github.io#readme",
   "dependencies": {
-    "angular2": "2.0.0-beta.14",
-    "systemjs": "0.19.25",
+    "angular2": "2.0.0-beta.16",
+    "systemjs": "0.19.26",
     "es6-shim": "^0.35.0",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
-    "zone.js": "0.6.6",
+    "zone.js": "0.6.12",
     "bootstrap": "^3.3.6",
     "seven-segment": "^4.1.0"
   },
@@ -38,7 +38,7 @@
     "gulp": "^3.9.1",
     "gulp-preprocess": "^2.0.0",
     "gulp-useref": "^3.0.8",
-    "typescript": "^1.8.9",
-    "typings": "^0.7.12"
+    "typescript": "^1.8.10",
+    "typings": "^0.8.1"
   }
 }
