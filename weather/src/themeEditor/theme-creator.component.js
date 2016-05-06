@@ -60,16 +60,33 @@ System.register(["../Color", "../Theme.interface", '../WidgetType', "../config.s
             ThemeCreatorComponent = (function () {
                 function ThemeCreatorComponent(_config) {
                     this._config = _config;
-                    this.save11 = new core_1.EventEmitter();
-                    this.update11 = new core_1.EventEmitter();
-                    this.cancel11 = new core_1.EventEmitter();
                     this.WidgetType = WidgetType_1.WidgetType;
                     this.ThemeCreatorMode = ThemeCreatorMode;
+                    this.save11 = new core_1.EventEmitter();
+                    this.update11 = new core_1.EventEmitter();
+                    this.delete11 = new core_1.EventEmitter();
+                    this.cancel11 = new core_1.EventEmitter();
                     this.currentPicker = null;
                     this.availableOptions = this.allOptions;
-                    this.resetTheme();
-                    this.onUpdate();
+                    this.theme = this.emptyTheme;
                 }
+                Object.defineProperty(ThemeCreatorComponent.prototype, "inputTheme", {
+                    set: function (t) {
+                        this._inputTheme = t;
+                        if (t) {
+                            this.theme = this.emptyTheme;
+                            this.copyThemeTo(t, this.theme);
+                        }
+                        else if (t === null) {
+                            this.theme = this.emptyTheme;
+                        } //t will be undefined to begin with, i.e., component load time
+                        if (t !== undefined) {
+                            this.onUpdate();
+                        }
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 ThemeCreatorComponent.prototype.updateDaylight = function (showDaylight) {
                     if (showDaylight) {
                         this.theme.daylight = Color_1.Color.white;
@@ -79,23 +96,63 @@ System.register(["../Color", "../Theme.interface", '../WidgetType', "../config.s
                     }
                     this.onUpdate();
                 };
-                ThemeCreatorComponent.prototype.resetTheme = function () {
-                    if (this.theme) {
-                        this.theme.name = '';
-                        this.theme.themeType = Theme_interface_1.ThemeType.Custom;
-                        this.theme.widgetType = WidgetType_1.WidgetType.Daily;
-                        this.theme.globals.dot.color = Color_1.Color.white;
-                        this.theme.globals.dot.radius = 5;
-                        this.theme.globals.segment.show = true;
-                        this.theme.globals.segment.color = Color_1.Color.white;
-                        this.theme.globals.segment.angle = 40;
-                        this.theme.globals.segment.padding = 4;
-                        while (this.theme.options.length) {
-                            this.availableOptions.push(this.theme.options.pop());
-                        }
+                ThemeCreatorComponent.prototype.copyThemeTo = function (from, to) {
+                    to.name = from.name;
+                    to.themeType = Theme_interface_1.ThemeType.Custom;
+                    to.widgetType = from.widgetType;
+                    to.globals.dot.color = from.globals.dot.color.copyOf();
+                    to.globals.dot.radius = from.globals.dot.radius;
+                    to.globals.segment.show = from.globals.segment.show;
+                    to.globals.segment.color = from.globals.segment.color.copyOf();
+                    to.globals.segment.angle = from.globals.segment.angle;
+                    to.globals.segment.padding = from.globals.segment.padding;
+                    if (from.daylight) {
+                        to.daylight = from.daylight.copyOf();
                     }
                     else {
-                        this.theme = {
+                        delete to.daylight;
+                    }
+                    for (var _i = 0, _a = from.options; _i < _a.length; _i++) {
+                        var o = _a[_i];
+                        to.options.push({
+                            title: o.title,
+                            dot: {
+                                color: {
+                                    global: o.dot.color.global,
+                                    value: o.dot.color.value.copyOf()
+                                },
+                                radius: {
+                                    global: o.dot.radius.global,
+                                    value: o.dot.radius.value
+                                },
+                            },
+                            segment: {
+                                show: {
+                                    global: o.segment.show.global,
+                                    value: o.segment.show.value
+                                },
+                                color: {
+                                    global: o.segment.color.global,
+                                    value: o.segment.color.value.copyOf()
+                                },
+                                angle: {
+                                    global: o.segment.angle.global,
+                                    value: o.segment.angle.value
+                                },
+                                padding: {
+                                    global: o.segment.padding.global,
+                                    value: o.segment.padding.value
+                                }
+                            }
+                        });
+                    }
+                };
+                Object.defineProperty(ThemeCreatorComponent.prototype, "emptyTheme", {
+                    /**
+                     * Return a new instance of an "empty" theme.
+                     */
+                    get: function () {
+                        return {
                             name: '',
                             themeType: Theme_interface_1.ThemeType.Custom,
                             widgetType: WidgetType_1.WidgetType.Daily,
@@ -113,8 +170,10 @@ System.register(["../Color", "../Theme.interface", '../WidgetType', "../config.s
                             },
                             options: []
                         };
-                    }
-                };
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 Object.defineProperty(ThemeCreatorComponent.prototype, "allOptions", {
                     get: function () {
                         var _this = this;
@@ -139,27 +198,22 @@ System.register(["../Color", "../Theme.interface", '../WidgetType', "../config.s
                         }
                     };
                 };
-                ThemeCreatorComponent.prototype.add = function (o) {
-                    this.theme.options.push(o);
-                    this.availableOptions.splice(this.availableOptions.indexOf(o), 1);
-                    this.onUpdate();
-                };
-                ThemeCreatorComponent.prototype.remove = function (o) {
-                    this.availableOptions.push(o);
-                    this.theme.options.splice(this.theme.options.indexOf(o), 1);
-                    this.onUpdate();
+                ThemeCreatorComponent.prototype.onDelete = function () {
+                    this._config.delete(this._inputTheme);
+                    this.delete11.emit(this._inputTheme);
                 };
                 ThemeCreatorComponent.prototype.onSave = function () {
-                    //TODO validate this.theme
+                    if (this.mode === ThemeCreatorMode.Edit) {
+                        this.copyThemeTo(this.theme, this._inputTheme);
+                        this.theme = this._inputTheme;
+                    }
                     this._config.save(this.theme);
                     this.save11.emit(this.theme);
                 };
                 ThemeCreatorComponent.prototype.onCancel = function () {
+                    this.mode = null;
+                    this.inputTheme = null;
                     this.cancel11.emit(null);
-                };
-                ThemeCreatorComponent.prototype.new = function () {
-                    this.theme = null;
-                    this.resetTheme();
                 };
                 ThemeCreatorComponent.prototype.onUpdate = function () {
                     this.update11.emit(this.theme);
@@ -173,6 +227,10 @@ System.register(["../Color", "../Theme.interface", '../WidgetType', "../config.s
                     __metadata('design:type', Object)
                 ], ThemeCreatorComponent.prototype, "update11", void 0);
                 __decorate([
+                    core_1.Output('delete'), 
+                    __metadata('design:type', Object)
+                ], ThemeCreatorComponent.prototype, "delete11", void 0);
+                __decorate([
                     core_1.Output('cancel'), 
                     __metadata('design:type', Object)
                 ], ThemeCreatorComponent.prototype, "cancel11", void 0);
@@ -182,8 +240,9 @@ System.register(["../Color", "../Theme.interface", '../WidgetType', "../config.s
                 ], ThemeCreatorComponent.prototype, "mode", void 0);
                 __decorate([
                     core_1.Input(), 
-                    __metadata('design:type', Object)
-                ], ThemeCreatorComponent.prototype, "inputTheme", void 0);
+                    __metadata('design:type', Object), 
+                    __metadata('design:paramtypes', [Object])
+                ], ThemeCreatorComponent.prototype, "inputTheme", null);
                 ThemeCreatorComponent = __decorate([
                     core_1.Component({
                         selector: 'theme-creator',

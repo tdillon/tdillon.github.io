@@ -65,6 +65,10 @@ System.register(["./themeEditor/theme-creator.component", "./themeList/theme-pic
                     this.currentTheme = theme;
                     this.currentPage = this.Pages.Themes;
                 };
+                AppComponent.prototype.themeDelete = function (theme) {
+                    //TODO delete theme
+                    this.currentPage = this.Pages.Themes;
+                };
                 AppComponent.prototype.onCreateTheme = function () {
                     this.creatorMode = theme_creator_component_1.ThemeCreatorMode.New;
                     this.inputTheme = null;

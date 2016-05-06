@@ -10,7 +10,7 @@
   <h2>
     <input type=button value=Save (click)="onSave()">
     <input type=button value=Cancel (click)="onCancel()">
-    <input type=button value=Delete (click)="delete()">
+    <input type=button value=Delete (click)="onDelete()" [hidden]="mode !== ThemeCreatorMode.Edit">
   </h2>
 </div>
 <text-picker

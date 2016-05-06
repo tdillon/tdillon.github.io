@@ -17,5 +17,6 @@
     [inputTheme]="inputTheme"
     (update)="currentTheme = $event"
     (cancel)="cancelThemeCreation()"
+    (delete)="themeDelete($event)"
     (save)="themeSave($event)"></theme-creator>
 </div>

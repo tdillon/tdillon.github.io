@@ -31,7 +31,9 @@ System.register(["angular2/core", "./Color", 'angular2/http', 'rxjs/Observable',
             //TODO WIP persist to local storage!!!!
             ConfigService = (function () {
                 function ConfigService(_http) {
+                    var _this = this;
                     this._http = _http;
+                    this._observable = new Observable_1.Observable(function (o) { _this._observer = o; });
                 }
                 ConfigService.prototype.deserializeColors = function (obj) {
                     var _this = this;
@@ -56,31 +58,49 @@ System.register(["angular2/core", "./Color", 'angular2/http', 'rxjs/Observable',
                     get: function () {
                         //TODO cache themes?
                         var _this = this;
-                        return new Observable_1.Observable(function (observer) {
-                            _this._observer = observer;
-                            _this._http.get('src/preset-themes.json').map(function (res) {
+                        if (!this._customThemes) {
+                            this._http.get('src/preset-themes.json').map(function (res) {
                                 var themes = (res.json());
                                 for (var _i = 0, themes_1 = themes; _i < themes_1.length; _i++) {
                                     var t = themes_1[_i];
                                     _this.deserializeColors(t);
                                 }
+                                var d = localStorage.getItem('customThemes');
+                                _this._customThemes = (d ? JSON.parse(d) : []);
+                                for (var _a = 0, _b = _this._customThemes; _a < _b.length; _a++) {
+                                    var t = _b[_a];
+                                    _this.deserializeColors(t);
+                                    _this._observer.next(t);
+                                }
                                 return themes;
                             }).subscribe(function (ta) { return ta.forEach(function (t) { return _this._observer.next(t); }); });
-                        });
-                        // return this._http.get('preset-themes.json').map(res => {
-                        //   var themes = <Theme[]>(res.json());
-                        //   for (let t of themes) {
-                        //     this.deserializeColors(t);
-                        //   }
-                        //   return themes;
-                        // });
+                        }
+                        return this._observable;
                     },
                     enumerable: true,
                     configurable: true
                 });
                 ConfigService.prototype.save = function (theme) {
-                    //TODO add theme to 'custom' theme repo (localStorage or app engine, etc.).
-                    this._observer.next(theme);
+                    var idx;
+                    if ((idx = this._customThemes.findIndex(function (t) { return t === theme; })) >= 0) {
+                        this._customThemes[idx] = theme;
+                    }
+                    else {
+                        this._customThemes.push(theme);
+                        this._observer.next(theme);
+                    }
+                    localStorage.setItem('customThemes', JSON.stringify(this._customThemes));
+                };
+                ConfigService.prototype.delete = function (theme) {
+                    var idx;
+                    if ((idx = this._customThemes.findIndex(function (t) { return t === theme; })) >= 0) {
+                        this._customThemes.splice(idx, 1);
+                    }
+                    else {
+                        console.error('When would this ever happen?');
+                    }
+                    //TODO do we need to notify any observers?
+                    localStorage.setItem('customThemes', JSON.stringify(this._customThemes));
                 };
                 Object.defineProperty(ConfigService.prototype, "maxDotRadius", {
                     /**

@@ -13,8 +13,11 @@ import 'rxjs/add/operator/map'
 @Injectable()
 export class ConfigService {
   private _observer: Observer<Theme>;
+  private _observable: Observable<Theme>;
+  private _customThemes: Array<Theme>;
 
   constructor(private _http: Http) {
+    this._observable = new Observable((o: Observer<Theme>) => { this._observer = o });
   }
 
   private deserializeColors(obj: Object) {
@@ -38,31 +41,50 @@ export class ConfigService {
   get themes(): Observable<Theme> {
     //TODO cache themes?
 
-    return new Observable((observer: Observer<Theme>) => {
-      this._observer = observer;
-
+    if (!this._customThemes) {  //themes have not been retrieved yet
       this._http.get('src/preset-themes.json').map(res => {
-        var themes = <Theme[]>(res.json());
+        let themes = <Theme[]>(res.json());
         for (let t of themes) {
           this.deserializeColors(t);
         }
+
+        let d = localStorage.getItem('customThemes');
+        this._customThemes = (d ? JSON.parse(d) : []);
+        for (let t of this._customThemes) {
+          this.deserializeColors(t);
+          this._observer.next(t);
+        }
+
         return themes;
       }).subscribe(ta => ta.forEach(t => this._observer.next(t)));
+    }
 
-    });
-
-    // return this._http.get('preset-themes.json').map(res => {
-    //   var themes = <Theme[]>(res.json());
-    //   for (let t of themes) {
-    //     this.deserializeColors(t);
-    //   }
-    //   return themes;
-    // });
+    return this._observable;
   }
 
   save(theme: Theme) {
-    //TODO add theme to 'custom' theme repo (localStorage or app engine, etc.).
-    this._observer.next(theme);
+    let idx: number;
+    if ((idx = this._customThemes.findIndex(t => t === theme)) >= 0) {
+      this._customThemes[idx] = theme;
+    } else {
+      this._customThemes.push(theme);
+      this._observer.next(theme);
+    }
+
+    localStorage.setItem('customThemes', JSON.stringify(this._customThemes));
+  }
+
+  delete(theme: Theme) {
+    let idx: number;
+    if ((idx = this._customThemes.findIndex(t => t === theme)) >= 0) {
+      this._customThemes.splice(idx, 1);
+    } else {
+      console.error('When would this ever happen?');
+    }
+
+    //TODO do we need to notify any observers?
+
+    localStorage.setItem('customThemes', JSON.stringify(this._customThemes));
   }
 
   /**

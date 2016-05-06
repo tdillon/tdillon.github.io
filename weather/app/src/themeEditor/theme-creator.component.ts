@@ -34,27 +34,38 @@ export enum ThemeCreatorMode { New, Edit, Copy }
   ]
 })
 export class ThemeCreatorComponent {
+  private _inputTheme;  //TODO do i need this?
+  private theme: Theme;
+  private WidgetType = WidgetType;
+  private availableOptions: Array<ConfigOption>;
+  private currentPicker: any;
+  private ThemeCreatorMode = ThemeCreatorMode;
+
   @Output('save') save11 = new EventEmitter<Theme>();
   @Output('update') update11 = new EventEmitter<Theme>();
+  @Output('delete') delete11 = new EventEmitter<Theme>();
   @Output('cancel') cancel11 = new EventEmitter<any>();
 
   @Input() mode: ThemeCreatorMode;
-  // @Input() inputTheme: Theme;
-  @Input() set inputTheme(t:Theme) {
-    console.log('set theme in theme-creator.component', t);
-  }
+  @Input() set inputTheme(t: Theme) {
+    this._inputTheme = t;
 
-  theme: Theme;
-  WidgetType = WidgetType;
-  availableOptions: Array<ConfigOption>;
-  currentPicker: any;
-  ThemeCreatorMode = ThemeCreatorMode;
+    if (t) {  //copying or editing a theme
+      this.theme = this.emptyTheme
+      this.copyThemeTo(t, this.theme);
+    } else if (t === null) {  //creating a new theme
+      this.theme = this.emptyTheme;
+    }  //t will be undefined to begin with, i.e., component load time
+
+    if (t !== undefined) {  //only update if user is adding/editing/copying a theme
+      this.onUpdate();
+    }
+  }
 
   constructor(private _config: ConfigService) {
     this.currentPicker = null;
     this.availableOptions = this.allOptions;
-    this.resetTheme();
-    this.onUpdate();
+    this.theme = this.emptyTheme;
   }
 
   updateDaylight(showDaylight: boolean) {
@@ -66,41 +77,79 @@ export class ThemeCreatorComponent {
     this.onUpdate();
   }
 
+  private copyThemeTo(from: Theme, to: Theme) {
+    to.name = from.name;
+    to.themeType = ThemeType.Custom;
+    to.widgetType = from.widgetType;
+    to.globals.dot.color = from.globals.dot.color.copyOf();
+    to.globals.dot.radius = from.globals.dot.radius;
+    to.globals.segment.show = from.globals.segment.show;
+    to.globals.segment.color = from.globals.segment.color.copyOf();
+    to.globals.segment.angle = from.globals.segment.angle;
+    to.globals.segment.padding = from.globals.segment.padding;
 
-  resetTheme() {
-    if (this.theme) {
-      this.theme.name = '';
-      this.theme.themeType = ThemeType.Custom;
-      this.theme.widgetType = WidgetType.Daily;
-      this.theme.globals.dot.color = Color.white;
-      this.theme.globals.dot.radius = 5;
-      this.theme.globals.segment.show = true;
-      this.theme.globals.segment.color = Color.white;
-      this.theme.globals.segment.angle = 40;
-      this.theme.globals.segment.padding = 4;
-
-      while (this.theme.options.length) {
-        this.availableOptions.push(this.theme.options.pop());
-      }
+    if (from.daylight) {
+      to.daylight = from.daylight.copyOf();
     } else {
-      this.theme = {
-        name: '',
-        themeType: ThemeType.Custom,
-        widgetType: WidgetType.Daily,
-        globals: {
-          dot: {
-            color: Color.white,
-            radius: 5
+      delete to.daylight;
+    }
+
+    for (let o of from.options) {
+      to.options.push({
+        title: o.title,
+        dot: {
+          color: {
+            global: o.dot.color.global,
+            value: o.dot.color.value.copyOf()
           },
-          segment: {
-            show: true,
-            color: Color.white,
-            angle: 40,
-            padding: 4
-          }
+          radius: {
+            global: o.dot.radius.global,
+            value: o.dot.radius.value
+          },
         },
-        options: []
-      }
+        segment: {
+          show: {
+            global: o.segment.show.global,
+            value: o.segment.show.value
+          },
+          color: {
+            global: o.segment.color.global,
+            value: o.segment.color.value.copyOf()
+          },
+          angle: {
+            global: o.segment.angle.global,
+            value: o.segment.angle.value
+          },
+          padding: {
+            global: o.segment.padding.global,
+            value: o.segment.padding.value
+          }
+        }
+      });
+    }
+  }
+
+  /**
+   * Return a new instance of an "empty" theme.
+   */
+  private get emptyTheme(): Theme {
+    return {
+      name: '',
+      themeType: ThemeType.Custom,
+      widgetType: WidgetType.Daily,
+      globals: {
+        dot: {
+          color: Color.white,
+          radius: 5
+        },
+        segment: {
+          show: true,
+          color: Color.white,
+          angle: 40,
+          padding: 4
+        }
+      },
+      options: []
     }
   }
 
@@ -108,7 +157,6 @@ export class ThemeCreatorComponent {
     let x = ['moon', 'humidity', 'visibility', 'dewPoint', 'apparentTemperatureMax', 'apparentTemperatureMin', 'temperatureMin', 'temperatureMax', 'windSpeed', 'ozone', 'pressure', 'apparentTemperature', 'temperature', 'precipProbability', 'precipAccumulation'];
     return x.map(o => this.getDefaultConfigOption(o));
   }
-
 
   getDefaultConfigOption(title: string): ConfigOption {
     return {
@@ -126,31 +174,25 @@ export class ThemeCreatorComponent {
     }
   }
 
-  add(o: ConfigOption) {
-    this.theme.options.push(o);
-    this.availableOptions.splice(this.availableOptions.indexOf(o), 1);
-    this.onUpdate();
-  }
-
-  remove(o: ConfigOption) {
-    this.availableOptions.push(o);
-    this.theme.options.splice(this.theme.options.indexOf(o), 1);
-    this.onUpdate();
+  onDelete() {
+    this._config.delete(this._inputTheme);
+    this.delete11.emit(this._inputTheme);
   }
 
   onSave() {
-    //TODO validate this.theme
+    if (this.mode === ThemeCreatorMode.Edit) {
+      this.copyThemeTo(this.theme, this._inputTheme);
+      this.theme = this._inputTheme;
+    }
+
     this._config.save(this.theme);
     this.save11.emit(this.theme);
   }
 
   onCancel() {
+    this.mode = null;
+    this.inputTheme = null;
     this.cancel11.emit(null);
-  }
-
-  new() {
-    this.theme = null;
-    this.resetTheme();
   }
 
   onUpdate() {

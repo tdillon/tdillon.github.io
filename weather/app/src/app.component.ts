@@ -55,6 +55,11 @@ export class AppComponent implements AfterViewInit {
     this.currentPage = this.Pages.Themes;
   }
 
+  themeDelete(theme: Theme) {
+    //TODO delete theme
+    this.currentPage = this.Pages.Themes;
+  }
+
   onCreateTheme() {
     this.creatorMode = ThemeCreatorMode.New;
     this.inputTheme = null;

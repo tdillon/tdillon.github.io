@@ -34,8 +34,6 @@ System.register(["./forecast.io.refresher.component", 'angular2/core', './foreca
                     this.close4.emit(null);
                 };
                 ConfigComponent.prototype.onRefresh = function (weather) {
-                    var dt = new Date(weather.currently.time * 1000);
-                    this.timestamp = dt.toLocaleString();
                     this.refresh4.emit(weather);
                 };
                 __decorate([
