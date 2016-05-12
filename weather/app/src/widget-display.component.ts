@@ -152,20 +152,20 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
        * IS THIS NECESSARY?  FIND AN EXAMPLE WHERE IT MATTERS -> Draw invert the order of the 2 for loops so that entire lines are drawn at once. this will allow for depth of lines to be set
        *
        * TODO:Dots
+       * create 'ring' type
        * Rain, Sleet, Snow, Hail icons for PrecipProbability
        * visibility icon
        * pressure icon
        * hummidity icon
        *
        * TODO segments
-       * Color precipProbability segments for precipIntensiy
+       * Allow precipProbability segment to be solid color (as well as 'intensity color'), i.e., configurable.
+       * somehow set opacity when using 'intensity color'.
        *
        * TODO Work List:
        * Toggle between daily and hourly.  work in progress figuring how hiding and showing of config options
-       * Persist config options
-       * I don't like config.global.type being H or D. seems clunky.
        * Background image configuration to simulate phone home screen widget.
-       * Show 'alerts' in bottom left corner
+       * Show 'alerts'.  in one of the corners?
        * do we need seperate font sizes for time and temp?
        *
        * TODO:Time
@@ -177,8 +177,7 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
        * Pressure: what scale? same as wind speed questions.
        *
        * TODO:Themes
-       * Add 'themes'
-       * Add save/edit/delete theme capability
+       * Finalize/cleanup theme workflow
        *
        */
 
@@ -195,12 +194,19 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
               DotDrawer.wind(this.ctx, today[c.title].x, today[c.title].y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), (c.dot.color.global ? this.theme.globals.dot.color.rgba : c.dot.color.value.rgba), d.windBearing);
               break;
             default:
-              DotDrawer.simple(this.ctx, today[c.title].x, today[c.title].y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), (c.dot.color.global ? this.theme.globals.dot.color.rgba : c.dot.color.value.rgba));
+              DotDrawer.simple(this.ctx, today[c.title].x, today[c.title].y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), (c.title === 'precipProbability') ? (this.theme.widgetType === WidgetType.Hourly ? today.precipIntensityColor : today.precipIntensityMaxColor) : (c.dot.color.global ? this.theme.globals.dot.color.rgba : c.dot.color.value.rgba));
           }
 
           //Don't draw segment for precipProbability when yesterday was 0%.
           if ((c.segment.show.global ? this.theme.globals.segment.show : c.segment.show.value) && s.hasSegment && !(c.title === 'precipProbability' && yesterday.data.precipProbability === 0)) {
-            this.ctx.fillStyle = (c.segment.color.global ? this.theme.globals.segment.color.rgba : c.segment.color.value.rgba);
+            if (c.title === 'precipProbability') {  //gradient
+              let gradient = this.ctx.createLinearGradient(yesterday[c.title].x, yesterday[c.title].y, today[c.title].x, today[c.title].y);
+              gradient.addColorStop(0, this.theme.widgetType === WidgetType.Hourly ? yesterday.precipIntensityColor : yesterday.precipIntensityMaxColor);
+              gradient.addColorStop(1, this.theme.widgetType === WidgetType.Hourly ? today.precipIntensityColor : today.precipIntensityMaxColor);
+              this.ctx.fillStyle = gradient;
+            } else {
+              this.ctx.fillStyle = (c.segment.color.global ? this.theme.globals.segment.color.rgba : c.segment.color.value.rgba);
+            }
             this.ctx.beginPath();
             this.ctx.arc(s.start.point.x, s.start.point.y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), s.start.from, s.start.to, false);
             this.ctx.arc(s.end.point.x, s.end.point.y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), s.end.from, s.end.to, false);
