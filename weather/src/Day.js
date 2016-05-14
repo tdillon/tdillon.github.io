@@ -13,6 +13,28 @@ System.register([], function(exports_1, context_1) {
                     this.xRight = xRight;
                     this.yTop = yTop;
                     this.yBottom = yBottom;
+                    /**
+                     * http://radar.weather.gov/Legend/N0R/DMX_N0R_Legend_0.gif
+                     * https://en.wikipedia.org/wiki/DBZ_(meteorology)
+                     */
+                    this._dbzs = [
+                        { intensity: 69.9, color: 'rgb(253, 253, 253)' },
+                        { intensity: 34, color: 'rgb(152, 84, 198)' },
+                        { intensity: 16.6, color: 'rgb(248, 0, 253)' },
+                        { intensity: 8, color: 'rgb(188, 0, 0)' },
+                        { intensity: 4, color: 'rgb(212, 0, 0)' },
+                        { intensity: 1.9, color: 'rgb(253, 0, 0)' },
+                        { intensity: .92, color: 'rgb(253, 149, 0)' },
+                        { intensity: .45, color: 'rgb(229, 188, 0)' },
+                        { intensity: .22, color: 'rgb(253, 248, 2)' },
+                        { intensity: .1, color: 'rgb(0, 142, 0)' },
+                        { intensity: .05, color: 'rgb(1, 197, 1)' },
+                        { intensity: .02, color: 'rgb(2, 253, 2)' },
+                        { intensity: .01, color: 'rgb(3, 0, 244)' },
+                        { intensity: .006, color: 'rgb(1, 159, 244)' },
+                        { intensity: .003, color: 'rgb(4, 233, 231)' },
+                        { intensity: 0, color: 'rgb(4, 233, 231)' } //TODO I don't know what to do for this color/intensity.
+                    ];
                     this.bod = this.data.time;
                     this.eod = this.data.time + Day.SECONDS_PER_DAY;
                     this.sunrise = this.data.sunriseTime;
@@ -31,6 +53,22 @@ System.register([], function(exports_1, context_1) {
                             x: this.xLeft + (this.data.precipIntensityMaxTime - this.bod) * this.unitsPerSecond,
                             y: this.yTop + (1 - this.data.precipProbability) * this.dayHeight
                         };
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Day.prototype, "precipIntensityMaxColor", {
+                    get: function () {
+                        var _this = this;
+                        return this._dbzs.find(function (i) { return i.intensity < _this.data.precipIntensityMax; }).color;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Day.prototype, "precipIntensityColor", {
+                    get: function () {
+                        var _this = this;
+                        return this._dbzs.find(function (i) { return i.intensity < _this.data.precipIntensity; }).color;
                     },
                     enumerable: true,
                     configurable: true

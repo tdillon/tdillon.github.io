@@ -84,6 +84,18 @@ System.register(["./themeEditor/theme-creator.component", "./themeList/theme-pic
                     this.inputTheme = t;
                     this.currentPage = this.Pages.Editor;
                 };
+                AppComponent.prototype.clickWidget = function () {
+                    this.showMenu = !this.showMenu;
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen();
+                    }
+                    else if (document.documentElement['mozRequestFullScreen']) {
+                        document.documentElement['mozRequestFullScreen']();
+                    }
+                    else if (document.documentElement['webkitRequestFullscreen']) {
+                        document.documentElement['webkitRequestFullscreen']();
+                    }
+                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'weather-widget-number-one-prototype',

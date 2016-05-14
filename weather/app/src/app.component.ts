@@ -24,7 +24,7 @@ export class AppComponent implements AfterViewInit {
   currentPage: number;
   Pages = { Themes: 1, Editor: 2, Config: 3 };
   creatorMode: ThemeCreatorMode;
-  inputTheme:Theme;
+  inputTheme: Theme;
 
   constructor(private _weatherService: WeatherService, public config: ConfigService) {
     this.currentPage = this.Pages.Themes;
@@ -76,5 +76,17 @@ export class AppComponent implements AfterViewInit {
     this.creatorMode = ThemeCreatorMode.Copy;
     this.inputTheme = t;
     this.currentPage = this.Pages.Editor;
+  }
+
+  clickWidget() {
+    this.showMenu = !this.showMenu;
+
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement['mozRequestFullScreen']) {
+      document.documentElement['mozRequestFullScreen']();
+    } else if (document.documentElement['webkitRequestFullscreen']) {
+      document.documentElement['webkitRequestFullscreen']();
+    }
   }
 }

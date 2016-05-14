@@ -1,4 +1,4 @@
-<widget-display [theme]="currentTheme" [data]="data" (click)="showMenu = !showMenu"></widget-display>
+<widget-display [theme]="currentTheme" [data]="data" (click)="clickWidget()"></widget-display>
 <div id=pages [class.hideMenu]="!showMenu">
   <config
     [class.current]="currentPage === Pages.Config"
