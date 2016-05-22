@@ -10,6 +10,14 @@ export class Color {
     return `rgb(${this.r}, ${this.g}, ${this.b})`;
   }
 
+  static get black() {
+    return new Color(0, 0, 0);
+  }
+
+  static get skyBlue() {
+    return new Color(0,128,255);
+  }
+
   static get white() {
     return new Color(255, 255, 255, 1);
   }

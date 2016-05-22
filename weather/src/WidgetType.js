@@ -5,6 +5,9 @@ System.register([], function(exports_1, context_1) {
     return {
         setters:[],
         execute: function() {
+            /**
+             * The 'type' of widget.   Either Daily or Hourly.
+             */
             (function (WidgetType) {
                 WidgetType[WidgetType["Daily"] = 0] = "Daily";
                 WidgetType[WidgetType["Hourly"] = 1] = "Hourly";

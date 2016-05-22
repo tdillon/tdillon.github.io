@@ -26,7 +26,7 @@ export class ConfigService {
     }
 
     Object.keys(obj).forEach(key => {
-      if (key === 'color' || key === 'daylight') {
+      if (key === 'color' || key === 'daylight' || key === 'nightlight') {
         if (obj[key].hasOwnProperty('value')) {
           obj[key].value = Color.getColor(obj[key].value);
         } else {

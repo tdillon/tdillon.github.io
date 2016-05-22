@@ -26,6 +26,20 @@ System.register([], function(exports_1, context_1) {
                     enumerable: true,
                     configurable: true
                 });
+                Object.defineProperty(Color, "black", {
+                    get: function () {
+                        return new Color(0, 0, 0);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Color, "skyBlue", {
+                    get: function () {
+                        return new Color(0, 128, 255);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 Object.defineProperty(Color, "white", {
                     get: function () {
                         return new Color(255, 255, 255, 1);

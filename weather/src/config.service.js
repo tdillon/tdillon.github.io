@@ -41,7 +41,7 @@ System.register(["angular2/core", "./Color", 'angular2/http', 'rxjs/Observable',
                         return;
                     }
                     Object.keys(obj).forEach(function (key) {
-                        if (key === 'color' || key === 'daylight') {
+                        if (key === 'color' || key === 'daylight' || key === 'nightlight') {
                             if (obj[key].hasOwnProperty('value')) {
                                 obj[key].value = Color_1.Color.getColor(obj[key].value);
                             }

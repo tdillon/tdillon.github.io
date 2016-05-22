@@ -1,17 +1,16 @@
 import {Theme} from "./Theme.interface";
 import {DataBlock} from "./forecast.io.interface";
-import {ConfigService} from "./config.service";
 
 
 export class Ranges {
-  minTemp:number;
-  minOzone:number;
-  minPressure:number;
-  maxTemp:number;
-  maxOzone:number;
-  maxPressure:number;
-  maxWindSpeed:number;
-  maxPrecipAccumulation:number;
+  private minTemp:number;
+  private minOzone:number;
+  private minPressure:number;
+  private maxTemp:number;
+  private maxOzone:number;
+  private maxPressure:number;
+  private maxWindSpeed:number;
+  private maxPrecipAccumulation:number;
 
   constructor(db:DataBlock, config:Theme) {
     this.minTemp = this.minOzone = this.minPressure = Number.MAX_SAFE_INTEGER;

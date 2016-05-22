@@ -1,4 +1,4 @@
-System.register(["./themeEditor/theme-creator.component", "./themeList/theme-picker.component", 'angular2/core', './weather.service', './widget-display.component', "./config.service", './config/config.component'], function(exports_1, context_1) {
+System.register(["./themeEditor/theme-creator.component", "./themeList/theme-picker.component", 'angular2/core', './weather.service', './widget/widget-display.component', "./config.service", './config/config.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {

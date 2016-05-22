@@ -1,4 +1,4 @@
-import {Color} from './Color'
+import {Color} from '../Color'
 
 export class DotDrawer {
   static simple(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, color: string) {

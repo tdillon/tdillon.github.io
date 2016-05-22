@@ -1,5 +1,6 @@
+import {CloudCoverLocationPickerComponent} from "./cloud-cover-location-picker.component";
 import {Color} from "../Color";
-import {Theme, ThemeType} from "../Theme.interface"
+import {Theme, ThemeType, CloudCoverLocation} from "../Theme.interface"
 import {WidgetType} from '../WidgetType'
 import {ConfigService} from "../config.service"
 import {Component, Output, Input, EventEmitter} from 'angular2/core'
@@ -31,6 +32,7 @@ export enum ThemeCreatorMode { New, Edit, Copy }
     WeatherPropertyPickerComponent,
     DefaultThemeSettingsComponent,
     WeatherPropertySettingsComponent,
+    CloudCoverLocationPickerComponent
   ]
 })
 export class ThemeCreatorComponent {
@@ -70,9 +72,18 @@ export class ThemeCreatorComponent {
 
   updateDaylight(showDaylight: boolean) {
     if (showDaylight) {
-      this.theme.daylight = Color.white;
+      this.theme.daylight = Color.skyBlue;
     } else {
       delete this.theme.daylight;
+    }
+    this.onUpdate();
+  }
+
+  updateNightlight(showNightlight: boolean) {
+    if (showNightlight) {
+      this.theme.nightlight = Color.black;
+    } else {
+      delete this.theme.nightlight;
     }
     this.onUpdate();
   }
@@ -81,6 +92,7 @@ export class ThemeCreatorComponent {
     to.name = from.name;
     to.themeType = ThemeType.Custom;
     to.widgetType = from.widgetType;
+    to.cloudCoverLocation = from.cloudCoverLocation;
     to.globals.dot.color = from.globals.dot.color.copyOf();
     to.globals.dot.radius = from.globals.dot.radius;
     to.globals.segment.show = from.globals.segment.show;
@@ -92,6 +104,12 @@ export class ThemeCreatorComponent {
       to.daylight = from.daylight.copyOf();
     } else {
       delete to.daylight;
+    }
+
+    if (from.nightlight) {
+      to.nightlight = from.nightlight.copyOf();
+    } else {
+      delete to.nightlight;
     }
 
     for (let o of from.options) {
@@ -137,6 +155,7 @@ export class ThemeCreatorComponent {
       name: '',
       themeType: ThemeType.Custom,
       widgetType: WidgetType.Daily,
+      cloudCoverLocation: CloudCoverLocation.Graph,
       globals: {
         dot: {
           color: Color.white,

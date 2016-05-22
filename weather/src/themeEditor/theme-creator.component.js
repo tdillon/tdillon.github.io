@@ -1,4 +1,4 @@
-System.register(["../Color", "../Theme.interface", '../WidgetType', "../config.service", 'angular2/core', './text-picker.component', './widget-type-picker.component', './boolean-picker.component', "./color-picker.component", './weather-property-picker.component', "./default-theme-settings.component", "./weather-property-settings.component"], function(exports_1, context_1) {
+System.register(["./cloud-cover-location-picker.component", "../Color", "../Theme.interface", '../WidgetType', "../config.service", 'angular2/core', './text-picker.component', './widget-type-picker.component', './boolean-picker.component', "./color-picker.component", './weather-property-picker.component', "./default-theme-settings.component", "./weather-property-settings.component"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,10 +10,13 @@ System.register(["../Color", "../Theme.interface", '../WidgetType', "../config.s
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var Color_1, Theme_interface_1, WidgetType_1, config_service_1, core_1, text_picker_component_1, widget_type_picker_component_1, boolean_picker_component_1, color_picker_component_1, weather_property_picker_component_1, default_theme_settings_component_1, weather_property_settings_component_1;
+    var cloud_cover_location_picker_component_1, Color_1, Theme_interface_1, WidgetType_1, config_service_1, core_1, text_picker_component_1, widget_type_picker_component_1, boolean_picker_component_1, color_picker_component_1, weather_property_picker_component_1, default_theme_settings_component_1, weather_property_settings_component_1;
     var ThemeCreatorMode, ThemeCreatorComponent;
     return {
         setters:[
+            function (cloud_cover_location_picker_component_1_1) {
+                cloud_cover_location_picker_component_1 = cloud_cover_location_picker_component_1_1;
+            },
             function (Color_1_1) {
                 Color_1 = Color_1_1;
             },
@@ -89,10 +92,19 @@ System.register(["../Color", "../Theme.interface", '../WidgetType', "../config.s
                 });
                 ThemeCreatorComponent.prototype.updateDaylight = function (showDaylight) {
                     if (showDaylight) {
-                        this.theme.daylight = Color_1.Color.white;
+                        this.theme.daylight = Color_1.Color.skyBlue;
                     }
                     else {
                         delete this.theme.daylight;
+                    }
+                    this.onUpdate();
+                };
+                ThemeCreatorComponent.prototype.updateNightlight = function (showNightlight) {
+                    if (showNightlight) {
+                        this.theme.nightlight = Color_1.Color.black;
+                    }
+                    else {
+                        delete this.theme.nightlight;
                     }
                     this.onUpdate();
                 };
@@ -100,6 +112,7 @@ System.register(["../Color", "../Theme.interface", '../WidgetType', "../config.s
                     to.name = from.name;
                     to.themeType = Theme_interface_1.ThemeType.Custom;
                     to.widgetType = from.widgetType;
+                    to.cloudCoverLocation = from.cloudCoverLocation;
                     to.globals.dot.color = from.globals.dot.color.copyOf();
                     to.globals.dot.radius = from.globals.dot.radius;
                     to.globals.segment.show = from.globals.segment.show;
@@ -111,6 +124,12 @@ System.register(["../Color", "../Theme.interface", '../WidgetType', "../config.s
                     }
                     else {
                         delete to.daylight;
+                    }
+                    if (from.nightlight) {
+                        to.nightlight = from.nightlight.copyOf();
+                    }
+                    else {
+                        delete to.nightlight;
                     }
                     for (var _i = 0, _a = from.options; _i < _a.length; _i++) {
                         var o = _a[_i];
@@ -156,6 +175,7 @@ System.register(["../Color", "../Theme.interface", '../WidgetType', "../config.s
                             name: '',
                             themeType: Theme_interface_1.ThemeType.Custom,
                             widgetType: WidgetType_1.WidgetType.Daily,
+                            cloudCoverLocation: Theme_interface_1.CloudCoverLocation.Graph,
                             globals: {
                                 dot: {
                                     color: Color_1.Color.white,
@@ -261,6 +281,7 @@ System.register(["../Color", "../Theme.interface", '../WidgetType', "../config.s
                             weather_property_picker_component_1.WeatherPropertyPickerComponent,
                             default_theme_settings_component_1.DefaultThemeSettingsComponent,
                             weather_property_settings_component_1.WeatherPropertySettingsComponent,
+                            cloud_cover_location_picker_component_1.CloudCoverLocationPickerComponent
                         ]
                     }), 
                     __metadata('design:paramtypes', [config_service_1.ConfigService])

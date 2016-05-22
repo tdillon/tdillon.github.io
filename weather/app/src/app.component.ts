@@ -3,7 +3,7 @@ import {Theme} from "./Theme.interface";
 import {ThemePickerComponent} from "./themeList/theme-picker.component";
 import {Component, AfterViewInit} from 'angular2/core';
 import {WeatherService} from './weather.service';
-import {WidgetDisplayComponent} from './widget-display.component';
+import {WidgetDisplayComponent} from './widget/widget-display.component';
 import {ForecastIO} from "./forecast.io.interface";
 import {ConfigService} from "./config.service";
 import {ConfigComponent} from './config/config.component'

@@ -2,6 +2,7 @@
     "name": "moon only hourly",
     "themeType": 0,
     "widgetType": 1,
+    "cloudCoverLocation": 0,
     "daylight": {
       "r": 0,
       "g": 255,
@@ -76,10 +77,16 @@
     "name": "moon only daily",
     "themeType": 0,
     "widgetType": 0,
+    "cloudCoverLocation": 1,
     "daylight": {
       "r": 0,
       "g": 127,
       "b": 255
+    },
+    "nightlight": {
+      "r": 0,
+      "g": 0,
+      "b": 0
     },
     "globals": {
       "dot": {

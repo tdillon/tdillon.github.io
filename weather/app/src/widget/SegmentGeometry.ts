@@ -1,5 +1,5 @@
 import {EndPoint} from "./EndPoint.interface";
-import {ConfigOption, GlobalOptions} from "./Option.interface"
+import {ConfigOption, GlobalOptions} from "../Option.interface"
 
 export class SegmentGeometry {
   private _length:number = 0;
