@@ -9,7 +9,8 @@ gulp.task('clean:weather', function() {
     'weather/src',
     'weather/index.html',
     'weather/app/src/**/*.js',
-    'weather/app/src/**/*.map'
+    'weather/app/src/**/*.map',
+    'js/angular.dependencies.bundle.js'
   ]);
 });
 gulp.task('useref:weather', function() {
@@ -22,7 +23,6 @@ gulp.task('copy:weather', function() {
     .src([
       'weather/app/src/**/*.html',
       'weather/app/src/**/*.css',
-      'weather/app/src/**/*.js',
       'weather/app/src/preset-themes.json'
     ])
     .pipe(gulp.dest('weather/src'))
@@ -36,7 +36,8 @@ gulp.task('clean:sevenClock', function() {
     'clocks/7/src',
     'clocks/7/index.html',
     'clocks/7/app/src/**/*.js',
-    'clocks/7/app/src/**/*.map'
+    'clocks/7/app/src/**/*.map',
+    'js/angular.dependencies.bundle.js'
   ]);
 });
 gulp.task('useref:sevenClock', function() {
@@ -45,15 +46,7 @@ gulp.task('useref:sevenClock', function() {
     .pipe(useref())
     .pipe(gulp.dest('clocks/7'));
 });
-gulp.task('copy:sevenClock', function() {
-  return gulp
-    .src([
-      'clocks/7/app/src/**/*.js',
-      'node_modules/seven-segment/7.js'
-    ])
-    .pipe(gulp.dest('clocks/7/src'))
-});
-gulp.task('build:sevenClock', ['useref:sevenClock', 'copy:sevenClock']);
+gulp.task('build:sevenClock', ['useref:sevenClock']);
 
 
 

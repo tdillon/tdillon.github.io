@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core'
+import {Component} from '@angular/core'
 import {DigitComponent} from './digit.component'
 import {TimeService} from './time.service'
 import {Digit} from 'seven-segment'

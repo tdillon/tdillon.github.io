@@ -11,7 +11,7 @@
     "tsc:w": "tsc -w",
     "gulp": "node_modules\\.bin\\gulp",
     "clean": "npm run gulp clean",
-    "build": "npm run gulp clean && npm run tsc:p && npm run gulp"
+    "build": "npm run gulp clean ; npm run tsc:p ; npm run gulp ; node builder.js"
   },
   "repository": {
     "type": "git",
@@ -24,12 +24,24 @@
   },
   "homepage": "https://github.com/tdillon/tdillon.github.io#readme",
   "dependencies": {
-    "angular2": "2.0.0-beta.16",
-    "systemjs": "0.19.26",
-    "es6-shim": "^0.35.0",
-    "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.2",
-    "zone.js": "0.6.12",
+
+    "@angular/common": "2.0.0-rc.1",
+    "@angular/compiler": "2.0.0-rc.1",
+    "@angular/core": "2.0.0-rc.1",
+    "@angular/http": "2.0.0-rc.1",
+    "@angular/platform-browser": "2.0.0-rc.1",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.1",
+    "@angular/router": "2.0.0-rc.1",
+    "@angular/router-deprecated": "2.0.0-rc.1",
+    "@angular/upgrade": "2.0.0-rc.1",
+
+    "systemjs": "0.19.27",
+    "core-js": "^2.4.0",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "5.0.0-beta.6",
+    "zone.js": "^0.6.12",
+    "angular2-in-memory-web-api": "0.0.9",
+
     "bootstrap": "^3.3.6",
     "seven-segment": "^4.1.0"
   },

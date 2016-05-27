@@ -1,7 +1,7 @@
 import {Theme} from "./Theme.interface";
-import {Injectable} from "angular2/core"
+import {Injectable} from "@angular/core"
 import {Color} from "./Color"
-import {Http} from 'angular2/http'
+import {Http} from '@angular/http'
 import {Observable} from 'rxjs/Observable'
 import {Observer} from 'rxjs/Observer'
 import 'rxjs/add/operator/map'

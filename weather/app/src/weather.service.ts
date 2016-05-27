@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {ForecastIO} from "./forecast.io.interface";
 
 @Injectable()

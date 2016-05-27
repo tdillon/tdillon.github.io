@@ -1,5 +1,5 @@
 import {Color} from "../Color";
-import {Component, Input, Output, EventEmitter} from 'angular2/core'
+import {Component, Input, Output, EventEmitter} from '@angular/core'
 import {ConfigOption} from '../Option.interface'
 import {BooleanPickerComponent} from "./boolean-picker.component";
 

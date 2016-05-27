@@ -1,5 +1,5 @@
 import {WidgetType} from "../WidgetType";
-import {Component, Output, EventEmitter, Input} from 'angular2/core';
+import {Component, Output, EventEmitter, Input} from '@angular/core';
 
 
 @Component({

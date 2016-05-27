@@ -3,7 +3,7 @@ import {Color} from "../Color";
 import {Theme, ThemeType, CloudCoverLocation} from "../Theme.interface"
 import {WidgetType} from '../WidgetType'
 import {ConfigService} from "../config.service"
-import {Component, Output, Input, EventEmitter} from 'angular2/core'
+import {Component, Output, Input, EventEmitter} from '@angular/core'
 import {ConfigOption} from '../Option.interface'
 import {TextPickerComponent} from './text-picker.component'
 import {WidgetTypePickerComponent} from './widget-type-picker.component'

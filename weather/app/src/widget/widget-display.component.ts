@@ -4,7 +4,7 @@ import {WidgetType} from "../WidgetType";
 import {Theme, CloudCoverLocation} from "../Theme.interface";
 import {DataBlock, DataPoint, ForecastIO} from '../forecast.io.interface';
 // import {Day} from "./Day";
-import {Component, Input, AfterViewInit, DoCheck} from "angular2/core";
+import {Component, Input, AfterViewInit, DoCheck} from "@angular/core";
 import {SegmentGeometry} from "./SegmentGeometry";
 // import {Ranges} from "./Ranges";
 import {DotDrawer} from './DotDrawer'

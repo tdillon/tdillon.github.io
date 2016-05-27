@@ -4,7 +4,7 @@ import {ColorPickerComponent} from "./color-picker.component";
 import {Theme} from "../Theme.interface";
 import {ConfigService} from "../config.service";
 import {ConfigOption, GlobalOptions} from '../Option.interface';
-import {Component, Output, Input, EventEmitter} from 'angular2/core';
+import {Component, Output, Input, EventEmitter} from '@angular/core';
 
 
 @Component({

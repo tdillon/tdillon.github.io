@@ -1,5 +1,5 @@
 import {ForecastIoRefresherComponent} from "./forecast.io.refresher.component";
-import {Component, Output, EventEmitter} from 'angular2/core'
+import {Component, Output, EventEmitter} from '@angular/core'
 import {ForecastIO} from '../forecast.io.interface'
 import {ForecastIoSettingsComponent} from './forecast.io.settings.component'
 

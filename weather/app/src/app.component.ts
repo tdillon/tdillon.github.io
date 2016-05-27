@@ -1,7 +1,7 @@
 import {ThemeCreatorComponent, ThemeCreatorMode} from "./themeEditor/theme-creator.component";
 import {Theme} from "./Theme.interface";
 import {ThemePickerComponent} from "./themeList/theme-picker.component";
-import {Component, AfterViewInit} from 'angular2/core';
+import {Component, AfterViewInit} from '@angular/core';
 import {WeatherService} from './weather.service';
 import {WidgetDisplayComponent} from './widget/widget-display.component';
 import {ForecastIO} from "./forecast.io.interface";

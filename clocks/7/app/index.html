@@ -5,42 +5,31 @@
 <link rel="icon" type="image/png" href="/icon.png" />
 
 <!-- build:css src/bundle.css -->
-<link rel=stylesheet href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
 <link rel=stylesheet href="app.css">
 <!-- endbuild -->
 
-
 <seven-segment-clock>Loading...</seven-segment-clock>
 
-
-<!-- build:js src/bundle.js -->
-<script src="../../../node_modules/es6-shim/es6-shim.min.js"></script>
-<script src="../../../node_modules/systemjs/dist/system-polyfills.js"></script>
-<script src="../../../node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
-<script src="../../../node_modules/angular2/bundles/angular2-polyfills.js"></script>
+<!-- build:js ../../js/angular.dependencies.bundle.js -->
+<script src="../../../node_modules/core-js/client/shim.min.js"></script>
+<script src="../../../node_modules/zone.js/dist/zone.js"></script>
+<script src="../../../node_modules/reflect-metadata/Reflect.js"></script>
 <script src="../../../node_modules/systemjs/dist/system.src.js"></script>
-<script src="../../../node_modules/rxjs/bundles/Rx.js"></script>
-<script src="../../../node_modules/angular2/bundles/angular2.dev.js"></script>
-<script src="../../../node_modules/angular2/bundles/http.dev.js"></script>
-<script src="../../../node_modules/seven-segment/dist/seven-segment.bundle.js"></script>
 <!-- endbuild -->
 
-<script>
-  System.config({
-    packages: {
-      src: {
-        format: 'register',
-        defaultExtension: 'js'
-      }/*,
-      'seven-segment': {
-        format: 'register',
-        defaultExtension: 'js'
-      }
-    */}/*,
-    map: {
-      'seven-segment': '/node_modules/seven-segment'
-    }*/
-  });
+<!-- build:js src/bundle.js -->
+<script src=""></script>
+<!-- endbuild -->
 
-  System.import('src/boot').then(null, console.error.bind(console));
+<!-- build:js systemjs.config.prod.js -->
+<script src=""></script>
+<!-- endbuild -->
+
+<!-- build:remove -->
+<script src="systemjs.config.dev.js"></script>
+<!-- endbuild -->
+<script>
+  System.import('src').catch(function(err) {
+    console.error(err);
+  });
 </script>

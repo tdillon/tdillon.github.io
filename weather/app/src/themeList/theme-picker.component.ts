@@ -1,6 +1,6 @@
 import {Theme, ThemeType} from "../Theme.interface";
 import {ConfigService} from "../config.service";
-import {Component, Output, EventEmitter} from 'angular2/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {WidgetType} from '../WidgetType'
 
 

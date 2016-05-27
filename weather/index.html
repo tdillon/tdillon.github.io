@@ -9,17 +9,16 @@
 
 <weather-widget-number-one-prototype>Loading...</weather-widget-number-one-prototype>
 
+<script src="../js/angular.dependencies.bundle.js"></script>
+
+
 <script src="src/bundle.js"></script>
 
-<script>
-  System.config({
-    packages: {
-      src: {
-        format: 'register',
-        defaultExtension: 'js'
-      }
-    }
-  });
+<script src="systemjs.config.prod.js"></script>
 
-  System.import('src/boot').then(null, console.error.bind(console));
+
+<script>
+  System.import('src').catch(function(err) {
+    console.error(err);
+  });
 </script>

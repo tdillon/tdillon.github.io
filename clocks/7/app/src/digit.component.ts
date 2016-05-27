@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, AfterViewInit, ViewChild, ElementRef} from 'angular2/core'
+import {Component, Input, Output, EventEmitter, AfterViewInit, ViewChild, ElementRef} from '@angular/core'
 import {Seven, Digit} from 'seven-segment'
 
 
