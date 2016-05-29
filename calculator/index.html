@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" manifest="Calculator.appcache">
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Inch/mm Calculator</title>
+    <script src="Calculator.js"></script>
+    <script src="angular.min.js"></script>
+    <script src="angular-animate.min.js"></script>
+    <script>
+
+
+
+function CalculatorController() {
+  var self = this;
+
+  self.Precision = Value.Precision;   //for access to enum
+  self.Unit = Value.Unit;             //for access to enum
+  self.Operator = Equation.Operator;  //for access to enum
+
+  self.history = [];
+  self.equation = new Equation();
+
+  self.showFractions = true;
+
+  self.getAnswer = function() {
+    navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+
+    if (navigator.vibrate) {
+      navigator.vibrate([100, 100, 200]);
+    }
+
+    if (self.equation.solve()) {
+      self.history.push(self.equation);
+      self.equation = new Equation(self.equation.unit);
+    }
+  }
+}
+
+
+
+/*
+ * Update the CSS rule used for animating the showing/hiding of the fraction panel.
+ */
+window.onload = window.onresize = function() {
+  var stylesheet;
+  for (var i = 0,stylesheet = document.styleSheets.item(0); stylesheet.title !== 'animation'; stylesheet = document.styleSheets.item(++i));
+
+  var oldRule = stylesheet.cssRules.item(0).cssRules.item(0).cssText;
+  var newRule = oldRule.replace(/\d+\.*\d+/, document.getElementById('advanced').clientHeight);
+
+  stylesheet.cssRules.item(0).deleteRule(0);
+  stylesheet.cssRules.item(0).insertRule(newRule, 0);
+}
+
+
+
+angular.module('tgdCalculator', ['ngAnimate'])
+  .directive('number', function() {
+    return {
+      restrict: 'A',
+      scope: { value: '=', calc: '=' },
+      template: angular.element(document.getElementById('ValueTemplate')).html()
+    }
+  })
+  .directive('operator', function() {
+    return {
+      restrict: 'A',
+      scope: {value: '='},
+      template: angular.element(document.getElementById('OperatorTemplate')).html()
+    }
+  })
+  .animation('.scroll-history-animation', function() {
+    return {
+      enter : function(element, done) {
+        element[0].scrollIntoView();
+        done();
+      }
+    }
+  });
+
+
+
+    </script>
+
+
+
+    <style title="animation">
+      @media (orientation: portrait) {
+        #main, #main.fraction-animation-remove.fraction-animation-remove-active {transform:translateY(131px);-webkit-transform:translateY(131px);}
+      }
+    </style>
+
+
+
+    <style type="text/css">
+
+/*
+kuler.adobe.com
+orange F46F35
+green 99F435
+blue 4D90FE
+red CC5C57
+yellow F4EB35
+*/
+
+      @media (orientation: landscape) {
+        #history{text-align:right;bottom:0;}
+        #history.advanced{bottom:128px;}
+        #calculator{width:50%;top:0;}
+        #main{position:fixed;bottom:0;left:0;right:50%;}
+        #standard{width:100%;}
+        #advanced{background:#E6E6E6;bottom:0;width: 50%;position:fixed;box-shadow:0 0 2px 2px #B7B7B7;/*right:50%;*/transform:translateX(0);-webkit-transform:translateX(0);}
+        #advanced.fraction-animation,#advanced.fraction-animation-add.fraction-animation-add-active {/*right:0;*/transform:translateX(100%);-webkit-transform:translateX(100%);}
+        #advanced.fraction-animation-remove.fraction-animation-remove-active {/*right:50%;*/transform:translateX(0);-webkit-transform:translateX(0);}
+      }
+
+      @media (orientation: portrait) {
+        #history{bottom:268px;}
+        #history.advanced{bottom:399px;}
+        #calculator{width:100%;}
+        #standard,#advanced{width:100%;}
+        #main{position:relative;padding-bottom:4px;}
+        #main.fraction-animation,#main.fraction-animation-add.fraction-animation-add-active {/*bottom:0px;*/transform:translateY(0);-webkit-transform:translateY(0);}
+        #advanced{padding-top:3px;}
+      }
+
+      body{background:#fff;margin:0;padding:0;font-size:2em;font-family:'Roboto',sans-serif;}
+
+      #history{font-size:.8em;transition:bottom ease 1s;position:fixed;overflow-y:scroll;top:0;right:0;left:0;}
+      #history .item{padding:15px 10px;border-bottom:solid 1px #e6e6e6;}
+      #history .item:last-child{border-bottom:none;}
+      #history .solution, #history .operand{border-radius:5px;padding:0 5px;}
+      #history .operand       {box-shadow:      1px 1px 1px #c7c7c7;color:#2E2E2E;background:#F6F6F6;}
+      #history .operand:active{box-shadow:inset 1px 1px 1px #c7c7c7;}
+      #history .solution       {box-shadow:      1px 1px 1px #a3a3a3;color:#2E2E2E;background:#D2D2D2;}
+      #history .solution:active{box-shadow:inset 1px 1px 1px #a3a3a3;}
+      #history .operator,#history .equals{margin-left:10px;}
+      #history .solution .unit{color:#393939;}
+      #history .item.scroll-history-animation{background:#fff;transition:background 1s ease;}
+      #history .item.scroll-history-animation.ng-enter{background:#F4EB35;}
+
+      #calculator{position:fixed;bottom:0;}
+      #main{background:#e6e6e6;z-index:2;padding-top:5px;box-shadow:0 0 2px 2px #B7B7B7;}
+      #advanced{background:#e6e6e6;z-index:1;}
+
+      #display{background:#f6f6f6;box-shadow:2px 2px 2px #e2e2e2;margin:5px;padding:0 5px;text-align:right;border-right:none;}
+      #display.active{background:#fff;box-shadow:2px 2px 2px #c6c6c6;}
+
+      .controls{}
+      .controls tr{height:14%;}
+      .controls td{width:20%;padding:3px;text-align:center;}
+      .controls td div{border-radius:5px;}
+      /* 2f2f2f between background and shadow */
+      .controls .digit,       .controls .fraction       {box-shadow:      1px 1px 1px #c7c7c7;color:#2E2E2E;background:#F6F6F6;}
+      .controls .digit:active,.controls .fraction:active{box-shadow:inset 1px 1px 1px #c7c7c7;}
+      .controls .digit.inactive,.controls.inactive .fraction{background:#f0f0f0;color:#d6d6d6;}
+      .controls .fraction{}
+      .controls .unit{font-size:.8em;}
+      .controls #equal       {box-shadow:      1px 1px 1px #1E61CF;color:#fefefe;background:#4D90FE;}
+      .controls #equal:active{box-shadow:inset 1px 1px 1px #1E61CF;}
+      .controls #delete       {box-shadow:      1px 1px 1px #9D2D28;color:#fff;background:#CC5C57;}
+      .controls #delete:active{box-shadow:inset 1px 1px 1px #9D2D28;}
+      .controls .operator       {box-shadow:      1px 1px 1px #a3a3a3;color:#2E2E2E;background:#D2D2D2;}
+      .controls .operator:active{box-shadow:inset 1px 1px 1px #a3a3a3;}
+      .controls .unpressed,.controls .pressed,#controls .unpressed:active{color:#fefefe;background:#F46F35;}
+      .controls .unpressed                          {box-shadow:      3px 3px 3px #C55A06;}
+      .controls .pressed,.controls .unpressed:active{box-shadow:inset 3px 3px 3px #C55A06;}
+
+      .fraction{font-size:.6em;}
+      .fraction sup{}
+      .fraction sub{vertical-align:bottom;}
+      .unit{color:#c6c6c6;}
+      .inch{}
+      .mm{font-size:.5em;}
+      .precision{font-size:.3em;color:#f0f0f0;background:#878787;padding:3px;}
+      .heavy{}
+      .light{}
+      .operator{color:#666;}
+
+      .fraction-animation-add, .fraction-animation-remove{-webkit-transition:all ease 0.5s;-moz-transition:all ease 0.5s;-o-transition:all ease 0.5s;transition:all ease 0.5s;}
+
+    </style>
+  </head>
+  <body data-ng-app="tgdCalculator" data-ng-controller="CalculatorController as calc">
+
+
+
+    <div id="history" data-ng-class="{advanced:calc.showFractions}">
+      <div class="item scroll-history-animation" data-ng-repeat="equation in calc.history">
+
+        <span class="operand" data-number data-value="equation.leftOperand" data-calc="calc" data-ng-click="calc.equation.setOperand(equation.leftOperand)"></span>
+        <span data-operator data-value="equation.operator"></span>
+        <span class="operand" data-number data-value="equation.rightOperand" data-calc="calc" data-ng-click="calc.equation.setOperand(equation.rightOperand)"></span>
+        <span class="equals">=</span>
+        <span class="solution" data-number data-value="equation.solution" data-calc="calc" data-ng-click="calc.equation.setOperand(equation.solution)"></span>
+
+        <!--
+        &#x1f52b; http://en.wikipedia.org/wiki/List_of_Unicode_characters
+        &#x25B6;
+        &#x25BC;
+        &#x1f4cc;
+        &#x1f6bd;
+        -->
+      </div>
+    </div>
+
+
+
+    <div id="calculator">
+
+      <div id="main" data-ng-class="{'fraction-animation': calc.showFractions}">
+
+        <div id="display" data-ng-class="{active: calc.equation.leftOperand.raw !== ''}">&nbsp;
+          <span data-number data-value="calc.equation.leftOperand" data-calc="calc"></span>
+          <span data-operator data-value="calc.equation.operator"></span>
+          <span data-number data-value="calc.equation.rightOperand" data-calc="calc"></span>
+        </div>
+
+
+        <table id="standard" class="controls">
+          <tr>
+            <td><div class="digit" data-ng-click="calc.equation.pushDigit(7);">7</div></td>
+            <td><div class="digit" data-ng-click="calc.equation.pushDigit(8);">8</div></td>
+            <td><div class="digit" data-ng-click="calc.equation.pushDigit(9);">9</div></td>
+            <td><div class="operator" data-ng-click="calc.equation.setOperator(calc.Operator.DIVIDE);">&divide;</div></td>
+            <td><div id="delete" data-ng-click="calc.equation.clearEntry();">CE</div></td>
+          </tr>
+          <tr>
+            <td><div class="digit" data-ng-click="calc.equation.pushDigit(4);">4</div></td>
+            <td><div class="digit" data-ng-click="calc.equation.pushDigit(5);">5</div></td>
+            <td><div class="digit" data-ng-click="calc.equation.pushDigit(6);">6</div></td>
+            <td><div class="operator" data-ng-click="calc.equation.setOperator(calc.Operator.MULTIPLY);">&times;</div></td>
+            <td><div class="unit" data-ng-class="{ pressed: calc.equation.unit === calc.Unit.INCH, unpressed: calc.equation.unit === calc.Unit.MM }" data-ng-click="calc.equation.setUnit(calc.Unit.INCH);">inch</div></td>
+          </tr>
+          <tr>
+            <td><div class="digit" data-ng-click="calc.equation.pushDigit(1);">1</div></td>
+            <td><div class="digit" data-ng-click="calc.equation.pushDigit(2);">2</div></td>
+            <td><div class="digit" data-ng-click="calc.equation.pushDigit(3);">3</div></td>
+            <td><div class="operator" data-ng-click="calc.equation.setOperator(calc.Operator.SUBTRACT);">-</div></td>
+            <td><div class="unit" data-ng-class="{ pressed: calc.equation.unit === calc.Unit.MM, unpressed: calc.equation.unit === calc.Unit.INCH }" data-ng-click="calc.equation.setUnit(calc.Unit.MM);">mm</div></td>
+          </tr>
+          <tr>
+            <td><div class="fraction" data-ng-class="{pressed: calc.showFractions, unpressed: !calc.showFractions}" data-ng-click="calc.showFractions = !calc.showFractions"><sup>x</sup>&frasl;<sub>16</sub></div></td>
+            <td><div class="digit" data-ng-click="calc.equation.pushDigit(0);">0</div></td>
+            <td><div class="digit" data-ng-class="{inactive: calc.equation.currentOperand.isFractional || calc.equation.currentOperand.isDecimal}" data-ng-click="calc.equation.setDecimal();">.</div></td>
+            <td><div class="operator" data-ng-click="calc.equation.setOperator(calc.Operator.ADD);">+</div></td>
+            <td><div id="equal" data-ng-click="calc.getAnswer();">=</div></td>
+          </tr>
+        </table>
+
+      </div>
+
+      <table id="advanced" class="controls" data-ng-class="{'fraction-animation': calc.showFractions, inactive: calc.equation.unit === calc.Unit.MM || calc.equation.currentOperand.isDecimal}">
+        <tr>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(1);"><sup>1</sup>&frasl;<sub>16</sub></div></td>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(2);"><sup>1</sup>&frasl;<sub>8</sub></div></td>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(3);"><sup>3</sup>&frasl;<sub>16</sub></div></td>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(4);"><sup>1</sup>&frasl;<sub>4</sub></div></td>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(5);"><sup>5</sup>&frasl;<sub>16</sub></div></td>
+        </tr>
+        <tr>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(6);"><sup>3</sup>&frasl;<sub>8</sub></div></td>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(7);"><sup>7</sup>&frasl;<sub>16</sub></div></td>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(8);"><sup>1</sup>&frasl;<sub>2</sub></div></td>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(9);"><sup>9</sup>&frasl;<sub>16</sub></div></td>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(10);"><sup>5</sup>&frasl;<sub>8</sub></div></td>
+        </tr>
+        <tr>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(11);"><sup>11</sup>&frasl;<sub>16</sub></div></td>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(12);"><sup>3</sup>&frasl;<sub>4</sub></div></td>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(13);"><sup>13</sup>&frasl;<sub>16</sub></div></td>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(14);"><sup>7</sup>&frasl;<sub>8</sub></div></td>
+          <td><div class="fraction" data-ng-click="calc.equation.setFraction(15);"><sup>15</sup>&frasl;<sub>16</sub></div></td>
+        </tr>
+      </table>
+
+
+
+    </div>
+
+
+
+    <script id="ValueTemplate" type="text/template">
+        <span data-ng-hide="value.isFractional || value.raw === ''">
+          {{value.raw}}
+          <span class="unit inch" data-ng-show="value.unit === calc.Unit.INCH">&Prime;</span>
+          <span class="unit mm" data-ng-show="value.unit === calc.Unit.MM">mm</span>
+        </span>
+
+        <span data-ng-show="value.isFractional">
+          <span data-ng-show="value.fracWhole > 0 || value.fracSixteenth === 0">{{value.fracWhole}}</span>
+          <span class="fraction" data-ng-hide="value.fracSixteenth === 0">
+            <sup>{{value.fracNumerator}}</sup>&frasl;<sub>{{value.fracDenominator}}</sub>
+          </span>
+          <span class="unit inch">&Prime;</span>
+          <span class="precision heavy" data-ng-show="value.fracPrecision === calc.Precision.HEAVY">h</span>
+          <span class="precision light" data-ng-show="value.fracPrecision === calc.Precision.LIGHT">l</span>
+        </span>
+    </script>
+
+
+
+    <script id="OperatorTemplate" type="text/template">
+      <span class="operator" data-ng-switch on="value">
+        <span data-ng-switch-when="+">+</span>
+        <span data-ng-switch-when="-">-</span>
+        <span data-ng-switch-when="*">&times;</span>
+        <span data-ng-switch-when="/">&divide;</span>
+      </span>
+    </script>
+
+
+
+  </body>
+</html>
