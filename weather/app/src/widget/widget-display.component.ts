@@ -142,29 +142,29 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
   }
 
   private renderWidgetBackground() {
-    this.ctx.fillStyle = 'transparent';//111  //TODO get from theme
+    this.ctx.fillStyle = 'rgb(50,50,50)';//111  //TODO get from theme
     this.ctx.fillRect(this._pos.widget.left, this._pos.widget.top, this._pos.widget.width, this._pos.widget.height);
   }
 
   private renderGraphBackground() {
-    this.ctx.fillStyle = 'transparent';//222  //TODO get from theme
+    this.ctx.fillStyle = 'yellow';//222  //TODO get from theme
     this.ctx.fillRect(this._pos.graph.left, this._pos.graph.top, this._pos.graph.width, this._pos.graph.height);
   }
 
   private renderTimeBackground() {
-    this.ctx.fillStyle = 'transparent';//'rgba(0,0,0,.5)';//222  //TODO get from config
+    this.ctx.fillStyle = 'orange';//'rgba(0,0,0,.5)';//222  //TODO get from config
     this.ctx.fillRect(this._pos.timeBar.left, this._pos.timeBar.top, this._pos.timeBar.width, this._pos.timeBar.height);
 
   }
 
   private renderLeftScaleBackground() {
-    this.ctx.fillStyle = 'transparent';//'rgba(0,0,0,.25)';//222  //TODO get from theme
+    this.ctx.fillStyle = 'orange';//'rgba(0,0,0,.25)';//222  //TODO get from theme
     this.ctx.fillRect(this._pos.leftScale.left, this._pos.leftScale.top, this._pos.leftScale.width, this._pos.leftScale.height);
 
   }
 
   private renderRightScaleBackground() {
-    this.ctx.fillStyle = 'transparent';//rgba(rgba(0,0,0,.25)';//222  //TODO get from theme
+    this.ctx.fillStyle = 'orange';//rgba(rgba(0,0,0,.25)';//222  //TODO get from theme
     this.ctx.fillRect(this._pos.rightScale.left, this._pos.rightScale.top, this._pos.rightScale.width, this._pos.rightScale.height);
 
   }

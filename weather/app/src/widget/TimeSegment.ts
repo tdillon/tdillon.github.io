@@ -81,23 +81,23 @@ export class TimeSegment {
 
 
     if (_data.sunsetTime < this.from || _data.sunriseTime > this.to) {  //sunset before segment, or sunrise after segment
-      this.timeBarNighttimes.push(new Box(timeBarBox.left, timeBarBox.top, timeBarBox.width, timeBarBox.height));
-      this.graphNighttimes.push(new Box(graphBox.left, graphBox.top, graphBox.width, graphBox.height));
+      this.timeBarNighttimes.push(new Box({ left: timeBarBox.left, top: timeBarBox.top, width: timeBarBox.width, height: timeBarBox.height }));
+      this.graphNighttimes.push(new Box({ left: graphBox.left, top: graphBox.top, width: graphBox.width, height: graphBox.height }));
     } else if (_data.sunriseTime < this.from) {  //sunrise before segment, sunset during or after segment
-      this.timeBarDaytimes.push(new Box(timeBarBox.left, timeBarBox.top, (Math.min(_data.sunsetTime, this.to) - this.from) * widthPerSecond, timeBarBox.height));
-      this.graphDaytimes.push(new Box(graphBox.left, graphBox.top, (Math.min(_data.sunsetTime, this.to) - this.from) * widthPerSecond, graphBox.height));
+      this.timeBarDaytimes.push(new Box({ left: timeBarBox.left, top: timeBarBox.top, width: (Math.min(_data.sunsetTime, this.to) - this.from) * widthPerSecond, height: timeBarBox.height }));
+      this.graphDaytimes.push(new Box({ left: graphBox.left, top: graphBox.top, width: (Math.min(_data.sunsetTime, this.to) - this.from) * widthPerSecond, height: graphBox.height }));
       if (_data.sunsetTime < this.to) {  //sunset during segment
-        this.timeBarNighttimes.push(new Box(timeBarBox.left + (_data.sunsetTime - this.from) * widthPerSecond, timeBarBox.top, (this.to - _data.sunsetTime) * widthPerSecond, timeBarBox.height));
-        this.graphNighttimes.push(new Box(graphBox.left + (_data.sunsetTime - this.from) * widthPerSecond, graphBox.top, (this.to - _data.sunsetTime) * widthPerSecond, graphBox.height));
+        this.timeBarNighttimes.push(new Box({ left: timeBarBox.left + (_data.sunsetTime - this.from) * widthPerSecond, top: timeBarBox.top, width: (this.to - _data.sunsetTime) * widthPerSecond, height: timeBarBox.height }));
+        this.graphNighttimes.push(new Box({ left: graphBox.left + (_data.sunsetTime - this.from) * widthPerSecond, top: graphBox.top, width: (this.to - _data.sunsetTime) * widthPerSecond, height: graphBox.height }));
       }
     } else {  //sunrise during segment, sunset during or after segment
-      this.timeBarNighttimes.push(new Box(timeBarBox.left, timeBarBox.top, (_data.sunriseTime - this.from) * widthPerSecond, timeBarBox.height));
-      this.graphNighttimes.push(new Box(graphBox.left, graphBox.top, (_data.sunriseTime - this.from) * widthPerSecond, graphBox.height));
-      this.timeBarDaytimes.push(new Box(timeBarBox.left + (_data.sunriseTime - this.from) * widthPerSecond, timeBarBox.top, (Math.min(_data.sunsetTime, this.to) - _data.sunriseTime) * widthPerSecond, timeBarBox.height));
-      this.graphDaytimes.push(new Box(graphBox.left + (_data.sunriseTime - this.from) * widthPerSecond, graphBox.top, (Math.min(_data.sunsetTime, this.to) - _data.sunriseTime) * widthPerSecond, graphBox.height));
+      this.timeBarNighttimes.push(new Box({ left: timeBarBox.left, top: timeBarBox.top, width: (_data.sunriseTime - this.from) * widthPerSecond, height: timeBarBox.height }));
+      this.graphNighttimes.push(new Box({ left: graphBox.left, top: graphBox.top, width: (_data.sunriseTime - this.from) * widthPerSecond, height: graphBox.height }));
+      this.timeBarDaytimes.push(new Box({ left: timeBarBox.left + (_data.sunriseTime - this.from) * widthPerSecond, top: timeBarBox.top, width: (Math.min(_data.sunsetTime, this.to) - _data.sunriseTime) * widthPerSecond, height: timeBarBox.height }));
+      this.graphDaytimes.push(new Box({ left: graphBox.left + (_data.sunriseTime - this.from) * widthPerSecond, top: graphBox.top, width: (Math.min(_data.sunsetTime, this.to) - _data.sunriseTime) * widthPerSecond, height: graphBox.height }));
       if (_data.sunsetTime < this.to) {  //sunset during segment
-        this.timeBarNighttimes.push(new Box(timeBarBox.left + (_data.sunsetTime - this.from) * widthPerSecond, timeBarBox.top, (this.to - _data.sunsetTime) * widthPerSecond, timeBarBox.height));
-        this.graphNighttimes.push(new Box(graphBox.left + (_data.sunsetTime - this.from) * widthPerSecond, graphBox.top, (this.to - _data.sunsetTime) * widthPerSecond, graphBox.height));
+        this.timeBarNighttimes.push(new Box({ left: timeBarBox.left + (_data.sunsetTime - this.from) * widthPerSecond, top: timeBarBox.top, width: (this.to - _data.sunsetTime) * widthPerSecond, height: timeBarBox.height }));
+        this.graphNighttimes.push(new Box({ left: graphBox.left + (_data.sunsetTime - this.from) * widthPerSecond, top: graphBox.top, width: (this.to - _data.sunsetTime) * widthPerSecond, height: graphBox.height }));
       }
     }
   }

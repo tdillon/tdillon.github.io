@@ -16,34 +16,53 @@ export class Positionings {
   public timeSegments: Array<TimeSegment>;
 
   constructor(private _theme: Theme, private _data: ForecastIO, clientWidth: number, widgetRatio: number, devicePixelRatio: number, maxTextWidth: number) {
-    this.client = new Box();
-    this.client.width = clientWidth;
-    this.client.height = clientWidth / widgetRatio;
+    this.client = new Box({ left: 0, top: 0, width: clientWidth, height: clientWidth / widgetRatio });
 
-    this.widget = new Box();
-    this.widget.width = clientWidth * devicePixelRatio;
-    this.widget.height = clientWidth / widgetRatio * devicePixelRatio;
+    this.widget = new Box({ left: 0, top: 0, width: clientWidth * devicePixelRatio, height: clientWidth / widgetRatio * devicePixelRatio });
 
-    let numLeftScales = 1;//TODO pull from theme
-    let timeBarFontSize = 12;//TODO pull from theme
-    let numRightScales = 2;//TODO pull from theme
 
-    this.leftScale = new Box();
-    this.leftScale.width = maxTextWidth * numLeftScales;
-    this.rightScale = new Box(this.widget.width - (maxTextWidth * numRightScales));
-    this.rightScale.right = this.widget.width;
 
-    this.timeBar = new Box(this.leftScale.right, this.widget.height - timeBarFontSize);
-    this.timeBar.right = this.rightScale.left;
-    this.timeBar.bottom = this.widget.height;
+    //TODO handle for padding
+    //TODO get top/bottom/left/right paddings!
+    let padding = this.getPadding();
 
-    this.leftScale.height = this.timeBar.top;
 
-    this.rightScale.bottom = this.timeBar.top;
+    let numLeftScales = 1;    //TODO determine from theme
+    let timeBarFontSize = 12; //TODO pull from theme
+    let numRightScales = 2;   //TODO determine from theme
 
-    this.graph = new Box(this.leftScale.width);
-    this.graph.right = this.rightScale.left;
-    this.graph.bottom = this.timeBar.top;
+    this.leftScale = new Box(
+      {
+        left: 0,
+        top: padding.top,
+        width: maxTextWidth * numLeftScales,
+        bottom: this.widget.height - padding.bottom
+      }
+    );
+
+    this.rightScale = new Box(
+      {
+        width: maxTextWidth * numRightScales,
+        right: this.widget.width,
+        top: this.leftScale.top,
+        bottom: this.leftScale.bottom
+      });
+
+    this.timeBar = new Box(
+      {
+        left: Math.max(this.leftScale.width, padding.left),
+        right: this.widget.width - Math.max(padding.right, this.rightScale.width),
+        top: this.widget.height - timeBarFontSize,
+        bottom: this.widget.height
+      }
+    );
+
+    this.graph = new Box({
+      left: this.timeBar.left,
+      right: this.timeBar.right,
+      top: padding.top,
+      bottom: this.widget.height - Math.max(this.timeBar.height, padding.bottom)
+    });
 
 
 
@@ -66,12 +85,46 @@ export class Positionings {
         new TimeSegment(
           _theme,
           dp,
-          new Box(this.graph.left + i * segWidth, 0, segWidth, this.graph.height),
-          new Box(this.timeBar.left + i * segWidth, this.timeBar.top, segWidth, this.timeBar.height),
+          new Box({
+            left: this.graph.left + i * segWidth,
+            top: this.graph.top,
+            width: segWidth,
+            height: this.graph.height
+          }),
+          new Box({
+            left: this.timeBar.left + i * segWidth,
+            top: this.timeBar.top,
+            width: segWidth,
+            height: this.timeBar.height
+          }),
           ranges
         )
       );
       ++i;
     }
   }
+
+  private getPadding(): { top: number, bottom: number, left: number, right: number } {
+
+    //todo hack try and get the 'left most' dot based on size, can you?
+    let db = (this._theme.widgetType === WidgetType.Daily ? this._data.daily : this._data.hourly);
+
+    for (let o of this._theme.options) {
+      for (let dp of db.data) {
+
+      }
+    }
+
+    let maxDot = 0, tempDot;
+
+    //hack: for now use the biggest dot
+    for (let o of this._theme.options) {
+      if ((tempDot = (o.dot.radius.global ? this._theme.globals.dot.radius : o.dot.radius.value)) > maxDot) {
+        maxDot = tempDot;
+      }
+    }
+
+    return { top: maxDot, bottom: maxDot, left: maxDot, right: maxDot };
+  }
+
 }

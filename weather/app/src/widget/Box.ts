@@ -10,45 +10,49 @@ export class Box {
   private _center: Point;
 
   /*
+   * Assumption: 2 items of each of the following sets must be given in the param
+   * (left | right | width) and (top | bottom | height)
    *
    * @param {Point} point The top left corner of the position.
    */
-  constructor(left = 0, top = 0, width = 0, height = 0) {
+  constructor({top, bottom, left, right, width, height}: { top?: number, bottom?: number, left?: number, right?: number, width?: number, height?: number } = { top: 0, bottom: 0, left: 0, right: 0 }) {
     this._center = new Point();
-    this._left = left;
-    this._top = top;
-    this.width = width;
-    this.height = height;
-  }
 
-  set width(w: number) {
-    this._width = w;
-    this._right = this._left + this._width;
-    this.updateCenter();
-  }
+    if (left === undefined) {
+      this._right = right || 0;
+      this._width = width || 0;
+      this._left = this._right - this._width;
+    } else if (right === undefined) {
+      this._left = left;
+      this._width = width || 0;
+      this._right = this._left + this._width;
+    } else {
+      this._left = left;
+      this._right = right;
+      this._width = this._right - this._left;
+    }
 
-  set height(h: number) {
-    this._height = h;
-    this._bottom = this._top + this._height;
-    this.updateCenter();
-  }
+    if (top === undefined) {
+      this._bottom = bottom || 0;
+      this._height = height || 0;
+      this._top = this._bottom - this._height;
+    } else if (bottom === undefined) {
+      this._top = top;
+      this._height = height || 0;
+      this._bottom = this._top + this._height;
+    } else {
+      this._top = top;
+      this._bottom = bottom;
+      this._height = this._bottom - this._top;
+    }
 
-  set right(r: number) {
-    this._right = r;
-    this._width = this._right - this._left;
-    this.updateCenter();
-  }
-
-  set bottom(b: number) {
-    this._bottom = b;
-    this._height = this._bottom - this._top;
-    this.updateCenter();
-  }
-
-  private updateCenter() {
     this._center.x = this.left + this.width / 2;
     this._center.y = this.top + this.height / 2;
+
+    //todo throw error if left > right, or width < 0
+    //todo throw error if top > bottom, or height < 0
   }
+
 
   get top(): number { return this._top; }
   get left(): number { return this._left; }
