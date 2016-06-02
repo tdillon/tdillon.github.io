@@ -95,7 +95,7 @@
   (cancel)="currentPicker = null"
   (save)="currentPicker = null"></weather-property-picker>
 <weather-property-settings
-  *ngFor="#p of theme.options"
+  *ngFor="let p of theme.options"
   [title]="p.title"
   [default]="theme.globals"
   [property]="p"

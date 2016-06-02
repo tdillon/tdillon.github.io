@@ -8,4 +8,4 @@
   <input type=button title=Done value="&#10004;" (click)="onSave()">
   <input type=button title=Cancel value="&#10008;" (click)="onCancel()">
 </div>
-<boolean-picker *ngFor="#opt of _properties" [title]="opt.displayTitle" [subtitle]="opt.summary" [value]="false" (update)="onUpdate(opt, $event)"></boolean-picker>
+<boolean-picker *ngFor="let opt of _properties" [title]="opt.displayTitle" [subtitle]="opt.summary" [value]="false" (update)="onUpdate(opt, $event)"></boolean-picker>

@@ -8,7 +8,7 @@
     <input type=button title="Config" value="&#9881;" (click)="onShowConfig()">
   </h2>
 </div>
-<header *ngFor="#t of themes" (click)="onSelect(t)" [class.current]="current === t">
+<header *ngFor="let t of themes" (click)="onSelect(t)" [class.current]="current === t">
   <h1>
     <span [ngSwitch]="t.widgetType">
       <template [ngSwitchWhen]="WidgetType.Hourly">🕒</template>
