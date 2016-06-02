@@ -22,11 +22,12 @@ export class NumberPickerComponent {
   oldValue: number;
 
   onFocus() {
-    this.oldValue = this.value;
+    this.oldValue = this.value * 1;
     this.focus9.emit(null);
   }
 
   onUpdate() {
+    this.value *= 1;
     this.update9.emit(this.value);
   }
 
@@ -35,6 +36,7 @@ export class NumberPickerComponent {
   }
 
   onSave() {
+    this.value *= 1;
     this.save9.emit(this.value);
   }
 }
