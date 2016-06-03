@@ -36,7 +36,7 @@ export class Positionings {
         left: 0,
         top: padding.top,
         width: maxTextWidth * numLeftScales,
-        bottom: this.widget.height - padding.bottom
+        bottom: this.widget.height - Math.max(padding.bottom, timeBarFontSize)
       }
     );
 
