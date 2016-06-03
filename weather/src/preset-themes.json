@@ -4,6 +4,7 @@
     "widgetType": 1,
     "cloudCoverLocation": 0,
     "fontSize": 10,
+    "scales": [],
     "daylight": {
       "r": 0,
       "g": 255,
@@ -79,7 +80,8 @@
     "themeType": 0,
     "widgetType": 0,
     "cloudCoverLocation": 1,
-    "fontSize":20,
+    "fontSize": 20,
+    "scales": [],
     "daylight": {
       "r": 0,
       "g": 127,
@@ -153,6 +155,223 @@
         }
       }
     }]
+  }, {
+    "name": "Jumbo",
+    "themeType": 0,
+    "widgetType": 0,
+    "cloudCoverLocation": 0,
+    "fontSize": 12,
+    "scales": [{
+      "type": 0,
+      "position": 0
+    }, {
+      "type": 1,
+      "position": 1
+    }, {
+      "type": 3,
+      "position": 1
+    }, {
+      "type": 4,
+      "position": 1
+    }, {
+      "type": 5,
+      "position": 1
+    }],
+    "globals": {
+      "dot": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255,
+          "a": 1
+        },
+        "radius": 20
+      },
+      "segment": {
+        "show": true,
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255,
+          "a": 0.3
+        },
+        "angle": 40,
+        "padding": 4
+      }
+    },
+    "options": [{
+      "title": "pressure",
+      "dot": {
+        "color": {
+          "global": false,
+          "value": {
+            "r": 255,
+            "g": 119,
+            "b": 131,
+            "a": 1
+          }
+        },
+        "radius": {
+          "global": false,
+          "value": 15
+        }
+      },
+      "segment": {
+        "show": {
+          "global": true,
+          "value": true
+        },
+        "color": {
+          "global": false,
+          "value": {
+            "r": 255,
+            "g": 112,
+            "b": 144,
+            "a": 0.3
+          }
+        },
+        "angle": {
+          "global": true,
+          "value": 40
+        },
+        "padding": {
+          "global": true,
+          "value": 5
+        }
+      }
+    }, {
+      "title": "temperatureMax",
+      "dot": {
+        "color": {
+          "global": true,
+          "value": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1
+          }
+        },
+        "radius": {
+          "global": true,
+          "value": 5
+        }
+      },
+      "segment": {
+        "show": {
+          "global": true,
+          "value": true
+        },
+        "color": {
+          "global": true,
+          "value": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1
+          }
+        },
+        "angle": {
+          "global": true,
+          "value": 40
+        },
+        "padding": {
+          "global": true,
+          "value": 5
+        }
+      }
+    }, {
+      "title": "temperatureMin",
+      "dot": {
+        "color": {
+          "global": true,
+          "value": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1
+          }
+        },
+        "radius": {
+          "global": true,
+          "value": 5
+        }
+      },
+      "segment": {
+        "show": {
+          "global": true,
+          "value": true
+        },
+        "color": {
+          "global": true,
+          "value": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1
+          }
+        },
+        "angle": {
+          "global": true,
+          "value": 40
+        },
+        "padding": {
+          "global": true,
+          "value": 5
+        }
+      }
+    }, {
+      "title": "windSpeed",
+      "dot": {
+        "color": {
+          "global": false,
+          "value": {
+            "r": 255,
+            "g": 114,
+            "b": 7,
+            "a": 1
+          }
+        },
+        "radius": {
+          "global": true,
+          "value": 5
+        }
+      },
+      "segment": {
+        "show": {
+          "global": false,
+          "value": false
+        },
+        "color": {
+          "global": true,
+          "value": {
+            "r": 255,
+            "g": 255,
+            "b": 255,
+            "a": 1
+          }
+        },
+        "angle": {
+          "global": true,
+          "value": 40
+        },
+        "padding": {
+          "global": true,
+          "value": 5
+        }
+      }
+    }],
+    "daylight": {
+      "r": 0,
+      "g": 128,
+      "b": 255,
+      "a": 1
+    },
+    "nightlight": {
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 1
+    }
   }
 
 ]

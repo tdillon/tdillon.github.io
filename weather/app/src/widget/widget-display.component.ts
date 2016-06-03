@@ -1,5 +1,5 @@
 import {TimeSegment} from "./TimeSegment";
-import {Positionings, ScaleType} from "./Positionings";
+import {Positionings} from "./Positionings";
 import {WidgetType} from "../WidgetType";
 import {Theme, CloudCoverLocation} from "../Theme.interface";
 import {DataBlock, DataPoint, ForecastIO} from '../forecast.io.interface';
@@ -131,7 +131,7 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
         document.documentElement.clientWidth,
         this.widgetRatio,
         window.devicePixelRatio,
-        this.ctx.measureText('125').width
+        text => this.ctx.measureText(text).width
       );
 
       this.render();
@@ -202,63 +202,75 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
     this._pos.timeSegments.forEach(s => this.ctx.fillText(s.timeBarDisplay, s.timeBarBox.center.x, s.timeBarBox.center.y));
   }
 
-  private renderLeftAxisText() {//ranges: Ranges) {
-    //TODO for now just draw degrees if needed, in future maybe  other stuff is rendered here
-    //TODO use a variable font size???
-
+  private renderScales() {
     this.ctx.textAlign = 'center';
     this.ctx.fillStyle = '#fff';
     this.ctx.textBaseline = 'middle';
 
     for (let s of this._pos.scales) {
-      if (s.type === ScaleType.Temperature) {
-        for (let i of s.items) {
-          this.ctx.fillText(i.value, i.center.x, i.center.y);
-        }
+      for (let i of s.items) {
+        this.ctx.fillText(i.value, i.center.x, i.center.y);
       }
     }
-
-    //write temps in 5deg increments
-    // const pxPerDeg = this._dims.graphHeight / (ranges.temperature.max - ranges.temperature.min);
-    // for (let i = Math.ceil(ranges.temperature.min / 5) * 5; i <= Math.floor(ranges.temperature.max / 5) * 5; i += 5) {
-    //   this.ctx.fillText(i.toString(), this._dims.maxTextWidth / 2, this._dims.padding.top + (ranges.temperature.max - i) * pxPerDeg, this._dims.maxTextWidth);
-    // }
   }
 
-  private renderRightAxisText() {//ranges: Ranges) {
-    //TODO for now just draw degrees if needed, in future maybe  other stuff is rendered here
-    //TODO use a variable font size???
-
-    //TODO how do i conditionally show these?
-
-    this.ctx.textAlign = 'center';
-    this.ctx.fillStyle = '#fff';
-    this.ctx.textBaseline = 'middle';
-
-
-    for (let s of this._pos.scales) {
-      if (s.type !== ScaleType.Temperature) {
-        for (let i of s.items) {
-          this.ctx.fillText(i.value, i.center.x, i.center.y);
-        }
-      }
-    }
-
-    //TODO draw accumilation scale!!!
-    // const pxPerInch = this._dims.graphHeight / ranges.precipAccumulation.max;
-    // for (let i = 1; i <= Math.floor(ranges.precipAccumulation.max); ++i) {
-    //   this.ctx.fillText(
-    //     i.toString(),
-    //     this._dims.widgetWidth - this._dims.maxTextWidth / 2,
-    //     this._dims.padding.top + (ranges.precipAccumulation.max - i) * pxPerInch,
-    //     this._dims.maxTextWidth
-    //   );
-    // }
-
-
-    //TODO other scales, how to generalize them? how to show them?
-
-  }
+  // private renderLeftAxisText() {//ranges: Ranges) {
+  //   //TODO for now just draw degrees if needed, in future maybe  other stuff is rendered here
+  //   //TODO use a variable font size???
+  //
+  //   this.ctx.textAlign = 'center';
+  //   this.ctx.fillStyle = '#fff';
+  //   this.ctx.textBaseline = 'middle';
+  //
+  //   for (let s of this._pos.scales) {
+  //     if (s.type === ScaleType.Temperature) {
+  //       for (let i of s.items) {
+  //         this.ctx.fillText(i.value, i.center.x, i.center.y);
+  //       }
+  //     }
+  //   }
+  //
+  //   //write temps in 5deg increments
+  //   // const pxPerDeg = this._dims.graphHeight / (ranges.temperature.max - ranges.temperature.min);
+  //   // for (let i = Math.ceil(ranges.temperature.min / 5) * 5; i <= Math.floor(ranges.temperature.max / 5) * 5; i += 5) {
+  //   //   this.ctx.fillText(i.toString(), this._dims.maxTextWidth / 2, this._dims.padding.top + (ranges.temperature.max - i) * pxPerDeg, this._dims.maxTextWidth);
+  //   // }
+  // }
+  //
+  // private renderRightAxisText() {//ranges: Ranges) {
+  //   //TODO for now just draw degrees if needed, in future maybe  other stuff is rendered here
+  //   //TODO use a variable font size???
+  //
+  //   //TODO how do i conditionally show these?
+  //
+  //   this.ctx.textAlign = 'center';
+  //   this.ctx.fillStyle = '#fff';
+  //   this.ctx.textBaseline = 'middle';
+  //
+  //
+  //   for (let s of this._pos.scales) {
+  //     if (s.type !== ScaleType.Temperature) {
+  //       for (let i of s.items) {
+  //         this.ctx.fillText(i.value, i.center.x, i.center.y);
+  //       }
+  //     }
+  //   }
+  //
+  //   //TODO draw accumilation scale!!!
+  //   // const pxPerInch = this._dims.graphHeight / ranges.precipAccumulation.max;
+  //   // for (let i = 1; i <= Math.floor(ranges.precipAccumulation.max); ++i) {
+  //   //   this.ctx.fillText(
+  //   //     i.toString(),
+  //   //     this._dims.widgetWidth - this._dims.maxTextWidth / 2,
+  //   //     this._dims.padding.top + (ranges.precipAccumulation.max - i) * pxPerInch,
+  //   //     this._dims.maxTextWidth
+  //   //   );
+  //   // }
+  //
+  //
+  //   //TODO other scales, how to generalize them? how to show them?
+  //
+  // }
 
   private renderWeatherProperty(c: ConfigOption) {
 
@@ -379,8 +391,9 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
     this.renderRightScaleBackground();   //5
     this.renderCloudCover();             //6
     this.renderTimeText();               //7
-    this.renderLeftAxisText();           //8
-    this.renderRightAxisText();          //9
+    this.renderScales();
+    // this.renderLeftAxisText();           //8
+    // this.renderRightAxisText();          //9
     for (let c of this.theme.options) {  //10
       this.renderWeatherProperty(c);
     }
