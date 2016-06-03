@@ -1,12 +1,10 @@
 import {TimeSegment} from "./TimeSegment";
-import {Positionings} from "./Positionings";
+import {Positionings, ScaleType} from "./Positionings";
 import {WidgetType} from "../WidgetType";
 import {Theme, CloudCoverLocation} from "../Theme.interface";
 import {DataBlock, DataPoint, ForecastIO} from '../forecast.io.interface';
-// import {Day} from "./Day";
 import {Component, Input, AfterViewInit, DoCheck} from "@angular/core";
 import {SegmentGeometry} from "./SegmentGeometry";
-// import {Ranges} from "./Ranges";
 import {DotDrawer} from './DotDrawer'
 import {ConfigOption} from '../Option.interface'
 
@@ -212,6 +210,14 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
     this.ctx.fillStyle = '#fff';
     this.ctx.textBaseline = 'middle';
 
+    for (let s of this._pos.scales) {
+      if (s.type === ScaleType.Temperature) {
+        for (let i of s.items) {
+          this.ctx.fillText(i.value, i.center.x, i.center.y);
+        }
+      }
+    }
+
     //write temps in 5deg increments
     // const pxPerDeg = this._dims.graphHeight / (ranges.temperature.max - ranges.temperature.min);
     // for (let i = Math.ceil(ranges.temperature.min / 5) * 5; i <= Math.floor(ranges.temperature.max / 5) * 5; i += 5) {
@@ -229,6 +235,15 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
     this.ctx.fillStyle = '#fff';
     this.ctx.textBaseline = 'middle';
 
+
+    for (let s of this._pos.scales) {
+      if (s.type !== ScaleType.Temperature) {
+        for (let i of s.items) {
+          this.ctx.fillText(i.value, i.center.x, i.center.y);
+        }
+      }
+    }
+
     //TODO draw accumilation scale!!!
     // const pxPerInch = this._dims.graphHeight / ranges.precipAccumulation.max;
     // for (let i = 1; i <= Math.floor(ranges.precipAccumulation.max); ++i) {
@@ -240,16 +255,6 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
     //   );
     // }
 
-    //TODO draw windSpeed scale!!!
-    // const pxPerMPH = this._dims.graphHeight / ranges.windSpeed.max;
-    // for (let i = 1; i <= Math.floor(ranges.windSpeed.max); ++i) {
-    //   this.ctx.fillText(
-    //     i.toString(),
-    //     this._dims.widgetWidth - 3 * this._dims.maxTextWidth / 2,
-    //     this._dims.padding.top + (ranges.windSpeed.max - i) * pxPerMPH,
-    //     this._dims.maxTextWidth
-    //   );
-    // }
 
     //TODO other scales, how to generalize them? how to show them?
 

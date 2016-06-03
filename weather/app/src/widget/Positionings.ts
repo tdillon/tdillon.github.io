@@ -1,4 +1,5 @@
-import {Ranges} from "../Ranges";
+import {Point} from "./Point";
+import {Ranges} from "./Ranges";
 import {WidgetType} from "../WidgetType";
 import {TimeSegment} from "./TimeSegment";
 import {ForecastIO} from "../forecast.io.interface";
@@ -6,7 +7,13 @@ import {Theme} from "../Theme.interface"
 import {Box} from './Box'
 
 
+export enum ScaleType {
+  Temperature, WindSpeed, Percentage, Pressure, Ozone, PrecipAccumulation
+}
+
 export class Positionings {
+  private _ranges: Ranges;
+
   public client: Box;
   public widget: Box;
   public graph: Box;
@@ -14,14 +21,17 @@ export class Positionings {
   public leftScale: Box;
   public rightScale: Box;
   public timeSegments: Array<TimeSegment>;
+  public scales: Array<{ type: ScaleType, items: Array<{ value: string, center: Point }> }> = [];
 
-  constructor(private _theme: Theme, private _data: ForecastIO, clientWidth: number, widgetRatio: number, devicePixelRatio: number, maxTextWidth: number) {
+  constructor(private _theme: Theme, private _data: ForecastIO, clientWidth: number, widgetRatio: number, devicePixelRatio: number, private maxTextWidth: number) {
+    let db = (_theme.widgetType === WidgetType.Daily ? _data.daily : _data.hourly);
+    this._ranges = new Ranges(db, this._theme);
     this.client = new Box({ left: 0, top: 0, width: clientWidth, height: clientWidth / widgetRatio });
 
     this.widget = new Box({ left: 0, top: 0, width: clientWidth * devicePixelRatio, height: clientWidth / widgetRatio * devicePixelRatio });
 
-    let numLeftScales = 1;//TODO pull from theme
-    let numRightScales = 2;//TODO pull from theme
+    let numLeftScales = (this._ranges.temperature ? 1 : 0);//TODO pull from theme
+    let numRightScales = (this._ranges.windSpeed ? 1 : 0) + (this._ranges.ozone ? 1 : 0);//TODO pull from theme
 
     let padding = this.getPadding();
 
@@ -62,8 +72,6 @@ export class Positionings {
 
     this.timeSegments = [];
 
-    let db = (_theme.widgetType === WidgetType.Daily ? _data.daily : _data.hourly);
-    let ranges = new Ranges(db, this._theme);
 
     let i = 0;
     let segWidth = this.graph.width / db.data.length;
@@ -91,11 +99,82 @@ export class Positionings {
             width: segWidth,
             height: this.timeBar.height
           }),
-          ranges
+          this._ranges
         )
       );
       ++i;
     }
+
+    this.getScales();
+  }
+
+  private getScales() {
+    //TODO whether a scale is shown or not, should be configurable (themed)
+    //TODO for now if you have a weather prop, show the scale
+
+    //TEMPERATURE SCALE
+    if (this._ranges.temperature) {
+      let x = { type: ScaleType.Temperature, items: [] };
+      this.scales.push(x);
+      const pxPerDeg = this.graph.height / (this._ranges.temperature.max - this._ranges.temperature.min);
+      let t = this._ranges.temperature;
+      //write temps in 5deg increments
+      for (let i = Math.ceil(t.min / 5) * 5; i <= Math.floor(t.max / 5) * 5; i += 5) {
+        x.items.push({
+          value: i.toString(),
+          center: new Point(this.leftScale.center.x, this.graph.top + (t.max - i) * pxPerDeg)
+        });
+      }
+    }
+
+    let numRightScalesUsed = 0;
+
+    //WIND SPEED SCALE
+    if (this._ranges.windSpeed) {
+      ++numRightScalesUsed;
+      let x = { type: ScaleType.WindSpeed, items: [] };
+      this.scales.push(x);
+      const pxPerMPH = this.graph.height / this._ranges.windSpeed.max;
+      for (let i = 1; i <= Math.floor(this._ranges.windSpeed.max); ++i) {
+        x.items.push({
+          value: i.toString(),
+          center: new Point(this.rightScale.left + (this.maxTextWidth / 2 * numRightScalesUsed), this.graph.top + (this._ranges.windSpeed.max - i) * pxPerMPH)
+        });
+      }
+    }
+
+    //TODO Percentage
+
+    //Ozone
+    if (this._ranges.ozone) {
+      ++numRightScalesUsed;
+      let x = { type: ScaleType.Ozone, items: [] };
+      this.scales.push(x);
+      const pxPerDobson = this.graph.height / (this._ranges.ozone.max - this._ranges.ozone.min);
+      for (let i = Math.ceil(this._ranges.ozone.min / 5) * 5; i <= Math.floor(this._ranges.ozone.max / 5) * 5; i += 5) {
+        x.items.push({
+          value: i.toString(),
+          center: new Point(this.rightScale.left + (this.maxTextWidth / 2 * numRightScalesUsed), this.graph.top + (this._ranges.ozone.max - i) * pxPerDobson)
+        });
+      }
+    }
+
+    //Pressure
+    if (this._ranges.pressure) {
+      ++numRightScalesUsed;
+      let x = { type: ScaleType.Pressure, items: [] };
+      this.scales.push(x);
+      const pxPerMB = this.graph.height / (this._ranges.pressure.max - this._ranges.pressure.min);
+      for (let i = Math.ceil(this._ranges.pressure.min / 5) * 5; i <= Math.floor(this._ranges.pressure.max / 5) * 5; i += 5) {
+        x.items.push({
+          value: i.toString(),
+          center: new Point(this.rightScale.left + (this.maxTextWidth / 2 * numRightScalesUsed), this.graph.top + (this._ranges.pressure.max - i) * pxPerMB)
+        });
+      }
+    }
+
+    //accumilation
+
   }
 
   private getPadding(): { top: number, bottom: number, left: number, right: number } {

@@ -1,5 +1,5 @@
 import {WidgetType} from "../WidgetType";
-import {Ranges} from "../Ranges";
+import {Ranges} from "./Ranges";
 import {DataPoint} from "../forecast.io.interface";
 import {Theme} from "../Theme.interface";
 import {Point} from "./Point"
@@ -53,7 +53,7 @@ export class TimeSegment {
 
     let secondsPerSegment = (_theme.widgetType === WidgetType.Daily ? 86400 : 3600);
 
-    this._unitsPerDegree = this.graphBox.height / (this._ranges.temperature.max - this._ranges.temperature.min);
+    this._unitsPerDegree = this.graphBox.height / (this._ranges.temperature ? this._ranges.temperature.max - this._ranges.temperature.min : 1);
     this._unitsPerSecond = this.graphBox.width / secondsPerSegment;
 
     this.from = _data.time;
@@ -115,10 +115,10 @@ export class TimeSegment {
 
 
   get windSpeed(): Point {
-    return {
+    return (this._ranges.windSpeed ? {
       x: this.graphBox.center.x,
       y: this.graphBox.top + (this._ranges.windSpeed.max - this._data.windSpeed) * (this.graphBox.height / this._ranges.windSpeed.max)
-    };
+    } : null);
   }
 
 
@@ -138,31 +138,31 @@ export class TimeSegment {
   }
 
   get apparentTemperatureMax() {
-    return {
+    return (this._ranges.temperature ? {
       x: this.graphBox.left + (this._data.apparentTemperatureMaxTime - this.from) * this._unitsPerSecond,
       y: this.graphBox.top + (this._ranges.temperature.max - this._data.apparentTemperatureMax) * this._unitsPerDegree
-    };
+    } : null);
   }
 
   get apparentTemperatureMin() {
-    return {
+    return (this._ranges.temperature ? {
       x: this.graphBox.left + (this._data.apparentTemperatureMinTime - this.from) * this._unitsPerSecond,
       y: this.graphBox.top + (this._ranges.temperature.max - this._data.apparentTemperatureMin) * this._unitsPerDegree
-    };
+    } : null);
   }
 
   get temperatureMax() {
-    return {
+    return (this._ranges.temperature ? {
       x: this.graphBox.left + (this._data.temperatureMaxTime - this.from) * this._unitsPerSecond,
       y: this.graphBox.top + (this._ranges.temperature.max - this._data.temperatureMax) * this._unitsPerDegree
-    };
+    } : null);
   }
 
   get temperatureMin() {
-    return {
+    return (this._ranges.temperature ? {
       x: this.graphBox.left + (this._data.temperatureMinTime - this.from) * this._unitsPerSecond,
       y: this.graphBox.top + (this._ranges.temperature.max - this._data.temperatureMin) * this._unitsPerDegree
-    };
+    } : null);
   }
 
 
@@ -181,38 +181,38 @@ export class TimeSegment {
   }
 
   get dewPoint() {
-    return {
+    return (this._ranges.temperature ? {
       x: this.graphBox.center.x,
       y: this.graphBox.top + (this._ranges.temperature.max - this._data.dewPoint) * this._unitsPerDegree
-    };
+    } : null);
   }
 
   get ozone() {
-    return {
+    return (this._ranges.ozone ? {
       x: this.graphBox.center.x,
       y: this.graphBox.top + (this._ranges.ozone.max - this._data.ozone) * (this.graphBox.height / (this._ranges.ozone.max - this._ranges.ozone.min))
-    };
+    } : null);
   }
 
   get pressure() {
-    return {
+    return (this._ranges.pressure ? {
       x: this.graphBox.center.x,
       y: this.graphBox.top + (this._ranges.pressure.max - this._data.pressure) * (this.graphBox.height / (this._ranges.pressure.max - this._ranges.pressure.min))
-    };
+    } : null);
   }
 
   get apparentTemperature() {
-    return {
+    return (this._ranges.temperature ? {
       x: this.graphBox.center.x,
       y: this.graphBox.top + (this._ranges.temperature.max - this._data.apparentTemperature) * this._unitsPerDegree
-    };
+    } : null);
   }
 
   get temperature() {
-    return {
+    return (this._ranges.temperature ? {
       x: this.graphBox.center.x,
       y: this.graphBox.top + (this._ranges.temperature.max - this._data.temperature) * this._unitsPerDegree
-    };
+    } : null);
   }
 
   get precipProbability() {
@@ -223,10 +223,10 @@ export class TimeSegment {
   }
 
   get precipAccumulation() {
-    return {
+    return (this._ranges.precipAccumulation ? {
       x: this.graphBox.center.x,
       y: this.graphBox.top + (this._ranges.precipAccumulation.max - this._data.precipAccumulation) * (this.graphBox.height / (this._ranges.precipAccumulation.max - this._ranges.precipAccumulation.min))
-    };
+    } : null);
   }
 
 
