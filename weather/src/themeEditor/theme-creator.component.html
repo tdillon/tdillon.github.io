@@ -29,6 +29,20 @@
   (update)="onUpdate(theme.widgetType = $event)"
   (cancel)="onUpdate(currentPicker = null, theme.widgetType = $event)"
   (save)="onUpdate(currentPicker = null, theme.widgetType = $event)"></widget-type-picker>
+
+<number-picker
+  #fs
+  [class.show]="currentPicker === fs"
+  [title]="'Font Size'"
+  [value]="theme.fontSize"
+  [min]="1"
+  [max]="60"
+  [step]="1"
+  (focus)="currentPicker = fs"
+  (update)="onUpdate(theme.fontSize = $event)"
+  (cancel)="onUpdate(currentPicker = null, theme.fontSize = $event)"
+  (save)="onUpdate(currentPicker = null, theme.fontSize = $event)"></number-picker>
+
 <default-theme-settings
   #dts
   [default]="theme.globals"
@@ -39,14 +53,14 @@
   (save)="currentPicker = null"></default-theme-settings>
 
 
-  <cloud-cover-location-picker
-    #cclp
-    [location]="theme.cloudCoverLocation"
-    [class.show]="currentPicker === cclp"
-    (focus)="currentPicker = cclp"
-    (update)="onUpdate(theme.cloudCoverLocation = $event)"
-    (cancel)="onUpdate(currentPicker = null, theme.cloudCoverLocation = $event)"
-    (save)="onUpdate(currentPicker = null, theme.cloudCoverLocation = $event)"></cloud-cover-location-picker>
+<cloud-cover-location-picker
+  #cclp
+  [location]="theme.cloudCoverLocation"
+  [class.show]="currentPicker === cclp"
+  (focus)="currentPicker = cclp"
+  (update)="onUpdate(theme.cloudCoverLocation = $event)"
+  (cancel)="onUpdate(currentPicker = null, theme.cloudCoverLocation = $event)"
+  (save)="onUpdate(currentPicker = null, theme.cloudCoverLocation = $event)"></cloud-cover-location-picker>
 
 
 <boolean-picker
@@ -67,22 +81,22 @@
   (save)="onUpdate(currentPicker = null, theme.daylight = $event)"></color-picker>
 
 
-  <boolean-picker
-    [title]="'Show Night Sky?'"
-    [subtitle]="'Show nighttime cloud coverage?'"
-    [value]="theme.nightlight"
-    (update)="updateNightlight($event)"></boolean-picker>
-  <color-picker
-    #nc
-    [class.hide]="!theme.nightlight"
-    [title]="'Night Sky Color'"
-    [color]="theme.nightlight"
-    [showalpha]="false"
-    [class.show]="currentPicker === nc"
-    (focus)="currentPicker = nc"
-    (update)="onUpdate(theme.nightlight = $event)"
-    (cancel)="onUpdate(currentPicker = null, theme.nightlight = $event)"
-    (save)="onUpdate(currentPicker = null, theme.nightlight = $event)"></color-picker>
+<boolean-picker
+  [title]="'Show Night Sky?'"
+  [subtitle]="'Show nighttime cloud coverage?'"
+  [value]="theme.nightlight"
+  (update)="updateNightlight($event)"></boolean-picker>
+<color-picker
+  #nc
+  [class.hide]="!theme.nightlight"
+  [title]="'Night Sky Color'"
+  [color]="theme.nightlight"
+  [showalpha]="false"
+  [class.show]="currentPicker === nc"
+  (focus)="currentPicker = nc"
+  (update)="onUpdate(theme.nightlight = $event)"
+  (cancel)="onUpdate(currentPicker = null, theme.nightlight = $event)"
+  (save)="onUpdate(currentPicker = null, theme.nightlight = $event)"></color-picker>
 
 
 <weather-property-picker

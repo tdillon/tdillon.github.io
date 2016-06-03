@@ -3,6 +3,7 @@
     "themeType": 0,
     "widgetType": 1,
     "cloudCoverLocation": 0,
+    "fontSize": 10,
     "daylight": {
       "r": 0,
       "g": 255,
@@ -78,6 +79,7 @@
     "themeType": 0,
     "widgetType": 0,
     "cloudCoverLocation": 1,
+    "fontSize":20,
     "daylight": {
       "r": 0,
       "g": 127,
