@@ -16,7 +16,6 @@ import {ConfigOption} from '../Option.interface'
 /*
  * TODO:MainGraph
  * Padding: we are using the radius of the largest shown dot for top and right. do we care about the case where that large dot is not near the top or right?  i.e., do we shift the padding depending upon the nearest dot to the edge?
- * Padding: what if max dot radius is larger then 'time bar' or 'temp bar'?
  * IS THIS NECESSARY?  FIND AN EXAMPLE WHERE IT MATTERS -> Draw invert the order of the 2 for loops so that entire lines are drawn at once. this will allow for depth of lines to be set
  *
  * TODO:Dots
@@ -126,7 +125,7 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
     //TODO how else can i get notified if this.theme.XXX has changed?, this hits too often
     if (this.data && this.theme) {
       //TODO pass in widget ratio
-      this.ctx.font = `12px 'Roboto', 'Consolas', sans-serif`;
+      this.ctx.font = `${this.theme.fontSize}px 'Roboto', 'Consolas', sans-serif`;
       //from testing ctx.measureText 125 seems to be as wide as any other reasonable temperature
       this._pos = new Positionings(
         this.theme,
@@ -197,6 +196,7 @@ export class WidgetDisplayComponent implements AfterViewInit, DoCheck {
 
   private renderTimeText() {
     //TODO color and fontsize should be configurable
+    this.ctx.font = `${this.theme.fontSize}px 'Roboto', 'Consolas', sans-serif`;
     this.ctx.fillStyle = '#fff';
     this.ctx.textBaseline = 'middle';
     this.ctx.textAlign = 'center';

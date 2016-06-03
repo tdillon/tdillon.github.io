@@ -20,23 +20,17 @@ export class Positionings {
 
     this.widget = new Box({ left: 0, top: 0, width: clientWidth * devicePixelRatio, height: clientWidth / widgetRatio * devicePixelRatio });
 
+    let numLeftScales = 1;//TODO pull from theme
+    let numRightScales = 2;//TODO pull from theme
 
-
-    //TODO handle for padding
-    //TODO get top/bottom/left/right paddings!
     let padding = this.getPadding();
-
-
-    let numLeftScales = 1;    //TODO determine from theme
-    let timeBarFontSize = 12; //TODO pull from theme
-    let numRightScales = 2;   //TODO determine from theme
 
     this.leftScale = new Box(
       {
         left: 0,
         top: padding.top,
         width: maxTextWidth * numLeftScales,
-        bottom: this.widget.height - Math.max(padding.bottom, timeBarFontSize)
+        bottom: this.widget.height - Math.max(padding.bottom, this._theme.fontSize)
       }
     );
 
@@ -52,7 +46,7 @@ export class Positionings {
       {
         left: Math.max(this.leftScale.width, padding.left),
         right: this.widget.width - Math.max(padding.right, this.rightScale.width),
-        top: this.widget.height - timeBarFontSize,
+        top: this.widget.height - this._theme.fontSize,
         bottom: this.widget.height
       }
     );

@@ -1,3 +1,4 @@
+import {NumberPickerComponent} from "./number-picker.component";
 import {CloudCoverLocationPickerComponent} from "./cloud-cover-location-picker.component";
 import {Color} from "../Color";
 import {Theme, ThemeType, CloudCoverLocation} from "../Theme.interface"
@@ -28,6 +29,7 @@ export enum ThemeCreatorMode { New, Edit, Copy }
     ColorPickerComponent,
     BooleanPickerComponent,
     TextPickerComponent,
+    NumberPickerComponent,
     WidgetTypePickerComponent,
     WeatherPropertyPickerComponent,
     DefaultThemeSettingsComponent,
@@ -93,6 +95,7 @@ export class ThemeCreatorComponent {
     to.themeType = ThemeType.Custom;
     to.widgetType = from.widgetType;
     to.cloudCoverLocation = from.cloudCoverLocation;
+    to.fontSize = from.fontSize;
     to.globals.dot.color = from.globals.dot.color.copyOf();
     to.globals.dot.radius = from.globals.dot.radius;
     to.globals.segment.show = from.globals.segment.show;
@@ -156,6 +159,7 @@ export class ThemeCreatorComponent {
       themeType: ThemeType.Custom,
       widgetType: WidgetType.Daily,
       cloudCoverLocation: CloudCoverLocation.Graph,
+      fontSize: 12,
       globals: {
         dot: {
           color: Color.white,

@@ -19,6 +19,7 @@ export interface Theme {  //TODO i don't like the name 'Theme'.  These are more 
   daylight?: Color;
   nightlight?: Color;
   cloudCoverLocation: CloudCoverLocation;
+  fontSize:number;
   /** These options apply to all 'options' in this.options for any property that prop.global === true */
   globals: GlobalOptions;
   options: Array<ConfigOption>;
