@@ -40,11 +40,6 @@ export class AppComponent implements AfterViewInit {
     }, () => console.log('Data is not set, configure forecast io info!!!'));
   }
 
-  // createTheme() {
-  //   this.tab = 2;
-  //   this.currentThemeBeforeCreatingTheme = this.currentTheme;
-  // }
-
   cancelThemeCreation() {
     this.currentTheme = this.currentThemeBeforeCreatingTheme;
     this.currentPage = this.Pages.Themes;
@@ -80,13 +75,5 @@ export class AppComponent implements AfterViewInit {
 
   clickWidget() {
     this.showMenu = !this.showMenu;
-
-    if (document.documentElement.requestFullscreen) {
-      document.documentElement.requestFullscreen();
-    } else if (document.documentElement['mozRequestFullScreen']) {
-      document.documentElement['mozRequestFullScreen']();
-    } else if (document.documentElement['webkitRequestFullscreen']) {
-      document.documentElement['webkitRequestFullscreen']();
-    }
   }
 }

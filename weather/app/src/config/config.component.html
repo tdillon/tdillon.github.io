@@ -17,7 +17,13 @@
 <forecast-io-refresher (refresh)="onRefresh($event)"></forecast-io-refresher>
 
 
-<!-- TODO Move this to the 'config' menu, i.e., with forecast.io stuff -->
+<boolean-picker
+  [title]="'Fullscreen'"
+  [subtitle]="'Enter fullscreen mode?'"
+  [value]="fullscreen"
+  (update)="toggleFullscreen($event)"></boolean-picker>
+
+
 <!-- <div class="form-group row">
       <div class=col-xs-5>Widget Dimension Ratio: {{graph.widgetRatio}}</div>
       <div class=col-xs-7>
