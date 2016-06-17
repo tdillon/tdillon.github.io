@@ -263,22 +263,27 @@ export class Positionings {
     }
 
     //Pressure
-    myScale = this._theme.scales.find(s => s.type === ScaleType.Pressure)
-    if (this._ranges.pressure && myScale) {
+    //TODO explain pressure's scale
+    if (this._ranges.pressure) {
       const pxPerMB = (this.widget.height - Math.max(this._padding.bottom, this._theme.fontSize) - this._padding.top) / (this._ranges.pressure.max - this._ranges.pressure.min);
 
-      let scaleTexts: Array<number> = [];
+      let scaleTexts: Array<number> = [30];
       let maxTextWidth = Number.MIN_SAFE_INTEGER, tempTextWidth;
-      for (let i = Math.ceil(this._ranges.pressure.min / 5) * 5; i <= Math.floor(this._ranges.pressure.max / 5) * 5; i += 5) {
-        scaleTexts.push(i);
-        if ((tempTextWidth = this.getTextWidth(i.toString())) > maxTextWidth) {
-          maxTextWidth = tempTextWidth;
-        }
+      const ATM = 1013.25; //mbar
+
+      const mbarPERinhg = 1000 / 100000 * 101325 / 760 * 25.4;  //mb -> bar -> pascal -> atm -> torr (inches of mm) -> inches of hg
+      let p = this._ranges.pressure
+
+      for (let band = 1; p.max > (30 + band) * mbarPERinhg && p.min < (30 + band) * mbarPERinhg; ++band) {
+        scaleTexts.push(30 + band);
+        scaleTexts.push(30 - band);
       }
+
+      maxTextWidth = scaleTexts.reduce((p, c) => Math.max(this.getTextWidth(c.toString()), p), 0);
 
       let x = {
         type: ScaleType.Pressure,
-        position: myScale.position,
+        position: ScalePosition.Right,
         box: new Box({
           top: this._padding.top,
           bottom: this.widget.height - Math.max(this._padding.bottom, this._theme.fontSize),
@@ -299,7 +304,7 @@ export class Positionings {
         value: t.toString(),
         center: new Point(
           x.box.center.x,
-          this._padding.top + (this._ranges.pressure.max - t) * pxPerMB
+          x.box.top + (this._ranges.pressure.max - t * mbarPERinhg) * pxPerMB
         )
       }));
     }

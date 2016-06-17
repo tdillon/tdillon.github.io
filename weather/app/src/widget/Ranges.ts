@@ -51,6 +51,15 @@ export class Ranges {
         this[r] = null;
       }
     });
+
+    if (this._pressure) {  //TODO explain how pressure gets scaled differently
+      const ATM = 1013.25;  //1 ATM === 1013.25 mbar
+      const BAND_SIZE = 37;  //band_size is the number of mbars to get whole number of inhg plus any 'padding'
+      const MAX_DEVIATION = Math.max(Math.abs(this._pressure.max - ATM), Math.abs(this._pressure.min - ATM));
+
+      this._pressure.max = ATM + Math.ceil(MAX_DEVIATION / ATM) * BAND_SIZE;
+      this._pressure.min = ATM - Math.ceil(MAX_DEVIATION / ATM) * BAND_SIZE;
+    }
   }
 
   get temperature() {
