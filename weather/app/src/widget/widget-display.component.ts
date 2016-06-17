@@ -27,11 +27,8 @@ import {ConfigOption} from '../Option.interface'
  * TODO:Scaling
  * add a 'legend' for scales. e.g., degree sign for temp, % for percentages, etc.,
  * Ozone: what scale? same as wind speed questions.
- * Pressure: use a 'fixed scale' with 1 atm at 50% of the graph, and show ~+/-1 inhg by default.
- *   if the pressure is outside the 1atm +/- 1 inhg then expact to next 1 ingh as needed.
  *
  * TODO:Themes
- * Add scaling configuration.  i.e., position (left | right), and visiblity. e.g., show rain on left, don't show pressure, show wind on right.
  * Add ordering to weather properties.
  * Add 'opacity' to precipProbability segment color, remove 'color'
  *

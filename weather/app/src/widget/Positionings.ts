@@ -3,9 +3,22 @@ import {Ranges} from "./Ranges";
 import {WidgetType} from "../WidgetType";
 import {TimeSegment} from "./TimeSegment";
 import {ForecastIO} from "../forecast.io.interface";
-import {Theme, ScaleType, ScalePosition} from "../Theme.interface"
+import {Theme} from "../Theme.interface"
 import {Box} from './Box'
 
+
+export enum ScaleType {
+  Temperature, WindSpeed, Percentage, Pressure, Ozone, PrecipAccumulation
+}
+
+export enum ScalePosition {
+  Left, Right
+}
+
+export interface Scale {
+  type: ScaleType;
+  position: ScalePosition;
+}
 
 
 export class Positionings {
@@ -124,13 +137,12 @@ export class Positionings {
   private getScales() {
     let leftMostScale = 0;
     let rightMostScale = this.widget.right;
-    let myScale = this._theme.scales.find(s => s.type === ScaleType.Temperature)
 
     //TODO whether a scale is shown or not, should be configurable (themed)
     //TODO for now if you have a weather prop, show the scale
 
     //TEMPERATURE
-    if (this._ranges.temperature && myScale) {
+    if (this._ranges.temperature) {
       const pxPerDeg = (this.widget.height - Math.max(this._padding.bottom, this._theme.fontSize) - this._padding.top) / (this._ranges.temperature.max - this._ranges.temperature.min);
 
       let scaleTexts: Array<number> = [];
@@ -145,12 +157,12 @@ export class Positionings {
 
       let x = {
         type: ScaleType.Temperature,
-        position: myScale.position,
+        position: ScalePosition.Left,
         box: new Box({
           top: this._padding.top,
           bottom: this.widget.height - Math.max(this._padding.bottom, this._theme.fontSize),
           width: maxTextWidth,
-          left: (myScale.position === ScalePosition.Left ? leftMostScale : rightMostScale - maxTextWidth)
+          left: leftMostScale
         }),
         items: []
       };
@@ -176,8 +188,7 @@ export class Positionings {
 
 
     //WIND SPEED
-    myScale = this._theme.scales.find(s => s.type === ScaleType.WindSpeed)
-    if (this._ranges.windSpeed && myScale) {
+    if (this._ranges.windSpeed) {
       const pxPerMPH = (this.widget.height - Math.max(this._padding.bottom, this._theme.fontSize) - this._padding.top) / this._ranges.windSpeed.max;
 
       let scaleTexts: Array<number> = [];
@@ -192,12 +203,12 @@ export class Positionings {
 
       let x = {
         type: ScaleType.WindSpeed,
-        position: myScale.position,
+        position: ScalePosition.Right,
         box: new Box({
           top: this._padding.top,
           bottom: this.widget.height - Math.max(this._padding.bottom, this._theme.fontSize),
           width: maxTextWidth,
-          left: (myScale.position === ScalePosition.Left ? leftMostScale : rightMostScale - maxTextWidth)
+          left: rightMostScale - maxTextWidth
         }),
         items: []
       };
@@ -221,8 +232,7 @@ export class Positionings {
 
 
     //Ozone
-    myScale = this._theme.scales.find(s => s.type === ScaleType.Ozone)
-    if (this._ranges.ozone && myScale) {
+    if (this._ranges.ozone) {
       const pxPerDobson = (this.widget.height - Math.max(this._padding.bottom, this._theme.fontSize) - this._padding.top) / (this._ranges.ozone.max - this._ranges.ozone.min);
 
       let scaleTexts: Array<number> = [];
@@ -236,12 +246,12 @@ export class Positionings {
 
       let x = {
         type: ScaleType.Ozone,
-        position: myScale.position,
+        position: ScalePosition.Right,
         box: new Box({
           top: this._padding.top,
           bottom: this.widget.height - Math.max(this._padding.bottom, this._theme.fontSize),
           width: maxTextWidth,
-          left: (myScale.position === ScalePosition.Left ? leftMostScale : rightMostScale - maxTextWidth)
+          left: rightMostScale - maxTextWidth
         }),
         items: []
       };
@@ -288,7 +298,7 @@ export class Positionings {
           top: this._padding.top,
           bottom: this.widget.height - Math.max(this._padding.bottom, this._theme.fontSize),
           width: maxTextWidth,
-          left: (myScale.position === ScalePosition.Left ? leftMostScale : rightMostScale - maxTextWidth)
+          left: rightMostScale - maxTextWidth
         }),
         items: []
       };

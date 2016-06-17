@@ -1,7 +1,7 @@
 import {NumberPickerComponent} from "./number-picker.component";
 import {CloudCoverLocationPickerComponent} from "./cloud-cover-location-picker.component";
 import {Color} from "../Color";
-import {Theme, ScaleType, ScalePosition, ThemeType, CloudCoverLocation} from "../Theme.interface"
+import {Theme, ThemeType, CloudCoverLocation} from "../Theme.interface"
 import {WidgetType} from '../WidgetType'
 import {ConfigService} from "../config.service"
 import {Component, Output, Input, EventEmitter} from '@angular/core'
@@ -160,13 +160,6 @@ export class ThemeCreatorComponent {
       widgetType: WidgetType.Daily,
       cloudCoverLocation: CloudCoverLocation.Graph,
       fontSize: 12,
-      scales: [
-        { type: ScaleType.Temperature, position: ScalePosition.Left },
-        { type: ScaleType.WindSpeed, position: ScalePosition.Right },
-        { type: ScaleType.Pressure, position: ScalePosition.Right },
-        { type: ScaleType.Ozone, position: ScalePosition.Right },
-        { type: ScaleType.PrecipAccumulation, position: ScalePosition.Right },
-      ],
       globals: {
         dot: {
           color: Color.white,

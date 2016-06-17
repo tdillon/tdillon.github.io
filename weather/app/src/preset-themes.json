@@ -4,7 +4,6 @@
     "widgetType": 1,
     "cloudCoverLocation": 0,
     "fontSize": 10,
-    "scales": [],
     "daylight": {
       "r": 0,
       "g": 255,
@@ -81,7 +80,6 @@
     "widgetType": 0,
     "cloudCoverLocation": 1,
     "fontSize": 20,
-    "scales": [],
     "daylight": {
       "r": 0,
       "g": 127,
@@ -161,22 +159,6 @@
     "widgetType": 0,
     "cloudCoverLocation": 0,
     "fontSize": 12,
-    "scales": [{
-      "type": 0,
-      "position": 0
-    }, {
-      "type": 1,
-      "position": 1
-    }, {
-      "type": 3,
-      "position": 1
-    }, {
-      "type": 4,
-      "position": 1
-    }, {
-      "type": 5,
-      "position": 1
-    }],
     "globals": {
       "dot": {
         "color": {
