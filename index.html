@@ -1,14 +1,213 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+
+<style>
+    body {
+        color: #fff;
+    }
+    
+    header,
+    section,
+    footer {
+        text-align: center;
+        padding: 20px;
+        color: #fff;
+        border-bottom: solid 5px rgba(0, 0, 0, .1)
+    }
+    
+    header,
+    footer {
+        background: #3E3E3E;
+    }
+    
+    section:nth-of-type(1) {
+        background: #454545;
+    }
+    
+    section:nth-of-type(2) {
+        background: #878787;
+    }
+    
+    section:nth-of-type(3) {
+        background: #3e3e3e;
+    }
+    
+    section:nth-of-type(4) {
+        background: #737373;
+    }
+    
+    footer {}
+    
+    canvas {
+        background: #09c;
+    }
+</style>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mindless Drone Software</title>
-<link rel=stylesheet href="css/bootstrap.min.css">
-<link rel="icon" type="image/png" href="/icon.png" />
+<link rel="icon" type="img/png" href="/icon.png">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1"
+    crossorigin="anonymous">
 
 
-<div class=list-group>
-  <a class="list-group-item" href=rangefinder>Rangefinder App</a>
-  <a class="list-group-item" href=clocks>Clocks</a>
-  <a class="list-group-item" href=weather>Weather</a>
-  <a class="list-group-item" href=timer>Shot Timer</a>
-</div>
+
+<header>
+    <i style="font-size:15em;" class="fa fa-meh-o"></i>
+
+    <h1>Travis Dillon</h1>
+    <ul class="list-inline">
+        <li><a href="https://github.com/tdillon"><i class="fa fa-github"></i></a></li>
+        <li><a href=https://twitter.com/tgd25><i class="fa fa-twitter"></i></a></li>
+        <li><a href=https://plus.google.com/103020966950971759410><i class="fa fa-google-plus"></i></a></li>
+        <li><a href=https://facebook.com/tdillon25><i class="fa fa-facebook  hi-icon-effect-8"></i></a></li>
+    </ul>
+
+    <!-- Rock Paper Scissors Lizard Spock -->
+    <div style="font-size:1.25em;">
+        <div>
+            <i class="fa fa-hand-rock-o"></i>
+            <i class="fa fa-hand-paper-o"></i>
+            <i class="fa fa-hand-scissors-o"></i>
+            <i class="fa fa-hand-lizard-o"></i>
+            <i class="fa fa-hand-spock-o"></i>
+        </div>
+        <div>
+            0
+            <i class="fa fa-trophy"></i>
+            <i class="fa fa-child"></i> vs
+            <i class="fa fa-blind"></i> 0
+            <i class="fa fa-trophy"></i>
+        </div>
+        <div>
+            <i class="fa fa-hand-rock-o"></i>
+            <i class="fa fa-hand-rock-o"></i>
+        </div>
+    </div>
+</header>
+
+
+
+<!-- TODO GITHUB STATS?  can i pull in api here?  NUMBERS - START -->
+<script>
+    window.x = 0;
+    window.addEventListener('load', () => {
+        fetch('https://api.github.com/users/tdillon/repos')
+            .then(r => r.json())
+            .then(d => document.querySelector('#numGithubRepos').textContent = d.length);
+    });
+</script>
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2">
+            <i class="fa fa-code"></i>
+            <p><span id=numGithubRepos>#</span> repos</p>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Magnum Opuses</h2>
+            <p>My penultimate achievements cannot be overstated. You're welcome society.</p>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <canvas height=200 width=200></canvas>
+            <h3>Seven Segment Display Library</h3>
+            <p>
+                TODO <a href="https://www.npmjs.com/package/seven-segment">NPM</a>
+            </p>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <canvas height=200 width=200></canvas>
+            <h3>Weather Widget Number One</h3>
+            <p>
+                TODO <a href="https://play.google.com/store/apps/details?id=tgd.mindless.drone.weatherwidgetnumberone.redux">Google Play</a>
+            </p>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <canvas height=200 width=200></canvas>
+            <h3>Rangefinder</h3>
+            <p>
+                TODO <a href=rangefinder>APP</a>
+            </p>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <canvas height=200 width=200></canvas>
+            <h3>Calculator</h3>
+            <p>
+                TODO <a href=calculator>APP</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-m-12">
+            <i class="fa fa-quote-left"></i>
+        </div>
+        <div class="col-m-12">
+            I gave him the blueberry one, and then I had, I looked back in my hand and I had a cheese danish and another blueberry one
+            in my hand, and I looked over and he had had a cheese danish and a blueberry one too, they had multiplied once
+            we had agreed that it was fair.
+        </div>
+        <div class=3>
+            -- III
+        </div>
+    </div>
+</section>
+
+
+
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>et al.</h2>
+            <p>Don't waste your time here.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-sm-6 col-md-4 col-lg-3">
+            <div class=row>
+                <div class="col-xs-4 col-sm-4 col-md-4 text-right">
+                    <i class="fa fa-clock-o"></i>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 text-left">
+                    <h3>Polar Clock</h3>
+                    <p>TODO</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-sm-6 col-md-4 col-lg-3">
+            <div class=row>
+                <div class="col-xs-4 col-sm-4 col-md-4 text-right">
+                    <i class="fa fa-bomb"></i>
+                </div>
+                <div class="col-xs-8 col-sm-8 col-md-8 text-left">
+                    <h3>Seven Segment Clock</h3>
+                    <p>TODO</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<footer>
+    FEMA region III
+</footer>
