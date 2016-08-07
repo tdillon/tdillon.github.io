@@ -1,9 +1,13 @@
-npm start
+READY TO DEV:
+1) Edit end of index.html to be in dev.
+2) npm start
+3) Edit app/*.ts or index.html as needed
 
-For now, edit end of index.html for prod or dev.
+READY TO DEPLOY:
 
-edit app/*.ts or index.html as needed
-
-npm run build
-
-commit
+1) Edit tsconfig to compile to es5
+2) npm run build
+3) Edit end of index.html to be in prod.
+4) Test
+5) Edit tsconfig to compile to es6
+6) commit

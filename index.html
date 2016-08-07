@@ -24,7 +24,7 @@
     }
     
     section:nth-of-type(2) {
-        background: #878787;
+        background: #575757;
     }
     
     section:nth-of-type(3) {
@@ -32,14 +32,10 @@
     }
     
     section:nth-of-type(4) {
-        background: #737373;
+        background: #676767;
     }
     
     footer {}
-    
-    canvas {
-        background: #09c;
-    }
 </style>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -110,34 +106,40 @@
         </div>
 
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <canvas height=200 width=200></canvas>
-            <h3>Seven Segment Display Library</h3>
+            <h3>7 Segment library</h3>
+            <canvas id=cvsSeven height=200 width=200></canvas>
             <p>
-                TODO <a href="https://www.npmjs.com/package/seven-segment">NPM</a>
+                View the
+                <a href="https://www.npmjs.com/package/seven-segment">NPM package</a>,
+                <a href="https://github.com/tdillon/7">Github repo</a>, 
+                <a href=7>project page</a>, or
+                <a href=7/demo.html>demo</a>.
             </p>
         </div>
 
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <h3>Weather Widget #1</h3>
             <canvas height=200 width=200></canvas>
-            <h3>Weather Widget Number One</h3>
             <p>
-                TODO <a href="https://play.google.com/store/apps/details?id=tgd.mindless.drone.weatherwidgetnumberone.redux">Google Play</a>
+                View the
+                <a href=weather>Angular 2 Prototype</a> or
+                <a href="https://play.google.com/store/apps/details?id=tgd.mindless.drone.weatherwidgetnumberone.redux">Google Play listing</a>.
             </p>
         </div>
 
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <canvas height=200 width=200></canvas>
             <h3>Rangefinder</h3>
+            <canvas height=200 width=200></canvas>
             <p>
-                TODO <a href=rangefinder>APP</a>
+                View the <a href=rangefinder>web app</a>.
             </p>
         </div>
 
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <canvas height=200 width=200></canvas>
             <h3>Calculator</h3>
+            <canvas height=200 width=200></canvas>
             <p>
-                TODO <a href=calculator>APP</a>
+                View the <a href=calculator>web app</a>.
             </p>
         </div>
     </div>
@@ -204,17 +206,22 @@
     FEMA region III
 </footer>
 
+<!-- PROD -->
 <script src=dist/bundle.js></script>
-<!--<script src=node_modules/systemjs/dist/system.js></script>
+
+<!-- DEV 
+<script src=node_modules/systemjs/dist/system.js></script>
 <script>
   System.config({
     map: {
       'app': 'js',
-      'rxjs': 'node_modules/rxjs'
+      'rxjs': 'node_modules/rxjs',
+      'seven-segment': 'node_modules/seven-segment/dist/seven-segment.js'
     },
     packages: {
       'app':{ main: 'main.js',  defaultExtension: 'js' },
-      'rxjs':{ defaultExtension: 'js' }
+      'rxjs':{ defaultExtension: 'js' },
+      'seven-segment':{ defaultExtension: 'js' }
     }
   });
 System.import('app').catch(function(err){ console.error(err); });
