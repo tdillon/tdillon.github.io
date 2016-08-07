@@ -75,15 +75,16 @@
             <i class="fa fa-hand-spock-o"></i>
         </div>
         <div>
-            0
+            <span id=rpslsP1Score>0</span>
             <i class="fa fa-trophy"></i>
             <i class="fa fa-child"></i> vs
-            <i class="fa fa-blind"></i> 0
+            <i class="fa fa-blind"></i>
+            <span id=rpslsP2Score>0</span>
             <i class="fa fa-trophy"></i>
         </div>
         <div>
-            <i class="fa fa-hand-rock-o"></i>
-            <i class="fa fa-hand-rock-o"></i>
+            <i id=rpslpP1Move class="fa fa-hand-rock-o"></i>
+            <i id=rpslpP2Move class="fa fa-hand-rock-o"></i>
         </div>
     </div>
 </header>
@@ -211,3 +212,19 @@
 <footer>
     FEMA region III
 </footer>
+
+<script src=node_modules/systemjs/dist/system.js></script>
+
+<script>
+  System.config({
+    map: {
+      'app': 'js',
+      'rxjs': 'node_modules/rxjs'
+    },
+    packages: {
+      'app':{ main: 'main.js',  defaultExtension: 'js' },
+      'rxjs':{ defaultExtension: 'js' }
+    }
+  });
+System.import('app').catch(function(err){ console.error(err); });
+</script>
