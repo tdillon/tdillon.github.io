@@ -91,15 +91,6 @@
 
 
 
-<!-- TODO GITHUB STATS?  can i pull in api here?  NUMBERS - START -->
-<script>
-    window.x = 0;
-    window.addEventListener('load', () => {
-        fetch('https://api.github.com/users/tdillon/repos')
-            .then(r => r.json())
-            .then(d => document.querySelector('#numGithubRepos').textContent = d.length);
-    });
-</script>
 <section class="container-fluid">
     <div class="row">
         <div class="col-sm-2">
@@ -115,7 +106,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>Magnum Opuses</h2>
-            <p>My penultimate achievements cannot be overstated. You're welcome society.</p>
+            <p>My penultimate achievements cannot be overstated.</p>
         </div>
 
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
@@ -213,8 +204,8 @@
     FEMA region III
 </footer>
 
-<script src=node_modules/systemjs/dist/system.js></script>
-
+<script src=dist/bundle.js></script>
+<!--<script src=node_modules/systemjs/dist/system.js></script>
 <script>
   System.config({
     map: {
@@ -227,4 +218,4 @@
     }
   });
 System.import('app').catch(function(err){ console.error(err); });
-</script>
+</script>-->
