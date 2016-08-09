@@ -1,48 +1,11 @@
 <!DOCTYPE html>
 
-<style>
-    body {
-        color: #fff;
-    }
-    
-    header,
-    section,
-    footer {
-        text-align: center;
-        padding: 20px;
-        color: #fff;
-        border-bottom: solid 5px rgba(0, 0, 0, .1)
-    }
-    
-    header,
-    footer {
-        background: #3E3E3E;
-    }
-    
-    section:nth-of-type(1) {
-        background: #454545;
-    }
-    
-    section:nth-of-type(2) {
-        background: #575757;
-    }
-    
-    section:nth-of-type(3) {
-        background: #3e3e3e;
-    }
-    
-    section:nth-of-type(4) {
-        background: #676767;
-    }
-    
-    footer {}
-</style>
-
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mindless Drone Software</title>
 <link rel="icon" type="img/png" href="/icon.png">
 
+<link rel=stylesheet href=css/my.css>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1"
@@ -51,19 +14,19 @@
 
 
 <header>
-    <i style="font-size:15em;" class="fa fa-meh-o"></i>
+    <i class="fa fa-meh-o"></i>
 
-    <h1>Travis Dillon</h1>
-    <ul class="list-inline">
-        <li><a href="https://github.com/tdillon"><i class="fa fa-github"></i></a></li>
-        <li><a href=https://twitter.com/tgd25><i class="fa fa-twitter"></i></a></li>
-        <li><a href=https://plus.google.com/103020966950971759410><i class="fa fa-google-plus"></i></a></li>
-        <li><a href=https://facebook.com/tdillon25><i class="fa fa-facebook  hi-icon-effect-8"></i></a></li>
-    </ul>
+
+    <h1>
+        <a href="https://github.com/tdillon"><i class="fa fa-github"></i></a>
+        <a href=https://twitter.com/tgd25><i class="fa fa-twitter"></i></a> Travis Dillon
+        <a href=https://plus.google.com/103020966950971759410><i class="fa fa-google-plus"></i></a>
+        <a href=https://facebook.com/tdillon25><i class="fa fa-facebook  hi-icon-effect-8"></i></a>
+    </h1>
 
     <!-- Rock Paper Scissors Lizard Spock -->
-    <div style="font-size:1.25em;">
-        <div>
+    <div id=rpsls>
+        <div class=current>
             <i class="fa fa-hand-rock-o"></i>
             <i class="fa fa-hand-paper-o"></i>
             <i class="fa fa-hand-scissors-o"></i>
@@ -71,16 +34,20 @@
             <i class="fa fa-hand-spock-o"></i>
         </div>
         <div>
-            <span id=rpslsP1Score>0</span>
-            <i class="fa fa-trophy"></i>
-            <i class="fa fa-child"></i> vs
-            <i class="fa fa-blind"></i>
-            <span id=rpslsP2Score>0</span>
-            <i class="fa fa-trophy"></i>
+            <i id=rpslsP1Move class="fa fa-hand-rock-o"></i> vs
+            <i id=rpslsP2Move class="fa fa-hand-rock-o"></i>
         </div>
         <div>
-            <i id=rpslpP1Move class="fa fa-hand-rock-o"></i>
-            <i id=rpslpP2Move class="fa fa-hand-rock-o"></i>
+            <span id=rpslsP1>
+                <i class="fa fa-child"></i> 
+                <span id=rpslsP1Score>0</span>
+                <i class="fa fa-trophy"></i>
+            </span>
+            <span id=rpslsP2>
+                <i class="fa fa-blind"></i>
+                <span id=rpslsP2Score>0</span>
+                <i class="fa fa-trophy"></i>
+            </span>
         </div>
     </div>
 </header>
@@ -111,7 +78,7 @@
             <p>
                 View the
                 <a href="https://www.npmjs.com/package/seven-segment">NPM package</a>,
-                <a href="https://github.com/tdillon/7">Github repo</a>, 
+                <a href="https://github.com/tdillon/7">Github repo</a>,
                 <a href=7>project page</a>, or
                 <a href=7/demo.html>demo</a>.
             </p>
