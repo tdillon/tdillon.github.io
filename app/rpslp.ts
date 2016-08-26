@@ -1,92 +1,93 @@
+import {RockPaperScissorsLizardSpock as R} from 'rpsls'
 import {Observable} from 'rxjs/Observable'
-import 'rxjs/add/observable/interval'
+import 'rxjs/add/observable/timer'
 import 'rxjs/add/operator/delay'
 import 'rxjs/add/operator/do'
-
-let rpslsP1Score = <HTMLSpanElement>document.querySelector('#rpslsP1Score');
-let rpslsP2Score = <HTMLSpanElement>document.querySelector('#rpslsP2Score');
-
-let rpslsP1 = <HTMLSpanElement>document.querySelector('#rpslsP1');
-let rpslsP2 = <HTMLSpanElement>document.querySelector('#rpslsP2');
 
 let p1Score = 0;
 let p2Score = 0;
 
 let moves = ['fa-hand-rock-o', 'fa-hand-paper-o', 'fa-hand-scissors-o', 'fa-hand-lizard-o', 'fa-hand-spock-o']
-let outcomeClasses = ['win', 'loose', 'draw'];
+let outcomeClasses = ['win', 'lose', 'draw'];
 
-let p1 = <HTMLElement>document.querySelector('#rpslsP1Move');
-let p2 = <HTMLElement>document.querySelector('#rpslsP2Move');
+let [divSplash, divShoot, divPlay, divResults] = <NodeListOf<HTMLDivElement>>document.querySelectorAll('#rpsls > div');
+let [iShootP1, iShootP2] = <NodeListOf<HTMLElement>>divShoot.querySelectorAll('div > *');
+let [iPlayP1, spanPlayResult, iPlayP2] = <NodeListOf<HTMLElement>>divPlay.querySelectorAll('div > *');
+let [spanResultsP1, spanResultsP2] = <NodeListOf<HTMLSpanElement>>divResults.querySelectorAll('div > span');
+let [spanResultsP1Score, spanResultsP2Score] = <NodeListOf<HTMLSpanElement>>divResults.querySelectorAll('span > span');
 
-let [r1, r2, r3] = <NodeListOf<HTMLDivElement>>document.querySelectorAll('#rpsls > div');
-
-Observable.interval(7000)
+Observable.timer(0, 7000)
     .do(x => {
-        r1.classList.add('current');
-        r2.classList.remove('current');
-        r3.classList.remove('current');
-        p1.classList.remove('win', 'loose', 'draw');
-        p2.classList.remove('win', 'loose', 'draw');
-        rpslsP1.classList.remove('win', 'loose', 'draw');
-        rpslsP2.classList.remove('win', 'loose', 'draw');
+        divSplash.classList.add('current');
+        divShoot.classList.remove('current');
+        divPlay.classList.remove('current');
+        divResults.classList.remove('current');
+        spanResultsP1.classList.remove(...outcomeClasses);
+        spanResultsP2.classList.remove(...outcomeClasses);
     })
     .delay(1500)
     .do(x => {
-        r1.classList.remove('current');
-        r2.classList.add('current');
+        divSplash.classList.remove('current');
+        divShoot.classList.add('current');
     })
     .delay(250)
-    .do(x => p1.className = p2.className = `fa ${moves[0]}`)
+    .do(x => iShootP1.className = iShootP2.className = `fa ${moves[0]}`)
     .delay(250)
-    .do(x => p1.className = p2.className = `fa ${moves[1]}`)
+    .do(x => iShootP1.className = iShootP2.className = `fa ${moves[1]}`)
     .delay(250)
-    .do(x => p1.className = p2.className = `fa ${moves[2]}`)
+    .do(x => iShootP1.className = iShootP2.className = `fa ${moves[2]}`)
     .delay(250)
-    .do(x => p1.className = p2.className = `fa ${moves[3]}`)
+    .do(x => iShootP1.className = iShootP2.className = `fa ${moves[3]}`)
     .delay(250)
-    .do(x => p1.className = p2.className = `fa ${moves[4]}`)
+    .do(x => iShootP1.className = iShootP2.className = `fa ${moves[4]}`)
     .delay(250)
     .do(x => {
-        p1.className = `fa ${moves[Math.floor(Math.random() * moves.length)]}`;
-        p2.className = `fa ${moves[Math.floor(Math.random() * moves.length)]}`;
+        divShoot.classList.remove('current');
+        divPlay.classList.add('current');
 
-        let winner = Math.floor(Math.random() * 3);
+        let p1m = Math.floor(Math.random() * 5);
+        let p2m = Math.floor(Math.random() * 5)
+        let game = R.play(p1m, p2m);
 
-        switch (winner) {
+        iPlayP1.className = `fa ${moves[p1m]}`;
+        spanPlayResult.textContent = game.result;
+        iPlayP2.className = `fa ${moves[p2m]}`;
+
+        switch (game.outcome) {
             case 0://tie
-                p1.classList.add('draw');
-                p2.classList.add('draw');
-                rpslsP1.classList.add('draw');
-                rpslsP2.classList.add('draw');
+                iPlayP1.classList.add('draw');
+                iPlayP2.classList.add('draw');
+                spanResultsP1.classList.add('draw');
+                spanResultsP2.classList.add('draw');
                 break;
             case 1://p1 win
-                p1.classList.add('win');
-                p2.classList.add('loose');
-                rpslsP1.classList.add('win');
-                rpslsP2.classList.add('loose');
+                iPlayP1.classList.add('win');
+                iPlayP2.classList.add('lose');
+                spanResultsP1.classList.add('win');
+                spanResultsP2.classList.add('lose');
                 ++p1Score;
                 break;
             case 2://p2 win
-                p1.classList.add('loose');
-                p2.classList.add('win');
-                rpslsP1.classList.add('loose');
-                rpslsP2.classList.add('win');
+                iPlayP1.classList.add('lose');
+                iPlayP2.classList.add('win');
+                spanResultsP1.classList.add('lose');
+                spanResultsP2.classList.add('win');
                 ++p2Score;
                 break;
             default:
                 break;
         }
     })
-    .delay(1500)
+    .delay(2000)
     .do(x => {
-        r2.classList.remove('current');
-        r3.classList.add('current');
+        divPlay.classList.remove('current');
+        divResults.classList.add('current');
     })
     .delay(1000)
     .do(x => {
-        rpslsP1Score.textContent = p1Score.toString();
-        rpslsP2Score.textContent = p2Score.toString();
+        spanResultsP1Score.textContent = p1Score.toString();
+        spanResultsP2Score.textContent = p2Score.toString();
     })
     .delay(750)
-    .do(x => r3.classList.remove('current'))
+    .do(x => divResults.classList.remove('current'))
     .subscribe();

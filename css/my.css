@@ -70,32 +70,28 @@ section  p {
 
 
 #rpsls { font-size: 2em; }
-
-#rpslsP1 {margin-right: 1em;}
-#rpslsP2 {margin-left: 1em;}
-
-
 #rpsls > div {
     opacity: 0;
     transition: all ease-in .25s;
 }
-
 .win{color:#09c;}
-.loose{color:pink;}
-.draw{color:orange;}
-
+.lose{color:lightpink;}
+.draw{color:rgba(255,255,255,.2);}
 #rpsls > div.current {
     opacity: 1;
     transition: all ease-in .25s .25s;
 }
-
 #rpsls > :first-child {
-    transform:translateY(100%);
+    transform:translateY(150%);
 }
-
 #rpsls > :nth-child(2) {
+    transform:translateY(50%);
 }
-
+#rpsls > :nth-child(3) {
+    transform:translateY(-50%);
+}
 #rpsls > :last-child {
-    transform:translateY(-100%);
+    transform:translateY(-150%);
 }
+#rpsls > :last-child > span:first-child {margin-right: 1em;}
+#rpsls > :last-child > span:last-child {margin-left: 1em;}
