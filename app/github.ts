@@ -27,7 +27,7 @@ interface GithubUserRepoStats {
     weeks: Array<{ a: number, d: number }>;
 }
 
-let [spanNumRepo, spanNumCommit, spanNumAdd, spanNumDel, spanSize] = <NodeListOf<HTMLSpanElement>>document.querySelectorAll('#github span');
+let [spanNumRepo, spanNumCommit, spanNumAdd, spanNumDel, spanNumChurn, spanSize] = <NodeListOf<HTMLSpanElement>>document.querySelectorAll('#github span');
 let user = 'tdillon';
 let requestInit = { cache: <RequestCache>'no-cache' };  //don't cache fetches.  stats api may give 202 on first hit 
 
@@ -57,5 +57,6 @@ Observable.range(1, 1)
         spanNumCommit.textContent = d.c.toString();
         spanNumAdd.textContent = d.a.toString();
         spanNumDel.textContent = d.d.toString();
+        spanNumChurn.textContent = (d.a - d.d).toString();
         spanSize.textContent = d.s.toString();
     });
