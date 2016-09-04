@@ -8,7 +8,10 @@
     "lite": "lite-server",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "build": "node builder.js"
+
+    "clean": "rm -rf js dist",
+    "compile": "tsc -p ./",
+    "build": "npm run clean && npm run compile && node builder.js"
   },
   "repository": {
     "type": "git",

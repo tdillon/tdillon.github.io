@@ -1,2 +1,4628 @@
-!function(a){function b(a,b,e){return 4===arguments.length?c.apply(this,arguments):void d(a,{declarative:!0,deps:b,declare:e})}function c(a,b,c,e){d(a,{declarative:!1,deps:b,executingRequire:c,execute:e})}function d(a,b){b.name=a,a in o||(o[a]=b),b.normalizedDeps=b.deps}function e(a,b){if(b[a.groupIndex]=b[a.groupIndex]||[],-1==p.call(b[a.groupIndex],a)){b[a.groupIndex].push(a);for(var c=0,d=a.normalizedDeps.length;d>c;c++){var f=a.normalizedDeps[c],g=o[f];if(g&&!g.evaluated){var h=a.groupIndex+(g.declarative!=a.declarative);if(void 0===g.groupIndex||g.groupIndex<h){if(void 0!==g.groupIndex&&(b[g.groupIndex].splice(p.call(b[g.groupIndex],g),1),0==b[g.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");g.groupIndex=h}e(g,b)}}}}function f(a){var b=o[a];b.groupIndex=0;var c=[];e(b,c);for(var d=!!b.declarative==c.length%2,f=c.length-1;f>=0;f--){for(var g=c[f],i=0;i<g.length;i++){var k=g[i];d?h(k):j(k)}d=!d}}function g(a){return s[a]||(s[a]={name:a,dependencies:[],exports:{},importers:[]})}function h(b){if(!b.module){var c=b.module=g(b.name),d=b.module.exports,e=b.declare.call(a,function(a,b){if(c.locked=!0,"object"==typeof a)for(var e in a)d[e]=a[e];else d[a]=b;for(var f=0,g=c.importers.length;g>f;f++){var h=c.importers[f];if(!h.locked)for(var i=0;i<h.dependencies.length;++i)h.dependencies[i]===c&&h.setters[i](d)}return c.locked=!1,b},{id:b.name});c.setters=e.setters,c.execute=e.execute;for(var f=0,i=b.normalizedDeps.length;i>f;f++){var j,k=b.normalizedDeps[f],l=o[k],m=s[k];m?j=m.exports:l&&!l.declarative?j=l.esModule:l?(h(l),m=l.module,j=m.exports):j=n(k),m&&m.importers?(m.importers.push(c),c.dependencies.push(m)):c.dependencies.push(null),c.setters[f]&&c.setters[f](j)}}}function i(a){var b,c=o[a];if(c)c.declarative?m(a,[]):c.evaluated||j(c),b=c.module.exports;else if(b=n(a),!b)throw new Error("Unable to load dependency "+a+".");return(!c||c.declarative)&&b&&b.__useDefault?b.default:b}function j(b){if(!b.module){var c={},d=b.module={exports:c,id:b.name};if(!b.executingRequire)for(var e=0,f=b.normalizedDeps.length;f>e;e++){var g=b.normalizedDeps[e],h=o[g];h&&j(h)}b.evaluated=!0;var l=b.execute.call(a,function(a){for(var c=0,d=b.deps.length;d>c;c++)if(b.deps[c]==a)return i(b.normalizedDeps[c]);throw new TypeError("Module "+a+" not declared as a dependency.")},c,d);l&&(d.exports=l),c=d.exports,c&&c.__esModule?b.esModule=c:b.esModule=k(c)}}function k(b){var c={};if(("object"==typeof b||"function"==typeof b)&&b!==a)if(q)for(var d in b)"default"!==d&&l(c,b,d);else{var e=b&&b.hasOwnProperty;for(var d in b)"default"===d||e&&!b.hasOwnProperty(d)||(c[d]=b[d])}return c.default=b,r(c,"__useDefault",{value:!0}),c}function l(a,b,c){try{var d;(d=Object.getOwnPropertyDescriptor(b,c))&&r(a,c,d)}catch(d){return a[c]=b[c],!1}}function m(b,c){var d=o[b];if(d&&!d.evaluated&&d.declarative){c.push(b);for(var e=0,f=d.normalizedDeps.length;f>e;e++){var g=d.normalizedDeps[e];-1==p.call(c,g)&&(o[g]?m(g,c):n(g))}d.evaluated||(d.evaluated=!0,d.module.execute.call(a))}}function n(a){if(u[a])return u[a];if("@node/"==a.substr(0,6))return u[a]=k(t(a.substr(6)));var b=o[a];if(!b)throw"Module "+a+" not present.";return f(a),m(a,[]),o[a]=void 0,b.declarative&&r(b.module.exports,"__esModule",{value:!0}),u[a]=b.declarative?b.module.exports:b.esModule}var o={},p=Array.prototype.indexOf||function(a){for(var b=0,c=this.length;c>b;b++)if(this[b]===a)return b;return-1},q=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(a){q=!1}var r;!function(){try{Object.defineProperty({},"a",{})&&(r=Object.defineProperty)}catch(a){r=function(a,b,c){try{a[b]=c.value||c.get.call(a)}catch(a){}}}}();var s={},t="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,u={"@empty":{}};return function(a,d,e,f){return function(g){g(function(g){for(var h={_nodeRequire:t,register:b,registerDynamic:c,get:n,set:function(a,b){u[a]=b},newModule:function(a){return a}},i=0;i<d.length;i++)(function(a,b){b&&b.__esModule?u[a]=b:u[a]=k(b)})(d[i],arguments[i]);f(h);var j=n(a[0]);if(a.length>1)for(var i=1;i<a.length;i++)n(a[i]);return e?j.default:j})}}}("undefined"!=typeof self?self:global)(["1"],[],!0,function(a){this.require,this.exports,this.module;a.register("2",[],function(a,b){"use strict";var c,d;b&&b.id;return{setters:[],execute:function(){c=new WeakMap,d=function(){function a(){}return Object.defineProperty(a,"TIE",{get:function(){return 0},enumerable:!0,configurable:!0}),Object.defineProperty(a,"PLAYER1",{get:function(){return 1},enumerable:!0,configurable:!0}),Object.defineProperty(a,"PLAYER2",{get:function(){return 2},enumerable:!0,configurable:!0}),Object.defineProperty(a,"ROCK",{get:function(){return 0},enumerable:!0,configurable:!0}),Object.defineProperty(a,"PAPER",{get:function(){return 1},enumerable:!0,configurable:!0}),Object.defineProperty(a,"SCISSORS",{get:function(){return 2},enumerable:!0,configurable:!0}),Object.defineProperty(a,"LIZARD",{get:function(){return 3},enumerable:!0,configurable:!0}),Object.defineProperty(a,"SPOCK",{get:function(){return 4},enumerable:!0,configurable:!0}),a.getMoveName=function(b){return a._validateMove(b),c.get(a).moves[b]},a.play=function(b,d){a._validateMove(b),a._validateMove(d);var e=c.get(a).rules;return b===d?{outcome:a.TIE,result:a.getMoveName(b)+" vs "+a.getMoveName(d)+" is a tie"}:e[b][d]?{outcome:a.PLAYER1,result:a.getMoveName(b)+" "+e[b][d]+" "+a.getMoveName(d),method:e[b][d],winner:b,loser:d}:{outcome:a.PLAYER2,result:a.getMoveName(d)+" "+e[d][b]+" "+a.getMoveName(b),method:e[d][b],winner:d,loser:b}},a._validateMove=function(a){if("number"!=typeof a)throw new TypeError("Move must be an integer between 0 and 4.  Got "+a);if(a<0||a>4||a%1!==0)throw new RangeError("Move must be an integer between 0 and 4.  Got "+a)},a}(),a("RockPaperScissorsLizardSpock",d),c.set(d,{moves:["rock","paper","scissors","lizard","spock"],rules:[[,,"crushes","crushes"],["covers",,,,"disproves"],[,"cuts",,"decapitates"],[,"eats",,,"poisons"],["vaporizes",,"smashes",,]]})}}}),a.registerDynamic("3",["4","5","6","7","8"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("4"),f=a("5"),g=a("6"),h=a("7"),i=a("8"),j=function(a){function b(b,c,d){void 0===b&&(b=0),a.call(this),this.period=-1,this.dueTime=0,e.isNumeric(c)?this.period=Number(c)<1&&1||Number(c):h.isScheduler(c)&&(d=c),h.isScheduler(d)||(d=g.async),this.scheduler=d,this.dueTime=i.isDate(b)?+b-this.scheduler.now():b}return d(b,a),b.create=function(a,c,d){return void 0===a&&(a=0),new b(a,c,d)},b.dispatch=function(a){var b=a.index,c=a.period,d=a.subscriber,e=this;if(d.next(b),!d.isUnsubscribed){if(c===-1)return d.complete();a.index=b+1,e.schedule(a,c)}},b.prototype._subscribe=function(a){var c=0,d=this,e=d.period,f=d.dueTime,g=d.scheduler;return g.schedule(b.dispatch,f,{index:c,period:e,subscriber:a})},b}(f.Observable);return b.TimerObservable=j,c.exports}),a.registerDynamic("9",["3"],!0,function(a,b,c){"use strict";var d=(this||self,a("3"));return b.timer=d.TimerObservable.create,c.exports}),a.registerDynamic("a",["5","9"],!0,function(a,b,c){"use strict";var d=(this||self,a("5")),e=a("9");return d.Observable.timer=e.timer,c.exports}),a.registerDynamic("8",[],!0,function(a,b,c){"use strict";function d(a){return a instanceof Date&&!isNaN(+a)}this||self;return b.isDate=d,c.exports}),a.registerDynamic("b",["6","8","c","d"],!0,function(a,b,c){"use strict";function d(a,b){void 0===b&&(b=f.async);var c=g.isDate(a),d=c?+a-b.now():Math.abs(a);return this.lift(new j(d,b))}var e=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),f=a("6"),g=a("8"),h=a("c"),i=a("d");b.delay=d;var j=function(){function a(a,b){this.delay=a,this.scheduler=b}return a.prototype.call=function(a,b){return b._subscribe(new k(a,this.delay,this.scheduler))},a}(),k=function(a){function b(b,c,d){a.call(this,b),this.delay=c,this.scheduler=d,this.queue=[],this.active=!1,this.errored=!1}return e(b,a),b.dispatch=function(a){for(var b=a.source,c=b.queue,d=a.scheduler,e=a.destination;c.length>0&&c[0].time-d.now()<=0;)c.shift().notification.observe(e);if(c.length>0){var f=Math.max(0,c[0].time-d.now());this.schedule(a,f)}else b.active=!1},b.prototype._schedule=function(a){this.active=!0,this.add(a.schedule(b.dispatch,this.delay,{source:this,destination:this.destination,scheduler:a}))},b.prototype.scheduleNotification=function(a){if(this.errored!==!0){var b=this.scheduler,c=new l(b.now()+this.delay,a);this.queue.push(c),this.active===!1&&this._schedule(b)}},b.prototype._next=function(a){this.scheduleNotification(i.Notification.createNext(a))},b.prototype._error=function(a){this.errored=!0,this.queue=[],this.destination.error(a)},b.prototype._complete=function(){this.scheduleNotification(i.Notification.createComplete())},b}(h.Subscriber),l=function(){function a(a,b){this.time=a,this.notification=b}return a}();return c.exports}),a.registerDynamic("e",["5","b"],!0,function(a,b,c){"use strict";var d=(this||self,a("5")),e=a("b");return d.Observable.prototype.delay=e.delay,c.exports}),a.registerDynamic("f",["c"],!0,function(a,b,c){"use strict";function d(a,b,c){return this.lift(new g(a,b,c))}var e=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),f=a("c");b._do=d;var g=function(){function a(a,b,c){this.nextOrObserver=a,this.error=b,this.complete=c}return a.prototype.call=function(a,b){return b._subscribe(new h(a,this.nextOrObserver,this.error,this.complete))},a}(),h=function(a){function b(b,c,d,e){a.call(this,b);var g=new f.Subscriber(c,d,e);g.syncErrorThrowable=!0,this.add(g),this.safeSubscriber=g}return e(b,a),b.prototype._next=function(a){var b=this.safeSubscriber;b.next(a),b.syncErrorThrown?this.destination.error(b.syncErrorValue):this.destination.next(a)},b.prototype._error=function(a){var b=this.safeSubscriber;b.error(a),b.syncErrorThrown?this.destination.error(b.syncErrorValue):this.destination.error(a)},b.prototype._complete=function(){var a=this.safeSubscriber;a.complete(),a.syncErrorThrown?this.destination.error(a.syncErrorValue):this.destination.complete()},b}(f.Subscriber);return c.exports}),a.registerDynamic("10",["5","f"],!0,function(a,b,c){"use strict";var d=(this||self,a("5")),e=a("f");return d.Observable.prototype.do=e._do,c.exports}),a.registerDynamic("11",["2","5","a","e","10"],!0,function(a,b,c){"use strict";var d=(this||self,a("2")),e=a("5");a("a"),a("e"),a("10");var f=0,g=0,h=["fa-hand-rock-o","fa-hand-paper-o","fa-hand-scissors-o","fa-hand-lizard-o","fa-hand-spock-o"],i=["win","lose","draw"],j=document.querySelectorAll("#rpsls > div"),k=j[0],l=j[1],m=j[2],n=j[3],o=l.querySelectorAll("div > *"),p=o[0],q=o[1],r=m.querySelectorAll("div > *"),s=r[0],t=r[1],u=r[2],v=n.querySelectorAll("div > span"),w=v[0],x=v[1],y=n.querySelectorAll("span > span"),z=y[0],A=y[1];return e.Observable.timer(0,7e3).do(function(a){k.classList.add("current"),l.classList.remove("current"),m.classList.remove("current"),n.classList.remove("current"),(b=w.classList).remove.apply(b,i),(c=x.classList).remove.apply(c,i);var b,c}).delay(1500).do(function(a){k.classList.remove("current"),l.classList.add("current")}).delay(250).do(function(a){return p.className=q.className="fa "+h[0]}).delay(250).do(function(a){return p.className=q.className="fa "+h[1]}).delay(250).do(function(a){return p.className=q.className="fa "+h[2]}).delay(250).do(function(a){return p.className=q.className="fa "+h[3]}).delay(250).do(function(a){return p.className=q.className="fa "+h[4]}).delay(250).do(function(a){l.classList.remove("current"),m.classList.add("current");var b=Math.floor(5*Math.random()),c=Math.floor(5*Math.random()),e=d.RockPaperScissorsLizardSpock.play(b,c);switch(s.className="fa "+h[b],t.textContent=e.result,u.className="fa "+h[c],e.outcome){case 0:s.classList.add("draw"),u.classList.add("draw"),w.classList.add("draw"),x.classList.add("draw");break;case 1:s.classList.add("win"),u.classList.add("lose"),w.classList.add("win"),x.classList.add("lose"),++f;break;case 2:s.classList.add("lose"),u.classList.add("win"),w.classList.add("lose"),x.classList.add("win"),++g}}).delay(2e3).do(function(a){m.classList.remove("current"),n.classList.add("current")}).delay(1e3).do(function(a){z.textContent=f.toString(),A.textContent=g.toString()}).delay(750).do(function(a){return n.classList.remove("current")}).subscribe(),c.exports}),a.registerDynamic("12",["13"],!0,function(a,b,c){"use strict";var d=(this||self,a("13"));return b.fromPromise=d.PromiseObservable.create,c.exports}),a.registerDynamic("14",["5","12"],!0,function(a,b,c){"use strict";var d=(this||self,a("5")),e=a("12");return d.Observable.fromPromise=e.fromPromise,c.exports}),a.registerDynamic("13",["15","5"],!0,function(a,b,c){"use strict";function d(a){var b=a.value,c=a.subscriber;c.isUnsubscribed||(c.next(b),c.complete())}function e(a){var b=a.err,c=a.subscriber;c.isUnsubscribed||c.error(b)}var f=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),g=a("15"),h=a("5"),i=function(a){function b(b,c){void 0===c&&(c=null),a.call(this),this.promise=b,this.scheduler=c}return f(b,a),b.create=function(a,c){return void 0===c&&(c=null),new b(a,c)},b.prototype._subscribe=function(a){var b=this,c=this.promise,f=this.scheduler;if(null==f)this._isScalar?a.isUnsubscribed||(a.next(this.value),a.complete()):c.then(function(c){b.value=c,b._isScalar=!0,a.isUnsubscribed||(a.next(c),a.complete())},function(b){a.isUnsubscribed||a.error(b)}).then(null,function(a){g.root.setTimeout(function(){throw a})});else if(this._isScalar){if(!a.isUnsubscribed)return f.schedule(d,0,{value:this.value,subscriber:a})}else c.then(function(c){b.value=c,b._isScalar=!0,a.isUnsubscribed||a.add(f.schedule(d,0,{value:c,subscriber:a}))},function(b){a.isUnsubscribed||a.add(f.schedule(e,0,{err:b,subscriber:a}))}).then(null,function(a){g.root.setTimeout(function(){throw a})})},b}(h.Observable);return b.PromiseObservable=i,c.exports}),a.registerDynamic("16",["15","17","18","5","19","1a","1b"],!0,function(a,b,c){"use strict";function d(a){var b=a[n.$$iterator];if(!b&&"string"==typeof a)return new q(a);if(!b&&void 0!==a.length)return new r(a);if(!b)throw new TypeError("Object is not iterable");return a[n.$$iterator]()}function e(a){var b=+a.length;return isNaN(b)?0:0!==b&&f(b)?(b=g(b)*Math.floor(Math.abs(b)),b<=0?0:b>s?s:b):b}function f(a){return"number"==typeof a&&i.root.isFinite(a)}function g(a){var b=+a;return 0===b?b:isNaN(b)?b:b<0?-1:1}var h=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),i=a("15"),j=a("17"),k=a("18"),l=a("5"),m=a("19"),n=a("1a"),o=a("1b"),p=function(a){function b(b,c,e,f){if(a.call(this),null==b)throw new Error("iterator cannot be null.");if(j.isObject(c))this.thisArg=c,this.scheduler=e;else if(m.isFunction(c))this.project=c,this.thisArg=e,this.scheduler=f;else if(null!=c)throw new Error("When provided, `project` must be a function.");this.iterator=d(b)}return h(b,a),b.create=function(a,c,d,e){return new b(a,c,d,e)},b.dispatch=function(a){var b=a.index,c=a.hasError,d=a.thisArg,e=a.project,f=a.iterator,g=a.subscriber;if(c)return void g.error(a.error);var h=f.next();return h.done?void g.complete():(e?(h=k.tryCatch(e).call(d,h.value,b),h===o.errorObject?(a.error=o.errorObject.e,a.hasError=!0):(g.next(h),a.index=b+1)):(g.next(h.value),a.index=b+1),void(g.isUnsubscribed||this.schedule(a)))},b.prototype._subscribe=function(a){var c=0,d=this,e=d.iterator,f=d.project,g=d.thisArg,h=d.scheduler;if(h)return h.schedule(b.dispatch,0,{index:c,thisArg:g,project:f,iterator:e,subscriber:a});for(;;){var i=e.next();if(i.done){a.complete();break}if(f){if(i=k.tryCatch(f).call(g,i.value,c++),i===o.errorObject){a.error(o.errorObject.e);break}a.next(i)}else a.next(i.value);if(a.isUnsubscribed)break}},b}(l.Observable);b.IteratorObservable=p;var q=function(){function a(a,b,c){void 0===b&&(b=0),void 0===c&&(c=a.length),this.str=a,this.idx=b,this.len=c}return a.prototype[n.$$iterator]=function(){return this},a.prototype.next=function(){return this.idx<this.len?{done:!1,value:this.str.charAt(this.idx++)}:{done:!0,value:void 0}},a}(),r=function(){function a(a,b,c){void 0===b&&(b=0),void 0===c&&(c=e(a)),this.arr=a,this.idx=b,this.len=c}return a.prototype[n.$$iterator]=function(){return this},a.prototype.next=function(){return this.idx<this.len?{done:!1,value:this.arr[this.idx++]}:{done:!0,value:void 0}},a}(),s=Math.pow(2,53)-1;return c.exports}),a.registerDynamic("7",[],!0,function(a,b,c){"use strict";function d(a){return a&&"function"==typeof a.schedule}this||self;return b.isScheduler=d,c.exports}),a.registerDynamic("1c",["5","1d","1e","7"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("5"),f=a("1d"),g=a("1e"),h=a("7"),i=function(a){function b(b,c){a.call(this),this.array=b,this.scheduler=c,c||1!==b.length||(this._isScalar=!0,this.value=b[0])}return d(b,a),b.create=function(a,c){return new b(a,c)},b.of=function(){for(var a=[],c=0;c<arguments.length;c++)a[c-0]=arguments[c];var d=a[a.length-1];h.isScheduler(d)?a.pop():d=null;var e=a.length;return e>1?new b(a,d):1===e?new f.ScalarObservable(a[0],d):new g.EmptyObservable(d)},b.dispatch=function(a){var b=a.array,c=a.index,d=a.count,e=a.subscriber;return c>=d?void e.complete():(e.next(b[c]),void(e.isUnsubscribed||(a.index=c+1,this.schedule(a))))},b.prototype._subscribe=function(a){var c=0,d=this.array,e=d.length,f=this.scheduler;if(f)return f.schedule(b.dispatch,0,{array:d,index:c,count:e,subscriber:a});for(var g=0;g<e&&!a.isUnsubscribed;g++)a.next(d[g]);a.complete()},b}(e.Observable);return b.ArrayObservable=i,c.exports}),a.registerDynamic("1d",["5"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("5"),f=function(a){function b(b,c){a.call(this),this.value=b,this.scheduler=c,this._isScalar=!0}return d(b,a),b.create=function(a,c){return new b(a,c)},b.dispatch=function(a){var b=a.done,c=a.value,d=a.subscriber;return b?void d.complete():(d.next(c),void(d.isUnsubscribed||(a.done=!0,this.schedule(a))))},b.prototype._subscribe=function(a){var c=this.value,d=this.scheduler;return d?d.schedule(b.dispatch,0,{done:!1,value:c,subscriber:a}):(a.next(c),void(a.isUnsubscribed||a.complete()))},b}(e.Observable);return b.ScalarObservable=f,c.exports}),a.registerDynamic("1e",["5"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("5"),f=function(a){function b(b){a.call(this),this.scheduler=b}return d(b,a),b.create=function(a){return new b(a)},b.dispatch=function(a){var b=a.subscriber;b.complete()},b.prototype._subscribe=function(a){var c=this.scheduler;return c?c.schedule(b.dispatch,0,{subscriber:a}):void a.complete()},b}(e.Observable);return b.EmptyObservable=f,c.exports}),a.registerDynamic("1f",["5","1d","1e"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("5"),f=a("1d"),g=a("1e"),h=function(a){function b(b,c,d,e){a.call(this),this.arrayLike=b,this.scheduler=e,c||e||1!==b.length||(this._isScalar=!0,this.value=b[0]),c&&(this.mapFn=c.bind(d))}return d(b,a),b.create=function(a,c,d,e){var h=a.length;return 0===h?new g.EmptyObservable:1!==h||c?new b(a,c,d,e):new f.ScalarObservable(a[0],e)},b.dispatch=function(a){var b=a.arrayLike,c=a.index,d=a.length,e=a.mapFn,f=a.subscriber;if(!f.isUnsubscribed){if(c>=d)return void f.complete();var g=e?e(b[c],c):b[c];f.next(g),a.index=c+1,this.schedule(a)}},b.prototype._subscribe=function(a){var c=0,d=this,e=d.arrayLike,f=d.mapFn,g=d.scheduler,h=e.length;if(g)return g.schedule(b.dispatch,0,{arrayLike:e,index:c,length:h,mapFn:f,subscriber:a});for(var i=0;i<h&&!a.isUnsubscribed;i++){var j=f?f(e[i],i):e[i];a.next(j)}a.complete()},b}(e.Observable);return b.ArrayLikeObservable=h,c.exports}),a.registerDynamic("d",["5"],!0,function(a,b,c){"use strict";var d=(this||self,a("5")),e=function(){function a(a,b,c){this.kind=a,this.value=b,this.exception=c,this.hasValue="N"===a}return a.prototype.observe=function(a){switch(this.kind){case"N":return a.next&&a.next(this.value);case"E":return a.error&&a.error(this.exception);case"C":return a.complete&&a.complete()}},a.prototype.do=function(a,b,c){var d=this.kind;switch(d){case"N":return a&&a(this.value);case"E":return b&&b(this.exception);case"C":return c&&c()}},a.prototype.accept=function(a,b,c){return a&&"function"==typeof a.next?this.observe(a):this.do(a,b,c)},a.prototype.toObservable=function(){var a=this.kind;switch(a){case"N":return d.Observable.of(this.value);case"E":return d.Observable.throw(this.exception);case"C":return d.Observable.empty()}},a.createNext=function(b){return"undefined"!=typeof b?new a("N",b):this.undefinedValueNotification},a.createError=function(b){return new a("E",(void 0),b)},a.createComplete=function(){return this.completeNotification},a.completeNotification=new a("C"),a.undefinedValueNotification=new a("N",(void 0)),a}();return b.Notification=e,c.exports}),a.registerDynamic("20",["c","d"],!0,function(a,b,c){"use strict";function d(a,b){return void 0===b&&(b=0),this.lift(new h(a,b))}var e=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),f=a("c"),g=a("d");b.observeOn=d;var h=function(){function a(a,b){void 0===b&&(b=0),this.scheduler=a,this.delay=b}return a.prototype.call=function(a,b){return b._subscribe(new i(a,this.scheduler,this.delay))},a}();b.ObserveOnOperator=h;var i=function(a){function b(b,c,d){void 0===d&&(d=0),a.call(this,b),this.scheduler=c,this.delay=d}return e(b,a),b.dispatch=function(a){var b=a.notification,c=a.destination;b.observe(c)},b.prototype.scheduleMessage=function(a){this.add(this.scheduler.schedule(b.dispatch,this.delay,new j(a,this.destination)))},b.prototype._next=function(a){this.scheduleMessage(g.Notification.createNext(a))},b.prototype._error=function(a){this.scheduleMessage(g.Notification.createError(a))},b.prototype._complete=function(){this.scheduleMessage(g.Notification.createComplete())},b}(f.Subscriber);b.ObserveOnSubscriber=i;var j=function(){function a(a,b){this.notification=a,this.destination=b}return a}();return b.ObserveOnMessage=j,c.exports}),a.registerDynamic("21",["22","19","23","7","13","16","1c","1f","24","1a","5","20"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("22"),f=a("19"),g=a("23"),h=a("7"),i=a("13"),j=a("16"),k=a("1c"),l=a("1f"),m=a("24"),n=a("1a"),o=a("5"),p=a("20"),q=function(a){return a&&"number"==typeof a.length},r=function(a){function b(b,c){a.call(this,null),this.ish=b,this.scheduler=c}return d(b,a),b.create=function(a,c,d,p){var r=null,s=null;if(f.isFunction(c)?(r=p||null,s=c):h.isScheduler(r)&&(r=c),null!=a){if("function"==typeof a[m.$$observable])return a instanceof o.Observable&&!r?a:new b(a,r);if(e.isArray(a))return new k.ArrayObservable(a,r);if(g.isPromise(a))return new i.PromiseObservable(a,r);if("function"==typeof a[n.$$iterator]||"string"==typeof a)return new j.IteratorObservable(a,null,null,r);if(q(a))return new l.ArrayLikeObservable(a,s,d,r)}throw new TypeError((null!==a&&typeof a||a)+" is not observable")},b.prototype._subscribe=function(a){var b=this.ish,c=this.scheduler;return null==c?b[m.$$observable]().subscribe(a):b[m.$$observable]().subscribe(new p.ObserveOnSubscriber(a,c,0))},b}(o.Observable);return b.FromObservable=r,c.exports}),a.registerDynamic("25",["21"],!0,function(a,b,c){"use strict";var d=(this||self,a("21"));return b.from=d.FromObservable.create,c.exports}),a.registerDynamic("26",["5","25"],!0,function(a,b,c){"use strict";var d=(this||self,a("5")),e=a("25");return d.Observable.from=e.from,c.exports}),a.registerDynamic("27",["5"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("5"),f=function(a){function b(b,c,d){a.call(this),this.start=b,this._count=c,this.scheduler=d}return d(b,a),b.create=function(a,c,d){return void 0===a&&(a=0),void 0===c&&(c=0),new b(a,c,d)},b.dispatch=function(a){var b=a.start,c=a.index,d=a.count,e=a.subscriber;return c>=d?void e.complete():(e.next(b),void(e.isUnsubscribed||(a.index=c+1,a.start=b+1,this.schedule(a))))},b.prototype._subscribe=function(a){var c=0,d=this.start,e=this._count,f=this.scheduler;if(f)return f.schedule(b.dispatch,0,{index:c,count:e,start:d,subscriber:a});for(;;){if(c++>=e){a.complete();break}if(a.next(d++),a.isUnsubscribed)break}},b}(e.Observable);return b.RangeObservable=f,c.exports}),a.registerDynamic("28",["27"],!0,function(a,b,c){"use strict";var d=(this||self,a("27"));return b.range=d.RangeObservable.create,c.exports}),a.registerDynamic("29",["5","28"],!0,function(a,b,c){"use strict";var d=(this||self,a("5")),e=a("28");return d.Observable.range=e.range,c.exports}),a.registerDynamic("2a",["2b","2c"],!0,function(a,b,c){"use strict";function d(a,b,c){return void 0===c&&(c=Number.POSITIVE_INFINITY),"number"==typeof b&&(c=b,b=null),this.lift(new h(a,b,c))}var e=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),f=a("2b"),g=a("2c");b.mergeMap=d;var h=function(){function a(a,b,c){void 0===c&&(c=Number.POSITIVE_INFINITY),this.project=a,this.resultSelector=b,this.concurrent=c}return a.prototype.call=function(a,b){return b._subscribe(new i(a,this.project,this.resultSelector,this.concurrent))},a}();b.MergeMapOperator=h;var i=function(a){function b(b,c,d,e){void 0===e&&(e=Number.POSITIVE_INFINITY),a.call(this,b),this.project=c,this.resultSelector=d,this.concurrent=e,this.hasCompleted=!1,this.buffer=[],this.active=0,this.index=0}return e(b,a),b.prototype._next=function(a){this.active<this.concurrent?this._tryNext(a):this.buffer.push(a)},b.prototype._tryNext=function(a){var b,c=this.index++;try{b=this.project(a,c)}catch(a){return void this.destination.error(a)}this.active++,this._innerSub(b,a,c)},b.prototype._innerSub=function(a,b,c){this.add(f.subscribeToResult(this,a,b,c))},b.prototype._complete=function(){this.hasCompleted=!0,0===this.active&&0===this.buffer.length&&this.destination.complete()},b.prototype.notifyNext=function(a,b,c,d,e){this.resultSelector?this._notifyResultSelector(a,b,c,d):this.destination.next(b)},b.prototype._notifyResultSelector=function(a,b,c,d){var e;try{e=this.resultSelector(a,b,c,d)}catch(a){return void this.destination.error(a)}this.destination.next(e)},b.prototype.notifyComplete=function(a){var b=this.buffer;this.remove(a),this.active--,b.length>0?this._next(b.shift()):0===this.active&&this.hasCompleted&&this.destination.complete()},b}(g.OuterSubscriber);return b.MergeMapSubscriber=i,c.exports}),a.registerDynamic("2d",["5","2a"],!0,function(a,b,c){"use strict";var d=(this||self,a("5")),e=a("2a");return d.Observable.prototype.mergeMap=e.mergeMap,d.Observable.prototype.flatMap=e.mergeMap,c.exports}),a.registerDynamic("2e",["c"],!0,function(a,b,c){"use strict";function d(a,b){return this.lift(new g(a,b))}var e=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),f=a("c");b.reduce=d;var g=function(){function a(a,b){this.project=a,this.seed=b}return a.prototype.call=function(a,b){return b._subscribe(new h(a,this.project,this.seed))},a}();b.ReduceOperator=g;var h=function(a){function b(b,c,d){a.call(this,b),this.hasValue=!1,this.acc=d,this.project=c,this.hasSeed="undefined"!=typeof d}return e(b,a),b.prototype._next=function(a){this.hasValue||(this.hasValue=this.hasSeed)?this._tryReduce(a):(this.acc=a,this.hasValue=!0)},b.prototype._tryReduce=function(a){var b;try{b=this.project(this.acc,a)}catch(a){return void this.destination.error(a)}this.acc=b},b.prototype._complete=function(){(this.hasValue||this.hasSeed)&&this.destination.next(this.acc),this.destination.complete()},b}(f.Subscriber);return b.ReduceSubscriber=h,c.exports}),a.registerDynamic("2f",["5","2e"],!0,function(a,b,c){"use strict";var d=(this||self,a("5")),e=a("2e");return d.Observable.prototype.reduce=e.reduce,c.exports}),a.registerDynamic("30",["c"],!0,function(a,b,c){"use strict";function d(a,b){if("function"!=typeof a)throw new TypeError("argument is not a function. Are you looking for `mapTo()`?");return this.lift(new g(a,b))}var e=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),f=a("c");b.map=d;var g=function(){function a(a,b){this.project=a,this.thisArg=b}return a.prototype.call=function(a,b){return b._subscribe(new h(a,this.project,this.thisArg))},a}(),h=function(a){function b(b,c,d){a.call(this,b),this.project=c,this.count=0,this.thisArg=d||this}return e(b,a),b.prototype._next=function(a){var b;try{b=this.project.call(this.thisArg,a,this.count++)}catch(a){return void this.destination.error(a)}this.destination.next(b)},b}(f.Subscriber);return c.exports}),a.registerDynamic("31",["5","30"],!0,function(a,b,c){"use strict";var d=(this||self,a("5")),e=a("30");return d.Observable.prototype.map=e.map,c.exports}),a.registerDynamic("32",["33"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("33"),f=function(a){function b(b,c){a.call(this),this.subject=b,this.observer=c,this.isUnsubscribed=!1}return d(b,a),b.prototype.unsubscribe=function(){if(!this.isUnsubscribed){this.isUnsubscribed=!0;var a=this.subject,b=a.observers;if(this.subject=null,b&&0!==b.length&&!a.isUnsubscribed){var c=b.indexOf(this.observer);c!==-1&&b.splice(c,1)}}},b}(e.Subscription);return b.SubjectSubscription=f,c.exports}),a.registerDynamic("34",[],!0,function(a,b,c){"use strict";function d(a){throw a}this||self;return b.throwError=d,c.exports}),a.registerDynamic("35",[],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=function(a){function b(){a.call(this,"object unsubscribed"),this.name="ObjectUnsubscribedError"}return d(b,a),b}(Error);return b.ObjectUnsubscribedError=e,c.exports}),a.registerDynamic("36",["5","c","33","32","37","34","35"],!0,function(a,b,c){
-"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("5"),f=a("c"),g=a("33"),h=a("32"),i=a("37"),j=a("34"),k=a("35"),l=function(a){function b(b,c){a.call(this),this.destination=b,this.source=c,this.observers=[],this.isUnsubscribed=!1,this.isStopped=!1,this.hasErrored=!1,this.dispatching=!1,this.hasCompleted=!1,this.source=c}return d(b,a),b.prototype.lift=function(a){var c=new b(this.destination||this,this);return c.operator=a,c},b.prototype.add=function(a){return g.Subscription.prototype.add.call(this,a)},b.prototype.remove=function(a){g.Subscription.prototype.remove.call(this,a)},b.prototype.unsubscribe=function(){g.Subscription.prototype.unsubscribe.call(this)},b.prototype._subscribe=function(a){if(this.source)return this.source.subscribe(a);if(!a.isUnsubscribed){if(this.hasErrored)return a.error(this.errorValue);if(this.hasCompleted)return a.complete();this.throwIfUnsubscribed();var b=new h.SubjectSubscription(this,a);return this.observers.push(a),b}},b.prototype._unsubscribe=function(){this.source=null,this.isStopped=!0,this.observers=null,this.destination=null},b.prototype.next=function(a){this.throwIfUnsubscribed(),this.isStopped||(this.dispatching=!0,this._next(a),this.dispatching=!1,this.hasErrored?this._error(this.errorValue):this.hasCompleted&&this._complete())},b.prototype.error=function(a){this.throwIfUnsubscribed(),this.isStopped||(this.isStopped=!0,this.hasErrored=!0,this.errorValue=a,this.dispatching||this._error(a))},b.prototype.complete=function(){this.throwIfUnsubscribed(),this.isStopped||(this.isStopped=!0,this.hasCompleted=!0,this.dispatching||this._complete())},b.prototype.asObservable=function(){var a=new m(this);return a},b.prototype._next=function(a){this.destination?this.destination.next(a):this._finalNext(a)},b.prototype._finalNext=function(a){for(var b=-1,c=this.observers.slice(0),d=c.length;++b<d;)c[b].next(a)},b.prototype._error=function(a){this.destination?this.destination.error(a):this._finalError(a)},b.prototype._finalError=function(a){var b=-1,c=this.observers;if(this.observers=null,this.isUnsubscribed=!0,c)for(var d=c.length;++b<d;)c[b].error(a);this.isUnsubscribed=!1,this.unsubscribe()},b.prototype._complete=function(){this.destination?this.destination.complete():this._finalComplete()},b.prototype._finalComplete=function(){var a=-1,b=this.observers;if(this.observers=null,this.isUnsubscribed=!0,b)for(var c=b.length;++a<c;)b[a].complete();this.isUnsubscribed=!1,this.unsubscribe()},b.prototype.throwIfUnsubscribed=function(){this.isUnsubscribed&&j.throwError(new k.ObjectUnsubscribedError)},b.prototype[i.$$rxSubscriber]=function(){return new f.Subscriber(this)},b.create=function(a,c){return new b(a,c)},b}(e.Observable);b.Subject=l;var m=function(a){function b(b){a.call(this),this.source=b}return d(b,a),b}(e.Observable);return c.exports}),a.registerDynamic("2c",["c"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("c"),f=function(a){function b(){a.apply(this,arguments)}return d(b,a),b.prototype.notifyNext=function(a,b,c,d,e){this.destination.next(b)},b.prototype.notifyError=function(a,b){this.destination.error(a)},b.prototype.notifyComplete=function(a){this.destination.complete()},b}(e.Subscriber);return b.OuterSubscriber=f,c.exports}),a.registerDynamic("23",[],!0,function(a,b,c){"use strict";function d(a){return a&&"function"!=typeof a.subscribe&&"function"==typeof a.then}this||self;return b.isPromise=d,c.exports}),a.registerDynamic("1a",["15"],!0,function(a,b,c){"use strict";var d=(this||self,a("15")),e=d.root.Symbol;if("function"==typeof e)e.iterator?b.$$iterator=e.iterator:"function"==typeof e.for&&(b.$$iterator=e.for("iterator"));else if(d.root.Set&&"function"==typeof(new d.root.Set)["@@iterator"])b.$$iterator="@@iterator";else if(d.root.Map)for(var f=Object.getOwnPropertyNames(d.root.Map.prototype),g=0;g<f.length;++g){var h=f[g];if("entries"!==h&&"size"!==h&&d.root.Map.prototype[h]===d.root.Map.prototype.entries){b.$$iterator=h;break}}else b.$$iterator="@@iterator";return c.exports}),a.registerDynamic("38",["c"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("c"),f=function(a){function b(b,c,d){a.call(this),this.parent=b,this.outerValue=c,this.outerIndex=d,this.index=0}return d(b,a),b.prototype._next=function(a){this.parent.notifyNext(this.outerValue,a,this.outerIndex,this.index++,this)},b.prototype._error=function(a){this.parent.notifyError(a,this),this.unsubscribe()},b.prototype._complete=function(){this.parent.notifyComplete(this),this.unsubscribe()},b}(e.Subscriber);return b.InnerSubscriber=f,c.exports}),a.registerDynamic("2b",["15","22","23","5","1a","24","38"],!0,function(a,b,c){"use strict";function d(a,b,c,d){var l=new k.InnerSubscriber(a,c,d);if(!l.isUnsubscribed){if(b instanceof h.Observable)return b._isScalar?(l.next(b.value),void l.complete()):b.subscribe(l);if(f.isArray(b)){for(var m=0,n=b.length;m<n&&!l.isUnsubscribed;m++)l.next(b[m]);l.isUnsubscribed||l.complete()}else{if(g.isPromise(b))return b.then(function(a){l.isUnsubscribed||(l.next(a),l.complete())},function(a){return l.error(a)}).then(null,function(a){e.root.setTimeout(function(){throw a})}),l;if("function"==typeof b[i.$$iterator]){for(var o=0,p=b;o<p.length;o++){var q=p[o];if(l.next(q),l.isUnsubscribed)break}l.isUnsubscribed||l.complete()}else if("function"==typeof b[j.$$observable]){var r=b[j.$$observable]();if("function"==typeof r.subscribe)return r.subscribe(new k.InnerSubscriber(a,c,d));l.error("invalid observable")}else l.error(new TypeError("unknown type returned"))}}}var e=(this||self,a("15")),f=a("22"),g=a("23"),h=a("5"),i=a("1a"),j=a("24"),k=a("38");return b.subscribeToResult=d,c.exports}),a.registerDynamic("39",["36","18","1b","2c","2b"],!0,function(a,b,c){"use strict";function d(a){return this.lift(new k(a,this))}var e=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),f=a("36"),g=a("18"),h=a("1b"),i=a("2c"),j=a("2b");b.retryWhen=d;var k=function(){function a(a,b){this.notifier=a,this.source=b}return a.prototype.call=function(a,b){return b._subscribe(new l(a,this.notifier,this.source))},a}(),l=function(a){function b(b,c,d){a.call(this,b),this.notifier=c,this.source=d}return e(b,a),b.prototype.error=function(b){if(!this.isStopped){var c=this.errors,d=this.retries,e=this.retriesSubscription;if(d)this.errors=null,this.retriesSubscription=null;else{if(c=new f.Subject,d=g.tryCatch(this.notifier)(c),d===h.errorObject)return a.prototype.error.call(this,h.errorObject.e);e=j.subscribeToResult(this,d)}this.unsubscribe(),this.isUnsubscribed=!1,this.errors=c,this.retries=d,this.retriesSubscription=e,c.next(b)}},b.prototype._unsubscribe=function(){var a=this,b=a.errors,c=a.retriesSubscription;b&&(b.unsubscribe(),this.errors=null),c&&(c.unsubscribe(),this.retriesSubscription=null),this.retries=null},b.prototype.notifyNext=function(a,b,c,d,e){var f=this,g=f.errors,h=f.retries,i=f.retriesSubscription;this.errors=null,this.retries=null,this.retriesSubscription=null,this.unsubscribe(),this.isStopped=!1,this.isUnsubscribed=!1,this.errors=g,this.retries=h,this.retriesSubscription=i,this.source.subscribe(this)},b}(i.OuterSubscriber);return c.exports}),a.registerDynamic("3a",["5","39"],!0,function(a,b,c){"use strict";var d=(this||self,a("5")),e=a("39");return d.Observable.prototype.retryWhen=e.retryWhen,c.exports}),a.registerDynamic("3b",["5","14","26","29","2d","2f","31","3a"],!0,function(a,b,c){"use strict";var d=(this||self,a("5"));a("14"),a("26"),a("29"),a("2d"),a("2f"),a("31"),a("3a");var e=document.querySelectorAll("#github span"),f=e[0],g=e[1],h=e[2],i=e[3],j=e[4],k=e[5],l="tdillon",m={cache:"no-cache"};return d.Observable.range(1,1).mergeMap(function(){return d.Observable.fromPromise(fetch("https://api.github.com/users/"+l+"/repos",m))}).mergeMap(function(a){if(200!==a.status)throw a;return a.json()}).retryWhen(function(a){return a.delay(5e3)}).mergeMap(function(a){return d.Observable.from(a)}).mergeMap(function(a){return d.Observable.range(1,1).mergeMap(function(){return d.Observable.fromPromise(fetch("https://api.github.com/repos/"+l+"/"+a.name+"/stats/contributors",m))}).mergeMap(function(a){if(200!==a.status)throw a;return a.json()}).retryWhen(function(a){return a.delay(5e3)}).map(function(b){var c=b.find(function(a){return a.author.login===l});return c.size=a.size,c})}).reduce(function(a,b){return a.a+=b.weeks.reduce(function(a,b){return a+=b.a},0),a.c+=b.total,a.d+=b.weeks.reduce(function(a,b){return a+=b.d},0),a.r+=1,a.s+=b.size,a},{r:0,c:0,a:0,d:0,s:0}).subscribe(function(a){f.textContent=a.r.toString(),g.textContent=a.c.toString(),h.textContent=a.a.toString(),i.textContent=a.d.toString(),j.textContent=(a.a-a.d).toString(),k.textContent=a.s.toString()}),c.exports}),a.registerDynamic("3c",[],!0,function(a,b,c){"use strict";this||self;!function(a){a[a.ZERO=0]="ZERO",a[a.ONE=1]="ONE",a[a.TWO=2]="TWO",a[a.THREE=3]="THREE",a[a.FOUR=4]="FOUR",a[a.FIVE=5]="FIVE",a[a.SIX=6]="SIX",a[a.SEVEN=7]="SEVEN",a[a.EIGHT=8]="EIGHT",a[a.NINE=9]="NINE",a[a.BLANK=10]="BLANK",a[a.D=11]="D"}(b.Digit||(b.Digit={}));var d=b.Digit,e=function(){function a(){this.on=!1,this.points=[{x:0,y:0},{x:0,y:0},{x:0,y:0},{x:0,y:0},{x:0,y:0},{x:0,y:0}]}return Object.defineProperty(a.prototype,"off",{get:function(){return!this.on},enumerable:!0,configurable:!0}),a}();b.Segment=e;var f=function(){function a(a){var b=void 0===a?{}:a,c=b.height,f=b.width,g=b.angle,h=void 0===g?10:g,i=b.ratioLtoW,j=void 0===i?4:i,k=b.ratioLtoS,l=void 0===k?32:k,m=b.digit,n=void 0===m?d.BLANK:m;this._horizontalSegmentGeometry=[{x:0,y:0},{x:0,y:0},{x:0,y:0},{x:0,y:0},{x:0,y:0},{x:0,y:0}],this._verticalSegmentGeometry=[{x:0,y:0},{x:0,y:0},{x:0,y:0},{x:0,y:0},{x:0,y:0},{x:0,y:0}],this._translations=[{x:0,y:0,a:this._horizontalSegmentGeometry},{x:0,y:0,a:this._verticalSegmentGeometry},{x:0,y:0,a:this._verticalSegmentGeometry},{x:0,y:0,a:this._horizontalSegmentGeometry},{x:0,y:0,a:this._verticalSegmentGeometry},{x:0,y:0,a:this._verticalSegmentGeometry},{x:0,y:0,a:this._horizontalSegmentGeometry}],this.segments=[new e,new e,new e,new e,new e,new e,new e],this._angleDegree=h,this.digit=n,this._ratioLtoW=j,this._ratioLtoS=l,this._height=this._width=100,this._isHeightFixed=!0,void 0!==c?this._height=c:void 0!==f&&(this._width=f,this._isHeightFixed=!1),this._positionSegments()}return a.prototype._checkConfig=function(){var a,b;if(a=this._height,b=1*a,b!=a||"string"==typeof a&&""===a.toString().trim())throw new TypeError("Invalid value ("+a+") for height, not a number.");if(b<=0)throw new RangeError("Invalid value ("+b+") for height, must be greater than 0.");if(!isFinite(b))throw new RangeError("Invalid value ("+b+") for height, must be finite.");if(this._height=b,a=this._width,b=1*a,b!=a||"string"==typeof a&&""===a.toString().trim())throw new TypeError("Invalid value ("+a+") for width, not a number.");if(b<=0)throw new RangeError("Invalid value ("+b+") for width, must be greater than 0.");if(!isFinite(b))throw new RangeError("Invalid value ("+b+") for width, must be finite.");if(this._width=b,a=this._angleDegree,b=1*a,b!=a||"string"==typeof a&&""===a.toString().trim())throw new TypeError("Invalid value ("+a+") for angle, not a number.");if(b<=-90||b>=90)throw new RangeError("Invalid value ("+b+") for angle, must be between 90 and -90 degrees.");if(this._angleDegree=b,a=this._ratioLtoW,b=1*a,b!=a||"string"==typeof a&&""===a.toString().trim())throw new TypeError("Invalid value ("+a+") for ratioLtoW, not a number.");if(b<1)throw new RangeError("Invalid value ("+b+") for ratioLtoW, must be at least 1.");if(!isFinite(b))throw new RangeError("Invalid value ("+b+") for ratioLtoW, must be finite.");if(this._ratioLtoW=b,a=this._ratioLtoS,b=1*a,b!=a||"string"==typeof a&&""===a.toString().trim())throw new TypeError("Invalid value ("+a+") for ratioLtoS, not a number.");if(b<=0)throw new RangeError("Invalid value ("+b+") for ratioLtoS, must be greater than 0.");if(!isFinite(b))throw new RangeError("Invalid value ("+b+") for ratioLtoS, must be finite.");this._ratioLtoS=b},a.prototype._calculateSegmentGeometry=function(){this._angleRadian=this._angleDegree*Math.PI/180,this._segmentEndAngle=(Math.PI/2-this._angleRadian)/2,this._isHeightFixed?this._segmentLength=this._height/(1/this._ratioLtoW+2*Math.cos(this._angleRadian)+2*(Math.sin(this._segmentEndAngle)+Math.cos(this._segmentEndAngle))/this._ratioLtoS):this._segmentLength=this._width/(2*Math.sin(Math.abs(this._angleRadian))+2*Math.cos(this._angleDegree>=0?this._segmentEndAngle:Math.PI/2-this._segmentEndAngle)/this._ratioLtoS+1+Math.tan(this._angleDegree>=0?this._segmentEndAngle:Math.PI/2-this._segmentEndAngle)/this._ratioLtoW),this._spacing=this._segmentLength/this.ratioLtoS;var a=this._segmentLength/this.ratioLtoW;this._halfSegmentWidth=a/2,this._segmentHorizontalShiftDistance=this._halfSegmentWidth*Math.tan(this._angleDegree>=0?this._segmentEndAngle:Math.PI/2-this._segmentEndAngle),this._isHeightFixed?this._width=2*this._segmentLength*Math.sin(Math.abs(this._angleRadian))+2*this._spacing*Math.cos(this._angleDegree>=0?this._segmentEndAngle:Math.PI/2-this._segmentEndAngle)+this._segmentLength+2*this._segmentHorizontalShiftDistance:this._height=a+2*this._segmentLength*Math.cos(this._angleRadian)+2*this._spacing*(Math.sin(this._segmentEndAngle)+Math.cos(this._segmentEndAngle));var b=this._halfSegmentWidth,c=this._segmentLength,d=Math.tan(this._segmentEndAngle);if(this._horizontalSegmentGeometry[1].x=b/d,this._horizontalSegmentGeometry[1].y=this._horizontalSegmentGeometry[2].y=-b,this._horizontalSegmentGeometry[2].x=c-b*d,this._horizontalSegmentGeometry[3].x=c,this._horizontalSegmentGeometry[4].x=c-b/d,this._horizontalSegmentGeometry[4].y=this._horizontalSegmentGeometry[5].y=b,this._horizontalSegmentGeometry[5].x=b*d,this._horizontalSegmentGeometry[1].x>this._horizontalSegmentGeometry[2].x)throw new RangeError("This digit configuration produces invalid geometry.  angle: "+this._angleDegree+",   ratioLtoW: "+this._ratioLtoW+",   ratioLtoS: "+this._ratioLtoS);for(var e=0,f=void 0,g=void 0;(f=this._horizontalSegmentGeometry[e])&&(g=this._verticalSegmentGeometry[e]);++e)g.x=f.x,g.y=-f.y;for(var h=this._angleRadian+Math.PI/2,i=0,j=this._verticalSegmentGeometry;i<j.length;i++){var k=j[i],l=k.x,m=k.y;k.x=l*Math.cos(h)-m*Math.sin(h),k.y=l*Math.sin(h)+m*Math.cos(h)}},a.prototype._positionSegments=function(){this._checkConfig(),this._calculateSegmentGeometry();var a=this._segmentLength,b=this._spacing*Math.cos(this._segmentEndAngle),c=this._spacing*Math.sin(this._segmentEndAngle),d=this._translations;d[6].x=this._segmentHorizontalShiftDistance+a*Math.sin(Math.abs(this._angleRadian))+(this._angleDegree>=0?b:c),d[5].x=d[6].x-c+a*Math.sin(this._angleRadian),d[0].x=d[5].x+b,d[1].x=d[6].x+a+b+a*Math.sin(this._angleRadian),d[2].x=d[6].x+a+c,d[3].x=d[6].x+(c-b)-a*Math.sin(this._angleRadian),d[4].x=d[4].x=d[6].x-b,d[0].y=this._halfSegmentWidth,d[1].y=d[0].y+b,d[5].y=d[0].y+c,d[6].y=d[5].y+a*Math.cos(this._angleRadian)+b,d[2].y=d[6].y+b,d[4].y=d[6].y+c,d[3].y=d[4].y+a*Math.cos(this._angleRadian)+b;for(var e=0,f=void 0,g=void 0;(f=this.segments[e])&&(g=d[e]);++e)for(var h=0,i=void 0,j=void 0;(i=f.points[h])&&(j=g.a[h]);++h)i.x=j.x+g.x,i.y=j.y+g.y},a.prototype._set=function(a,b){var c=this[a];try{this[a]=b,this._positionSegments()}catch(b){throw this[a]=c,this._positionSegments(),b}},Object.defineProperty(a.prototype,"angle",{get:function(){return this._angleDegree},set:function(a){this._set("_angleDegree",a)},enumerable:!0,configurable:!0}),Object.defineProperty(a.prototype,"ratioLtoW",{get:function(){return this._ratioLtoW},set:function(a){this._set("_ratioLtoW",a)},enumerable:!0,configurable:!0}),Object.defineProperty(a.prototype,"ratioLtoS",{get:function(){return this._ratioLtoS},set:function(a){this._set("_ratioLtoS",a)},enumerable:!0,configurable:!0}),Object.defineProperty(a.prototype,"digit",{get:function(){return this._digit},set:function(b){var c=1*b;if(c!=b||"string"==typeof b&&""===b.toString().trim())throw new TypeError("Invalid value ("+b+") for digit, not a Digit.");if(void 0===d[c])throw new RangeError("Invalid value ("+c+") for digit, must be a Digit.");this._digit=c;for(var e=0,f=void 0;f=this.segments[e];++e)f.on=a.matrix[this._digit][e]},enumerable:!0,configurable:!0}),Object.defineProperty(a.prototype,"height",{get:function(){return this._height},set:function(a){var b=this._isHeightFixed;this._isHeightFixed=!0;try{this._set("_height",a)}catch(a){throw this._isHeightFixed=b,a}},enumerable:!0,configurable:!0}),Object.defineProperty(a.prototype,"width",{get:function(){return this._width},set:function(a){var b=this._isHeightFixed;this._isHeightFixed=!1;try{this._set("_width",a)}catch(a){throw this._isHeightFixed=b,a}},enumerable:!0,configurable:!0}),Object.defineProperty(a.prototype,"isHeightFixed",{get:function(){return this._isHeightFixed},set:function(a){this._isHeightFixed=!!a},enumerable:!0,configurable:!0}),Object.defineProperty(a.prototype,"isWidthFixed",{get:function(){return!this.isHeightFixed},set:function(a){this._isHeightFixed=!a},enumerable:!0,configurable:!0}),a.matrix=[[!0,!0,!0,!0,!0,!0,!1],[!1,!0,!0,!1,!1,!1,!1],[!0,!0,!1,!0,!0,!1,!0],[!0,!0,!0,!0,!1,!1,!0],[!1,!0,!0,!1,!1,!0,!0],[!0,!1,!0,!0,!1,!0,!0],[!0,!1,!0,!0,!0,!0,!0],[!0,!0,!0,!1,!1,!1,!1],[!0,!0,!0,!0,!0,!0,!0],[!0,!0,!0,!0,!1,!0,!0],[!1,!1,!1,!1,!1,!1,!1],[!1,!0,!0,!0,!0,!1,!0]],a}();return b.Seven=f,c.exports}),a.registerDynamic("4",["22"],!0,function(a,b,c){"use strict";function d(a){return!e.isArray(a)&&a-parseFloat(a)+1>=0}var e=(this||self,a("22"));return b.isNumeric=d,c.exports}),a.registerDynamic("24",["15"],!0,function(a,b,c){"use strict";var d=(this||self,a("15")),e=d.root.Symbol;return"function"==typeof e?e.observable?b.$$observable=e.observable:("function"==typeof e.for?b.$$observable=e.for("observable"):b.$$observable=e("observable"),e.observable=b.$$observable):b.$$observable="@@observable",c.exports}),a.registerDynamic("3d",[],!0,function(a,b,c){"use strict";this||self;return b.empty={isUnsubscribed:!0,next:function(a){},error:function(a){throw a},complete:function(){}},c.exports}),a.registerDynamic("c",["19","33","37","3d"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("19"),f=a("33"),g=a("37"),h=a("3d"),i=function(a){function b(c,d,e){switch(a.call(this),this.syncErrorValue=null,this.syncErrorThrown=!1,this.syncErrorThrowable=!1,this.isStopped=!1,arguments.length){case 0:this.destination=h.empty;break;case 1:if(!c){this.destination=h.empty;break}if("object"==typeof c){c instanceof b?(this.destination=c,this.destination.add(this)):(this.syncErrorThrowable=!0,this.destination=new j(this,c));break}default:this.syncErrorThrowable=!0,this.destination=new j(this,c,d,e)}}return d(b,a),b.create=function(a,c,d){var e=new b(a,c,d);return e.syncErrorThrowable=!1,e},b.prototype.next=function(a){this.isStopped||this._next(a)},b.prototype.error=function(a){this.isStopped||(this.isStopped=!0,this._error(a))},b.prototype.complete=function(){this.isStopped||(this.isStopped=!0,this._complete())},b.prototype.unsubscribe=function(){this.isUnsubscribed||(this.isStopped=!0,a.prototype.unsubscribe.call(this))},b.prototype._next=function(a){this.destination.next(a)},b.prototype._error=function(a){this.destination.error(a),this.unsubscribe()},b.prototype._complete=function(){this.destination.complete(),this.unsubscribe()},b.prototype[g.$$rxSubscriber]=function(){return this},b}(f.Subscription);b.Subscriber=i;var j=function(a){function b(b,c,d,f){a.call(this),this._parent=b;var g,h=this;e.isFunction(c)?g=c:c&&(h=c,g=c.next,d=c.error,f=c.complete,e.isFunction(h.unsubscribe)&&this.add(h.unsubscribe.bind(h)),h.unsubscribe=this.unsubscribe.bind(this)),this._context=h,this._next=g,this._error=d,this._complete=f}return d(b,a),b.prototype.next=function(a){if(!this.isStopped&&this._next){var b=this._parent;b.syncErrorThrowable?this.__tryOrSetError(b,this._next,a)&&this.unsubscribe():this.__tryOrUnsub(this._next,a)}},b.prototype.error=function(a){if(!this.isStopped){var b=this._parent;if(this._error)b.syncErrorThrowable?(this.__tryOrSetError(b,this._error,a),this.unsubscribe()):(this.__tryOrUnsub(this._error,a),this.unsubscribe());else{if(!b.syncErrorThrowable)throw this.unsubscribe(),a;b.syncErrorValue=a,b.syncErrorThrown=!0,this.unsubscribe()}}},b.prototype.complete=function(){if(!this.isStopped){var a=this._parent;this._complete?a.syncErrorThrowable?(this.__tryOrSetError(a,this._complete),this.unsubscribe()):(this.__tryOrUnsub(this._complete),this.unsubscribe()):this.unsubscribe()}},b.prototype.__tryOrUnsub=function(a,b){try{a.call(this._context,b)}catch(a){throw this.unsubscribe(),a}},b.prototype.__tryOrSetError=function(a,b,c){try{b.call(this._context,c)}catch(b){return a.syncErrorValue=b,a.syncErrorThrown=!0,!0}return!1},b.prototype._unsubscribe=function(){var a=this._parent;this._context=null,this._parent=null,a.unsubscribe()},b}(i);return c.exports}),a.registerDynamic("37",["15"],!0,function(a,b,c){"use strict";var d=(this||self,a("15")),e=d.root.Symbol;return b.$$rxSubscriber="function"==typeof e&&"function"==typeof e.for?e.for("rxSubscriber"):"@@rxSubscriber",c.exports}),a.registerDynamic("3e",["c","37"],!0,function(a,b,c){"use strict";function d(a,b,c){if(a&&"object"==typeof a){if(a instanceof e.Subscriber)return a;if("function"==typeof a[f.$$rxSubscriber])return a[f.$$rxSubscriber]()}return new e.Subscriber(a,b,c)}var e=(this||self,a("c")),f=a("37");return b.toSubscriber=d,c.exports}),a.registerDynamic("5",["15","24","3e"],!0,function(a,b,c){"use strict";var d=(this||self,a("15")),e=a("24"),f=a("3e"),g=function(){function a(a){this._isScalar=!1,a&&(this._subscribe=a)}return a.prototype.lift=function(b){var c=new a;return c.source=this,c.operator=b,c},a.prototype.subscribe=function(a,b,c){var d=this.operator,e=f.toSubscriber(a,b,c);if(e.add(d?d.call(e,this):this._subscribe(e)),e.syncErrorThrowable&&(e.syncErrorThrowable=!1,e.syncErrorThrown))throw e.syncErrorValue;return e},a.prototype.forEach=function(a,b){var c=this;if(b||(d.root.Rx&&d.root.Rx.config&&d.root.Rx.config.Promise?b=d.root.Rx.config.Promise:d.root.Promise&&(b=d.root.Promise)),!b)throw new Error("no Promise impl found");return new b(function(b,d){var e=c.subscribe(function(b){if(e)try{a(b)}catch(a){d(a),e.unsubscribe()}else a(b)},d,b)})},a.prototype._subscribe=function(a){return this.source.subscribe(a)},a.prototype[e.$$observable]=function(){return this},a.create=function(b){return new a(b)},a}();return b.Observable=g,c.exports}),a.registerDynamic("3f",["40"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("40"),f=function(a){function b(){a.apply(this,arguments)}return d(b,a),b.prototype._schedule=function(b,c){if(void 0===c&&(c=0),c>0)return a.prototype._schedule.call(this,b,c);this.delay=c,this.state=b;var d=this.scheduler;return d.actions.push(this),d.flush(),this},b}(e.FutureAction);return b.QueueAction=f,c.exports}),a.registerDynamic("15",[],!0,function(a,b,c){"use strict";var d=this||self,e={boolean:!1,function:!0,object:!0,number:!1,string:!1,undefined:!1};b.root=e[typeof self]&&self||e[typeof window]&&window;var f=(e[typeof b]&&b&&!b.nodeType&&b,e[typeof c]&&c&&!c.nodeType&&c,e[typeof d]&&d);return!f||f.global!==f&&f.window!==f||(b.root=f),c.exports}),a.registerDynamic("22",[],!0,function(a,b,c){"use strict";this||self;return b.isArray=Array.isArray||function(a){return a&&"number"==typeof a.length},c.exports}),a.registerDynamic("17",[],!0,function(a,b,c){"use strict";function d(a){return null!=a&&"object"==typeof a}this||self;return b.isObject=d,c.exports}),a.registerDynamic("19",[],!0,function(a,b,c){"use strict";function d(a){return"function"==typeof a}this||self;return b.isFunction=d,c.exports}),a.registerDynamic("18",["1b"],!0,function(a,b,c){"use strict";function d(){try{return f.apply(this,arguments)}catch(a){return g.errorObject.e=a,g.errorObject}}function e(a){return f=a,d}var f,g=(this||self,a("1b"));return b.tryCatch=e,c.exports}),a.registerDynamic("1b",[],!0,function(a,b,c){"use strict";this||self;return b.errorObject={e:{}},c.exports}),a.registerDynamic("41",[],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=function(a){function b(b){a.call(this),this.errors=b,this.name="UnsubscriptionError",this.message=b?b.length+" errors occurred during unsubscription:\n"+b.map(function(a,b){return b+1+") "+a.toString()}).join("\n"):""}return d(b,a),b}(Error);return b.UnsubscriptionError=e,c.exports}),a.registerDynamic("33",["22","17","19","18","1b","41"],!0,function(a,b,c){"use strict";var d=(this||self,a("22")),e=a("17"),f=a("19"),g=a("18"),h=a("1b"),i=a("41"),j=function(){function a(a){this.isUnsubscribed=!1,a&&(this._unsubscribe=a)}return a.prototype.unsubscribe=function(){var a,b=!1;if(!this.isUnsubscribed){this.isUnsubscribed=!0;var c=this,j=c._unsubscribe,k=c._subscriptions;if(this._subscriptions=null,f.isFunction(j)){var l=g.tryCatch(j).call(this);l===h.errorObject&&(b=!0,(a=a||[]).push(h.errorObject.e))}if(d.isArray(k))for(var m=-1,n=k.length;++m<n;){var o=k[m];if(e.isObject(o)){var l=g.tryCatch(o.unsubscribe).call(o);if(l===h.errorObject){b=!0,a=a||[];var p=h.errorObject.e;p instanceof i.UnsubscriptionError?a=a.concat(p.errors):a.push(p)}}}if(b)throw new i.UnsubscriptionError(a)}},a.prototype.add=function(b){if(b&&b!==this&&b!==a.EMPTY){var c=b;switch(typeof b){case"function":c=new a(b);case"object":if(c.isUnsubscribed||"function"!=typeof c.unsubscribe)break;this.isUnsubscribed?c.unsubscribe():(this._subscriptions||(this._subscriptions=[])).push(c);break;default:throw new Error("Unrecognized teardown "+b+" added to Subscription.")}return c}},a.prototype.remove=function(b){if(null!=b&&b!==this&&b!==a.EMPTY){var c=this._subscriptions;if(c){var d=c.indexOf(b);d!==-1&&c.splice(d,1)}}},a.EMPTY=function(a){return a.isUnsubscribed=!0,a}(new a),a}();return b.Subscription=j,c.exports}),a.registerDynamic("40",["15","33"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("15"),f=a("33"),g=function(a){function b(b,c){a.call(this),this.scheduler=b,this.work=c,this.pending=!1}return d(b,a),b.prototype.execute=function(){if(this.isUnsubscribed)this.error=new Error("executing a cancelled action");else try{this.work(this.state)}catch(a){this.unsubscribe(),this.error=a}},b.prototype.schedule=function(a,b){return void 0===b&&(b=0),this.isUnsubscribed?this:this._schedule(a,b)},b.prototype._schedule=function(a,b){var c=this;void 0===b&&(b=0),this.state=a,this.pending=!0;var d=this.id;return null!=d&&this.delay===b?this:(this.delay=b,null!=d&&(this.id=null,e.root.clearInterval(d)),this.id=e.root.setInterval(function(){c.pending=!1;var a=c,b=a.id,d=a.scheduler;d.actions.push(c),d.flush(),c.pending===!1&&null!=b&&(c.id=null,e.root.clearInterval(b))},b),this)},b.prototype._unsubscribe=function(){this.pending=!1;var a=this,b=a.id,c=a.scheduler,d=c.actions,f=d.indexOf(this);null!=b&&(this.id=null,e.root.clearInterval(b)),f!==-1&&d.splice(f,1),this.work=null,this.state=null,this.scheduler=null},b}(f.Subscription);return b.FutureAction=g,c.exports}),a.registerDynamic("42",["3f","40"],!0,function(a,b,c){"use strict";var d=(this||self,a("3f")),e=a("40"),f=function(){function a(){this.active=!1,this.actions=[],this.scheduledId=null}return a.prototype.now=function(){return Date.now()},a.prototype.flush=function(){if(!this.active&&!this.scheduledId){this.active=!0;for(var a=this.actions,b=null;b=a.shift();)if(b.execute(),b.error)throw this.active=!1,b.error;this.active=!1}},a.prototype.schedule=function(a,b,c){return void 0===b&&(b=0),b<=0?this.scheduleNow(a,c):this.scheduleLater(a,b,c)},a.prototype.scheduleNow=function(a,b){return new d.QueueAction(this,a).schedule(b)},a.prototype.scheduleLater=function(a,b,c){return new e.FutureAction(this,a).schedule(c,b)},a}();return b.QueueScheduler=f,c.exports}),a.registerDynamic("43",["40","42"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("40"),f=a("42"),g=function(a){function b(){a.apply(this,arguments)}return d(b,a),b.prototype.scheduleNow=function(a,b){return new e.FutureAction(this,a).schedule(b,0)},b}(f.QueueScheduler);return b.AsyncScheduler=g,c.exports}),a.registerDynamic("6",["43"],!0,function(a,b,c){"use strict";var d=(this||self,a("43"));return b.async=new d.AsyncScheduler,c.exports}),a.registerDynamic("44",["4","5","6"],!0,function(a,b,c){"use strict";var d=(this||self,this&&this.__extends||function(a,b){function c(){this.constructor=a}for(var d in b)b.hasOwnProperty(d)&&(a[d]=b[d]);a.prototype=null===b?Object.create(b):(c.prototype=b.prototype,new c)}),e=a("4"),f=a("5"),g=a("6"),h=function(a){function b(b,c){void 0===b&&(b=0),void 0===c&&(c=g.async),a.call(this),this.period=b,this.scheduler=c,(!e.isNumeric(b)||b<0)&&(this.period=0),c&&"function"==typeof c.schedule||(this.scheduler=g.async)}return d(b,a),b.create=function(a,c){return void 0===a&&(a=0),void 0===c&&(c=g.async),new b(a,c)},b.dispatch=function(a){var b=a.index,c=a.subscriber,d=a.period;c.next(b),c.isUnsubscribed||(a.index+=1,this.schedule(a,d))},b.prototype._subscribe=function(a){var c=0,d=this.period,e=this.scheduler;a.add(e.schedule(b.dispatch,d,{index:c,subscriber:a,period:d}))},b}(f.Observable);return b.IntervalObservable=h,c.exports}),a.registerDynamic("45",["44"],!0,function(a,b,c){"use strict";var d=(this||self,a("44"));return b.interval=d.IntervalObservable.create,c.exports}),a.registerDynamic("46",["5","45"],!0,function(a,b,c){"use strict";var d=(this||self,a("5")),e=a("45");return d.Observable.interval=e.interval,c.exports}),a.registerDynamic("47",["3c","5","46"],!0,function(a,b,c){"use strict";var d=(this||self,a("3c")),e=a("5");a("46");var f=document.querySelector("#cvsSeven"),g=f.getContext("2d"),h=new d.Seven({digit:d.Digit.SEVEN,height:f.height}),i=(f.width-h.width)/2;return e.Observable.interval(1e3).subscribe(function(a){h.digit=a%10,g.clearRect(0,0,f.width,f.height);for(var b=0,c=h.segments;b<c.length;b++){var d=c[b];g.fillStyle="rgba(255,255,255,"+(d.on?.87:.05)+")",g.beginPath();for(var e=0,j=d.points;e<j.length;e++){var k=j[e];g.lineTo(i+k.x,k.y+.5)}g.closePath(),g.fill()}}),c.exports}),a.registerDynamic("1",["11","3b","47"],!0,function(a,b,c){"use strict";this||self;return a("11"),a("3b"),a("47"),c.exports})})(function(a){"function"==typeof define&&define.amd?define([],a):"object"==typeof module&&module.exports&&"function"==typeof require?module.exports=a():a()});
+!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in v||(v[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==g.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=v[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(g.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=v[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return y[e]||(y[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},{id:r.name});t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=v[s],f=y[s];f?l=f.exports:c&&!c.declarative?l=c.esModule:c?(d(c),f=c.module,l=f.exports):l=p(s),f&&f.importers?(f.importers.push(t),t.dependencies.push(f)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=v[e];if(t)t.declarative?f(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=p(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=v[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(r){var t={};if(("object"==typeof r||"function"==typeof r)&&r!==e)if(m)for(var n in r)"default"!==n&&c(t,r,n);else{var o=r&&r.hasOwnProperty;for(var n in r)"default"===n||o&&!r.hasOwnProperty(n)||(t[n]=r[n])}return t["default"]=r,x(t,"__useDefault",{value:!0}),t}function c(e,r,t){try{var n;(n=Object.getOwnPropertyDescriptor(r,t))&&x(e,t,n)}catch(o){return e[t]=r[t],!1}}function f(r,t){var n=v[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==g.call(t,u)&&(v[u]?f(u,t):p(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function p(e){if(I[e])return I[e];if("@node/"==e.substr(0,6))return I[e]=s(D(e.substr(6)));var r=v[e];if(!r)throw"Module "+e+" not present.";return a(e),f(e,[]),v[e]=void 0,r.declarative&&x(r.module.exports,"__esModule",{value:!0}),I[e]=r.declarative?r.module.exports:r.esModule}var v={},g=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},m=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(h){m=!1}var x;!function(){try{Object.defineProperty({},"a",{})&&(x=Object.defineProperty)}catch(e){x=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var y={},D="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,I={"@empty":{}};return function(e,n,o,a){return function(u){u(function(u){for(var d={_nodeRequire:D,register:r,registerDynamic:t,get:p,set:function(e,r){I[e]=r},newModule:function(e){return e}},i=0;i<n.length;i++)(function(e,r){r&&r.__esModule?I[e]=r:I[e]=s(r)})(n[i],arguments[i]);a(d);var l=p(e[0]);if(e.length>1)for(var i=1;i<e.length;i++)p(e[i]);return o?l["default"]:l})}}}("undefined"!=typeof self?self:global)
+
+(["1"], [], true, function($__System) {
+var require = this.require, exports = this.exports, module = this.module;
+$__System.register("2", [], function (exports_1, context_1) {
+    "use strict";
+
+    var __moduleName = context_1 && context_1.id;
+    var privateData, RockPaperScissorsLizardSpock;
+    return {
+        setters: [],
+        execute: function () {
+            //Use a WeakMap until class static fields are available.  ES 2017?
+            privateData = new WeakMap();
+            RockPaperScissorsLizardSpock = function () {
+                function RockPaperScissorsLizardSpock() {}
+                Object.defineProperty(RockPaperScissorsLizardSpock, "TIE", {
+                    /** Constant for a tie outcome, 0 */
+                    get: function () {
+                        return 0;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(RockPaperScissorsLizardSpock, "PLAYER1", {
+                    /** Constant for a player 1 victory, 1 */
+                    get: function () {
+                        return 1;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(RockPaperScissorsLizardSpock, "PLAYER2", {
+                    /** Constant for a player 2 victory, 2 */
+                    get: function () {
+                        return 2;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(RockPaperScissorsLizardSpock, "ROCK", {
+                    /** Constant for a rock move, 0. */
+                    get: function () {
+                        return 0;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(RockPaperScissorsLizardSpock, "PAPER", {
+                    /** Constant for a paper move, 1. */
+                    get: function () {
+                        return 1;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(RockPaperScissorsLizardSpock, "SCISSORS", {
+                    /** Constant for a scissors move, 2. */
+                    get: function () {
+                        return 2;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(RockPaperScissorsLizardSpock, "LIZARD", {
+                    /** Constant for a lizard move, 3. */
+                    get: function () {
+                        return 3;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(RockPaperScissorsLizardSpock, "SPOCK", {
+                    /** Constant for a spock move, 4. */
+                    get: function () {
+                        return 4;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                /**
+                 * Return the string representation of the given move.
+                 */
+                RockPaperScissorsLizardSpock.getMoveName = function (move) {
+                    RockPaperScissorsLizardSpock._validateMove(move);
+                    return privateData.get(RockPaperScissorsLizardSpock).moves[move];
+                };
+                /**
+                 * Return an object containing the outcome and result of player one's (p1) move vs player two's move (p2).
+                 * The outcome property of the returned object will be TIE, PLAYER1, or PLAYER2.
+                 * The result property of the returned object will be a string that describes the outcome.
+                 */
+                RockPaperScissorsLizardSpock.play = function (p1, p2) {
+                    RockPaperScissorsLizardSpock._validateMove(p1);
+                    RockPaperScissorsLizardSpock._validateMove(p2);
+                    var rules = privateData.get(RockPaperScissorsLizardSpock).rules;
+                    if (p1 === p2) {
+                        return {
+                            outcome: RockPaperScissorsLizardSpock.TIE,
+                            result: RockPaperScissorsLizardSpock.getMoveName(p1) + " vs " + RockPaperScissorsLizardSpock.getMoveName(p2) + " is a tie"
+                        };
+                    } else if (rules[p1][p2]) {
+                        return {
+                            outcome: RockPaperScissorsLizardSpock.PLAYER1,
+                            result: RockPaperScissorsLizardSpock.getMoveName(p1) + " " + rules[p1][p2] + " " + RockPaperScissorsLizardSpock.getMoveName(p2),
+                            method: rules[p1][p2],
+                            winner: p1,
+                            loser: p2
+                        };
+                    } else {
+                        return {
+                            outcome: RockPaperScissorsLizardSpock.PLAYER2,
+                            result: RockPaperScissorsLizardSpock.getMoveName(p2) + " " + rules[p2][p1] + " " + RockPaperScissorsLizardSpock.getMoveName(p1),
+                            method: rules[p2][p1],
+                            winner: p2,
+                            loser: p1
+                        };
+                    }
+                };
+                /**
+                 * Verify whether a move is valid.
+                 * If not, throw an error.
+                 */
+                RockPaperScissorsLizardSpock._validateMove = function (move) {
+                    if (typeof move !== 'number') {
+                        throw new TypeError("Move must be an integer between 0 and 4.  Got " + move);
+                    } else if (move < 0 || move > 4 || move % 1 !== 0) {
+                        throw new RangeError("Move must be an integer between 0 and 4.  Got " + move);
+                    }
+                };
+                return RockPaperScissorsLizardSpock;
+            }();
+            exports_1("RockPaperScissorsLizardSpock", RockPaperScissorsLizardSpock);
+            privateData.set(RockPaperScissorsLizardSpock, {
+                moves: ['rock', 'paper', 'scissors', 'lizard', 'spock'],
+                rules: [[,, 'crushes', 'crushes'], ['covers',,,, 'disproves'], [, 'cuts',, 'decapitates'], [, 'eats',,, 'poisons'], ['vaporizes',, 'smashes',,]]
+            });
+        }
+    };
+});
+
+$__System.registerDynamic('3', ['4', '5', '6', '7', '8'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var isNumeric_1 = $__require('4');
+    var Observable_1 = $__require('5');
+    var async_1 = $__require('6');
+    var isScheduler_1 = $__require('7');
+    var isDate_1 = $__require('8');
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @extends {Ignored}
+     * @hide true
+     */
+    var TimerObservable = function (_super) {
+        __extends(TimerObservable, _super);
+        function TimerObservable(dueTime, period, scheduler) {
+            if (dueTime === void 0) {
+                dueTime = 0;
+            }
+            _super.call(this);
+            this.period = -1;
+            this.dueTime = 0;
+            if (isNumeric_1.isNumeric(period)) {
+                this.period = Number(period) < 1 && 1 || Number(period);
+            } else if (isScheduler_1.isScheduler(period)) {
+                scheduler = period;
+            }
+            if (!isScheduler_1.isScheduler(scheduler)) {
+                scheduler = async_1.async;
+            }
+            this.scheduler = scheduler;
+            this.dueTime = isDate_1.isDate(dueTime) ? +dueTime - this.scheduler.now() : dueTime;
+        }
+        /**
+         * Creates an Observable that starts emitting after an `initialDelay` and
+         * emits ever increasing numbers after each `period` of time thereafter.
+         *
+         * <span class="informal">Its like {@link interval}, but you can specify when
+         * should the emissions start.</span>
+         *
+         * <img src="./img/timer.png" width="100%">
+         *
+         * `timer` returns an Observable that emits an infinite sequence of ascending
+         * integers, with a constant interval of time, `period` of your choosing
+         * between those emissions. The first emission happens after the specified
+         * `initialDelay`. The initial delay may be a {@link Date}. By default, this
+         * operator uses the `async` Scheduler to provide a notion of time, but you
+         * may pass any Scheduler to it. If `period` is not specified, the output
+         * Observable emits only one value, `0`. Otherwise, it emits an infinite
+         * sequence.
+         *
+         * @example <caption>Emits ascending numbers, one every second (1000ms), starting after 3 seconds</caption>
+         * var numbers = Rx.Observable.timer(3000, 1000);
+         * numbers.subscribe(x => console.log(x));
+         *
+         * @example <caption>Emits one number after five seconds</caption>
+         * var numbers = Rx.Observable.timer(5000);
+         * numbers.subscribe(x => console.log(x));
+         *
+         * @see {@link interval}
+         * @see {@link delay}
+         *
+         * @param {number|Date} initialDelay The initial delay time to wait before
+         * emitting the first value of `0`.
+         * @param {number} [period] The period of time between emissions of the
+         * subsequent numbers.
+         * @param {Scheduler} [scheduler=async] The Scheduler to use for scheduling
+         * the emission of values, and providing a notion of "time".
+         * @return {Observable} An Observable that emits a `0` after the
+         * `initialDelay` and ever increasing numbers after each `period` of time
+         * thereafter.
+         * @static true
+         * @name timer
+         * @owner Observable
+         */
+        TimerObservable.create = function (initialDelay, period, scheduler) {
+            if (initialDelay === void 0) {
+                initialDelay = 0;
+            }
+            return new TimerObservable(initialDelay, period, scheduler);
+        };
+        TimerObservable.dispatch = function (state) {
+            var index = state.index,
+                period = state.period,
+                subscriber = state.subscriber;
+            var action = this;
+            subscriber.next(index);
+            if (subscriber.isUnsubscribed) {
+                return;
+            } else if (period === -1) {
+                return subscriber.complete();
+            }
+            state.index = index + 1;
+            action.schedule(state, period);
+        };
+        TimerObservable.prototype._subscribe = function (subscriber) {
+            var index = 0;
+            var _a = this,
+                period = _a.period,
+                dueTime = _a.dueTime,
+                scheduler = _a.scheduler;
+            return scheduler.schedule(TimerObservable.dispatch, dueTime, {
+                index: index, period: period, subscriber: subscriber
+            });
+        };
+        return TimerObservable;
+    }(Observable_1.Observable);
+    exports.TimerObservable = TimerObservable;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("9", ["3"], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var TimerObservable_1 = $__require("3");
+  exports.timer = TimerObservable_1.TimerObservable.create;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic('a', ['5', '9'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var Observable_1 = $__require('5');
+  var timer_1 = $__require('9');
+  Observable_1.Observable.timer = timer_1.timer;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic("8", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    function isDate(value) {
+        return value instanceof Date && !isNaN(+value);
+    }
+    exports.isDate = isDate;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('b', ['6', '8', 'c', 'd'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var async_1 = $__require('6');
+    var isDate_1 = $__require('8');
+    var Subscriber_1 = $__require('c');
+    var Notification_1 = $__require('d');
+    /**
+     * Delays the emission of items from the source Observable by a given timeout or
+     * until a given Date.
+     *
+     * <span class="informal">Time shifts each item by some specified amount of
+     * milliseconds.</span>
+     *
+     * <img src="./img/delay.png" width="100%">
+     *
+     * If the delay argument is a Number, this operator time shifts the source
+     * Observable by that amount of time expressed in milliseconds. The relative
+     * time intervals between the values are preserved.
+     *
+     * If the delay argument is a Date, this operator time shifts the start of the
+     * Observable execution until the given date occurs.
+     *
+     * @example <caption>Delay each click by one second</caption>
+     * var clicks = Rx.Observable.fromEvent(document, 'click');
+     * var delayedClicks = clicks.delay(1000); // each click emitted after 1 second
+     * delayedClicks.subscribe(x => console.log(x));
+     *
+     * @example <caption>Delay all clicks until a future date happens</caption>
+     * var clicks = Rx.Observable.fromEvent(document, 'click');
+     * var date = new Date('March 15, 2050 12:00:00'); // in the future
+     * var delayedClicks = clicks.delay(date); // click emitted only after that date
+     * delayedClicks.subscribe(x => console.log(x));
+     *
+     * @see {@link debounceTime}
+     * @see {@link delayWhen}
+     *
+     * @param {number|Date} delay The delay duration in milliseconds (a `number`) or
+     * a `Date` until which the emission of the source items is delayed.
+     * @param {Scheduler} [scheduler=async] The Scheduler to use for
+     * managing the timers that handle the time-shift for each item.
+     * @return {Observable} An Observable that delays the emissions of the source
+     * Observable by the specified timeout or Date.
+     * @method delay
+     * @owner Observable
+     */
+    function delay(delay, scheduler) {
+        if (scheduler === void 0) {
+            scheduler = async_1.async;
+        }
+        var absoluteDelay = isDate_1.isDate(delay);
+        var delayFor = absoluteDelay ? +delay - scheduler.now() : Math.abs(delay);
+        return this.lift(new DelayOperator(delayFor, scheduler));
+    }
+    exports.delay = delay;
+    var DelayOperator = function () {
+        function DelayOperator(delay, scheduler) {
+            this.delay = delay;
+            this.scheduler = scheduler;
+        }
+        DelayOperator.prototype.call = function (subscriber, source) {
+            return source._subscribe(new DelaySubscriber(subscriber, this.delay, this.scheduler));
+        };
+        return DelayOperator;
+    }();
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var DelaySubscriber = function (_super) {
+        __extends(DelaySubscriber, _super);
+        function DelaySubscriber(destination, delay, scheduler) {
+            _super.call(this, destination);
+            this.delay = delay;
+            this.scheduler = scheduler;
+            this.queue = [];
+            this.active = false;
+            this.errored = false;
+        }
+        DelaySubscriber.dispatch = function (state) {
+            var source = state.source;
+            var queue = source.queue;
+            var scheduler = state.scheduler;
+            var destination = state.destination;
+            while (queue.length > 0 && queue[0].time - scheduler.now() <= 0) {
+                queue.shift().notification.observe(destination);
+            }
+            if (queue.length > 0) {
+                var delay_1 = Math.max(0, queue[0].time - scheduler.now());
+                this.schedule(state, delay_1);
+            } else {
+                source.active = false;
+            }
+        };
+        DelaySubscriber.prototype._schedule = function (scheduler) {
+            this.active = true;
+            this.add(scheduler.schedule(DelaySubscriber.dispatch, this.delay, {
+                source: this, destination: this.destination, scheduler: scheduler
+            }));
+        };
+        DelaySubscriber.prototype.scheduleNotification = function (notification) {
+            if (this.errored === true) {
+                return;
+            }
+            var scheduler = this.scheduler;
+            var message = new DelayMessage(scheduler.now() + this.delay, notification);
+            this.queue.push(message);
+            if (this.active === false) {
+                this._schedule(scheduler);
+            }
+        };
+        DelaySubscriber.prototype._next = function (value) {
+            this.scheduleNotification(Notification_1.Notification.createNext(value));
+        };
+        DelaySubscriber.prototype._error = function (err) {
+            this.errored = true;
+            this.queue = [];
+            this.destination.error(err);
+        };
+        DelaySubscriber.prototype._complete = function () {
+            this.scheduleNotification(Notification_1.Notification.createComplete());
+        };
+        return DelaySubscriber;
+    }(Subscriber_1.Subscriber);
+    var DelayMessage = function () {
+        function DelayMessage(time, notification) {
+            this.time = time;
+            this.notification = notification;
+        }
+        return DelayMessage;
+    }();
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('e', ['5', 'b'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var Observable_1 = $__require('5');
+  var delay_1 = $__require('b');
+  Observable_1.Observable.prototype.delay = delay_1.delay;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic("f", ["c"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Subscriber_1 = $__require("c");
+    /**
+     * Perform a side effect for every emission on the source Observable, but return
+     * an Observable that is identical to the source.
+     *
+     * <span class="informal">Intercepts each emission on the source and runs a
+     * function, but returns an output which is identical to the source.</span>
+     *
+     * <img src="./img/do.png" width="100%">
+     *
+     * Returns a mirrored Observable of the source Observable, but modified so that
+     * the provided Observer is called to perform a side effect for every value,
+     * error, and completion emitted by the source. Any errors that are thrown in
+     * the aforementioned Observer or handlers are safely sent down the error path
+     * of the output Observable.
+     *
+     * This operator is useful for debugging your Observables for the correct values
+     * or performing other side effects.
+     *
+     * Note: this is different to a `subscribe` on the Observable. If the Observable
+     * returned by `do` is not subscribed, the side effects specified by the
+     * Observer will never happen. `do` therefore simply spies on existing
+     * execution, it does not trigger an execution to happen like `subscribe` does.
+     *
+     * @example <caption>Map every every click to the clientX position of that click, while also logging the click event</caption>
+     * var clicks = Rx.Observable.fromEvent(document, 'click');
+     * var positions = clicks
+     *   .do(ev => console.log(ev))
+     *   .map(ev => ev.clientX);
+     * positions.subscribe(x => console.log(x));
+     *
+     * @see {@link map}
+     * @see {@link subscribe}
+     *
+     * @param {Observer|function} [nextOrObserver] A normal Observer object or a
+     * callback for `next`.
+     * @param {function} [error] Callback for errors in the source.
+     * @param {function} [complete] Callback for the completion of the source.
+     * @return {Observable} An Observable identical to the source, but runs the
+     * specified Observer or callback(s) for each item.
+     * @method do
+     * @name do
+     * @owner Observable
+     */
+    function _do(nextOrObserver, error, complete) {
+        return this.lift(new DoOperator(nextOrObserver, error, complete));
+    }
+    exports._do = _do;
+    var DoOperator = function () {
+        function DoOperator(nextOrObserver, error, complete) {
+            this.nextOrObserver = nextOrObserver;
+            this.error = error;
+            this.complete = complete;
+        }
+        DoOperator.prototype.call = function (subscriber, source) {
+            return source._subscribe(new DoSubscriber(subscriber, this.nextOrObserver, this.error, this.complete));
+        };
+        return DoOperator;
+    }();
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var DoSubscriber = function (_super) {
+        __extends(DoSubscriber, _super);
+        function DoSubscriber(destination, nextOrObserver, error, complete) {
+            _super.call(this, destination);
+            var safeSubscriber = new Subscriber_1.Subscriber(nextOrObserver, error, complete);
+            safeSubscriber.syncErrorThrowable = true;
+            this.add(safeSubscriber);
+            this.safeSubscriber = safeSubscriber;
+        }
+        DoSubscriber.prototype._next = function (value) {
+            var safeSubscriber = this.safeSubscriber;
+            safeSubscriber.next(value);
+            if (safeSubscriber.syncErrorThrown) {
+                this.destination.error(safeSubscriber.syncErrorValue);
+            } else {
+                this.destination.next(value);
+            }
+        };
+        DoSubscriber.prototype._error = function (err) {
+            var safeSubscriber = this.safeSubscriber;
+            safeSubscriber.error(err);
+            if (safeSubscriber.syncErrorThrown) {
+                this.destination.error(safeSubscriber.syncErrorValue);
+            } else {
+                this.destination.error(err);
+            }
+        };
+        DoSubscriber.prototype._complete = function () {
+            var safeSubscriber = this.safeSubscriber;
+            safeSubscriber.complete();
+            if (safeSubscriber.syncErrorThrown) {
+                this.destination.error(safeSubscriber.syncErrorValue);
+            } else {
+                this.destination.complete();
+            }
+        };
+        return DoSubscriber;
+    }(Subscriber_1.Subscriber);
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('10', ['5', 'f'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var Observable_1 = $__require('5');
+  var do_1 = $__require('f');
+  Observable_1.Observable.prototype.do = do_1._do;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic('11', ['2', '5', 'a', 'e', '10'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    const rpsls_1 = $__require('2');
+    const Observable_1 = $__require('5');
+    $__require('a');
+    $__require('e');
+    $__require('10');
+    let p1Score = 0;
+    let p2Score = 0;
+    let moves = ['fa-hand-rock-o', 'fa-hand-paper-o', 'fa-hand-scissors-o', 'fa-hand-lizard-o', 'fa-hand-spock-o'];
+    let outcomeClasses = ['win', 'lose', 'draw'];
+    let [divSplash, divShoot, divPlay, divResults] = document.querySelectorAll('#rpsls > div');
+    let [iShootP1, iShootP2] = divShoot.querySelectorAll('div > *');
+    let [iPlayP1, spanPlayResult, iPlayP2] = divPlay.querySelectorAll('div > *');
+    let [spanResultsP1, spanResultsP2] = divResults.querySelectorAll('div > span');
+    let [spanResultsP1Score, spanResultsP2Score] = divResults.querySelectorAll('span > span');
+    Observable_1.Observable.timer(0, 7000).do(x => {
+        divSplash.classList.add('current');
+        divShoot.classList.remove('current');
+        divPlay.classList.remove('current');
+        divResults.classList.remove('current');
+        spanResultsP1.classList.remove(...outcomeClasses);
+        spanResultsP2.classList.remove(...outcomeClasses);
+    }).delay(1500).do(x => {
+        divSplash.classList.remove('current');
+        divShoot.classList.add('current');
+    }).delay(250).do(x => iShootP1.className = iShootP2.className = `fa ${ moves[0] }`).delay(250).do(x => iShootP1.className = iShootP2.className = `fa ${ moves[1] }`).delay(250).do(x => iShootP1.className = iShootP2.className = `fa ${ moves[2] }`).delay(250).do(x => iShootP1.className = iShootP2.className = `fa ${ moves[3] }`).delay(250).do(x => iShootP1.className = iShootP2.className = `fa ${ moves[4] }`).delay(250).do(x => {
+        divShoot.classList.remove('current');
+        divPlay.classList.add('current');
+        let p1m = Math.floor(Math.random() * 5);
+        let p2m = Math.floor(Math.random() * 5);
+        let game = rpsls_1.RockPaperScissorsLizardSpock.play(p1m, p2m);
+        iPlayP1.className = `fa ${ moves[p1m] }`;
+        spanPlayResult.textContent = game.result;
+        iPlayP2.className = `fa ${ moves[p2m] }`;
+        switch (game.outcome) {
+            case 0:
+                iPlayP1.classList.add('draw');
+                iPlayP2.classList.add('draw');
+                spanResultsP1.classList.add('draw');
+                spanResultsP2.classList.add('draw');
+                break;
+            case 1:
+                iPlayP1.classList.add('win');
+                iPlayP2.classList.add('lose');
+                spanResultsP1.classList.add('win');
+                spanResultsP2.classList.add('lose');
+                ++p1Score;
+                break;
+            case 2:
+                iPlayP1.classList.add('lose');
+                iPlayP2.classList.add('win');
+                spanResultsP1.classList.add('lose');
+                spanResultsP2.classList.add('win');
+                ++p2Score;
+                break;
+            default:
+                break;
+        }
+    }).delay(2000).do(x => {
+        divPlay.classList.remove('current');
+        divResults.classList.add('current');
+    }).delay(1000).do(x => {
+        spanResultsP1Score.textContent = p1Score.toString();
+        spanResultsP2Score.textContent = p2Score.toString();
+    }).delay(750).do(x => divResults.classList.remove('current')).subscribe();
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("12", ["13"], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var PromiseObservable_1 = $__require("13");
+  exports.fromPromise = PromiseObservable_1.PromiseObservable.create;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic('14', ['5', '12'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var Observable_1 = $__require('5');
+  var fromPromise_1 = $__require('12');
+  Observable_1.Observable.fromPromise = fromPromise_1.fromPromise;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic('13', ['15', '5'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var root_1 = $__require('15');
+    var Observable_1 = $__require('5');
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @extends {Ignored}
+     * @hide true
+     */
+    var PromiseObservable = function (_super) {
+        __extends(PromiseObservable, _super);
+        function PromiseObservable(promise, scheduler) {
+            if (scheduler === void 0) {
+                scheduler = null;
+            }
+            _super.call(this);
+            this.promise = promise;
+            this.scheduler = scheduler;
+        }
+        /**
+         * @param promise
+         * @param scheduler
+         * @return {PromiseObservable}
+         * @static true
+         * @name fromPromise
+         * @owner Observable
+         */
+        PromiseObservable.create = function (promise, scheduler) {
+            if (scheduler === void 0) {
+                scheduler = null;
+            }
+            return new PromiseObservable(promise, scheduler);
+        };
+        PromiseObservable.prototype._subscribe = function (subscriber) {
+            var _this = this;
+            var promise = this.promise;
+            var scheduler = this.scheduler;
+            if (scheduler == null) {
+                if (this._isScalar) {
+                    if (!subscriber.isUnsubscribed) {
+                        subscriber.next(this.value);
+                        subscriber.complete();
+                    }
+                } else {
+                    promise.then(function (value) {
+                        _this.value = value;
+                        _this._isScalar = true;
+                        if (!subscriber.isUnsubscribed) {
+                            subscriber.next(value);
+                            subscriber.complete();
+                        }
+                    }, function (err) {
+                        if (!subscriber.isUnsubscribed) {
+                            subscriber.error(err);
+                        }
+                    }).then(null, function (err) {
+                        // escape the promise trap, throw unhandled errors
+                        root_1.root.setTimeout(function () {
+                            throw err;
+                        });
+                    });
+                }
+            } else {
+                if (this._isScalar) {
+                    if (!subscriber.isUnsubscribed) {
+                        return scheduler.schedule(dispatchNext, 0, { value: this.value, subscriber: subscriber });
+                    }
+                } else {
+                    promise.then(function (value) {
+                        _this.value = value;
+                        _this._isScalar = true;
+                        if (!subscriber.isUnsubscribed) {
+                            subscriber.add(scheduler.schedule(dispatchNext, 0, { value: value, subscriber: subscriber }));
+                        }
+                    }, function (err) {
+                        if (!subscriber.isUnsubscribed) {
+                            subscriber.add(scheduler.schedule(dispatchError, 0, { err: err, subscriber: subscriber }));
+                        }
+                    }).then(null, function (err) {
+                        // escape the promise trap, throw unhandled errors
+                        root_1.root.setTimeout(function () {
+                            throw err;
+                        });
+                    });
+                }
+            }
+        };
+        return PromiseObservable;
+    }(Observable_1.Observable);
+    exports.PromiseObservable = PromiseObservable;
+    function dispatchNext(arg) {
+        var value = arg.value,
+            subscriber = arg.subscriber;
+        if (!subscriber.isUnsubscribed) {
+            subscriber.next(value);
+            subscriber.complete();
+        }
+    }
+    function dispatchError(arg) {
+        var err = arg.err,
+            subscriber = arg.subscriber;
+        if (!subscriber.isUnsubscribed) {
+            subscriber.error(err);
+        }
+    }
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('16', ['15', '17', '18', '5', '19', '1a', '1b'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var root_1 = $__require('15');
+    var isObject_1 = $__require('17');
+    var tryCatch_1 = $__require('18');
+    var Observable_1 = $__require('5');
+    var isFunction_1 = $__require('19');
+    var iterator_1 = $__require('1a');
+    var errorObject_1 = $__require('1b');
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @extends {Ignored}
+     * @hide true
+     */
+    var IteratorObservable = function (_super) {
+        __extends(IteratorObservable, _super);
+        function IteratorObservable(iterator, project, thisArg, scheduler) {
+            _super.call(this);
+            if (iterator == null) {
+                throw new Error('iterator cannot be null.');
+            }
+            if (isObject_1.isObject(project)) {
+                this.thisArg = project;
+                this.scheduler = thisArg;
+            } else if (isFunction_1.isFunction(project)) {
+                this.project = project;
+                this.thisArg = thisArg;
+                this.scheduler = scheduler;
+            } else if (project != null) {
+                throw new Error('When provided, `project` must be a function.');
+            }
+            this.iterator = getIterator(iterator);
+        }
+        IteratorObservable.create = function (iterator, project, thisArg, scheduler) {
+            return new IteratorObservable(iterator, project, thisArg, scheduler);
+        };
+        IteratorObservable.dispatch = function (state) {
+            var index = state.index,
+                hasError = state.hasError,
+                thisArg = state.thisArg,
+                project = state.project,
+                iterator = state.iterator,
+                subscriber = state.subscriber;
+            if (hasError) {
+                subscriber.error(state.error);
+                return;
+            }
+            var result = iterator.next();
+            if (result.done) {
+                subscriber.complete();
+                return;
+            }
+            if (project) {
+                result = tryCatch_1.tryCatch(project).call(thisArg, result.value, index);
+                if (result === errorObject_1.errorObject) {
+                    state.error = errorObject_1.errorObject.e;
+                    state.hasError = true;
+                } else {
+                    subscriber.next(result);
+                    state.index = index + 1;
+                }
+            } else {
+                subscriber.next(result.value);
+                state.index = index + 1;
+            }
+            if (subscriber.isUnsubscribed) {
+                return;
+            }
+            this.schedule(state);
+        };
+        IteratorObservable.prototype._subscribe = function (subscriber) {
+            var index = 0;
+            var _a = this,
+                iterator = _a.iterator,
+                project = _a.project,
+                thisArg = _a.thisArg,
+                scheduler = _a.scheduler;
+            if (scheduler) {
+                return scheduler.schedule(IteratorObservable.dispatch, 0, {
+                    index: index, thisArg: thisArg, project: project, iterator: iterator, subscriber: subscriber
+                });
+            } else {
+                do {
+                    var result = iterator.next();
+                    if (result.done) {
+                        subscriber.complete();
+                        break;
+                    } else if (project) {
+                        result = tryCatch_1.tryCatch(project).call(thisArg, result.value, index++);
+                        if (result === errorObject_1.errorObject) {
+                            subscriber.error(errorObject_1.errorObject.e);
+                            break;
+                        }
+                        subscriber.next(result);
+                    } else {
+                        subscriber.next(result.value);
+                    }
+                    if (subscriber.isUnsubscribed) {
+                        break;
+                    }
+                } while (true);
+            }
+        };
+        return IteratorObservable;
+    }(Observable_1.Observable);
+    exports.IteratorObservable = IteratorObservable;
+    var StringIterator = function () {
+        function StringIterator(str, idx, len) {
+            if (idx === void 0) {
+                idx = 0;
+            }
+            if (len === void 0) {
+                len = str.length;
+            }
+            this.str = str;
+            this.idx = idx;
+            this.len = len;
+        }
+        StringIterator.prototype[iterator_1.$$iterator] = function () {
+            return this;
+        };
+        StringIterator.prototype.next = function () {
+            return this.idx < this.len ? {
+                done: false,
+                value: this.str.charAt(this.idx++)
+            } : {
+                done: true,
+                value: undefined
+            };
+        };
+        return StringIterator;
+    }();
+    var ArrayIterator = function () {
+        function ArrayIterator(arr, idx, len) {
+            if (idx === void 0) {
+                idx = 0;
+            }
+            if (len === void 0) {
+                len = toLength(arr);
+            }
+            this.arr = arr;
+            this.idx = idx;
+            this.len = len;
+        }
+        ArrayIterator.prototype[iterator_1.$$iterator] = function () {
+            return this;
+        };
+        ArrayIterator.prototype.next = function () {
+            return this.idx < this.len ? {
+                done: false,
+                value: this.arr[this.idx++]
+            } : {
+                done: true,
+                value: undefined
+            };
+        };
+        return ArrayIterator;
+    }();
+    function getIterator(obj) {
+        var i = obj[iterator_1.$$iterator];
+        if (!i && typeof obj === 'string') {
+            return new StringIterator(obj);
+        }
+        if (!i && obj.length !== undefined) {
+            return new ArrayIterator(obj);
+        }
+        if (!i) {
+            throw new TypeError('Object is not iterable');
+        }
+        return obj[iterator_1.$$iterator]();
+    }
+    var maxSafeInteger = Math.pow(2, 53) - 1;
+    function toLength(o) {
+        var len = +o.length;
+        if (isNaN(len)) {
+            return 0;
+        }
+        if (len === 0 || !numberIsFinite(len)) {
+            return len;
+        }
+        len = sign(len) * Math.floor(Math.abs(len));
+        if (len <= 0) {
+            return 0;
+        }
+        if (len > maxSafeInteger) {
+            return maxSafeInteger;
+        }
+        return len;
+    }
+    function numberIsFinite(value) {
+        return typeof value === 'number' && root_1.root.isFinite(value);
+    }
+    function sign(value) {
+        var valueAsNumber = +value;
+        if (valueAsNumber === 0) {
+            return valueAsNumber;
+        }
+        if (isNaN(valueAsNumber)) {
+            return valueAsNumber;
+        }
+        return valueAsNumber < 0 ? -1 : 1;
+    }
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("7", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    function isScheduler(value) {
+        return value && typeof value.schedule === 'function';
+    }
+    exports.isScheduler = isScheduler;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('1c', ['5', '1d', '1e', '7'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Observable_1 = $__require('5');
+    var ScalarObservable_1 = $__require('1d');
+    var EmptyObservable_1 = $__require('1e');
+    var isScheduler_1 = $__require('7');
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @extends {Ignored}
+     * @hide true
+     */
+    var ArrayObservable = function (_super) {
+        __extends(ArrayObservable, _super);
+        function ArrayObservable(array, scheduler) {
+            _super.call(this);
+            this.array = array;
+            this.scheduler = scheduler;
+            if (!scheduler && array.length === 1) {
+                this._isScalar = true;
+                this.value = array[0];
+            }
+        }
+        ArrayObservable.create = function (array, scheduler) {
+            return new ArrayObservable(array, scheduler);
+        };
+        /**
+         * Creates an Observable that emits some values you specify as arguments,
+         * immediately one after the other, and then emits a complete notification.
+         *
+         * <span class="informal">Emits the arguments you provide, then completes.
+         * </span>
+         *
+         * <img src="./img/of.png" width="100%">
+         *
+         * This static operator is useful for creating a simple Observable that only
+         * emits the arguments given, and the complete notification thereafter. It can
+         * be used for composing with other Observables, such as with {@link concat}.
+         * By default, it uses a `null` Scheduler, which means the `next`
+         * notifications are sent synchronously, although with a different Scheduler
+         * it is possible to determine when those notifications will be delivered.
+         *
+         * @example <caption>Emit 10, 20, 30, then 'a', 'b', 'c', then start ticking every second.</caption>
+         * var numbers = Rx.Observable.of(10, 20, 30);
+         * var letters = Rx.Observable.of('a', 'b', 'c');
+         * var interval = Rx.Observable.interval(1000);
+         * var result = numbers.concat(letters).concat(interval);
+         * result.subscribe(x => console.log(x));
+         *
+         * @see {@link create}
+         * @see {@link empty}
+         * @see {@link never}
+         * @see {@link throw}
+         *
+         * @param {...T} values Arguments that represent `next` values to be emitted.
+         * @param {Scheduler} [scheduler] A {@link Scheduler} to use for scheduling
+         * the emissions of the `next` notifications.
+         * @return {Observable<T>} An Observable that emits each given input value.
+         * @static true
+         * @name of
+         * @owner Observable
+         */
+        ArrayObservable.of = function () {
+            var array = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                array[_i - 0] = arguments[_i];
+            }
+            var scheduler = array[array.length - 1];
+            if (isScheduler_1.isScheduler(scheduler)) {
+                array.pop();
+            } else {
+                scheduler = null;
+            }
+            var len = array.length;
+            if (len > 1) {
+                return new ArrayObservable(array, scheduler);
+            } else if (len === 1) {
+                return new ScalarObservable_1.ScalarObservable(array[0], scheduler);
+            } else {
+                return new EmptyObservable_1.EmptyObservable(scheduler);
+            }
+        };
+        ArrayObservable.dispatch = function (state) {
+            var array = state.array,
+                index = state.index,
+                count = state.count,
+                subscriber = state.subscriber;
+            if (index >= count) {
+                subscriber.complete();
+                return;
+            }
+            subscriber.next(array[index]);
+            if (subscriber.isUnsubscribed) {
+                return;
+            }
+            state.index = index + 1;
+            this.schedule(state);
+        };
+        ArrayObservable.prototype._subscribe = function (subscriber) {
+            var index = 0;
+            var array = this.array;
+            var count = array.length;
+            var scheduler = this.scheduler;
+            if (scheduler) {
+                return scheduler.schedule(ArrayObservable.dispatch, 0, {
+                    array: array, index: index, count: count, subscriber: subscriber
+                });
+            } else {
+                for (var i = 0; i < count && !subscriber.isUnsubscribed; i++) {
+                    subscriber.next(array[i]);
+                }
+                subscriber.complete();
+            }
+        };
+        return ArrayObservable;
+    }(Observable_1.Observable);
+    exports.ArrayObservable = ArrayObservable;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("1d", ["5"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Observable_1 = $__require("5");
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @extends {Ignored}
+     * @hide true
+     */
+    var ScalarObservable = function (_super) {
+        __extends(ScalarObservable, _super);
+        function ScalarObservable(value, scheduler) {
+            _super.call(this);
+            this.value = value;
+            this.scheduler = scheduler;
+            this._isScalar = true;
+        }
+        ScalarObservable.create = function (value, scheduler) {
+            return new ScalarObservable(value, scheduler);
+        };
+        ScalarObservable.dispatch = function (state) {
+            var done = state.done,
+                value = state.value,
+                subscriber = state.subscriber;
+            if (done) {
+                subscriber.complete();
+                return;
+            }
+            subscriber.next(value);
+            if (subscriber.isUnsubscribed) {
+                return;
+            }
+            state.done = true;
+            this.schedule(state);
+        };
+        ScalarObservable.prototype._subscribe = function (subscriber) {
+            var value = this.value;
+            var scheduler = this.scheduler;
+            if (scheduler) {
+                return scheduler.schedule(ScalarObservable.dispatch, 0, {
+                    done: false, value: value, subscriber: subscriber
+                });
+            } else {
+                subscriber.next(value);
+                if (!subscriber.isUnsubscribed) {
+                    subscriber.complete();
+                }
+            }
+        };
+        return ScalarObservable;
+    }(Observable_1.Observable);
+    exports.ScalarObservable = ScalarObservable;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("1e", ["5"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Observable_1 = $__require("5");
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @extends {Ignored}
+     * @hide true
+     */
+    var EmptyObservable = function (_super) {
+        __extends(EmptyObservable, _super);
+        function EmptyObservable(scheduler) {
+            _super.call(this);
+            this.scheduler = scheduler;
+        }
+        /**
+         * Creates an Observable that emits no items to the Observer and immediately
+         * emits a complete notification.
+         *
+         * <span class="informal">Just emits 'complete', and nothing else.
+         * </span>
+         *
+         * <img src="./img/empty.png" width="100%">
+         *
+         * This static operator is useful for creating a simple Observable that only
+         * emits the complete notification. It can be used for composing with other
+         * Observables, such as in a {@link mergeMap}.
+         *
+         * @example <caption>Emit the number 7, then complete.</caption>
+         * var result = Rx.Observable.empty().startWith(7);
+         * result.subscribe(x => console.log(x));
+         *
+         * @example <caption>Map and flatten only odd numbers to the sequence 'a', 'b', 'c'</caption>
+         * var interval = Rx.Observable.interval(1000);
+         * var result = interval.mergeMap(x =>
+         *   x % 2 === 1 ? Rx.Observable.of('a', 'b', 'c') : Rx.Observable.empty()
+         * );
+         * result.subscribe(x => console.log(x));
+         *
+         * @see {@link create}
+         * @see {@link never}
+         * @see {@link of}
+         * @see {@link throw}
+         *
+         * @param {Scheduler} [scheduler] A {@link Scheduler} to use for scheduling
+         * the emission of the complete notification.
+         * @return {Observable} An "empty" Observable: emits only the complete
+         * notification.
+         * @static true
+         * @name empty
+         * @owner Observable
+         */
+        EmptyObservable.create = function (scheduler) {
+            return new EmptyObservable(scheduler);
+        };
+        EmptyObservable.dispatch = function (arg) {
+            var subscriber = arg.subscriber;
+            subscriber.complete();
+        };
+        EmptyObservable.prototype._subscribe = function (subscriber) {
+            var scheduler = this.scheduler;
+            if (scheduler) {
+                return scheduler.schedule(EmptyObservable.dispatch, 0, { subscriber: subscriber });
+            } else {
+                subscriber.complete();
+            }
+        };
+        return EmptyObservable;
+    }(Observable_1.Observable);
+    exports.EmptyObservable = EmptyObservable;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('1f', ['5', '1d', '1e'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Observable_1 = $__require('5');
+    var ScalarObservable_1 = $__require('1d');
+    var EmptyObservable_1 = $__require('1e');
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @extends {Ignored}
+     * @hide true
+     */
+    var ArrayLikeObservable = function (_super) {
+        __extends(ArrayLikeObservable, _super);
+        function ArrayLikeObservable(arrayLike, mapFn, thisArg, scheduler) {
+            _super.call(this);
+            this.arrayLike = arrayLike;
+            this.scheduler = scheduler;
+            if (!mapFn && !scheduler && arrayLike.length === 1) {
+                this._isScalar = true;
+                this.value = arrayLike[0];
+            }
+            if (mapFn) {
+                this.mapFn = mapFn.bind(thisArg);
+            }
+        }
+        ArrayLikeObservable.create = function (arrayLike, mapFn, thisArg, scheduler) {
+            var length = arrayLike.length;
+            if (length === 0) {
+                return new EmptyObservable_1.EmptyObservable();
+            } else if (length === 1 && !mapFn) {
+                return new ScalarObservable_1.ScalarObservable(arrayLike[0], scheduler);
+            } else {
+                return new ArrayLikeObservable(arrayLike, mapFn, thisArg, scheduler);
+            }
+        };
+        ArrayLikeObservable.dispatch = function (state) {
+            var arrayLike = state.arrayLike,
+                index = state.index,
+                length = state.length,
+                mapFn = state.mapFn,
+                subscriber = state.subscriber;
+            if (subscriber.isUnsubscribed) {
+                return;
+            }
+            if (index >= length) {
+                subscriber.complete();
+                return;
+            }
+            var result = mapFn ? mapFn(arrayLike[index], index) : arrayLike[index];
+            subscriber.next(result);
+            state.index = index + 1;
+            this.schedule(state);
+        };
+        ArrayLikeObservable.prototype._subscribe = function (subscriber) {
+            var index = 0;
+            var _a = this,
+                arrayLike = _a.arrayLike,
+                mapFn = _a.mapFn,
+                scheduler = _a.scheduler;
+            var length = arrayLike.length;
+            if (scheduler) {
+                return scheduler.schedule(ArrayLikeObservable.dispatch, 0, {
+                    arrayLike: arrayLike, index: index, length: length, mapFn: mapFn, subscriber: subscriber
+                });
+            } else {
+                for (var i = 0; i < length && !subscriber.isUnsubscribed; i++) {
+                    var result = mapFn ? mapFn(arrayLike[i], i) : arrayLike[i];
+                    subscriber.next(result);
+                }
+                subscriber.complete();
+            }
+        };
+        return ArrayLikeObservable;
+    }(Observable_1.Observable);
+    exports.ArrayLikeObservable = ArrayLikeObservable;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('d', ['5'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var Observable_1 = $__require('5');
+    /**
+     * Represents a push-based event or value that an {@link Observable} can emit.
+     * This class is particularly useful for operators that manage notifications,
+     * like {@link materialize}, {@link dematerialize}, {@link observeOn}, and
+     * others. Besides wrapping the actual delivered value, it also annotates it
+     * with metadata of, for instance, what type of push message it is (`next`,
+     * `error`, or `complete`).
+     *
+     * @see {@link materialize}
+     * @see {@link dematerialize}
+     * @see {@link observeOn}
+     *
+     * @class Notification<T>
+     */
+    var Notification = function () {
+        function Notification(kind, value, exception) {
+            this.kind = kind;
+            this.value = value;
+            this.exception = exception;
+            this.hasValue = kind === 'N';
+        }
+        /**
+         * Delivers to the given `observer` the value wrapped by this Notification.
+         * @param {Observer} observer
+         * @return
+         */
+        Notification.prototype.observe = function (observer) {
+            switch (this.kind) {
+                case 'N':
+                    return observer.next && observer.next(this.value);
+                case 'E':
+                    return observer.error && observer.error(this.exception);
+                case 'C':
+                    return observer.complete && observer.complete();
+            }
+        };
+        /**
+         * Given some {@link Observer} callbacks, deliver the value represented by the
+         * current Notification to the correctly corresponding callback.
+         * @param {function(value: T): void} next An Observer `next` callback.
+         * @param {function(err: any): void} [error] An Observer `error` callback.
+         * @param {function(): void} [complete] An Observer `complete` callback.
+         * @return {any}
+         */
+        Notification.prototype.do = function (next, error, complete) {
+            var kind = this.kind;
+            switch (kind) {
+                case 'N':
+                    return next && next(this.value);
+                case 'E':
+                    return error && error(this.exception);
+                case 'C':
+                    return complete && complete();
+            }
+        };
+        /**
+         * Takes an Observer or its individual callback functions, and calls `observe`
+         * or `do` methods accordingly.
+         * @param {Observer|function(value: T): void} nextOrObserver An Observer or
+         * the `next` callback.
+         * @param {function(err: any): void} [error] An Observer `error` callback.
+         * @param {function(): void} [complete] An Observer `complete` callback.
+         * @return {any}
+         */
+        Notification.prototype.accept = function (nextOrObserver, error, complete) {
+            if (nextOrObserver && typeof nextOrObserver.next === 'function') {
+                return this.observe(nextOrObserver);
+            } else {
+                return this.do(nextOrObserver, error, complete);
+            }
+        };
+        /**
+         * Returns a simple Observable that just delivers the notification represented
+         * by this Notification instance.
+         * @return {any}
+         */
+        Notification.prototype.toObservable = function () {
+            var kind = this.kind;
+            switch (kind) {
+                case 'N':
+                    return Observable_1.Observable.of(this.value);
+                case 'E':
+                    return Observable_1.Observable.throw(this.exception);
+                case 'C':
+                    return Observable_1.Observable.empty();
+            }
+        };
+        /**
+         * A shortcut to create a Notification instance of the type `next` from a
+         * given value.
+         * @param {T} value The `next` value.
+         * @return {Notification<T>} The "next" Notification representing the
+         * argument.
+         */
+        Notification.createNext = function (value) {
+            if (typeof value !== 'undefined') {
+                return new Notification('N', value);
+            }
+            return this.undefinedValueNotification;
+        };
+        /**
+         * A shortcut to create a Notification instance of the type `error` from a
+         * given error.
+         * @param {any} [err] The `error` exception.
+         * @return {Notification<T>} The "error" Notification representing the
+         * argument.
+         */
+        Notification.createError = function (err) {
+            return new Notification('E', undefined, err);
+        };
+        /**
+         * A shortcut to create a Notification instance of the type `complete`.
+         * @return {Notification<any>} The valueless "complete" Notification.
+         */
+        Notification.createComplete = function () {
+            return this.completeNotification;
+        };
+        Notification.completeNotification = new Notification('C');
+        Notification.undefinedValueNotification = new Notification('N', undefined);
+        return Notification;
+    }();
+    exports.Notification = Notification;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('20', ['c', 'd'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Subscriber_1 = $__require('c');
+    var Notification_1 = $__require('d');
+    /**
+     * @see {@link Notification}
+     *
+     * @param scheduler
+     * @param delay
+     * @return {Observable<R>|WebSocketSubject<T>|Observable<T>}
+     * @method observeOn
+     * @owner Observable
+     */
+    function observeOn(scheduler, delay) {
+        if (delay === void 0) {
+            delay = 0;
+        }
+        return this.lift(new ObserveOnOperator(scheduler, delay));
+    }
+    exports.observeOn = observeOn;
+    var ObserveOnOperator = function () {
+        function ObserveOnOperator(scheduler, delay) {
+            if (delay === void 0) {
+                delay = 0;
+            }
+            this.scheduler = scheduler;
+            this.delay = delay;
+        }
+        ObserveOnOperator.prototype.call = function (subscriber, source) {
+            return source._subscribe(new ObserveOnSubscriber(subscriber, this.scheduler, this.delay));
+        };
+        return ObserveOnOperator;
+    }();
+    exports.ObserveOnOperator = ObserveOnOperator;
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var ObserveOnSubscriber = function (_super) {
+        __extends(ObserveOnSubscriber, _super);
+        function ObserveOnSubscriber(destination, scheduler, delay) {
+            if (delay === void 0) {
+                delay = 0;
+            }
+            _super.call(this, destination);
+            this.scheduler = scheduler;
+            this.delay = delay;
+        }
+        ObserveOnSubscriber.dispatch = function (arg) {
+            var notification = arg.notification,
+                destination = arg.destination;
+            notification.observe(destination);
+        };
+        ObserveOnSubscriber.prototype.scheduleMessage = function (notification) {
+            this.add(this.scheduler.schedule(ObserveOnSubscriber.dispatch, this.delay, new ObserveOnMessage(notification, this.destination)));
+        };
+        ObserveOnSubscriber.prototype._next = function (value) {
+            this.scheduleMessage(Notification_1.Notification.createNext(value));
+        };
+        ObserveOnSubscriber.prototype._error = function (err) {
+            this.scheduleMessage(Notification_1.Notification.createError(err));
+        };
+        ObserveOnSubscriber.prototype._complete = function () {
+            this.scheduleMessage(Notification_1.Notification.createComplete());
+        };
+        return ObserveOnSubscriber;
+    }(Subscriber_1.Subscriber);
+    exports.ObserveOnSubscriber = ObserveOnSubscriber;
+    var ObserveOnMessage = function () {
+        function ObserveOnMessage(notification, destination) {
+            this.notification = notification;
+            this.destination = destination;
+        }
+        return ObserveOnMessage;
+    }();
+    exports.ObserveOnMessage = ObserveOnMessage;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('21', ['22', '19', '23', '7', '13', '16', '1c', '1f', '24', '1a', '5', '20'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var isArray_1 = $__require('22');
+    var isFunction_1 = $__require('19');
+    var isPromise_1 = $__require('23');
+    var isScheduler_1 = $__require('7');
+    var PromiseObservable_1 = $__require('13');
+    var IteratorObservable_1 = $__require('16');
+    var ArrayObservable_1 = $__require('1c');
+    var ArrayLikeObservable_1 = $__require('1f');
+    var observable_1 = $__require('24');
+    var iterator_1 = $__require('1a');
+    var Observable_1 = $__require('5');
+    var observeOn_1 = $__require('20');
+    var isArrayLike = function (x) {
+        return x && typeof x.length === 'number';
+    };
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @extends {Ignored}
+     * @hide true
+     */
+    var FromObservable = function (_super) {
+        __extends(FromObservable, _super);
+        function FromObservable(ish, scheduler) {
+            _super.call(this, null);
+            this.ish = ish;
+            this.scheduler = scheduler;
+        }
+        FromObservable.create = function (ish, mapFnOrScheduler, thisArg, lastScheduler) {
+            var scheduler = null;
+            var mapFn = null;
+            if (isFunction_1.isFunction(mapFnOrScheduler)) {
+                scheduler = lastScheduler || null;
+                mapFn = mapFnOrScheduler;
+            } else if (isScheduler_1.isScheduler(scheduler)) {
+                scheduler = mapFnOrScheduler;
+            }
+            if (ish != null) {
+                if (typeof ish[observable_1.$$observable] === 'function') {
+                    if (ish instanceof Observable_1.Observable && !scheduler) {
+                        return ish;
+                    }
+                    return new FromObservable(ish, scheduler);
+                } else if (isArray_1.isArray(ish)) {
+                    return new ArrayObservable_1.ArrayObservable(ish, scheduler);
+                } else if (isPromise_1.isPromise(ish)) {
+                    return new PromiseObservable_1.PromiseObservable(ish, scheduler);
+                } else if (typeof ish[iterator_1.$$iterator] === 'function' || typeof ish === 'string') {
+                    return new IteratorObservable_1.IteratorObservable(ish, null, null, scheduler);
+                } else if (isArrayLike(ish)) {
+                    return new ArrayLikeObservable_1.ArrayLikeObservable(ish, mapFn, thisArg, scheduler);
+                }
+            }
+            throw new TypeError((ish !== null && typeof ish || ish) + ' is not observable');
+        };
+        FromObservable.prototype._subscribe = function (subscriber) {
+            var ish = this.ish;
+            var scheduler = this.scheduler;
+            if (scheduler == null) {
+                return ish[observable_1.$$observable]().subscribe(subscriber);
+            } else {
+                return ish[observable_1.$$observable]().subscribe(new observeOn_1.ObserveOnSubscriber(subscriber, scheduler, 0));
+            }
+        };
+        return FromObservable;
+    }(Observable_1.Observable);
+    exports.FromObservable = FromObservable;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("25", ["21"], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var FromObservable_1 = $__require("21");
+  exports.from = FromObservable_1.FromObservable.create;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic('26', ['5', '25'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var Observable_1 = $__require('5');
+  var from_1 = $__require('25');
+  Observable_1.Observable.from = from_1.from;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic("27", ["5"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Observable_1 = $__require("5");
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @extends {Ignored}
+     * @hide true
+     */
+    var RangeObservable = function (_super) {
+        __extends(RangeObservable, _super);
+        function RangeObservable(start, count, scheduler) {
+            _super.call(this);
+            this.start = start;
+            this._count = count;
+            this.scheduler = scheduler;
+        }
+        /**
+         * Creates an Observable that emits a sequence of numbers within a specified
+         * range.
+         *
+         * <span class="informal">Emits a sequence of numbers in a range.</span>
+         *
+         * <img src="./img/range.png" width="100%">
+         *
+         * `range` operator emits a range of sequential integers, in order, where you
+         * select the `start` of the range and its `length`. By default, uses no
+         * Scheduler and just delivers the notifications synchronously, but may use
+         * an optional Scheduler to regulate those deliveries.
+         *
+         * @example <caption>Emits the numbers 1 to 10</caption>
+         * var numbers = Rx.Observable.range(1, 10);
+         * numbers.subscribe(x => console.log(x));
+         *
+         * @see {@link timer}
+         * @see {@link interval}
+         *
+         * @param {number} [start=0] The value of the first integer in the sequence.
+         * @param {number} [count=0] The number of sequential integers to generate.
+         * @param {Scheduler} [scheduler] A {@link Scheduler} to use for scheduling
+         * the emissions of the notifications.
+         * @return {Observable} An Observable of numbers that emits a finite range of
+         * sequential integers.
+         * @static true
+         * @name range
+         * @owner Observable
+         */
+        RangeObservable.create = function (start, count, scheduler) {
+            if (start === void 0) {
+                start = 0;
+            }
+            if (count === void 0) {
+                count = 0;
+            }
+            return new RangeObservable(start, count, scheduler);
+        };
+        RangeObservable.dispatch = function (state) {
+            var start = state.start,
+                index = state.index,
+                count = state.count,
+                subscriber = state.subscriber;
+            if (index >= count) {
+                subscriber.complete();
+                return;
+            }
+            subscriber.next(start);
+            if (subscriber.isUnsubscribed) {
+                return;
+            }
+            state.index = index + 1;
+            state.start = start + 1;
+            this.schedule(state);
+        };
+        RangeObservable.prototype._subscribe = function (subscriber) {
+            var index = 0;
+            var start = this.start;
+            var count = this._count;
+            var scheduler = this.scheduler;
+            if (scheduler) {
+                return scheduler.schedule(RangeObservable.dispatch, 0, {
+                    index: index, count: count, start: start, subscriber: subscriber
+                });
+            } else {
+                do {
+                    if (index++ >= count) {
+                        subscriber.complete();
+                        break;
+                    }
+                    subscriber.next(start++);
+                    if (subscriber.isUnsubscribed) {
+                        break;
+                    }
+                } while (true);
+            }
+        };
+        return RangeObservable;
+    }(Observable_1.Observable);
+    exports.RangeObservable = RangeObservable;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("28", ["27"], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var RangeObservable_1 = $__require("27");
+  exports.range = RangeObservable_1.RangeObservable.create;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic('29', ['5', '28'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var Observable_1 = $__require('5');
+  var range_1 = $__require('28');
+  Observable_1.Observable.range = range_1.range;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic('2a', ['2b', '2c'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var subscribeToResult_1 = $__require('2b');
+    var OuterSubscriber_1 = $__require('2c');
+    /**
+     * Projects each source value to an Observable which is merged in the output
+     * Observable.
+     *
+     * <span class="informal">Maps each value to an Observable, then flattens all of
+     * these inner Observables using {@link mergeAll}.</span>
+     *
+     * <img src="./img/mergeMap.png" width="100%">
+     *
+     * Returns an Observable that emits items based on applying a function that you
+     * supply to each item emitted by the source Observable, where that function
+     * returns an Observable, and then merging those resulting Observables and
+     * emitting the results of this merger.
+     *
+     * @example <caption>Map and flatten each letter to an Observable ticking every 1 second</caption>
+     * var letters = Rx.Observable.of('a', 'b', 'c');
+     * var result = letters.mergeMap(x =>
+     *   Rx.Observable.interval(1000).map(i => x+i)
+     * );
+     * result.subscribe(x => console.log(x));
+     *
+     * @see {@link concatMap}
+     * @see {@link exhaustMap}
+     * @see {@link merge}
+     * @see {@link mergeAll}
+     * @see {@link mergeMapTo}
+     * @see {@link mergeScan}
+     * @see {@link switchMap}
+     *
+     * @param {function(value: T, ?index: number): Observable} project A function
+     * that, when applied to an item emitted by the source Observable, returns an
+     * Observable.
+     * @param {function(outerValue: T, innerValue: I, outerIndex: number, innerIndex: number): any} [resultSelector]
+     * A function to produce the value on the output Observable based on the values
+     * and the indices of the source (outer) emission and the inner Observable
+     * emission. The arguments passed to this function are:
+     * - `outerValue`: the value that came from the source
+     * - `innerValue`: the value that came from the projected Observable
+     * - `outerIndex`: the "index" of the value that came from the source
+     * - `innerIndex`: the "index" of the value from the projected Observable
+     * @param {number} [concurrent=Number.POSITIVE_INFINITY] Maximum number of input
+     * Observables being subscribed to concurrently.
+     * @return {Observable} An Observable that emits the result of applying the
+     * projection function (and the optional `resultSelector`) to each item emitted
+     * by the source Observable and merging the results of the Observables obtained
+     * from this transformation.
+     * @method mergeMap
+     * @owner Observable
+     */
+    function mergeMap(project, resultSelector, concurrent) {
+        if (concurrent === void 0) {
+            concurrent = Number.POSITIVE_INFINITY;
+        }
+        if (typeof resultSelector === 'number') {
+            concurrent = resultSelector;
+            resultSelector = null;
+        }
+        return this.lift(new MergeMapOperator(project, resultSelector, concurrent));
+    }
+    exports.mergeMap = mergeMap;
+    var MergeMapOperator = function () {
+        function MergeMapOperator(project, resultSelector, concurrent) {
+            if (concurrent === void 0) {
+                concurrent = Number.POSITIVE_INFINITY;
+            }
+            this.project = project;
+            this.resultSelector = resultSelector;
+            this.concurrent = concurrent;
+        }
+        MergeMapOperator.prototype.call = function (observer, source) {
+            return source._subscribe(new MergeMapSubscriber(observer, this.project, this.resultSelector, this.concurrent));
+        };
+        return MergeMapOperator;
+    }();
+    exports.MergeMapOperator = MergeMapOperator;
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var MergeMapSubscriber = function (_super) {
+        __extends(MergeMapSubscriber, _super);
+        function MergeMapSubscriber(destination, project, resultSelector, concurrent) {
+            if (concurrent === void 0) {
+                concurrent = Number.POSITIVE_INFINITY;
+            }
+            _super.call(this, destination);
+            this.project = project;
+            this.resultSelector = resultSelector;
+            this.concurrent = concurrent;
+            this.hasCompleted = false;
+            this.buffer = [];
+            this.active = 0;
+            this.index = 0;
+        }
+        MergeMapSubscriber.prototype._next = function (value) {
+            if (this.active < this.concurrent) {
+                this._tryNext(value);
+            } else {
+                this.buffer.push(value);
+            }
+        };
+        MergeMapSubscriber.prototype._tryNext = function (value) {
+            var result;
+            var index = this.index++;
+            try {
+                result = this.project(value, index);
+            } catch (err) {
+                this.destination.error(err);
+                return;
+            }
+            this.active++;
+            this._innerSub(result, value, index);
+        };
+        MergeMapSubscriber.prototype._innerSub = function (ish, value, index) {
+            this.add(subscribeToResult_1.subscribeToResult(this, ish, value, index));
+        };
+        MergeMapSubscriber.prototype._complete = function () {
+            this.hasCompleted = true;
+            if (this.active === 0 && this.buffer.length === 0) {
+                this.destination.complete();
+            }
+        };
+        MergeMapSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
+            if (this.resultSelector) {
+                this._notifyResultSelector(outerValue, innerValue, outerIndex, innerIndex);
+            } else {
+                this.destination.next(innerValue);
+            }
+        };
+        MergeMapSubscriber.prototype._notifyResultSelector = function (outerValue, innerValue, outerIndex, innerIndex) {
+            var result;
+            try {
+                result = this.resultSelector(outerValue, innerValue, outerIndex, innerIndex);
+            } catch (err) {
+                this.destination.error(err);
+                return;
+            }
+            this.destination.next(result);
+        };
+        MergeMapSubscriber.prototype.notifyComplete = function (innerSub) {
+            var buffer = this.buffer;
+            this.remove(innerSub);
+            this.active--;
+            if (buffer.length > 0) {
+                this._next(buffer.shift());
+            } else if (this.active === 0 && this.hasCompleted) {
+                this.destination.complete();
+            }
+        };
+        return MergeMapSubscriber;
+    }(OuterSubscriber_1.OuterSubscriber);
+    exports.MergeMapSubscriber = MergeMapSubscriber;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('2d', ['5', '2a'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var Observable_1 = $__require('5');
+  var mergeMap_1 = $__require('2a');
+  Observable_1.Observable.prototype.mergeMap = mergeMap_1.mergeMap;
+  Observable_1.Observable.prototype.flatMap = mergeMap_1.mergeMap;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic('2e', ['c'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Subscriber_1 = $__require('c');
+    /**
+     * Returns an Observable that applies a specified accumulator function to the first item emitted by a source Observable,
+     * then feeds the result of that function along with the second item emitted by the source Observable into the same
+     * function, and so on until all items have been emitted by the source Observable, and emits the final result from
+     * the final call to your function as its sole item.
+     * This technique, which is called "reduce" here, is sometimes called "aggregate," "fold," "accumulate," "compress," or
+     * "inject" in other programming contexts.
+     *
+     * <img src="./img/reduce.png" width="100%">
+     *
+     * @param {initialValue} the initial (seed) accumulator value
+     * @param {accumulator} an accumulator function to be invoked on each item emitted by the source Observable, the
+     * result of which will be used in the next accumulator call.
+     * @return {Observable} an Observable that emits a single item that is the result of accumulating the output from the
+     * items emitted by the source Observable.
+     * @method reduce
+     * @owner Observable
+     */
+    function reduce(project, seed) {
+        return this.lift(new ReduceOperator(project, seed));
+    }
+    exports.reduce = reduce;
+    var ReduceOperator = function () {
+        function ReduceOperator(project, seed) {
+            this.project = project;
+            this.seed = seed;
+        }
+        ReduceOperator.prototype.call = function (subscriber, source) {
+            return source._subscribe(new ReduceSubscriber(subscriber, this.project, this.seed));
+        };
+        return ReduceOperator;
+    }();
+    exports.ReduceOperator = ReduceOperator;
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var ReduceSubscriber = function (_super) {
+        __extends(ReduceSubscriber, _super);
+        function ReduceSubscriber(destination, project, seed) {
+            _super.call(this, destination);
+            this.hasValue = false;
+            this.acc = seed;
+            this.project = project;
+            this.hasSeed = typeof seed !== 'undefined';
+        }
+        ReduceSubscriber.prototype._next = function (value) {
+            if (this.hasValue || (this.hasValue = this.hasSeed)) {
+                this._tryReduce(value);
+            } else {
+                this.acc = value;
+                this.hasValue = true;
+            }
+        };
+        ReduceSubscriber.prototype._tryReduce = function (value) {
+            var result;
+            try {
+                result = this.project(this.acc, value);
+            } catch (err) {
+                this.destination.error(err);
+                return;
+            }
+            this.acc = result;
+        };
+        ReduceSubscriber.prototype._complete = function () {
+            if (this.hasValue || this.hasSeed) {
+                this.destination.next(this.acc);
+            }
+            this.destination.complete();
+        };
+        return ReduceSubscriber;
+    }(Subscriber_1.Subscriber);
+    exports.ReduceSubscriber = ReduceSubscriber;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('2f', ['5', '2e'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var Observable_1 = $__require('5');
+  var reduce_1 = $__require('2e');
+  Observable_1.Observable.prototype.reduce = reduce_1.reduce;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic('30', ['c'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Subscriber_1 = $__require('c');
+    /**
+     * Applies a given `project` function to each value emitted by the source
+     * Observable, and emits the resulting values as an Observable.
+     *
+     * <span class="informal">Like [Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map),
+     * it passes each source value through a transformation function to get
+     * corresponding output values.</span>
+     *
+     * <img src="./img/map.png" width="100%">
+     *
+     * Similar to the well known `Array.prototype.map` function, this operator
+     * applies a projection to each value and emits that projection in the output
+     * Observable.
+     *
+     * @example <caption>Map every every click to the clientX position of that click</caption>
+     * var clicks = Rx.Observable.fromEvent(document, 'click');
+     * var positions = clicks.map(ev => ev.clientX);
+     * positions.subscribe(x => console.log(x));
+     *
+     * @see {@link mapTo}
+     * @see {@link pluck}
+     *
+     * @param {function(value: T, index: number): R} project The function to apply
+     * to each `value` emitted by the source Observable. The `index` parameter is
+     * the number `i` for the i-th emission that has happened since the
+     * subscription, starting from the number `0`.
+     * @param {any} [thisArg] An optional argument to define what `this` is in the
+     * `project` function.
+     * @return {Observable<R>} An Observable that emits the values from the source
+     * Observable transformed by the given `project` function.
+     * @method map
+     * @owner Observable
+     */
+    function map(project, thisArg) {
+        if (typeof project !== 'function') {
+            throw new TypeError('argument is not a function. Are you looking for `mapTo()`?');
+        }
+        return this.lift(new MapOperator(project, thisArg));
+    }
+    exports.map = map;
+    var MapOperator = function () {
+        function MapOperator(project, thisArg) {
+            this.project = project;
+            this.thisArg = thisArg;
+        }
+        MapOperator.prototype.call = function (subscriber, source) {
+            return source._subscribe(new MapSubscriber(subscriber, this.project, this.thisArg));
+        };
+        return MapOperator;
+    }();
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var MapSubscriber = function (_super) {
+        __extends(MapSubscriber, _super);
+        function MapSubscriber(destination, project, thisArg) {
+            _super.call(this, destination);
+            this.project = project;
+            this.count = 0;
+            this.thisArg = thisArg || this;
+        }
+        // NOTE: This looks unoptimized, but it's actually purposefully NOT
+        // using try/catch optimizations.
+        MapSubscriber.prototype._next = function (value) {
+            var result;
+            try {
+                result = this.project.call(this.thisArg, value, this.count++);
+            } catch (err) {
+                this.destination.error(err);
+                return;
+            }
+            this.destination.next(result);
+        };
+        return MapSubscriber;
+    }(Subscriber_1.Subscriber);
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('31', ['5', '30'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var Observable_1 = $__require('5');
+  var map_1 = $__require('30');
+  Observable_1.Observable.prototype.map = map_1.map;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic("32", ["33"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Subscription_1 = $__require("33");
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var SubjectSubscription = function (_super) {
+        __extends(SubjectSubscription, _super);
+        function SubjectSubscription(subject, observer) {
+            _super.call(this);
+            this.subject = subject;
+            this.observer = observer;
+            this.isUnsubscribed = false;
+        }
+        SubjectSubscription.prototype.unsubscribe = function () {
+            if (this.isUnsubscribed) {
+                return;
+            }
+            this.isUnsubscribed = true;
+            var subject = this.subject;
+            var observers = subject.observers;
+            this.subject = null;
+            if (!observers || observers.length === 0 || subject.isUnsubscribed) {
+                return;
+            }
+            var subscriberIndex = observers.indexOf(this.observer);
+            if (subscriberIndex !== -1) {
+                observers.splice(subscriberIndex, 1);
+            }
+        };
+        return SubjectSubscription;
+    }(Subscription_1.Subscription);
+    exports.SubjectSubscription = SubjectSubscription;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("34", [], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  function throwError(e) {
+    throw e;
+  }
+  exports.throwError = throwError;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic('35', [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    /**
+     * An error thrown when an action is invalid because the object has been
+     * unsubscribed.
+     *
+     * @see {@link Subject}
+     * @see {@link BehaviorSubject}
+     *
+     * @class ObjectUnsubscribedError
+     */
+    var ObjectUnsubscribedError = function (_super) {
+        __extends(ObjectUnsubscribedError, _super);
+        function ObjectUnsubscribedError() {
+            _super.call(this, 'object unsubscribed');
+            this.name = 'ObjectUnsubscribedError';
+        }
+        return ObjectUnsubscribedError;
+    }(Error);
+    exports.ObjectUnsubscribedError = ObjectUnsubscribedError;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('36', ['5', 'c', '33', '32', '37', '34', '35'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Observable_1 = $__require('5');
+    var Subscriber_1 = $__require('c');
+    var Subscription_1 = $__require('33');
+    var SubjectSubscription_1 = $__require('32');
+    var rxSubscriber_1 = $__require('37');
+    var throwError_1 = $__require('34');
+    var ObjectUnsubscribedError_1 = $__require('35');
+    /**
+     * @class Subject<T>
+     */
+    var Subject = function (_super) {
+        __extends(Subject, _super);
+        function Subject(destination, source) {
+            _super.call(this);
+            this.destination = destination;
+            this.source = source;
+            this.observers = [];
+            this.isUnsubscribed = false;
+            this.isStopped = false;
+            this.hasErrored = false;
+            this.dispatching = false;
+            this.hasCompleted = false;
+            this.source = source;
+        }
+        Subject.prototype.lift = function (operator) {
+            var subject = new Subject(this.destination || this, this);
+            subject.operator = operator;
+            return subject;
+        };
+        Subject.prototype.add = function (subscription) {
+            return Subscription_1.Subscription.prototype.add.call(this, subscription);
+        };
+        Subject.prototype.remove = function (subscription) {
+            Subscription_1.Subscription.prototype.remove.call(this, subscription);
+        };
+        Subject.prototype.unsubscribe = function () {
+            Subscription_1.Subscription.prototype.unsubscribe.call(this);
+        };
+        Subject.prototype._subscribe = function (subscriber) {
+            if (this.source) {
+                return this.source.subscribe(subscriber);
+            } else {
+                if (subscriber.isUnsubscribed) {
+                    return;
+                } else if (this.hasErrored) {
+                    return subscriber.error(this.errorValue);
+                } else if (this.hasCompleted) {
+                    return subscriber.complete();
+                }
+                this.throwIfUnsubscribed();
+                var subscription = new SubjectSubscription_1.SubjectSubscription(this, subscriber);
+                this.observers.push(subscriber);
+                return subscription;
+            }
+        };
+        Subject.prototype._unsubscribe = function () {
+            this.source = null;
+            this.isStopped = true;
+            this.observers = null;
+            this.destination = null;
+        };
+        Subject.prototype.next = function (value) {
+            this.throwIfUnsubscribed();
+            if (this.isStopped) {
+                return;
+            }
+            this.dispatching = true;
+            this._next(value);
+            this.dispatching = false;
+            if (this.hasErrored) {
+                this._error(this.errorValue);
+            } else if (this.hasCompleted) {
+                this._complete();
+            }
+        };
+        Subject.prototype.error = function (err) {
+            this.throwIfUnsubscribed();
+            if (this.isStopped) {
+                return;
+            }
+            this.isStopped = true;
+            this.hasErrored = true;
+            this.errorValue = err;
+            if (this.dispatching) {
+                return;
+            }
+            this._error(err);
+        };
+        Subject.prototype.complete = function () {
+            this.throwIfUnsubscribed();
+            if (this.isStopped) {
+                return;
+            }
+            this.isStopped = true;
+            this.hasCompleted = true;
+            if (this.dispatching) {
+                return;
+            }
+            this._complete();
+        };
+        Subject.prototype.asObservable = function () {
+            var observable = new SubjectObservable(this);
+            return observable;
+        };
+        Subject.prototype._next = function (value) {
+            if (this.destination) {
+                this.destination.next(value);
+            } else {
+                this._finalNext(value);
+            }
+        };
+        Subject.prototype._finalNext = function (value) {
+            var index = -1;
+            var observers = this.observers.slice(0);
+            var len = observers.length;
+            while (++index < len) {
+                observers[index].next(value);
+            }
+        };
+        Subject.prototype._error = function (err) {
+            if (this.destination) {
+                this.destination.error(err);
+            } else {
+                this._finalError(err);
+            }
+        };
+        Subject.prototype._finalError = function (err) {
+            var index = -1;
+            var observers = this.observers;
+            // optimization to block our SubjectSubscriptions from
+            // splicing themselves out of the observers list one by one.
+            this.observers = null;
+            this.isUnsubscribed = true;
+            if (observers) {
+                var len = observers.length;
+                while (++index < len) {
+                    observers[index].error(err);
+                }
+            }
+            this.isUnsubscribed = false;
+            this.unsubscribe();
+        };
+        Subject.prototype._complete = function () {
+            if (this.destination) {
+                this.destination.complete();
+            } else {
+                this._finalComplete();
+            }
+        };
+        Subject.prototype._finalComplete = function () {
+            var index = -1;
+            var observers = this.observers;
+            // optimization to block our SubjectSubscriptions from
+            // splicing themselves out of the observers list one by one.
+            this.observers = null;
+            this.isUnsubscribed = true;
+            if (observers) {
+                var len = observers.length;
+                while (++index < len) {
+                    observers[index].complete();
+                }
+            }
+            this.isUnsubscribed = false;
+            this.unsubscribe();
+        };
+        Subject.prototype.throwIfUnsubscribed = function () {
+            if (this.isUnsubscribed) {
+                throwError_1.throwError(new ObjectUnsubscribedError_1.ObjectUnsubscribedError());
+            }
+        };
+        Subject.prototype[rxSubscriber_1.$$rxSubscriber] = function () {
+            return new Subscriber_1.Subscriber(this);
+        };
+        Subject.create = function (destination, source) {
+            return new Subject(destination, source);
+        };
+        return Subject;
+    }(Observable_1.Observable);
+    exports.Subject = Subject;
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var SubjectObservable = function (_super) {
+        __extends(SubjectObservable, _super);
+        function SubjectObservable(source) {
+            _super.call(this);
+            this.source = source;
+        }
+        return SubjectObservable;
+    }(Observable_1.Observable);
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("2c", ["c"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Subscriber_1 = $__require("c");
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var OuterSubscriber = function (_super) {
+        __extends(OuterSubscriber, _super);
+        function OuterSubscriber() {
+            _super.apply(this, arguments);
+        }
+        OuterSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
+            this.destination.next(innerValue);
+        };
+        OuterSubscriber.prototype.notifyError = function (error, innerSub) {
+            this.destination.error(error);
+        };
+        OuterSubscriber.prototype.notifyComplete = function (innerSub) {
+            this.destination.complete();
+        };
+        return OuterSubscriber;
+    }(Subscriber_1.Subscriber);
+    exports.OuterSubscriber = OuterSubscriber;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('23', [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    function isPromise(value) {
+        return value && typeof value.subscribe !== 'function' && typeof value.then === 'function';
+    }
+    exports.isPromise = isPromise;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('1a', ['15'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var root_1 = $__require('15');
+    var Symbol = root_1.root.Symbol;
+    if (typeof Symbol === 'function') {
+        if (Symbol.iterator) {
+            exports.$$iterator = Symbol.iterator;
+        } else if (typeof Symbol.for === 'function') {
+            exports.$$iterator = Symbol.for('iterator');
+        }
+    } else {
+        if (root_1.root.Set && typeof new root_1.root.Set()['@@iterator'] === 'function') {
+            // Bug for mozilla version
+            exports.$$iterator = '@@iterator';
+        } else if (root_1.root.Map) {
+            // es6-shim specific logic
+            var keys = Object.getOwnPropertyNames(root_1.root.Map.prototype);
+            for (var i = 0; i < keys.length; ++i) {
+                var key = keys[i];
+                if (key !== 'entries' && key !== 'size' && root_1.root.Map.prototype[key] === root_1.root.Map.prototype['entries']) {
+                    exports.$$iterator = key;
+                    break;
+                }
+            }
+        } else {
+            exports.$$iterator = '@@iterator';
+        }
+    }
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("38", ["c"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Subscriber_1 = $__require("c");
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var InnerSubscriber = function (_super) {
+        __extends(InnerSubscriber, _super);
+        function InnerSubscriber(parent, outerValue, outerIndex) {
+            _super.call(this);
+            this.parent = parent;
+            this.outerValue = outerValue;
+            this.outerIndex = outerIndex;
+            this.index = 0;
+        }
+        InnerSubscriber.prototype._next = function (value) {
+            this.parent.notifyNext(this.outerValue, value, this.outerIndex, this.index++, this);
+        };
+        InnerSubscriber.prototype._error = function (error) {
+            this.parent.notifyError(error, this);
+            this.unsubscribe();
+        };
+        InnerSubscriber.prototype._complete = function () {
+            this.parent.notifyComplete(this);
+            this.unsubscribe();
+        };
+        return InnerSubscriber;
+    }(Subscriber_1.Subscriber);
+    exports.InnerSubscriber = InnerSubscriber;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('2b', ['15', '22', '23', '5', '1a', '24', '38'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var root_1 = $__require('15');
+    var isArray_1 = $__require('22');
+    var isPromise_1 = $__require('23');
+    var Observable_1 = $__require('5');
+    var iterator_1 = $__require('1a');
+    var observable_1 = $__require('24');
+    var InnerSubscriber_1 = $__require('38');
+    function subscribeToResult(outerSubscriber, result, outerValue, outerIndex) {
+        var destination = new InnerSubscriber_1.InnerSubscriber(outerSubscriber, outerValue, outerIndex);
+        if (destination.isUnsubscribed) {
+            return;
+        }
+        if (result instanceof Observable_1.Observable) {
+            if (result._isScalar) {
+                destination.next(result.value);
+                destination.complete();
+                return;
+            } else {
+                return result.subscribe(destination);
+            }
+        }
+        if (isArray_1.isArray(result)) {
+            for (var i = 0, len = result.length; i < len && !destination.isUnsubscribed; i++) {
+                destination.next(result[i]);
+            }
+            if (!destination.isUnsubscribed) {
+                destination.complete();
+            }
+        } else if (isPromise_1.isPromise(result)) {
+            result.then(function (value) {
+                if (!destination.isUnsubscribed) {
+                    destination.next(value);
+                    destination.complete();
+                }
+            }, function (err) {
+                return destination.error(err);
+            }).then(null, function (err) {
+                // Escaping the Promise trap: globally throw unhandled errors
+                root_1.root.setTimeout(function () {
+                    throw err;
+                });
+            });
+            return destination;
+        } else if (typeof result[iterator_1.$$iterator] === 'function') {
+            for (var _i = 0, _a = result; _i < _a.length; _i++) {
+                var item = _a[_i];
+                destination.next(item);
+                if (destination.isUnsubscribed) {
+                    break;
+                }
+            }
+            if (!destination.isUnsubscribed) {
+                destination.complete();
+            }
+        } else if (typeof result[observable_1.$$observable] === 'function') {
+            var obs = result[observable_1.$$observable]();
+            if (typeof obs.subscribe !== 'function') {
+                destination.error('invalid observable');
+            } else {
+                return obs.subscribe(new InnerSubscriber_1.InnerSubscriber(outerSubscriber, outerValue, outerIndex));
+            }
+        } else {
+            destination.error(new TypeError('unknown type returned'));
+        }
+    }
+    exports.subscribeToResult = subscribeToResult;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('39', ['36', '18', '1b', '2c', '2b'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var Subject_1 = $__require('36');
+    var tryCatch_1 = $__require('18');
+    var errorObject_1 = $__require('1b');
+    var OuterSubscriber_1 = $__require('2c');
+    var subscribeToResult_1 = $__require('2b');
+    /**
+     * Returns an Observable that emits the same values as the source observable with the exception of an `error`.
+     * An `error` will cause the emission of the Throwable that cause the error to the Observable returned from
+     * notificationHandler. If that Observable calls onComplete or `error` then retry will call `complete` or `error`
+     * on the child subscription. Otherwise, this Observable will resubscribe to the source observable, on a particular
+     * Scheduler.
+     *
+     * <img src="./img/retryWhen.png" width="100%">
+     *
+     * @param {notificationHandler} receives an Observable of notifications with which a user can `complete` or `error`,
+     * aborting the retry.
+     * @param {scheduler} the Scheduler on which to subscribe to the source Observable.
+     * @return {Observable} the source Observable modified with retry logic.
+     * @method retryWhen
+     * @owner Observable
+     */
+    function retryWhen(notifier) {
+        return this.lift(new RetryWhenOperator(notifier, this));
+    }
+    exports.retryWhen = retryWhen;
+    var RetryWhenOperator = function () {
+        function RetryWhenOperator(notifier, source) {
+            this.notifier = notifier;
+            this.source = source;
+        }
+        RetryWhenOperator.prototype.call = function (subscriber, source) {
+            return source._subscribe(new RetryWhenSubscriber(subscriber, this.notifier, this.source));
+        };
+        return RetryWhenOperator;
+    }();
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var RetryWhenSubscriber = function (_super) {
+        __extends(RetryWhenSubscriber, _super);
+        function RetryWhenSubscriber(destination, notifier, source) {
+            _super.call(this, destination);
+            this.notifier = notifier;
+            this.source = source;
+        }
+        RetryWhenSubscriber.prototype.error = function (err) {
+            if (!this.isStopped) {
+                var errors = this.errors;
+                var retries = this.retries;
+                var retriesSubscription = this.retriesSubscription;
+                if (!retries) {
+                    errors = new Subject_1.Subject();
+                    retries = tryCatch_1.tryCatch(this.notifier)(errors);
+                    if (retries === errorObject_1.errorObject) {
+                        return _super.prototype.error.call(this, errorObject_1.errorObject.e);
+                    }
+                    retriesSubscription = subscribeToResult_1.subscribeToResult(this, retries);
+                } else {
+                    this.errors = null;
+                    this.retriesSubscription = null;
+                }
+                this.unsubscribe();
+                this.isUnsubscribed = false;
+                this.errors = errors;
+                this.retries = retries;
+                this.retriesSubscription = retriesSubscription;
+                errors.next(err);
+            }
+        };
+        RetryWhenSubscriber.prototype._unsubscribe = function () {
+            var _a = this,
+                errors = _a.errors,
+                retriesSubscription = _a.retriesSubscription;
+            if (errors) {
+                errors.unsubscribe();
+                this.errors = null;
+            }
+            if (retriesSubscription) {
+                retriesSubscription.unsubscribe();
+                this.retriesSubscription = null;
+            }
+            this.retries = null;
+        };
+        RetryWhenSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
+            var _a = this,
+                errors = _a.errors,
+                retries = _a.retries,
+                retriesSubscription = _a.retriesSubscription;
+            this.errors = null;
+            this.retries = null;
+            this.retriesSubscription = null;
+            this.unsubscribe();
+            this.isStopped = false;
+            this.isUnsubscribed = false;
+            this.errors = errors;
+            this.retries = retries;
+            this.retriesSubscription = retriesSubscription;
+            this.source.subscribe(this);
+        };
+        return RetryWhenSubscriber;
+    }(OuterSubscriber_1.OuterSubscriber);
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('3a', ['5', '39'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var Observable_1 = $__require('5');
+  var retryWhen_1 = $__require('39');
+  Observable_1.Observable.prototype.retryWhen = retryWhen_1.retryWhen;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic('3b', ['5', '14', '26', '29', '2d', '2f', '31', '3a'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    const Observable_1 = $__require('5');
+    $__require('14');
+    $__require('26');
+    $__require('29');
+    $__require('2d');
+    $__require('2f');
+    $__require('31');
+    $__require('3a');
+    let [spanNumRepo, spanNumCommit, spanNumAdd, spanNumDel, spanNumChurn, spanSize] = document.querySelectorAll('#github span');
+    let user = 'tdillon';
+    let requestInit = { cache: 'no-cache' }; //don't cache fetches.  stats api may give 202 on first hit 
+    Observable_1.Observable.range(1, 1).mergeMap(() => Observable_1.Observable.fromPromise(fetch(`https://api.github.com/users/${ user }/repos`, requestInit))).mergeMap(r => {
+        if (r.status !== 200) {
+            throw r;
+        }return r.json();
+    }).retryWhen(error => error.delay(5000)).mergeMap(repos => Observable_1.Observable.from(repos)).mergeMap(repo => Observable_1.Observable.range(1, 1).mergeMap(() => Observable_1.Observable.fromPromise(fetch(`https://api.github.com/repos/${ user }/${ repo.name }/stats/contributors`, requestInit))).mergeMap(r => {
+        if (r.status !== 200) {
+            throw r;
+        }return r.json();
+    }).retryWhen(error => error.delay(5000)).map(urs => {
+        let stats = urs.find(s => s.author.login === user);stats.size = repo.size;return stats;
+    })).reduce((acc, cur) => {
+        acc.a += cur.weeks.reduce((a, c) => a += c.a, 0); //total # of adds for this repo
+        acc.c += cur.total; //total # of commits for this repo
+        acc.d += cur.weeks.reduce((a, c) => a += c.d, 0); //total # of deletes for this repo
+        acc.r += 1; //add 1 to the total # of repos
+        acc.s += cur.size; //LOC for this repo
+        return acc;
+    }, { r: 0, c: 0, a: 0, d: 0, s: 0 }).subscribe(d => {
+        spanNumRepo.textContent = d.r.toString();
+        spanNumCommit.textContent = d.c.toString();
+        spanNumAdd.textContent = d.a.toString();
+        spanNumDel.textContent = d.d.toString();
+        spanNumChurn.textContent = (d.a - d.d).toString();
+        spanSize.textContent = d.s.toString();
+    });
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("3c", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    (function (Digit) {
+        Digit[Digit["ZERO"] = 0] = "ZERO";
+        Digit[Digit["ONE"] = 1] = "ONE";
+        Digit[Digit["TWO"] = 2] = "TWO";
+        Digit[Digit["THREE"] = 3] = "THREE";
+        Digit[Digit["FOUR"] = 4] = "FOUR";
+        Digit[Digit["FIVE"] = 5] = "FIVE";
+        Digit[Digit["SIX"] = 6] = "SIX";
+        Digit[Digit["SEVEN"] = 7] = "SEVEN";
+        Digit[Digit["EIGHT"] = 8] = "EIGHT";
+        Digit[Digit["NINE"] = 9] = "NINE";
+        Digit[Digit["BLANK"] = 10] = "BLANK";
+        Digit[Digit["D"] = 11] = "D";
+    })(exports.Digit || (exports.Digit = {}));
+    var Digit = exports.Digit;
+    var Segment = function () {
+        function Segment() {
+            this.on = false;
+            this.points = [{ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }];
+        }
+        Object.defineProperty(Segment.prototype, "off", {
+            get: function () {
+                return !this.on;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return Segment;
+    }();
+    exports.Segment = Segment;
+    /**
+     * The Seven class represents the geometry of a seven segment digit.
+     * The geometry uses a coordinate system that is a cartesian grid with
+     *    -x values to the left of the origin,
+     *    +x values to the right of the origin,
+     *    +y values below the origin, and
+     *    -y values above the origin.
+     * This is the coordinate system typically used for computer graphic systems.
+     */
+    var Seven = function () {
+        /**
+         * Construct a new Seven object.
+         * Optionally pass a SevenConfig object to set properties.
+         * Each property of the SevenConfig object is optional.
+         * If the passed in config contains bad values an exception will be thrown.
+         */
+        function Seven(_a) {
+            var _b = _a === void 0 ? {} : _a,
+                height = _b.height,
+                width = _b.width,
+                _c = _b.angle,
+                angle = _c === void 0 ? 10 : _c,
+                _d = _b.ratioLtoW,
+                ratioLtoW = _d === void 0 ? 4 : _d,
+                _e = _b.ratioLtoS,
+                ratioLtoS = _e === void 0 ? 32 : _e,
+                _f = _b.digit,
+                digit = _f === void 0 ? Digit.BLANK : _f;
+            /** The cononical points for a horizontal segment for the given configuration. */
+            this._horizontalSegmentGeometry = [{ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }];
+            /** The cononical points for a vertical segment for the given configuration. */
+            this._verticalSegmentGeometry = [{ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }];
+            /** The x and y shifts that must be applied to each segment. */
+            this._translations = [{ x: 0, y: 0, a: this._horizontalSegmentGeometry }, { x: 0, y: 0, a: this._verticalSegmentGeometry }, { x: 0, y: 0, a: this._verticalSegmentGeometry }, { x: 0, y: 0, a: this._horizontalSegmentGeometry }, { x: 0, y: 0, a: this._verticalSegmentGeometry }, { x: 0, y: 0, a: this._verticalSegmentGeometry }, { x: 0, y: 0, a: this._horizontalSegmentGeometry }];
+            /** The segments, A-G of the digit. */
+            this.segments = [new Segment(), new Segment(), new Segment(), new Segment(), new Segment(), new Segment(), new Segment()];
+            this._angleDegree = angle;
+            this.digit = digit;
+            this._ratioLtoW = ratioLtoW;
+            this._ratioLtoS = ratioLtoS;
+            this._height = this._width = 100; //initialize so checkConfig passes, and for default case
+            this._isHeightFixed = true;
+            if (height !== undefined) {
+                this._height = height;
+            } else if (width !== undefined) {
+                this._width = width;
+                this._isHeightFixed = false;
+            } //else - neither specified, default to height=100
+            this._positionSegments();
+        }
+        /**
+         * Check the height, width, angle, ratioLtoH, and ratioLtoS for valid values.
+         * Throws exception on first found issue.
+         *
+         * @private
+         */
+        Seven.prototype._checkConfig = function () {
+            var a;
+            var b;
+            //check height
+            a = this._height;
+            b = a * 1; //convert to a number
+            if (b != a || typeof a === 'string' && a.toString().trim() === '') {
+                throw new TypeError("Invalid value (" + a + ") for height, not a number.");
+            } else if (b <= 0) {
+                throw new RangeError("Invalid value (" + b + ") for height, must be greater than 0.");
+            } else if (!isFinite(b)) {
+                throw new RangeError("Invalid value (" + b + ") for height, must be finite.");
+            }
+            this._height = b;
+            //check width
+            a = this._width;
+            b = a * 1; //convert to a number
+            if (b != a || typeof a === 'string' && a.toString().trim() === '') {
+                throw new TypeError("Invalid value (" + a + ") for width, not a number.");
+            } else if (b <= 0) {
+                throw new RangeError("Invalid value (" + b + ") for width, must be greater than 0.");
+            } else if (!isFinite(b)) {
+                throw new RangeError("Invalid value (" + b + ") for width, must be finite.");
+            }
+            this._width = b;
+            //Check angle
+            a = this._angleDegree;
+            b = a * 1; //convert to a number
+            if (b != a || typeof a === 'string' && a.toString().trim() === '') {
+                throw new TypeError("Invalid value (" + a + ") for angle, not a number.");
+            } else if (b <= -90 || b >= 90) {
+                throw new RangeError("Invalid value (" + b + ") for angle, must be between 90 and -90 degrees.");
+            }
+            this._angleDegree = b;
+            //Check ratioLtoW
+            a = this._ratioLtoW;
+            b = a * 1; //convert to a number
+            if (b != a || typeof a === 'string' && a.toString().trim() === '') {
+                throw new TypeError("Invalid value (" + a + ") for ratioLtoW, not a number.");
+            } else if (b < 1) {
+                throw new RangeError("Invalid value (" + b + ") for ratioLtoW, must be at least 1.");
+            } else if (!isFinite(b)) {
+                throw new RangeError("Invalid value (" + b + ") for ratioLtoW, must be finite.");
+            }
+            this._ratioLtoW = b;
+            //Check ratioLtoS
+            a = this._ratioLtoS;
+            b = a * 1; //convert to a number
+            if (b != a || typeof a === 'string' && a.toString().trim() === '') {
+                throw new TypeError("Invalid value (" + a + ") for ratioLtoS, not a number.");
+            } else if (b <= 0) {
+                throw new RangeError("Invalid value (" + b + ") for ratioLtoS, must be greater than 0.");
+            } else if (!isFinite(b)) {
+                throw new RangeError("Invalid value (" + b + ") for ratioLtoS, must be finite.");
+            }
+            this._ratioLtoS = b;
+        };
+        /**
+         * This method sets the following values for the object.
+         * _segmentLength, _angleRadian, _spacing, _halfSegmentWidth, _height, _width
+         *
+         * This method populates the _horizontalSegmentGeometry array.
+         * The array contains the six points of the horizontal segment's geometry.
+         * The first element in the array is the left most point.
+         * The points are then listed in clockwise order.
+         * All points besides the first have positive x values.
+         * The first point is always at the origin (0,0).
+         * The second and third points have negative y values;
+         * The fourth point is always at (l, 0). where l is the segment length
+         * The fifth and sixth points have positive y values.
+         *
+         * This method populates the _verticalSegmentGeometry array.
+         * The array contains the six points of the vertical segment's geometry.
+         * The first element in the array is the top most point.
+         * The points are then listed in counterclockwise order.
+         * All points besides the first have positive y values.
+         * The first point is always at the origin (0,0).
+         *
+         * This method throws an error if the calculated geometry is unexpected.
+         *
+         * @private
+         */
+        Seven.prototype._calculateSegmentGeometry = function () {
+            this._angleRadian = this._angleDegree * Math.PI / 180;
+            this._segmentEndAngle = (Math.PI / 2 - this._angleRadian) / 2;
+            //These calculations for segmentLength are the same as the height and width calcs below, except solved for segmentLength;
+            if (this._isHeightFixed) {
+                this._segmentLength = this._height / (1 / this._ratioLtoW + 2 * Math.cos(this._angleRadian) + 2 * (Math.sin(this._segmentEndAngle) + Math.cos(this._segmentEndAngle)) / this._ratioLtoS);
+            } else {
+                this._segmentLength = this._width / (2 * Math.sin(Math.abs(this._angleRadian)) + 2 * Math.cos(this._angleDegree >= 0 ? this._segmentEndAngle : Math.PI / 2 - this._segmentEndAngle) / this._ratioLtoS + 1 + Math.tan(this._angleDegree >= 0 ? this._segmentEndAngle : Math.PI / 2 - this._segmentEndAngle) / this._ratioLtoW);
+            }
+            this._spacing = this._segmentLength / this.ratioLtoS;
+            var _segmentWidth = this._segmentLength / this.ratioLtoW;
+            this._halfSegmentWidth = _segmentWidth / 2;
+            this._segmentHorizontalShiftDistance = this._halfSegmentWidth * Math.tan(this._angleDegree >= 0 ? this._segmentEndAngle : Math.PI / 2 - this._segmentEndAngle); //This is the horizontal distance between the left most point in the digit and the nearest point on that same segment.
+            if (this._isHeightFixed) {
+                this._width = 2 * this._segmentLength * Math.sin(Math.abs(this._angleRadian)) + 2 * this._spacing * Math.cos(this._angleDegree >= 0 ? this._segmentEndAngle : Math.PI / 2 - this._segmentEndAngle) + this._segmentLength + 2 * this._segmentHorizontalShiftDistance; //This is the horizontal distance between the outer most (furthest to the left or furthest to the right) point on the 2 outer most segments and the 1st or 4th (whichever is closest) point on that same segment.
+            } else {
+                this._height = _segmentWidth + 2 * this._segmentLength * Math.cos(this._angleRadian) + 2 * this._spacing * (Math.sin(this._segmentEndAngle) + Math.cos(this._segmentEndAngle)); //This is the sum of the vertical distance between the following (1st point of segment A and 1st point of segment F) and (4th point of segment F and 1st point of segment E) and (4th point of segment E and 1st point of segment D).
+            }
+            var h = this._halfSegmentWidth;
+            var l = this._segmentLength;
+            var t = Math.tan(this._segmentEndAngle); //tangent of the segmentEndAngle, used for several point locations
+            this._horizontalSegmentGeometry[1].x = h / t;
+            this._horizontalSegmentGeometry[1].y = this._horizontalSegmentGeometry[2].y = -h;
+            this._horizontalSegmentGeometry[2].x = l - h * t;
+            this._horizontalSegmentGeometry[3].x = l;
+            this._horizontalSegmentGeometry[4].x = l - h / t;
+            this._horizontalSegmentGeometry[4].y = this._horizontalSegmentGeometry[5].y = h;
+            this._horizontalSegmentGeometry[5].x = h * t;
+            if (this._horizontalSegmentGeometry[1].x > this._horizontalSegmentGeometry[2].x) {
+                throw new RangeError("This digit configuration produces invalid geometry.  angle: " + this._angleDegree + ",   ratioLtoW: " + this._ratioLtoW + ",   ratioLtoS: " + this._ratioLtoS);
+            }
+            //set vertical segment to horizontal segment mirrored over x axis
+            for (var i = 0, hPoint = void 0, vPoint = void 0; (hPoint = this._horizontalSegmentGeometry[i]) && (vPoint = this._verticalSegmentGeometry[i]); ++i) {
+                vPoint.x = hPoint.x;
+                vPoint.y = -hPoint.y;
+            }
+            //rotate vertical segment, https://en.wikipedia.org/wiki/Cartesian_coordinate_system#Rotation
+            var angle = this._angleRadian + Math.PI / 2; //rotate by 90deg + _angleDeg for proper position
+            for (var _i = 0, _a = this._verticalSegmentGeometry; _i < _a.length; _i++) {
+                var p = _a[_i];
+                var tempX = p.x;
+                var tempY = p.y;
+                p.x = tempX * Math.cos(angle) - tempY * Math.sin(angle);
+                p.y = tempX * Math.sin(angle) + tempY * Math.cos(angle);
+            }
+        };
+        /**
+         * This method first calls _calculateSegmentGeometry to populate the horizontal and vertical geometry arrays.
+         * Then, the x and y translations for each segment are calculated.
+         * Finally, the translations are applied to each segment.
+         *
+         * @private
+         */
+        Seven.prototype._positionSegments = function () {
+            this._checkConfig();
+            this._calculateSegmentGeometry();
+            var l = this._segmentLength;
+            var aC = this._spacing * Math.cos(this._segmentEndAngle); //Used for horizontal spacing calculations
+            var aS = this._spacing * Math.sin(this._segmentEndAngle); //Used for horizontal spacing calculations
+            var x = this._translations;
+            //calculate the x translations
+            x[6].x = this._segmentHorizontalShiftDistance + l * Math.sin(Math.abs(this._angleRadian)) + (this._angleDegree >= 0 ? aC : aS);
+            x[5].x = x[6].x - aS + l * Math.sin(this._angleRadian);
+            x[0].x = x[5].x + aC;
+            x[1].x = x[6].x + l + aC + l * Math.sin(this._angleRadian);
+            x[2].x = x[6].x + l + aS;
+            x[3].x = x[6].x + (aS - aC) - l * Math.sin(this._angleRadian);
+            x[4].x = x[4].x = x[6].x - aC;
+            //calculate the y translations
+            x[0].y = this._halfSegmentWidth;
+            x[1].y = x[0].y + aC;
+            x[5].y = x[0].y + aS;
+            x[6].y = x[5].y + l * Math.cos(this._angleRadian) + aC;
+            x[2].y = x[6].y + aC;
+            x[4].y = x[6].y + aS;
+            x[3].y = x[4].y + l * Math.cos(this._angleRadian) + aC;
+            //update all segment positions
+            for (var i = 0, s = void 0, t = void 0; (s = this.segments[i]) && (t = x[i]); ++i) {
+                for (var j = 0, p = void 0, g = void 0; (p = s.points[j]) && (g = t.a[j]); ++j) {
+                    p.x = g.x + t.x;
+                    p.y = g.y + t.y;
+                }
+            }
+        };
+        Seven.prototype._set = function (prop, value) {
+            var oldValue = this[prop];
+            try {
+                this[prop] = value;
+                this._positionSegments();
+            } catch (e) {
+                this[prop] = oldValue;
+                this._positionSegments();
+                throw e;
+            }
+        };
+        Object.defineProperty(Seven.prototype, "angle", {
+            get: function () {
+                return this._angleDegree;
+            },
+            set: function (value) {
+                this._set('_angleDegree', value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Seven.prototype, "ratioLtoW", {
+            get: function () {
+                return this._ratioLtoW;
+            },
+            set: function (value) {
+                this._set('_ratioLtoW', value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Seven.prototype, "ratioLtoS", {
+            get: function () {
+                return this._ratioLtoS;
+            },
+            set: function (value) {
+                this._set('_ratioLtoS', value);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Seven.prototype, "digit", {
+            get: function () {
+                return this._digit;
+            },
+            set: function (value) {
+                //Check digit
+                var newValue = value * 1; //convert to a number
+                if (newValue != value || typeof value === 'string' && value.toString().trim() === '') {
+                    throw new TypeError("Invalid value (" + value + ") for digit, not a Digit.");
+                } else if (Digit[newValue] === undefined) {
+                    throw new RangeError("Invalid value (" + newValue + ") for digit, must be a Digit.");
+                }
+                this._digit = newValue;
+                //Set segment's on/off as needed
+                for (var i = 0, s = void 0; s = this.segments[i]; ++i) {
+                    s.on = Seven.matrix[this._digit][i];
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Seven.prototype, "height", {
+            get: function () {
+                return this._height;
+            },
+            set: function (value) {
+                var orig = this._isHeightFixed;
+                this._isHeightFixed = true;
+                try {
+                    this._set('_height', value);
+                } catch (e) {
+                    this._isHeightFixed = orig;
+                    throw e;
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Seven.prototype, "width", {
+            get: function () {
+                return this._width;
+            },
+            set: function (value) {
+                var orig = this._isHeightFixed;
+                this._isHeightFixed = false;
+                try {
+                    this._set('_width', value);
+                } catch (e) {
+                    this._isHeightFixed = orig;
+                    throw e;
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Seven.prototype, "isHeightFixed", {
+            get: function () {
+                return this._isHeightFixed;
+            },
+            set: function (value) {
+                this._isHeightFixed = !!value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Seven.prototype, "isWidthFixed", {
+            get: function () {
+                return !this.isHeightFixed;
+            },
+            set: function (value) {
+                this._isHeightFixed = !value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /** Lookup between which segments are used for each digit.  */
+        Seven.matrix = [
+        //A     B      C      D      E      F      G
+        [true, true, true, true, true, true, false], [false, true, true, false, false, false, false], [true, true, false, true, true, false, true], [true, true, true, true, false, false, true], [false, true, true, false, false, true, true], [true, false, true, true, false, true, true], [true, false, true, true, true, true, true], [true, true, true, false, false, false, false], [true, true, true, true, true, true, true], [true, true, true, true, false, true, true], [false, false, false, false, false, false, false], [false, true, true, true, true, false, true]];
+        return Seven;
+    }();
+    exports.Seven = Seven;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("4", ["22"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var isArray_1 = $__require("22");
+    function isNumeric(val) {
+        // parseFloat NaNs numeric-cast false positives (null|true|false|"")
+        // ...but misinterprets leading-number strings, particularly hex literals ("0x...")
+        // subtraction forces infinities to NaN
+        // adding 1 corrects loss of precision from parseFloat (#15100)
+        return !isArray_1.isArray(val) && val - parseFloat(val) + 1 >= 0;
+    }
+    exports.isNumeric = isNumeric;
+    ;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('24', ['15'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var root_1 = $__require('15');
+    var Symbol = root_1.root.Symbol;
+    if (typeof Symbol === 'function') {
+        if (Symbol.observable) {
+            exports.$$observable = Symbol.observable;
+        } else {
+            if (typeof Symbol.for === 'function') {
+                exports.$$observable = Symbol.for('observable');
+            } else {
+                exports.$$observable = Symbol('observable');
+            }
+            Symbol.observable = exports.$$observable;
+        }
+    } else {
+        exports.$$observable = '@@observable';
+    }
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("3d", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    exports.empty = {
+        isUnsubscribed: true,
+        next: function (value) {},
+        error: function (err) {
+            throw err;
+        },
+        complete: function () {}
+    };
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('c', ['19', '33', '37', '3d'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var isFunction_1 = $__require('19');
+    var Subscription_1 = $__require('33');
+    var rxSubscriber_1 = $__require('37');
+    var Observer_1 = $__require('3d');
+    /**
+     * Implements the {@link Observer} interface and extends the
+     * {@link Subscription} class. While the {@link Observer} is the public API for
+     * consuming the values of an {@link Observable}, all Observers get converted to
+     * a Subscriber, in order to provide Subscription-like capabilities such as
+     * `unsubscribe`. Subscriber is a common type in RxJS, and crucial for
+     * implementing operators, but it is rarely used as a public API.
+     *
+     * @class Subscriber<T>
+     */
+    var Subscriber = function (_super) {
+        __extends(Subscriber, _super);
+        /**
+         * @param {Observer|function(value: T): void} [destinationOrNext] A partially
+         * defined Observer or a `next` callback function.
+         * @param {function(e: ?any): void} [error] The `error` callback of an
+         * Observer.
+         * @param {function(): void} [complete] The `complete` callback of an
+         * Observer.
+         */
+        function Subscriber(destinationOrNext, error, complete) {
+            _super.call(this);
+            this.syncErrorValue = null;
+            this.syncErrorThrown = false;
+            this.syncErrorThrowable = false;
+            this.isStopped = false;
+            switch (arguments.length) {
+                case 0:
+                    this.destination = Observer_1.empty;
+                    break;
+                case 1:
+                    if (!destinationOrNext) {
+                        this.destination = Observer_1.empty;
+                        break;
+                    }
+                    if (typeof destinationOrNext === 'object') {
+                        if (destinationOrNext instanceof Subscriber) {
+                            this.destination = destinationOrNext;
+                            this.destination.add(this);
+                        } else {
+                            this.syncErrorThrowable = true;
+                            this.destination = new SafeSubscriber(this, destinationOrNext);
+                        }
+                        break;
+                    }
+                default:
+                    this.syncErrorThrowable = true;
+                    this.destination = new SafeSubscriber(this, destinationOrNext, error, complete);
+                    break;
+            }
+        }
+        /**
+         * A static factory for a Subscriber, given a (potentially partial) definition
+         * of an Observer.
+         * @param {function(x: ?T): void} [next] The `next` callback of an Observer.
+         * @param {function(e: ?any): void} [error] The `error` callback of an
+         * Observer.
+         * @param {function(): void} [complete] The `complete` callback of an
+         * Observer.
+         * @return {Subscriber<T>} A Subscriber wrapping the (partially defined)
+         * Observer represented by the given arguments.
+         */
+        Subscriber.create = function (next, error, complete) {
+            var subscriber = new Subscriber(next, error, complete);
+            subscriber.syncErrorThrowable = false;
+            return subscriber;
+        };
+        /**
+         * The {@link Observer} callback to receive notifications of type `next` from
+         * the Observable, with a value. The Observable may call this method 0 or more
+         * times.
+         * @param {T} [value] The `next` value.
+         * @return {void}
+         */
+        Subscriber.prototype.next = function (value) {
+            if (!this.isStopped) {
+                this._next(value);
+            }
+        };
+        /**
+         * The {@link Observer} callback to receive notifications of type `error` from
+         * the Observable, with an attached {@link Error}. Notifies the Observer that
+         * the Observable has experienced an error condition.
+         * @param {any} [err] The `error` exception.
+         * @return {void}
+         */
+        Subscriber.prototype.error = function (err) {
+            if (!this.isStopped) {
+                this.isStopped = true;
+                this._error(err);
+            }
+        };
+        /**
+         * The {@link Observer} callback to receive a valueless notification of type
+         * `complete` from the Observable. Notifies the Observer that the Observable
+         * has finished sending push-based notifications.
+         * @return {void}
+         */
+        Subscriber.prototype.complete = function () {
+            if (!this.isStopped) {
+                this.isStopped = true;
+                this._complete();
+            }
+        };
+        Subscriber.prototype.unsubscribe = function () {
+            if (this.isUnsubscribed) {
+                return;
+            }
+            this.isStopped = true;
+            _super.prototype.unsubscribe.call(this);
+        };
+        Subscriber.prototype._next = function (value) {
+            this.destination.next(value);
+        };
+        Subscriber.prototype._error = function (err) {
+            this.destination.error(err);
+            this.unsubscribe();
+        };
+        Subscriber.prototype._complete = function () {
+            this.destination.complete();
+            this.unsubscribe();
+        };
+        Subscriber.prototype[rxSubscriber_1.$$rxSubscriber] = function () {
+            return this;
+        };
+        return Subscriber;
+    }(Subscription_1.Subscription);
+    exports.Subscriber = Subscriber;
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var SafeSubscriber = function (_super) {
+        __extends(SafeSubscriber, _super);
+        function SafeSubscriber(_parent, observerOrNext, error, complete) {
+            _super.call(this);
+            this._parent = _parent;
+            var next;
+            var context = this;
+            if (isFunction_1.isFunction(observerOrNext)) {
+                next = observerOrNext;
+            } else if (observerOrNext) {
+                context = observerOrNext;
+                next = observerOrNext.next;
+                error = observerOrNext.error;
+                complete = observerOrNext.complete;
+                if (isFunction_1.isFunction(context.unsubscribe)) {
+                    this.add(context.unsubscribe.bind(context));
+                }
+                context.unsubscribe = this.unsubscribe.bind(this);
+            }
+            this._context = context;
+            this._next = next;
+            this._error = error;
+            this._complete = complete;
+        }
+        SafeSubscriber.prototype.next = function (value) {
+            if (!this.isStopped && this._next) {
+                var _parent = this._parent;
+                if (!_parent.syncErrorThrowable) {
+                    this.__tryOrUnsub(this._next, value);
+                } else if (this.__tryOrSetError(_parent, this._next, value)) {
+                    this.unsubscribe();
+                }
+            }
+        };
+        SafeSubscriber.prototype.error = function (err) {
+            if (!this.isStopped) {
+                var _parent = this._parent;
+                if (this._error) {
+                    if (!_parent.syncErrorThrowable) {
+                        this.__tryOrUnsub(this._error, err);
+                        this.unsubscribe();
+                    } else {
+                        this.__tryOrSetError(_parent, this._error, err);
+                        this.unsubscribe();
+                    }
+                } else if (!_parent.syncErrorThrowable) {
+                    this.unsubscribe();
+                    throw err;
+                } else {
+                    _parent.syncErrorValue = err;
+                    _parent.syncErrorThrown = true;
+                    this.unsubscribe();
+                }
+            }
+        };
+        SafeSubscriber.prototype.complete = function () {
+            if (!this.isStopped) {
+                var _parent = this._parent;
+                if (this._complete) {
+                    if (!_parent.syncErrorThrowable) {
+                        this.__tryOrUnsub(this._complete);
+                        this.unsubscribe();
+                    } else {
+                        this.__tryOrSetError(_parent, this._complete);
+                        this.unsubscribe();
+                    }
+                } else {
+                    this.unsubscribe();
+                }
+            }
+        };
+        SafeSubscriber.prototype.__tryOrUnsub = function (fn, value) {
+            try {
+                fn.call(this._context, value);
+            } catch (err) {
+                this.unsubscribe();
+                throw err;
+            }
+        };
+        SafeSubscriber.prototype.__tryOrSetError = function (parent, fn, value) {
+            try {
+                fn.call(this._context, value);
+            } catch (err) {
+                parent.syncErrorValue = err;
+                parent.syncErrorThrown = true;
+                return true;
+            }
+            return false;
+        };
+        SafeSubscriber.prototype._unsubscribe = function () {
+            var _parent = this._parent;
+            this._context = null;
+            this._parent = null;
+            _parent.unsubscribe();
+        };
+        return SafeSubscriber;
+    }(Subscriber);
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('37', ['15'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var root_1 = $__require('15');
+    var Symbol = root_1.root.Symbol;
+    exports.$$rxSubscriber = typeof Symbol === 'function' && typeof Symbol.for === 'function' ? Symbol.for('rxSubscriber') : '@@rxSubscriber';
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('3e', ['c', '37'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var Subscriber_1 = $__require('c');
+    var rxSubscriber_1 = $__require('37');
+    function toSubscriber(nextOrObserver, error, complete) {
+        if (nextOrObserver && typeof nextOrObserver === 'object') {
+            if (nextOrObserver instanceof Subscriber_1.Subscriber) {
+                return nextOrObserver;
+            } else if (typeof nextOrObserver[rxSubscriber_1.$$rxSubscriber] === 'function') {
+                return nextOrObserver[rxSubscriber_1.$$rxSubscriber]();
+            }
+        }
+        return new Subscriber_1.Subscriber(nextOrObserver, error, complete);
+    }
+    exports.toSubscriber = toSubscriber;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('5', ['15', '24', '3e'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var root_1 = $__require('15');
+    var observable_1 = $__require('24');
+    var toSubscriber_1 = $__require('3e');
+    /**
+     * A representation of any set of values over any amount of time. This the most basic building block
+     * of RxJS.
+     *
+     * @class Observable<T>
+     */
+    var Observable = function () {
+        /**
+         * @constructor
+         * @param {Function} subscribe the function that is  called when the Observable is
+         * initially subscribed to. This function is given a Subscriber, to which new values
+         * can be `next`ed, or an `error` method can be called to raise an error, or
+         * `complete` can be called to notify of a successful completion.
+         */
+        function Observable(subscribe) {
+            this._isScalar = false;
+            if (subscribe) {
+                this._subscribe = subscribe;
+            }
+        }
+        /**
+         * Creates a new Observable, with this Observable as the source, and the passed
+         * operator defined as the new observable's operator.
+         * @method lift
+         * @param {Operator} operator the operator defining the operation to take on the observable
+         * @return {Observable} a new observable with the Operator applied
+         */
+        Observable.prototype.lift = function (operator) {
+            var observable = new Observable();
+            observable.source = this;
+            observable.operator = operator;
+            return observable;
+        };
+        /**
+         * Registers handlers for handling emitted values, error and completions from the observable, and
+         *  executes the observable's subscriber function, which will take action to set up the underlying data stream
+         * @method subscribe
+         * @param {PartialObserver|Function} observerOrNext (optional) either an observer defining all functions to be called,
+         *  or the first of three possible handlers, which is the handler for each value emitted from the observable.
+         * @param {Function} error (optional) a handler for a terminal event resulting from an error. If no error handler is provided,
+         *  the error will be thrown as unhandled
+         * @param {Function} complete (optional) a handler for a terminal event resulting from successful completion.
+         * @return {ISubscription} a subscription reference to the registered handlers
+         */
+        Observable.prototype.subscribe = function (observerOrNext, error, complete) {
+            var operator = this.operator;
+            var sink = toSubscriber_1.toSubscriber(observerOrNext, error, complete);
+            sink.add(operator ? operator.call(sink, this) : this._subscribe(sink));
+            if (sink.syncErrorThrowable) {
+                sink.syncErrorThrowable = false;
+                if (sink.syncErrorThrown) {
+                    throw sink.syncErrorValue;
+                }
+            }
+            return sink;
+        };
+        /**
+         * @method forEach
+         * @param {Function} next a handler for each value emitted by the observable
+         * @param {PromiseConstructor} [PromiseCtor] a constructor function used to instantiate the Promise
+         * @return {Promise} a promise that either resolves on observable completion or
+         *  rejects with the handled error
+         */
+        Observable.prototype.forEach = function (next, PromiseCtor) {
+            var _this = this;
+            if (!PromiseCtor) {
+                if (root_1.root.Rx && root_1.root.Rx.config && root_1.root.Rx.config.Promise) {
+                    PromiseCtor = root_1.root.Rx.config.Promise;
+                } else if (root_1.root.Promise) {
+                    PromiseCtor = root_1.root.Promise;
+                }
+            }
+            if (!PromiseCtor) {
+                throw new Error('no Promise impl found');
+            }
+            return new PromiseCtor(function (resolve, reject) {
+                var subscription = _this.subscribe(function (value) {
+                    if (subscription) {
+                        // if there is a subscription, then we can surmise
+                        // the next handling is asynchronous. Any errors thrown
+                        // need to be rejected explicitly and unsubscribe must be
+                        // called manually
+                        try {
+                            next(value);
+                        } catch (err) {
+                            reject(err);
+                            subscription.unsubscribe();
+                        }
+                    } else {
+                        // if there is NO subscription, then we're getting a nexted
+                        // value synchronously during subscription. We can just call it.
+                        // If it errors, Observable's `subscribe` imple will ensure the
+                        // unsubscription logic is called, then synchronously rethrow the error.
+                        // After that, Promise will trap the error and send it
+                        // down the rejection path.
+                        next(value);
+                    }
+                }, reject, resolve);
+            });
+        };
+        Observable.prototype._subscribe = function (subscriber) {
+            return this.source.subscribe(subscriber);
+        };
+        /**
+         * An interop point defined by the es7-observable spec https://github.com/zenparsing/es-observable
+         * @method Symbol.observable
+         * @return {Observable} this instance of the observable
+         */
+        Observable.prototype[observable_1.$$observable] = function () {
+            return this;
+        };
+        // HACK: Since TypeScript inherits static properties too, we have to
+        // fight against TypeScript here so Subject can have a different static create signature
+        /**
+         * Creates a new cold Observable by calling the Observable constructor
+         * @static true
+         * @owner Observable
+         * @method create
+         * @param {Function} subscribe? the subscriber function to be passed to the Observable constructor
+         * @return {Observable} a new cold observable
+         */
+        Observable.create = function (subscribe) {
+            return new Observable(subscribe);
+        };
+        return Observable;
+    }();
+    exports.Observable = Observable;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("3f", ["40"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var FutureAction_1 = $__require("40");
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var QueueAction = function (_super) {
+        __extends(QueueAction, _super);
+        function QueueAction() {
+            _super.apply(this, arguments);
+        }
+        QueueAction.prototype._schedule = function (state, delay) {
+            if (delay === void 0) {
+                delay = 0;
+            }
+            if (delay > 0) {
+                return _super.prototype._schedule.call(this, state, delay);
+            }
+            this.delay = delay;
+            this.state = state;
+            var scheduler = this.scheduler;
+            scheduler.actions.push(this);
+            scheduler.flush();
+            return this;
+        };
+        return QueueAction;
+    }(FutureAction_1.FutureAction);
+    exports.QueueAction = QueueAction;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('15', [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var objectTypes = {
+        'boolean': false,
+        'function': true,
+        'object': true,
+        'number': false,
+        'string': false,
+        'undefined': false
+    };
+    exports.root = objectTypes[typeof self] && self || objectTypes[typeof window] && window;
+    /* tslint:disable:no-unused-variable */
+    var freeExports = objectTypes[typeof exports] && exports && !exports.nodeType && exports;
+    var freeModule = objectTypes[typeof module] && module && !module.nodeType && module;
+    var freeGlobal = objectTypes[typeof global] && global;
+    if (freeGlobal && (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal)) {
+        exports.root = freeGlobal;
+    }
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("22", [], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  exports.isArray = Array.isArray || function (x) {
+    return x && typeof x.length === 'number';
+  };
+  
+
+  return module.exports;
+});
+$__System.registerDynamic("17", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    function isObject(x) {
+        return x != null && typeof x === 'object';
+    }
+    exports.isObject = isObject;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("19", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    function isFunction(x) {
+        return typeof x === 'function';
+    }
+    exports.isFunction = isFunction;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("18", ["1b"], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var errorObject_1 = $__require("1b");
+    var tryCatchTarget;
+    function tryCatcher() {
+        try {
+            return tryCatchTarget.apply(this, arguments);
+        } catch (e) {
+            errorObject_1.errorObject.e = e;
+            return errorObject_1.errorObject;
+        }
+    }
+    function tryCatch(fn) {
+        tryCatchTarget = fn;
+        return tryCatcher;
+    }
+    exports.tryCatch = tryCatch;
+    ;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("1b", [], true, function ($__require, exports, module) {
+  "use strict";
+  // typeof any so that it we don't have to cast when comparing a result to the error object
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  exports.errorObject = { e: {} };
+  
+
+  return module.exports;
+});
+$__System.registerDynamic("41", [], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    /**
+     * An error thrown when one or more errors have occurred during the
+     * `unsubscribe` of a {@link Subscription}.
+     */
+    var UnsubscriptionError = function (_super) {
+        __extends(UnsubscriptionError, _super);
+        function UnsubscriptionError(errors) {
+            _super.call(this);
+            this.errors = errors;
+            this.name = 'UnsubscriptionError';
+            this.message = errors ? errors.length + " errors occurred during unsubscription:\n" + errors.map(function (err, i) {
+                return i + 1 + ") " + err.toString();
+            }).join('\n') : '';
+        }
+        return UnsubscriptionError;
+    }(Error);
+    exports.UnsubscriptionError = UnsubscriptionError;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('33', ['22', '17', '19', '18', '1b', '41'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var isArray_1 = $__require('22');
+    var isObject_1 = $__require('17');
+    var isFunction_1 = $__require('19');
+    var tryCatch_1 = $__require('18');
+    var errorObject_1 = $__require('1b');
+    var UnsubscriptionError_1 = $__require('41');
+    /**
+     * Represents a disposable resource, such as the execution of an Observable. A
+     * Subscription has one important method, `unsubscribe`, that takes no argument
+     * and just disposes the resource held by the subscription.
+     *
+     * Additionally, subscriptions may be grouped together through the `add()`
+     * method, which will attach a child Subscription to the current Subscription.
+     * When a Subscription is unsubscribed, all its children (and its grandchildren)
+     * will be unsubscribed as well.
+     *
+     * @class Subscription
+     */
+    var Subscription = function () {
+        /**
+         * @param {function(): void} [unsubscribe] A function describing how to
+         * perform the disposal of resources when the `unsubscribe` method is called.
+         */
+        function Subscription(unsubscribe) {
+            /**
+             * A flag to indicate whether this Subscription has already been unsubscribed.
+             * @type {boolean}
+             */
+            this.isUnsubscribed = false;
+            if (unsubscribe) {
+                this._unsubscribe = unsubscribe;
+            }
+        }
+        /**
+         * Disposes the resources held by the subscription. May, for instance, cancel
+         * an ongoing Observable execution or cancel any other type of work that
+         * started when the Subscription was created.
+         * @return {void}
+         */
+        Subscription.prototype.unsubscribe = function () {
+            var hasErrors = false;
+            var errors;
+            if (this.isUnsubscribed) {
+                return;
+            }
+            this.isUnsubscribed = true;
+            var _a = this,
+                _unsubscribe = _a._unsubscribe,
+                _subscriptions = _a._subscriptions;
+            this._subscriptions = null;
+            if (isFunction_1.isFunction(_unsubscribe)) {
+                var trial = tryCatch_1.tryCatch(_unsubscribe).call(this);
+                if (trial === errorObject_1.errorObject) {
+                    hasErrors = true;
+                    (errors = errors || []).push(errorObject_1.errorObject.e);
+                }
+            }
+            if (isArray_1.isArray(_subscriptions)) {
+                var index = -1;
+                var len = _subscriptions.length;
+                while (++index < len) {
+                    var sub = _subscriptions[index];
+                    if (isObject_1.isObject(sub)) {
+                        var trial = tryCatch_1.tryCatch(sub.unsubscribe).call(sub);
+                        if (trial === errorObject_1.errorObject) {
+                            hasErrors = true;
+                            errors = errors || [];
+                            var err = errorObject_1.errorObject.e;
+                            if (err instanceof UnsubscriptionError_1.UnsubscriptionError) {
+                                errors = errors.concat(err.errors);
+                            } else {
+                                errors.push(err);
+                            }
+                        }
+                    }
+                }
+            }
+            if (hasErrors) {
+                throw new UnsubscriptionError_1.UnsubscriptionError(errors);
+            }
+        };
+        /**
+         * Adds a tear down to be called during the unsubscribe() of this
+         * Subscription.
+         *
+         * If the tear down being added is a subscription that is already
+         * unsubscribed, is the same reference `add` is being called on, or is
+         * `Subscription.EMPTY`, it will not be added.
+         *
+         * If this subscription is already in an `isUnsubscribed` state, the passed
+         * tear down logic will be executed immediately.
+         *
+         * @param {TeardownLogic} teardown The additional logic to execute on
+         * teardown.
+         * @return {Subscription} Returns the Subscription used or created to be
+         * added to the inner subscriptions list. This Subscription can be used with
+         * `remove()` to remove the passed teardown logic from the inner subscriptions
+         * list.
+         */
+        Subscription.prototype.add = function (teardown) {
+            if (!teardown || teardown === this || teardown === Subscription.EMPTY) {
+                return;
+            }
+            var sub = teardown;
+            switch (typeof teardown) {
+                case 'function':
+                    sub = new Subscription(teardown);
+                case 'object':
+                    if (sub.isUnsubscribed || typeof sub.unsubscribe !== 'function') {
+                        break;
+                    } else if (this.isUnsubscribed) {
+                        sub.unsubscribe();
+                    } else {
+                        (this._subscriptions || (this._subscriptions = [])).push(sub);
+                    }
+                    break;
+                default:
+                    throw new Error('Unrecognized teardown ' + teardown + ' added to Subscription.');
+            }
+            return sub;
+        };
+        /**
+         * Removes a Subscription from the internal list of subscriptions that will
+         * unsubscribe during the unsubscribe process of this Subscription.
+         * @param {Subscription} subscription The subscription to remove.
+         * @return {void}
+         */
+        Subscription.prototype.remove = function (subscription) {
+            // HACK: This might be redundant because of the logic in `add()`
+            if (subscription == null || subscription === this || subscription === Subscription.EMPTY) {
+                return;
+            }
+            var subscriptions = this._subscriptions;
+            if (subscriptions) {
+                var subscriptionIndex = subscriptions.indexOf(subscription);
+                if (subscriptionIndex !== -1) {
+                    subscriptions.splice(subscriptionIndex, 1);
+                }
+            }
+        };
+        Subscription.EMPTY = function (empty) {
+            empty.isUnsubscribed = true;
+            return empty;
+        }(new Subscription());
+        return Subscription;
+    }();
+    exports.Subscription = Subscription;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('40', ['15', '33'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var root_1 = $__require('15');
+    var Subscription_1 = $__require('33');
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @ignore
+     * @extends {Ignored}
+     */
+    var FutureAction = function (_super) {
+        __extends(FutureAction, _super);
+        function FutureAction(scheduler, work) {
+            _super.call(this);
+            this.scheduler = scheduler;
+            this.work = work;
+            this.pending = false;
+        }
+        FutureAction.prototype.execute = function () {
+            if (this.isUnsubscribed) {
+                this.error = new Error('executing a cancelled action');
+            } else {
+                try {
+                    this.work(this.state);
+                } catch (e) {
+                    this.unsubscribe();
+                    this.error = e;
+                }
+            }
+        };
+        FutureAction.prototype.schedule = function (state, delay) {
+            if (delay === void 0) {
+                delay = 0;
+            }
+            if (this.isUnsubscribed) {
+                return this;
+            }
+            return this._schedule(state, delay);
+        };
+        FutureAction.prototype._schedule = function (state, delay) {
+            var _this = this;
+            if (delay === void 0) {
+                delay = 0;
+            }
+            // Always replace the current state with the new state.
+            this.state = state;
+            // Set the pending flag indicating that this action has been scheduled, or
+            // has recursively rescheduled itself.
+            this.pending = true;
+            var id = this.id;
+            // If this action has an intervalID and the specified delay matches the
+            // delay we used to create the intervalID, don't call `setInterval` again.
+            if (id != null && this.delay === delay) {
+                return this;
+            }
+            this.delay = delay;
+            // If this action has an intervalID, but was rescheduled with a different
+            // `delay` time, cancel the current intervalID and call `setInterval` with
+            // the new `delay` time.
+            if (id != null) {
+                this.id = null;
+                root_1.root.clearInterval(id);
+            }
+            //
+            // Important implementation note:
+            //
+            // By default, FutureAction only executes once. However, Actions have the
+            // ability to be rescheduled from within the scheduled callback (mimicking
+            // recursion for asynchronous methods). This allows us to implement single
+            // and repeated actions with the same code path without adding API surface
+            // area, and implement tail-call optimization over asynchronous boundaries.
+            //
+            // However, JS runtimes make a distinction between intervals scheduled by
+            // repeatedly calling `setTimeout` vs. a single `setInterval` call, with
+            // the latter providing a better guarantee of precision.
+            //
+            // In order to accommodate both single and repeatedly rescheduled actions,
+            // use `setInterval` here for both cases. By default, the interval will be
+            // canceled after its first execution, or if the action schedules itself to
+            // run again with a different `delay` time.
+            //
+            // If the action recursively schedules itself to run again with the same
+            // `delay` time, the interval is not canceled, but allowed to loop again.
+            // The check of whether the interval should be canceled or not is run every
+            // time the interval is executed. The first time an action fails to
+            // reschedule itself, the interval is canceled.
+            //
+            this.id = root_1.root.setInterval(function () {
+                _this.pending = false;
+                var _a = _this,
+                    id = _a.id,
+                    scheduler = _a.scheduler;
+                scheduler.actions.push(_this);
+                scheduler.flush();
+                //
+                // Terminate this interval if the action didn't reschedule itself.
+                // Don't call `this.unsubscribe()` here, because the action could be
+                // rescheduled later. For example:
+                //
+                // ```
+                // scheduler.schedule(function doWork(counter) {
+                //   /* ... I'm a busy worker bee ... */
+                //   var originalAction = this;
+                //   /* wait 100ms before rescheduling this action again */
+                //   setTimeout(function () {
+                //     originalAction.schedule(counter + 1);
+                //   }, 100);
+                // }, 1000);
+                // ```
+                if (_this.pending === false && id != null) {
+                    _this.id = null;
+                    root_1.root.clearInterval(id);
+                }
+            }, delay);
+            return this;
+        };
+        FutureAction.prototype._unsubscribe = function () {
+            this.pending = false;
+            var _a = this,
+                id = _a.id,
+                scheduler = _a.scheduler;
+            var actions = scheduler.actions;
+            var index = actions.indexOf(this);
+            if (id != null) {
+                this.id = null;
+                root_1.root.clearInterval(id);
+            }
+            if (index !== -1) {
+                actions.splice(index, 1);
+            }
+            this.work = null;
+            this.state = null;
+            this.scheduler = null;
+        };
+        return FutureAction;
+    }(Subscription_1.Subscription);
+    exports.FutureAction = FutureAction;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('42', ['3f', '40'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var QueueAction_1 = $__require('3f');
+    var FutureAction_1 = $__require('40');
+    var QueueScheduler = function () {
+        function QueueScheduler() {
+            this.active = false;
+            this.actions = []; // XXX: use `any` to remove type param `T` from `VirtualTimeScheduler`.
+            this.scheduledId = null;
+        }
+        QueueScheduler.prototype.now = function () {
+            return Date.now();
+        };
+        QueueScheduler.prototype.flush = function () {
+            if (this.active || this.scheduledId) {
+                return;
+            }
+            this.active = true;
+            var actions = this.actions;
+            // XXX: use `any` to remove type param `T` from `VirtualTimeScheduler`.
+            for (var action = null; action = actions.shift();) {
+                action.execute();
+                if (action.error) {
+                    this.active = false;
+                    throw action.error;
+                }
+            }
+            this.active = false;
+        };
+        QueueScheduler.prototype.schedule = function (work, delay, state) {
+            if (delay === void 0) {
+                delay = 0;
+            }
+            return delay <= 0 ? this.scheduleNow(work, state) : this.scheduleLater(work, delay, state);
+        };
+        QueueScheduler.prototype.scheduleNow = function (work, state) {
+            return new QueueAction_1.QueueAction(this, work).schedule(state);
+        };
+        QueueScheduler.prototype.scheduleLater = function (work, delay, state) {
+            return new FutureAction_1.FutureAction(this, work).schedule(state, delay);
+        };
+        return QueueScheduler;
+    }();
+    exports.QueueScheduler = QueueScheduler;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('43', ['40', '42'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var FutureAction_1 = $__require('40');
+    var QueueScheduler_1 = $__require('42');
+    var AsyncScheduler = function (_super) {
+        __extends(AsyncScheduler, _super);
+        function AsyncScheduler() {
+            _super.apply(this, arguments);
+        }
+        AsyncScheduler.prototype.scheduleNow = function (work, state) {
+            return new FutureAction_1.FutureAction(this, work).schedule(state, 0);
+        };
+        return AsyncScheduler;
+    }(QueueScheduler_1.QueueScheduler);
+    exports.AsyncScheduler = AsyncScheduler;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("6", ["43"], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var AsyncScheduler_1 = $__require("43");
+  exports.async = new AsyncScheduler_1.AsyncScheduler();
+  
+
+  return module.exports;
+});
+$__System.registerDynamic('44', ['4', '5', '6'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    var __extends = this && this.__extends || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var isNumeric_1 = $__require('4');
+    var Observable_1 = $__require('5');
+    var async_1 = $__require('6');
+    /**
+     * We need this JSDoc comment for affecting ESDoc.
+     * @extends {Ignored}
+     * @hide true
+     */
+    var IntervalObservable = function (_super) {
+        __extends(IntervalObservable, _super);
+        function IntervalObservable(period, scheduler) {
+            if (period === void 0) {
+                period = 0;
+            }
+            if (scheduler === void 0) {
+                scheduler = async_1.async;
+            }
+            _super.call(this);
+            this.period = period;
+            this.scheduler = scheduler;
+            if (!isNumeric_1.isNumeric(period) || period < 0) {
+                this.period = 0;
+            }
+            if (!scheduler || typeof scheduler.schedule !== 'function') {
+                this.scheduler = async_1.async;
+            }
+        }
+        /**
+         * Creates an Observable that emits sequential numbers every specified
+         * interval of time, on a specified Scheduler.
+         *
+         * <span class="informal">Emits incremental numbers periodically in time.
+         * </span>
+         *
+         * <img src="./img/interval.png" width="100%">
+         *
+         * `interval` returns an Observable that emits an infinite sequence of
+         * ascending integers, with a constant interval of time of your choosing
+         * between those emissions. The first emission is not sent immediately, but
+         * only after the first period has passed. By default, this operator uses the
+         * `async` Scheduler to provide a notion of time, but you may pass any
+         * Scheduler to it.
+         *
+         * @example <caption>Emits ascending numbers, one every second (1000ms)</caption>
+         * var numbers = Rx.Observable.interval(1000);
+         * numbers.subscribe(x => console.log(x));
+         *
+         * @see {@link timer}
+         * @see {@link delay}
+         *
+         * @param {number} [period=0] The interval size in milliseconds (by default)
+         * or the time unit determined by the scheduler's clock.
+         * @param {Scheduler} [scheduler=async] The Scheduler to use for scheduling
+         * the emission of values, and providing a notion of "time".
+         * @return {Observable} An Observable that emits a sequential number each time
+         * interval.
+         * @static true
+         * @name interval
+         * @owner Observable
+         */
+        IntervalObservable.create = function (period, scheduler) {
+            if (period === void 0) {
+                period = 0;
+            }
+            if (scheduler === void 0) {
+                scheduler = async_1.async;
+            }
+            return new IntervalObservable(period, scheduler);
+        };
+        IntervalObservable.dispatch = function (state) {
+            var index = state.index,
+                subscriber = state.subscriber,
+                period = state.period;
+            subscriber.next(index);
+            if (subscriber.isUnsubscribed) {
+                return;
+            }
+            state.index += 1;
+            this.schedule(state, period);
+        };
+        IntervalObservable.prototype._subscribe = function (subscriber) {
+            var index = 0;
+            var period = this.period;
+            var scheduler = this.scheduler;
+            subscriber.add(scheduler.schedule(IntervalObservable.dispatch, period, {
+                index: index, subscriber: subscriber, period: period
+            }));
+        };
+        return IntervalObservable;
+    }(Observable_1.Observable);
+    exports.IntervalObservable = IntervalObservable;
+    
+
+    return module.exports;
+});
+$__System.registerDynamic("45", ["44"], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var IntervalObservable_1 = $__require("44");
+  exports.interval = IntervalObservable_1.IntervalObservable.create;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic('46', ['5', '45'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  var Observable_1 = $__require('5');
+  var interval_1 = $__require('45');
+  Observable_1.Observable.interval = interval_1.interval;
+  
+
+  return module.exports;
+});
+$__System.registerDynamic('47', ['3c', '5', '46'], true, function ($__require, exports, module) {
+    "use strict";
+
+    var define,
+        global = this || self,
+        GLOBAL = global;
+    const seven_segment_1 = $__require('3c');
+    const Observable_1 = $__require('5');
+    $__require('46');
+    let canvas = document.querySelector('#cvsSeven');
+    let ctx = canvas.getContext('2d');
+    let seven = new seven_segment_1.Seven({ digit: seven_segment_1.Digit.SEVEN, height: canvas.height });
+    let xShift = (canvas.width - seven.width) / 2;
+    Observable_1.Observable.interval(1000).subscribe(n => {
+        seven.digit = n % 10;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let s of seven.segments) {
+            ctx.fillStyle = "rgba(255,255,255," + (s.on ? .87 : .05) + ")";
+            ctx.beginPath();
+            for (let p of s.points) {
+                ctx.lineTo(xShift + p.x, p.y + .5);
+            }
+            ctx.closePath();
+            ctx.fill();
+        }
+    });
+    
+
+    return module.exports;
+});
+$__System.registerDynamic('1', ['11', '3b', '47'], true, function ($__require, exports, module) {
+  "use strict";
+
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  $__require('11');
+  $__require('3b');
+  $__require('47');
+  
+
+  return module.exports;
+});
+})
+(function(factory) {
+  if (typeof define == 'function' && define.amd)
+    define([], factory);
+  else if (typeof module == 'object' && module.exports && typeof require == 'function')
+    module.exports = factory();
+  else
+    factory();
+});
