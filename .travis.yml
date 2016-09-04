@@ -11,6 +11,7 @@ script:
   - npm run build
 after_success:
   - ls -la
+  - git status
 #   - git checkout -b gh-pages
 #   - rm tsconfig.json .travis.yml package.json .gitignore
 #   - git add --all
