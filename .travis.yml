@@ -13,7 +13,7 @@ script:
 after_success:
   - ls -la
   - git checkout -b master
-  - rm -rf app/ node_modules/ .gitignore .travis.yml builder.js package.json README.MD system.config.js tsconfig.json
+  - rm -rf app/ js/ node_modules/ typings/ .gitignore .travis.yml builder.js package.json README.MD system.config.js tsconfig.json
   - git add --all
   - git commit -m "travis-ci deployment"
   - git push --force origin master
