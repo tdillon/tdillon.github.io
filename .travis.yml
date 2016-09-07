@@ -9,11 +9,11 @@ before_install:
   - echo "   login tdillon" >> ~/.netrc
   - echo "   password $GH_TOKEN" >> ~/.netrc
 script:
-  - npm run build
+  - npm run build:prod
 after_success:
   - ls -la
   - git checkout -b master
-  - rm -rf app/ js/ node_modules/ typings/ .gitignore .travis.yml builder.js package.json README.MD system.config.js tsconfig.json
+  - rm -rf app/ js/ node_modules/ typings/ .gitignore .travis.yml builder.js gulpfile.js package.json README.MD system.config.js tsconfig.json
   - git add --all
   - git commit -m "travis-ci deployment"
   - git push --force origin master
