@@ -10,17 +10,17 @@ footer {
     text-align: center;
     padding: 20px;
     color: #fff;
-    border-bottom: solid 5px rgba(0, 0, 0, .1)
 }
 
-header,
-footer {
-    background: #3E3E3E;
+header {
+    background: #212121;
 }
+
+footer{background:#111;}
 
 /*Stats*/
 section:nth-of-type(1) {
-    background: #454545;
+    background: #111;
 }
 section:nth-of-type(1) > div > div {
     margin: 50px 0;
@@ -30,15 +30,44 @@ section:nth-of-type(1) p {
 }
 
 section:nth-of-type(2) {
-    background: #575757;
+    background: #212121;
 }
-
+/* Quote */
 section:nth-of-type(3) {
-    background: #3e3e3e;
+    background: #303030;
 }
 
 section:nth-of-type(4) {
-    background: #676767;
+    background: #212121;
+}
+
+footer {}header {
+    background: #212121;
+}
+
+footer{background:#111;}
+
+/*Stats*/
+section:nth-of-type(1) {
+    background: #111;
+}
+section:nth-of-type(1) > div > div {
+    margin: 50px 0;
+} 
+section:nth-of-type(1) p {
+    margin:0;
+}
+
+section:nth-of-type(2) {
+    background: #212121;
+}
+/* Quote */
+section:nth-of-type(3) {
+    background: #303030;
+}
+
+section:nth-of-type(4) {
+    background: #212121;
 }
 
 footer {}
@@ -74,7 +103,6 @@ section  p {
     opacity: 0;
     transition: all ease-in .25s;
 }
-.win{color:#09c;}
 .lose{color:lightpink;}
 .draw{color:rgba(255,255,255,.2);}
 #rpsls > div.current {
@@ -95,3 +123,34 @@ section  p {
 }
 #rpsls > :last-child > span:first-child {margin-right: 1em;}
 #rpsls > :last-child > span:last-child {margin-left: 1em;}
+
+
+#github i {
+    font-size:2em;
+    margin-bottom:.5em;
+}
+#github span {
+    border-bottom:solid 2px;
+}
+
+
+
+section > blockquote{
+    text-align: justify;
+    border:none;
+    margin-top:50px;
+}
+blockquote footer{background-color:inherit;}
+
+
+
+#github i,
+blockquote i,
+#github span,
+.win,
+segment a {
+    color:#09c;
+}
+#github span {
+    border-color:#09c;
+}

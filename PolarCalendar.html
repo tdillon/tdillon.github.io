@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<title>Polar Calendar 2009 - 2039</title>
+
+<style type="text/css">
+    body {
+        margin: 0;
+    }
+    
+    canvas {
+        background: #fff;
+    }
+</style>
+
+<script type="text/javascript">  //Initial inspiration:  http://farm4.staticflickr.com/3801/11516750185_9df86c5de2_o.jpg
+
+var RingCalendar = {
+    fromYear: 2009,
+    toYear: 2039,
+    startDate: new Date('2009-03-16'),  //these are in UTC time https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
+    endDate: new Date('2039-06-17'),
+    strikeout: true,  //cross out days beginning with startDate up to the current date
+    circle: true,  //circle the startDate and endDate
+    canvasSize: 2000,
+    yearFontSizePercentage: 1.2,
+    dayFontSizePercentage: .6,
+    ringWidthPercentage: .5,
+    getYearFontSize: function() { return this.canvasSize * this.yearFontSizePercentage / 100; },
+    getDayFontSize: function() { return this.canvasSize * this.dayFontSizePercentage / 100; },
+    getYearsTextRadius: function() { return this.canvasSize / 2 - (55 * this.getRingWidth()) },
+    getRingWidth: function() { return this.canvasSize * this.ringWidthPercentage / 100 },
+    getYearAngle: function() { return 360 / (this.toYear - this.fromYear + 1); },
+    getYearAngleHalf: function() { return this.getYearAngle() / 2; },
+    getWeekdayAngle: function() { return this.getYearAngle() / 7; },
+    getWeekdayAngleHalf: function() { return this.getWeekdayAngle() / 2; },
+    getIth: function(year) { return year - this.fromYear; }
+};
+
+
+
+function printBackground(year) {
+    var ith = RingCalendar.getIth(year);
+    var startAngle = RingCalendar.getYearAngle() * ith;  //0 @ top dead center is where RingCalendar.fromYear starts
+    var d = new Date(year + '-01-01');
+    d.setUTCDate(1 - d.getUTCDay());
+
+    for (var h = 0; h < 54; ++h) {  //54 weeks need to be diplayed sometimes, e.g., 2028
+        for (var w = 0; w < 7; ++w) {  //7 days per week
+            var radius = canvas.height / 2 - RingCalendar.getRingWidth() / 2 - (h * RingCalendar.getRingWidth()) - 1;
+
+            ctx.beginPath();
+            ctx.arc(canvas.height/2, canvas.width/2, radius, (startAngle + w * RingCalendar.getWeekdayAngle()) * Math.PI / 180 - (Math.PI / 2) , (startAngle + w * RingCalendar.getWeekdayAngle() + RingCalendar.getWeekdayAngle()) * Math.PI / 180 - (Math.PI / 2));
+            ctx.lineWidth = RingCalendar.getRingWidth();
+
+            switch ((ith + d.getUTCMonth()) % 4) {
+                case 0: ctx.strokeStyle = '#fff'; break;
+                case 1: ctx.strokeStyle = '#ddd'; break;
+                case 2: ctx.strokeStyle = '#eee'; break;
+                case 3: ctx.strokeStyle = '#ccc'; break;
+            }
+
+            ctx.stroke();
+
+            d.setUTCDate(d.getUTCDate() + 1);
+        }
+    }
+}
+
+
+
+function printYear(year) {
+    //angle to center of year section for the given year
+    var angle = RingCalendar.getIth(year) * RingCalendar.getYearAngle() +
+        (3 * RingCalendar.getWeekdayAngle() + RingCalendar.getWeekdayAngleHalf());
+
+    //Set font for years.
+    ctx.font = RingCalendar.getYearFontSize() + 'px "Gill Sans MT",Arial';
+    ctx.textBaseline = 'top'
+
+    ctx.save();
+    ctx.translate(canvas.height / 2, canvas.width / 2);
+    ctx.rotate(angle * Math.PI / 180);
+    ctx.fillText(year, 0, - RingCalendar.getYearsTextRadius());
+    ctx.restore();
+}
+
+
+
+function printCalendar(year) {
+    //Set font for days of year.
+    ctx.font = RingCalendar.getDayFontSize() + 'px "Gill Sans MT",Arial';
+    ctx.textBaseline = 'bottom';
+    ctx.strokeStyle = '#f00';  //for strikethrough
+
+    var d = new Date(year + '-01-01');
+    var week = 1;
+    var ith = RingCalendar.getIth(year);
+
+    do {
+        var angle = RingCalendar.getYearAngle() * ith + d.getUTCDay() * RingCalendar.getWeekdayAngle() + RingCalendar.getWeekdayAngleHalf();
+
+        ctx.save();
+        ctx.translate(canvas.height / 2, canvas.width / 2);
+        ctx.rotate(angle * Math.PI / 180);
+        ctx.fillText(d.getUTCDate(), 0, -RingCalendar.canvasSize / 2 + 2 /*padding*/ + RingCalendar.getRingWidth() * week);
+        
+        if (RingCalendar.strikeout && d >= RingCalendar.startDate && d < new Date()) {
+          ctx.beginPath();
+          ctx.lineWidth = 2;
+          
+          ctx.moveTo(- (RingCalendar.canvasSize / 2 - RingCalendar.getRingWidth() * week) * Math.sin(RingCalendar.getWeekdayAngleHalf() * Math.PI / 180), -RingCalendar.canvasSize / 2 + 2 /*padding*/ + RingCalendar.getRingWidth() * (week - 1));
+          ctx.lineTo((RingCalendar.canvasSize / 2 - RingCalendar.getRingWidth() * week) * Math.sin(RingCalendar.getWeekdayAngleHalf() * Math.PI / 180), -RingCalendar.canvasSize / 2 + 2 /*padding*/ + RingCalendar.getRingWidth() * week);
+          ctx.stroke();
+        }
+
+        if (RingCalendar.circle && (d.toUTCString() == RingCalendar.startDate.toUTCString() || d.toUTCString() == RingCalendar.endDate.toUTCString())) {
+          console.log(d.toUTCString());
+          ctx.lineWidth = 2;
+          ctx.strokeRect(
+          - (RingCalendar.canvasSize / 2 - RingCalendar.getRingWidth() * week) * Math.sin(RingCalendar.getWeekdayAngleHalf() * Math.PI / 180),
+          -RingCalendar.canvasSize / 2 + RingCalendar.getRingWidth() * (week - 1),
+          (RingCalendar.canvasSize / 2 - RingCalendar.getRingWidth() * week) * Math.sin(RingCalendar.getWeekdayAngle() * Math.PI / 180),
+          RingCalendar.getRingWidth());
+        }
+
+        ctx.restore();
+
+        d.setUTCDate(d.getUTCDate() + 1);
+        if (d.getUTCDay() === 0) {  //new week
+            ++week;
+        }
+    } while (d.getUTCFullYear() === year);
+}
+
+//https://developer.mozilla.org/en-US/docs/Web/API/URLUtils.search
+function getURLParam ( sVar) {
+  return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+}
+
+function getParameters() {
+  RingCalendar.fromYear = parseInt(getURLParam('fy'));
+  RingCalendar.toYear = parseInt(getURLParam('ty'));
+  RingCalendar.startDate = new Date(getURLParam('fd'));
+  RingCalendar.endDate = new Date(getURLParam('td'));
+  RingCalendar.strikeout = new Boolean(getURLParam('strike')).valueOf();
+  RingCalendar.circle = new Boolean(getURLParam('circle')).valueOf();
+}
+
+var canvas,ctx;
+
+window.onload = function() {
+    //getParameters();
+    canvas = document.getElementById('calendar');
+    ctx = canvas.getContext('2d');
+    canvas.height = canvas.width = RingCalendar.canvasSize;
+
+    var currentYear = RingCalendar.fromYear;  //used by drawYears
+
+    //Set universal text properties
+    ctx.textAlign = 'center';
+    ctx.fillStyle='#000';
+
+    function drawYear(timestamp) {
+        printBackground(currentYear);
+        printYear(currentYear);
+        printCalendar(currentYear);
+        if (currentYear++ !== RingCalendar.toYear) {
+            requestAnimationFrame(drawYear);
+        }
+    }
+
+    requestAnimationFrame(drawYear);
+}
+
+
+
+</script>
+
+
+<canvas id="calendar"></canvas>
