@@ -1,13 +1,10 @@
-READY TO DEV:
-1) Edit end of index.html to be in dev.
-2) npm start
-3) Edit app/*.ts or index.html as needed
+# Dev Process
 
-READY TO DEPLOY:
-
-1) Edit tsconfig to compile to es5
-2) npm run build
-3) Edit end of index.html to be in prod.
-4) Test
-5) Edit tsconfig to compile to es6
-6) commit
+* git clone https:github.com/tdillon/tdillon.github.io [DIR_LOCATION]
+* cd [DIR_LOCATION]
+* git checkout dev
+* npm run start
+* update source files and test as desired
+* npm run build:dev  //just to verify build will succeed
+* git commit -am "msg here"
+* git push origin dev

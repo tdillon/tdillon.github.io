@@ -3,7 +3,7 @@ System.config({
         'app': 'js',
         'rxjs': 'node_modules/rxjs',
         'seven-segment': 'node_modules/seven-segment/dist/seven-segment.js',
-        'rpsls': 'node_modules/rpsls/dist/rpsls.js'
+        'rpsls': 'node_modules/rpsls/dist/cjs/rpsls.js'
     },
     packages: {
         'app': { main: 'main.js', defaultExtension: 'js' },

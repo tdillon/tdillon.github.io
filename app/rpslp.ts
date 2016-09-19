@@ -1,4 +1,4 @@
-import {RockPaperScissorsLizardSpock as R} from 'rpsls'
+import R from 'rpsls'
 import {Observable} from 'rxjs/Observable'
 import 'rxjs/add/observable/timer'
 import 'rxjs/add/operator/delay'
